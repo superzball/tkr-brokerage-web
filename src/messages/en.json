@@ -1,0 +1,1046 @@
+{
+  "common": {
+    "brandAlt": "TKR Insurance Brokerage"
+  },
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "customer": "Customer Center",
+    "agency": "Agent Center",
+    "services": "Digital Services",
+    "login": "Log in",
+    "startBuy": "Buy insurance",
+    "startBuyShort": "Buy now",
+    "menu": "Menu",
+    "close": "Close",
+    "featured": "Top",
+    "product": {
+      "worker": {
+        "title": "Foreign Worker Insurance",
+        "desc": "Our specialty — one at a time or in bulk"
+      },
+      "auto": {
+        "title": "Car Insurance",
+        "desc": "Compare premiums from many insurers in one place"
+      },
+      "travel": {
+        "title": "Travel Insurance",
+        "desc": "Coverage at home and abroad"
+      },
+      "health": {
+        "title": "Health Insurance",
+        "desc": "Covers your medical costs"
+      },
+      "fire": {
+        "title": "Fire Insurance",
+        "desc": "Protects your home and property"
+      }
+    },
+    "service": {
+      "wallet": {
+        "title": "Digital Policy Wallet",
+        "desc": "For workers · mobile"
+      },
+      "line": {
+        "title": "LINE Assistant",
+        "desc": "Check, renew, file claims"
+      },
+      "tracking": {
+        "title": "Policy Issuance Tracking",
+        "desc": "Real-time, like tracking a parcel"
+      }
+    },
+    "mobile": {
+      "worker": "Foreign Worker Insurance",
+      "auto": "Car Insurance",
+      "wallet": "Digital Policy Wallet",
+      "line": "LINE Assistant",
+      "tracking": "Policy Issuance Tracking"
+    }
+  },
+  "footer": {
+    "tagline": "A full-service insurance broker and leader in foreign-worker insurance, licensed as a non-life insurance broker No. ว00000/2545",
+    "col": {
+      "products": "Products",
+      "services": "Services",
+      "company": "Agents & Company"
+    },
+    "link": {
+      "worker": "Foreign Worker Insurance",
+      "auto": "Car Insurance",
+      "travel": "Travel Insurance",
+      "health": "Health Insurance",
+      "fire": "Fire Insurance",
+      "customer": "Customer Center",
+      "wallet": "Policy Wallet",
+      "line": "LINE Assistant",
+      "tracking": "Policy Tracking",
+      "applyAgent": "Become an agent",
+      "agencyCenter": "Agent Center",
+      "about": "About TKR",
+      "contact": "Contact us"
+    },
+    "copyright": "© 2026 TKR Insurance Brokerage Co., Ltd. All rights reserved.",
+    "legal": {
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Use",
+      "pdpa": "PDPA"
+    }
+  },
+  "home": {
+    "hero": {
+      "badge": "Trusted by more than 12,800 organizations across Thailand",
+      "title": "Comprehensive insurance<br></br>you can <grad>trust</grad> for every risk",
+      "subtitle": "The leader in <strong>foreign worker insurance</strong>, plus car, travel, health and fire coverage — buy, renew and manage every policy in one place",
+      "ctaPrimary": "Get foreign worker insurance",
+      "ctaSecondary": "Compare car insurance",
+      "trustLicense": "Legally licensed insurance broker",
+      "trustEncryption": "Bank-grade data encryption",
+      "card": {
+        "policyType": "Foreign Worker Insurance Policy",
+        "company": "Thai Charoen Construction Co., Ltd.",
+        "active": "Active",
+        "workers": "Workers",
+        "perCapita": "Sum per person",
+        "coverage": "Coverage",
+        "coverageValue": "1 year",
+        "totalPremium": "Total premium",
+        "agentStatus": "Agent status",
+        "issued": "Policy issued"
+      }
+    },
+    "quote": {
+      "tabs": {
+        "worker": "Foreign Worker",
+        "auto": "Car",
+        "travel": "Travel",
+        "health": "Health",
+        "fire": "Fire"
+      },
+      "cta": {
+        "worker": "Insure workers",
+        "auto": "Compare car premiums",
+        "travel": "View travel plans",
+        "health": "View health plans",
+        "fire": "View fire plans"
+      },
+      "fields": {
+        "workerCount": {
+          "label": "Number of workers",
+          "placeholder": "e.g. 50"
+        },
+        "workerNat": {
+          "label": "Main nationality",
+          "options": [
+            "Myanmar",
+            "Laos",
+            "Vietnam"
+          ]
+        },
+        "autoModel": {
+          "label": "Make / model",
+          "placeholder": "e.g. Toyota Yaris"
+        },
+        "autoYear": {
+          "label": "Registration year",
+          "options": [
+            "2024",
+            "2023",
+            "2022",
+            "2021",
+            "Before 2021"
+          ]
+        },
+        "travelDest": {
+          "label": "Destination",
+          "placeholder": "e.g. Japan"
+        },
+        "travelDays": {
+          "label": "Number of days",
+          "placeholder": "e.g. 7 days"
+        },
+        "healthAge": {
+          "label": "Insured's age",
+          "placeholder": "e.g. 35"
+        },
+        "healthBudget": {
+          "label": "Annual premium budget",
+          "options": [
+            "Under 15,000",
+            "15,000–30,000",
+            "30,000+"
+          ]
+        },
+        "fireProp": {
+          "label": "Property type",
+          "options": [
+            "Detached house",
+            "Townhouse",
+            "Condo",
+            "Commercial building"
+          ]
+        },
+        "fireSum": {
+          "label": "Sum insured",
+          "placeholder": "e.g. 2,000,000"
+        }
+      }
+    },
+    "products": {
+      "badge": "Our products",
+      "title": "Coverage for every need",
+      "subtitle": "Built on the expertise that sets TKR apart",
+      "worker": {
+        "badge": "Our specialty",
+        "title": "Foreign Worker Insurance",
+        "desc": "The market leader the big players don't compete with head-on — handle one worker at a time or thousands in bulk via Excel, with automatic validation.",
+        "features": [
+          "Bulk upload, issue policies all at once",
+          "Supports Myanmar · Laos · Vietnam",
+          "Digital policy wallet for workers"
+        ],
+        "cta": "Get started"
+      },
+      "auto": {
+        "title": "Car Insurance",
+        "desc": "Compare Class 1–3 premiums from many insurers on one screen and pick the best value.",
+        "cta": "Compare prices"
+      },
+      "travel": {
+        "title": "Travel Insurance",
+        "desc": "Coverage for trips in Thailand and abroad, issued instantly before you travel.",
+        "cta": "View plans"
+      },
+      "health": {
+        "title": "Health Insurance",
+        "desc": "Lump-sum medical coverage — choose protection that fits your budget.",
+        "cta": "View plans"
+      },
+      "fire": {
+        "title": "Fire Insurance",
+        "desc": "Protects your home and property from fire, flood and natural disasters.",
+        "cta": "View plans"
+      }
+    },
+    "why": {
+      "badge": "Why TKR",
+      "title": "More than a broker — a partner that looks after you for the life of your policy",
+      "desc": "We combine insurance expertise with modern technology so every step, from comparing to buying to claiming, is simple and transparent.",
+      "features": {
+        "expertise": {
+          "title": "Deep specialization",
+          "desc": "Over 20 years leading foreign-worker insurance — we understand every requirement"
+        },
+        "compare": {
+          "title": "Compare many insurers",
+          "desc": "Impartial — pick the best value from over 15 partners"
+        },
+        "allInOne": {
+          "title": "All in one place",
+          "desc": "Buy, renew, download documents and file claims online"
+        },
+        "support": {
+          "title": "Care for the whole policy term",
+          "desc": "Our team and LINE assistant are ready to help every day"
+        }
+      },
+      "steps": {
+        "heading": "A process designed to be simple",
+        "s1": {
+          "title": "Choose a plan & enter details",
+          "sub": "One by one or upload in bulk"
+        },
+        "s2": {
+          "title": "Review & pay",
+          "sub": "Automatic data validation"
+        },
+        "s3": {
+          "title": "Track in real time",
+          "sub": "See every status until the policy is issued"
+        },
+        "cta": "See a tracking example"
+      }
+    },
+    "stats": {
+      "orgs": {
+        "value": "12,800",
+        "label": "Organizations and customers who trust us"
+      },
+      "policies": {
+        "value": "> 1 Million",
+        "label": "Policies issued"
+      },
+      "founded": {
+        "value": "2002",
+        "label": "Year founded"
+      },
+      "partners": {
+        "value": "15",
+        "label": "Partner insurers"
+      },
+      "partnersHeading": "Leading partner insurers",
+      "partnerList": [
+        "Viriyah Insurance",
+        "Dhipaya Insurance",
+        "Bangkok Insurance",
+        "Muang Thai Insurance",
+        "Southeast Insurance"
+      ]
+    },
+    "agentCta": {
+      "badge": "Earning opportunity",
+      "title": "Become a TKR agent and earn without limits",
+      "desc": "A tiered commission system from Silver → Diamond, a full sales toolkit, and overseas reward trips you can actually win.",
+      "apply": "Become an agent",
+      "view": "View Agent Center",
+      "tiers": {
+        "title": "4 tiers",
+        "sub": "Silver · Gold · Platinum · Diamond"
+      },
+      "trip": {
+        "title": "Japan trip",
+        "sub": "Top Agent Award 2026"
+      },
+      "commission": {
+        "label": "Max commission",
+        "value": "Up to 28%"
+      }
+    }
+  },
+  "worker": {
+    "head": {
+      "breadcrumbHome": "Home",
+      "breadcrumbCurrent": "Foreign Worker Insurance",
+      "title": "Get Foreign Worker Insurance",
+      "subtitle": "Accident and health coverage as required by law · one at a time or thousands in bulk",
+      "badge24h": "Policy issued immediately"
+    },
+    "steps": {
+      "plan": "Choose plan",
+      "fill": "Enter details",
+      "review": "Review",
+      "pay": "Pay"
+    },
+    "summary": {
+      "title": "Order summary",
+      "plan": "Coverage plan",
+      "perYear": "Premium / person / year",
+      "count": "Number of workers",
+      "countValue": "{n, plural, one {# person} other {# people}}",
+      "total": "Net total premium",
+      "info": "Price includes stamp duty. Company tax invoice available.",
+      "next": "Next",
+      "pay": "Pay",
+      "back": "Back",
+      "secure": "Secure encrypted payment"
+    },
+    "plan": {
+      "heading": "Choose your coverage plan",
+      "sub": "Pick the plan that fits your workers — price per person per year",
+      "recommended": "Recommended",
+      "perUnit": "/person/year",
+      "names": {
+        "basic": "Basic",
+        "standard": "Standard",
+        "premium": "Premium"
+      },
+      "rows": {
+        "life": "Death / disability",
+        "medical": "Medical expenses",
+        "repatriation": "Repatriation"
+      },
+      "included": "Included",
+      "notIncluded": "Not included",
+      "modeHeading": "How to enter worker details",
+      "modeSingle": {
+        "title": "Enter one by one",
+        "desc": "Best for small numbers — fill in the form"
+      },
+      "modeBulk": {
+        "title": "Bulk upload",
+        "badge": "Popular",
+        "desc": "Hundreds to thousands via Excel"
+      }
+    },
+    "single": {
+      "heading": "Enter worker details",
+      "sub": "Fill in details exactly as on the passport",
+      "switchToBulk": "Switch to bulk upload",
+      "addWorker": "Add another worker",
+      "workerN": "Worker no. {n}",
+      "fields": {
+        "name": "Full name (English)",
+        "namePh": "e.g. Aung Min",
+        "passport": "Passport number",
+        "passportPh": "e.g. MB1234567",
+        "nationality": "Nationality",
+        "dob": "Date of birth",
+        "job": "Job type",
+        "jobPh": "e.g. construction, housekeeping, factory"
+      }
+    },
+    "bulk": {
+      "heading": "Bulk upload",
+      "sub": "Download the template, fill it in, then upload it back",
+      "switchToSingle": "Switch to one-by-one entry",
+      "dropTitle": "Drag a file here or click to choose",
+      "dropHint": "Supports .xlsx, .xls, .csv · up to 5,000 records",
+      "templateTitle": "TKR standard template",
+      "templateDesc": "Headers and examples included",
+      "download": "Download",
+      "fileName": "worker_list_thaicharoen.xlsx",
+      "uploadedMeta": "Uploaded just now · {total, number} records",
+      "passedChip": "Passed {n, number}",
+      "errorChip": "To fix {n, number}",
+      "filterAll": "All ({n, number})",
+      "filterError": "Issues only ({n, number})",
+      "table": {
+        "num": "#",
+        "name": "Full name",
+        "passport": "Passport",
+        "nationality": "Nationality",
+        "dob": "Date of birth",
+        "status": "Status"
+      },
+      "statusOk": "Valid",
+      "errors": {
+        "passport": "Passport number not found",
+        "age": "Under 15 — not eligible",
+        "nationality": "Invalid nationality"
+      }
+    },
+    "nat": {
+      "mm": "Myanmar",
+      "la": "Laos",
+      "vn": "Vietnam"
+    },
+    "review": {
+      "heading": "Review before payment",
+      "sub": "Check the details once more before confirming your order",
+      "holder": "Policyholder",
+      "company": "Thai Charoen Construction Co., Ltd.",
+      "taxId": "Tax ID 0105545012345",
+      "planLabel": "Coverage plan",
+      "coveragePeriod": "1-year coverage, starting 15 Jun 2026",
+      "listTitle": "Workers to be issued policies",
+      "readyChip": "{n, number} ready to issue",
+      "countLabel": "Number of workers",
+      "perLabel": "Premium per person",
+      "totalLabel": "Net total premium",
+      "confirmText": "I confirm the information is correct and accept the ",
+      "confirmLink": "policy terms"
+    },
+    "pay": {
+      "heading": "Payment",
+      "sub": "Choose a convenient payment method",
+      "methods": {
+        "promptpay": "PromptPay / QR",
+        "transfer": "Bank transfer",
+        "card": "Credit card"
+      },
+      "amountLabel": "Amount due",
+      "qrHint": "Scan with your banking app to pay via PromptPay",
+      "confirm": "I've completed payment"
+    },
+    "done": {
+      "heading": "Order received",
+      "desc": "We're issuing policies for {n, plural, one {# worker} other {# workers}}. You can track the status in real time.",
+      "orderNo": "Order number",
+      "orderNoValue": "#TKR-2569-08842",
+      "track": "Track policy issuance",
+      "toCustomer": "Go to Customer Center"
+    }
+  },
+  "auto": {
+    "head": {
+      "breadcrumbHome": "Home",
+      "breadcrumbCurrent": "Car Insurance",
+      "title": "Compare car insurance",
+      "subtitle": "Enter a few car details and compare premiums from many insurers on one screen"
+    },
+    "form": {
+      "brand": "Make",
+      "model": "Model",
+      "year": "Registration year",
+      "coverageType": "Coverage type",
+      "search": "Find premiums",
+      "years": [
+        "2024",
+        "2023",
+        "2022",
+        "2021"
+      ],
+      "classes": [
+        "Class 1",
+        "Class 2+",
+        "Class 3+",
+        "Class 3"
+      ]
+    },
+    "filters": {
+      "title": "Filters",
+      "sortBy": "Sort by",
+      "sortPrice": "Premium (low → high)",
+      "sortCoverage": "Coverage (high → low)",
+      "sortRating": "Review score",
+      "repairTypeLabel": "Repair type",
+      "garage": "Garage",
+      "dealer": "Dealership",
+      "coverageLabel": "Coverage",
+      "cov1": "Flood",
+      "cov2": "Courtesy car",
+      "cov3": "Driver cover"
+    },
+    "repair": {
+      "garage": "Garage",
+      "dealer": "Dealership"
+    },
+    "results": {
+      "summary": "Found <strong>{count}</strong> plans for <em>{car}</em>",
+      "car": "Toyota Yaris Ativ 2022 · Class 1"
+    },
+    "plan": {
+      "best": "Recommended · best value",
+      "cheapest": "Cheapest premium",
+      "sum": "Sum insured",
+      "deductible": "Deductible",
+      "noDeduct": "None",
+      "perYear": "Per year",
+      "choose": "Choose this plan"
+    },
+    "plans": {
+      "viriyah": {
+        "co": "Viriyah Insurance",
+        "features": [
+          "Flood cover",
+          "Free towing 24h",
+          "Driver accident cover"
+        ]
+      },
+      "dhipaya": {
+        "co": "Dhipaya Insurance",
+        "features": [
+          "Authorized service center",
+          "Flood cover",
+          "Courtesy car"
+        ]
+      },
+      "bangkok": {
+        "co": "Bangkok Insurance",
+        "features": [
+          "Best-value premium",
+          "Flood cover",
+          "Emergency assistance"
+        ]
+      },
+      "muangthai": {
+        "co": "Muang Thai Insurance",
+        "features": [
+          "Highest sum insured",
+          "Service-center repair",
+          "Accessory cover"
+        ]
+      },
+      "southeast": {
+        "co": "Southeast Insurance",
+        "features": [
+          "0% installments 6 months",
+          "Flood cover",
+          "Free towing"
+        ]
+      },
+      "thanachart": {
+        "co": "Thanachart Insurance",
+        "features": [
+          "Authorized service center",
+          "24h assistance",
+          "Passenger cover"
+        ]
+      }
+    }
+  },
+  "customer": {
+    "header": {
+      "avatar": "S",
+      "welcome": "Welcome back",
+      "name": "Mr. Somsak Charoensap",
+      "newPolicy": "Buy a new policy"
+    },
+    "stats": {
+      "active": "Active policies",
+      "expiring": "Expiring soon (30 days)",
+      "premium": "Total premium / year",
+      "documents": "Documents to download"
+    },
+    "policiesTitle": "My policies",
+    "filter": {
+      "all": "All",
+      "active": "Active",
+      "expiring": "Expiring soon"
+    },
+    "status": {
+      "active": "Active",
+      "expiring": "Expiring soon",
+      "expired": "Expired"
+    },
+    "policies": {
+      "worker": {
+        "type": "Foreign Worker Insurance",
+        "co": "Dhipaya Insurance",
+        "extra": "248 workers",
+        "expiry": "14 Mar 2027"
+      },
+      "auto": {
+        "type": "Car Insurance Class 1",
+        "co": "Viriyah Insurance",
+        "extra": "Toyota Yaris · 1กข 1234",
+        "expiry": "28 Jun 2026"
+      },
+      "health": {
+        "type": "Lump-sum Health Insurance",
+        "co": "Muang Thai Insurance",
+        "extra": "Health Plus plan",
+        "expiry": "01 Sep 2026"
+      },
+      "travel": {
+        "type": "International Travel Insurance",
+        "co": "Bangkok Insurance",
+        "extra": "Japan · 7 days",
+        "expiry": "19 Jun 2026"
+      },
+      "fire": {
+        "type": "Home Fire Insurance",
+        "co": "Southeast Insurance",
+        "extra": "2-storey detached house",
+        "expiry": "10 Jan 2026"
+      }
+    },
+    "policyCard": {
+      "policyNo": "Policy no.",
+      "coverUntil": "Covered until",
+      "expiredOn": "Expired on",
+      "perYear": "Premium/year",
+      "renew": "Renew",
+      "download": "Download policy",
+      "claim": "File a claim"
+    },
+    "timeline": {
+      "title": "Latest order status",
+      "viewTracking": "View tracking details",
+      "steps": {
+        "s1": {
+          "t": "Order received",
+          "d": "4 Jun 09:12"
+        },
+        "s2": {
+          "t": "Data verified",
+          "d": "4 Jun 10:40"
+        },
+        "s3": {
+          "t": "Issuing policies",
+          "d": "In progress"
+        },
+        "s4": {
+          "t": "Document delivery",
+          "d": "Pending"
+        }
+      }
+    },
+    "notifsTitle": "Notifications",
+    "notifs": {
+      "n1": {
+        "t": "Car insurance expiring soon",
+        "d": "24 days left · renew for continuous coverage"
+      },
+      "n2": {
+        "t": "Health policy issued",
+        "d": "Documents are ready to download"
+      },
+      "n3": {
+        "t": "Member perk",
+        "d": "Get 10% off when you renew this month"
+      }
+    }
+  },
+  "agency": {
+    "header": {
+      "avatar": "P",
+      "greeting": "Good late morning",
+      "name": "Mr. Pakorn Wattanachai",
+      "tierBadge": "Platinum tier",
+      "tools": "Sales tools"
+    },
+    "stats": {
+      "sales": "Cumulative sales this year",
+      "commission": "Commission earned",
+      "clients": "Clients in portfolio",
+      "policies": "Policies sold"
+    },
+    "chart": {
+      "title": "Monthly sales trend",
+      "subtitle": "2026 (฿ millions)",
+      "monthly": "Monthly",
+      "quarterly": "Quarterly",
+      "months": [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+      ]
+    },
+    "reward": {
+      "label": "Next goal",
+      "title": "฿1.58M more to reach Diamond",
+      "desc": "Earn 28% commission and a Japan trip for two",
+      "current": "฿8.42M",
+      "target": "Goal ฿10M",
+      "cta": "View tier benefits"
+    },
+    "tier": {
+      "title": "Commission tier system",
+      "subtitle": "The more you sell, the higher your commission and perks",
+      "currentBadge": "Current tier: Platinum",
+      "youAreHere": "You are here",
+      "nextStep": "Next tier",
+      "cumulative": "Cumulative",
+      "commLabel": "commission"
+    },
+    "tiers": {
+      "silver": {
+        "name": "Silver",
+        "threshold": "Starter",
+        "perks": [
+          "15% commission",
+          "Basic sales tools",
+          "Online training"
+        ]
+      },
+      "gold": {
+        "name": "Gold",
+        "threshold": "฿3M+",
+        "perks": [
+          "20% commission",
+          "Premium marketing media",
+          "Personal advisor"
+        ]
+      },
+      "platinum": {
+        "name": "Platinum",
+        "threshold": "฿6M+",
+        "perks": [
+          "24% commission",
+          "Quarterly bonus",
+          "Trip campaign eligibility"
+        ]
+      },
+      "diamond": {
+        "name": "Diamond",
+        "threshold": "฿10M+",
+        "perks": [
+          "28% commission",
+          "Overseas trips",
+          "VIP care"
+        ]
+      }
+    },
+    "trip": {
+      "badge": "Special campaign 2026",
+      "title": "Japan trip · 5 days 4 nights",
+      "desc": "Hit ฿10,000,000 by Dec 31, 2026 to win a Tokyo–Osaka trip for two, including flights and 5-star accommodation",
+      "progressLabel": "Achieved ฿8.42M",
+      "remaining": "฿1.58M to go · 87 days left in the campaign"
+    },
+    "leaderboard": {
+      "title": "Agent ranking (Q2)",
+      "updated": "Updated daily",
+      "you": "(you)",
+      "r1": "Wannapha Srisuk",
+      "r2": "Thanakrit Intra",
+      "r3": "Pakorn Wattanachai",
+      "r4": "Sunisa Kaewmanee",
+      "r5": "Anucha Pongprai"
+    },
+    "downline": {
+      "title": "Downline network",
+      "subtitle": "Your team's performance",
+      "cols": {
+        "agent": "Agent",
+        "sales": "Sales",
+        "clients": "Clients",
+        "growth": "Growth"
+      },
+      "d1": {
+        "name": "Manop Chanpen"
+      },
+      "d2": {
+        "name": "Rattana Phothong"
+      },
+      "d3": {
+        "name": "Chaiwat Boonma"
+      },
+      "d4": {
+        "name": "Pornthip Somboon"
+      }
+    },
+    "share": {
+      "title": "Personal sales link",
+      "url": "tkr.co.th/a/pakorn-w",
+      "copy": "Copy",
+      "copied": "Copied",
+      "qrTitle": "Personal QR code",
+      "qrDesc": "Let customers scan to buy insurance directly through you — commission credited automatically"
+    },
+    "media": {
+      "title": "Marketing media library",
+      "brochure": {
+        "title": "Foreign Worker Insurance brochure 2026",
+        "meta": "PDF · 2.4 MB"
+      },
+      "social": {
+        "title": "Social media promo images",
+        "meta": "ZIP · 18 images"
+      },
+      "video": {
+        "title": "Product intro video",
+        "meta": "MP4 · 1:32 min"
+      },
+      "deck": {
+        "title": "Corporate client pitch deck",
+        "meta": "PPTX · 12 slides"
+      }
+    }
+  },
+  "tracking": {
+    "breadcrumb": {
+      "customer": "Customer Center",
+      "current": "Policy Issuance Tracking"
+    },
+    "title": "Policy Issuance Tracking",
+    "orderPrefix": "Order",
+    "orderInfo": "Foreign Worker Insurance · 248 workers",
+    "statusBadge": "In progress",
+    "overview": {
+      "title": "Overall progress",
+      "subtitle": "186 of 248 policies issued"
+    },
+    "stats": {
+      "issued": "Issued",
+      "processing": "In progress",
+      "problem": "Issues"
+    },
+    "timelineTitle": "Processing steps",
+    "timeline": {
+      "currentBadge": "Active"
+    },
+    "stages": {
+      "s1": {
+        "t": "Order received",
+        "d": "4 Jun 2026 · 09:12",
+        "desc": "Received data for 248 workers and confirmed payment"
+      },
+      "s2": {
+        "t": "Data verification",
+        "d": "4 Jun 2026 · 10:40",
+        "desc": "Verified data accuracy and complete documents"
+      },
+      "s3": {
+        "t": "Issuing policies",
+        "d": "In progress · updated 11:25",
+        "desc": "The insurer is issuing policies one by one (186/248)"
+      },
+      "s4": {
+        "t": "Policies issued",
+        "d": "Estimated by 17:00 today",
+        "desc": "All policies issued and ready to use"
+      },
+      "s5": {
+        "t": "Document delivery",
+        "d": "Pending",
+        "desc": "Send all policy files via LINE and email"
+      }
+    },
+    "itemsTitle": "Individual status",
+    "itemsSubtitle": "Sample workers in this order",
+    "viewAll": "View all 248 workers",
+    "itemStatus": {
+      "done": "Issued",
+      "current": "Issuing",
+      "pending": "Queued"
+    },
+    "items": {
+      "i1": "Aung Ko Latt",
+      "i2": "Somsak Phomma",
+      "i3": "Win Htut",
+      "i4": "Thida Aung",
+      "i5": "Khamla Volavong"
+    },
+    "notify": {
+      "title": "We'll notify you",
+      "desc": "Once every policy is issued, we'll send a notification via LINE and email with a link to download all documents"
+    }
+  },
+  "wallet": {
+    "hero": {
+      "breadcrumbHome": "Home",
+      "breadcrumbCurrent": "Digital Policy Wallet",
+      "chip": "For foreign workers",
+      "title": "A digital policy wallet in every worker's phone",
+      "desc": "Workers can view their own insurance card anytime, anywhere, with a QR code for hospitals to scan and verify, plus an emergency help button. Supports 3 languages.",
+      "features": {
+        "lang": {
+          "title": "3 languages",
+          "desc": "Thai · Burmese · Lao"
+        },
+        "qr": {
+          "title": "QR verification",
+          "desc": "Staff or hospitals can scan instantly"
+        },
+        "sos": {
+          "title": "Emergency SOS",
+          "desc": "Call for help with a single button"
+        }
+      },
+      "hint": "Try switching the language and tabs in the simulator below →"
+    },
+    "app": {
+      "greeting": "Your insurance card",
+      "name": "Name",
+      "nat": "Nationality",
+      "natValue": "Myanmar",
+      "cardName": "Aung Ko Latt",
+      "policyNo": "Policy number",
+      "valid": "Valid until",
+      "active": "Active",
+      "coverage": "Coverage",
+      "accident": "Accident",
+      "medical": "Medical expenses",
+      "life": "Death/Disability",
+      "scan": "Have staff or a hospital scan to verify",
+      "verified": "Policy valid · Verified",
+      "emergency": "Call emergency help",
+      "emergencySub": "Call 1554 · 24 hrs",
+      "hospital": "Hospitals near me",
+      "call": "Contact TKR staff",
+      "offlineInfo": "Keep this app on your phone to show your insurance card anytime, even offline",
+      "myCard": "My card",
+      "help": "Help"
+    }
+  },
+  "line": {
+    "hero": {
+      "breadcrumbHome": "Home",
+      "breadcrumbCurrent": "LINE Assistant",
+      "chip": "LINE Official Account",
+      "title": "Reach every service through the channel customers know best",
+      "desc": "Customers can check policies, renew, file claims, and ask questions instantly on LINE — with a beautiful Rich Menu and Flex Messages, as if an agent were always in the chat.",
+      "features": {
+        "check": {
+          "title": "Check & renew",
+          "sub": "Policies in chat"
+        },
+        "claim": {
+          "title": "Instant claims",
+          "sub": "Send photos & documents"
+        },
+        "auto": {
+          "title": "Auto-reply",
+          "sub": "24 hours"
+        },
+        "agent": {
+          "title": "Talk to an agent",
+          "sub": "Whenever you need"
+        }
+      },
+      "hint": "Try the + button to open/close the Rich Menu in the simulator →"
+    },
+    "chat": {
+      "accountName": "TKR Insurance",
+      "accountStatus": "Official Account · Auto-reply",
+      "inputPlaceholder": "Type a message…",
+      "time": "Today 10:24",
+      "bot1": "Hello 👋 Welcome to TKR Insurance. How can we help you?",
+      "me1": "I'd like to check my car insurance policy.",
+      "bot2": "Sure! Here's Mr. Somsak's active car insurance policy.",
+      "me2": "It's expiring soon — can I renew it?",
+      "bot3": "You can renew right away. This year's premium is ฿14,200 (10% off for existing customers). Tap the button below to pay."
+    },
+    "policy": {
+      "type": "Car Insurance Class 1",
+      "badge": "Expiring soon",
+      "car": "Toyota Yaris Ativ",
+      "plate": "Reg. 1กข 1234 · Viriyah Insurance",
+      "rows": {
+        "policyNo": {
+          "label": "Policy number",
+          "value": "TKR-A-2568-3387"
+        },
+        "sum": {
+          "label": "Sum insured",
+          "value": "฿700,000"
+        },
+        "until": {
+          "label": "Covered until",
+          "value": "28 Jun 2026"
+        }
+      },
+      "detailBtn": "View full details"
+    },
+    "renew": {
+      "label": "Renewal total (10% off applied)",
+      "price": "฿14,200",
+      "original": "฿15,780",
+      "payBtn": "Pay renewal",
+      "quoteBtn": "Request a quote"
+    },
+    "richMenu": {
+      "check": "Check policy",
+      "renew": "Renew",
+      "claim": "File a claim",
+      "info": "Ask a question",
+      "buy": "Buy new insurance",
+      "contact": "Contact an agent"
+    }
+  },
+  "metadata": {
+    "home": {
+      "title": "TKR | Full-service insurance broker · Foreign worker insurance leader",
+      "description": "The leader in foreign worker insurance, plus car, travel, health and fire coverage — buy, renew and manage every policy in one place."
+    },
+    "worker": {
+      "title": "TKR | Get Foreign Worker Insurance",
+      "description": "Accident and health coverage as required by law · one at a time or thousands in bulk"
+    },
+    "auto": {
+      "title": "TKR | Compare car insurance",
+      "description": "Enter a few car details and compare premiums from many insurers on one screen"
+    },
+    "customer": {
+      "title": "TKR | Customer Center",
+      "description": "Manage policies, renew, download documents and track status all in one place"
+    },
+    "agency": {
+      "title": "TKR | Agent Center",
+      "description": "Agent dashboard: track sales, commission, loyalty tiers, and sales tools all in one place"
+    },
+    "tracking": {
+      "title": "TKR | Policy Issuance Tracking",
+      "description": "Track real-time, per-policy issuance status with a notification when documents are ready to download"
+    },
+    "wallet": {
+      "title": "TKR | Digital Policy Wallet (Worker Wallet)",
+      "description": "A digital insurance card in the worker's phone — 3 languages, QR verification, and an emergency SOS button"
+    },
+    "line": {
+      "title": "TKR | Smart Assistant on LINE",
+      "description": "Check policies, renew, file claims, and chat with an agent instantly via the LINE Official Account, with Rich Menu and Flex Messages"
+    }
+  }
+}
