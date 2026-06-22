@@ -4,9 +4,6 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { fontVariables } from "@/lib/fonts";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { RevealObserver } from "@/components/RevealObserver";
 import "./globals.css";
 
 type Props = {
@@ -38,12 +35,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html lang={locale} className={fontVariables}>
       <body className="min-h-screen antialiased">
-        <NextIntlClientProvider>
-          <Navbar />
-          {children}
-          <Footer />
-          <RevealObserver />
-        </NextIntlClientProvider>
+        <NextIntlClientProvider>{children}</NextIntlClientProvider>
       </body>
     </html>
   );

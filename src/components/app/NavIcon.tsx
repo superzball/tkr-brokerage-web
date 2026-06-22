@@ -1,0 +1,55 @@
+// src/components/app/NavIcon.tsx
+// Resolves the lucide-react PascalCase icon names used in portal-nav.ts
+// (NavItem.icon). Kept separate from ui/Icon (which uses the original site's
+// lowercase ICON-map keys) so the portal IA can reference lucide names 1:1.
+
+import {
+  LayoutDashboard,
+  ShieldCheck,
+  Users,
+  ShoppingCart,
+  ClipboardList,
+  CreditCard,
+  FolderOpen,
+  Wallet,
+  FileText,
+  Target,
+  Receipt,
+  Award,
+  Megaphone,
+  LifeBuoy,
+  Settings,
+  CircleDot,
+  type LucideProps,
+} from "lucide-react";
+
+const registry: Record<string, React.ComponentType<LucideProps>> = {
+  LayoutDashboard,
+  ShieldCheck,
+  Users,
+  ShoppingCart,
+  ClipboardList,
+  CreditCard,
+  FolderOpen,
+  Wallet,
+  FileText,
+  Target,
+  Receipt,
+  Award,
+  Megaphone,
+  LifeBuoy,
+  Settings,
+};
+
+export function NavIcon({
+  name,
+  size = 20,
+  className,
+}: {
+  name: string;
+  size?: number;
+  className?: string;
+}) {
+  const Glyph = registry[name] ?? CircleDot;
+  return <Glyph size={size} strokeWidth={2} className={className} />;
+}

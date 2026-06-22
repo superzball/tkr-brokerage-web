@@ -39,6 +39,7 @@
   ],
   "exclude": [
     "node_modules",
-    "TKR Platform"
+    "TKR Platform",
+    "files"
   ]
 }

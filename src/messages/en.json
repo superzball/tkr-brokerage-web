@@ -3,6 +3,25 @@
     "brandAlt": "TKR Insurance Brokerage"
   },
   "nav": {
+    "dashboard": "Dashboard",
+    "policies": "My Policies",
+    "workers": "Workers",
+    "buy": "Buy / Renew",
+    "claims": "Claims",
+    "billing": "Billing",
+    "documents": "Documents",
+    "wallet": "Worker Wallet",
+    "clients": "My Clients",
+    "quote": "Create Quote",
+    "leads": "Leads",
+    "commissions": "Commissions",
+    "tier": "Agent Tier",
+    "marketing": "Marketing",
+    "help": "Help Center",
+    "settings": "Settings",
+    "manage": "Manage",
+    "earnings": "Earnings",
+    "support": "Support",
     "home": "Home",
     "products": "Products",
     "customer": "Customer Center",
@@ -56,6 +75,62 @@
       "wallet": "Digital Policy Wallet",
       "line": "LINE Assistant",
       "tracking": "Policy Issuance Tracking"
+    }
+  },
+  "app": {
+    "menu": "Menu",
+    "signOut": "Sign out",
+    "notifications": "Notifications",
+    "markAllRead": "Mark all read",
+    "noNotifications": "No notifications",
+    "comingSoon": {
+      "title": "Coming soon",
+      "body": "This screen will be available in a later phase."
+    },
+    "forbidden": {
+      "title": "Access denied",
+      "body": "Your account doesn't have access to this page.",
+      "back": "Back to dashboard"
+    },
+    "table": {
+      "empty": "No data",
+      "prev": "Previous",
+      "next": "Next",
+      "of": "of"
+    },
+    "dashboard": {
+      "greeting": "Hello, {name}",
+      "subtitle": "Your account overview",
+      "business": {
+        "activePolicies": "Active policies",
+        "workersCovered": "Workers covered",
+        "expiringSoon": "Expiring soon",
+        "openClaims": "Open claims"
+      },
+      "individual": {
+        "activePolicies": "Active policies",
+        "renewalsDue": "Renewals due",
+        "openClaims": "Open claims"
+      },
+      "agent": {
+        "commissionThisMonth": "Commission this month",
+        "tier": "Agent tier",
+        "activeClients": "Active clients",
+        "openLeads": "Open leads"
+      }
+    },
+    "login": {
+      "title": "Log in",
+      "subtitle": "Demo build — pick a test account to sign in.",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Log in",
+      "demoTitle": "Demo accounts",
+      "business": "Business / Company",
+      "individual": "Individual",
+      "agent": "Agent",
+      "error": "Incorrect email or password",
+      "note": "The full login screen arrives in Phase 8."
     }
   },
   "footer": {

@@ -11,7 +11,7 @@ Never invent Burmese — replace placeholders with reviewed translations only.
 
 ## Status by namespace
 - [ ] common
-- [ ] nav
+- [ ] nav — incl. portal sidebar keys (dashboard…support) added as Thai placeholders in Phase 7
 - [ ] footer
 - [ ] home
 - [ ] worker

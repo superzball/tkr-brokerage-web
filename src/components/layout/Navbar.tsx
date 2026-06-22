@@ -64,7 +64,7 @@ export function Navbar() {
 
           <div className="hidden lg:flex items-center gap-2.5 shrink-0">
             <LocaleSwitcher />
-            <Button href={ROUTES.customer} variant="ghost" size="sm">
+            <Button href="/login" variant="ghost" size="sm">
               {t("login")}
             </Button>
             <Button href={ROUTES.worker} variant="primary" size="sm">

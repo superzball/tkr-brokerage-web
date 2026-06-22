@@ -1,0 +1,164 @@
+// src/components/app/TopBar.tsx
+// App-shell top bar: mobile menu button, notifications bell, locale switcher,
+// and the user menu (with mock sign-out). Reads the user from useSession().
+
+"use client";
+
+import { useEffect, useRef, useState, useTransition } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { Icon } from "@/components/ui/Icon";
+import { LocaleSwitcher } from "@/components/ui/LocaleSwitcher";
+import { useSession } from "@/lib/auth/SessionProvider";
+import { signOut } from "@/lib/auth/actions";
+import { getNotifications } from "@/lib/mock/seed";
+import type { Locale } from "@/types/portal";
+import { cn } from "@/lib/cn";
+
+function useDismiss<T extends HTMLElement>(onClose: () => void) {
+  const ref = useRef<T>(null);
+  useEffect(() => {
+    const onClick = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) onClose();
+    };
+    document.addEventListener("mousedown", onClick);
+    return () => document.removeEventListener("mousedown", onClick);
+  }, [onClose]);
+  return ref;
+}
+
+function initials(name: string) {
+  const clean = name.replace(/^คุณ\s*/, "");
+  return clean.slice(0, 2);
+}
+
+export function TopBar({ onMenu }: { onMenu: () => void }) {
+  const user = useSession();
+  const t = useTranslations("app");
+  const locale = useLocale() as Locale;
+  const [pending, startTransition] = useTransition();
+
+  const [bellOpen, setBellOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const bellRef = useDismiss<HTMLDivElement>(() => setBellOpen(false));
+  const menuRef = useDismiss<HTMLDivElement>(() => setMenuOpen(false));
+
+  const [readIds, setReadIds] = useState<Set<string>>(
+    () => new Set(getNotifications().filter((n) => n.read).map((n) => n.id)),
+  );
+  const notifications = getNotifications();
+  const unread = notifications.filter((n) => !readIds.has(n.id)).length;
+
+  return (
+    <header className="sticky top-0 z-30 h-[68px] bg-white/85 backdrop-blur-xl border-b border-ink-100 flex items-center gap-2 px-4 sm:px-6">
+      <button
+        onClick={onMenu}
+        className="lg:hidden w-10 h-10 rounded-lg text-ink-700 hover:bg-sky-100 flex items-center justify-center"
+        aria-label={t("menu")}
+      >
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
+          <line x1="3" y1="6" x2="21" y2="6" />
+          <line x1="3" y1="12" x2="21" y2="12" />
+          <line x1="3" y1="18" x2="21" y2="18" />
+        </svg>
+      </button>
+
+      <div className="flex-1" />
+
+      {/* Notifications */}
+      <div ref={bellRef} className="relative">
+        <button
+          onClick={() => setBellOpen((o) => !o)}
+          aria-label={t("notifications")}
+          className="relative w-10 h-10 rounded-lg text-ink-600 hover:bg-sky-100 flex items-center justify-center"
+        >
+          <Icon name="bell" size={20} />
+          {unread > 0 && (
+            <span className="absolute top-1.5 right-1.5 min-w-[16px] h-4 px-1 rounded-full bg-rose-500 text-white text-[10px] font-700 flex items-center justify-center tabnum">
+              {unread}
+            </span>
+          )}
+        </button>
+        {bellOpen && (
+          <div className="absolute right-0 top-full mt-2 w-80 card p-2 z-50">
+            <div className="flex items-center justify-between px-2 py-1.5">
+              <span className="text-sm font-700 text-ink-900">
+                {t("notifications")}
+              </span>
+              {unread > 0 && (
+                <button
+                  onClick={() => setReadIds(new Set(notifications.map((n) => n.id)))}
+                  className="text-xs font-600 text-brand-600 hover:underline"
+                >
+                  {t("markAllRead")}
+                </button>
+              )}
+            </div>
+            <ul className="max-h-80 overflow-y-auto">
+              {notifications.length === 0 ? (
+                <li className="px-2 py-6 text-center text-sm text-ink-400">
+                  {t("noNotifications")}
+                </li>
+              ) : (
+                notifications.map((n) => (
+                  <li
+                    key={n.id}
+                    className={cn(
+                      "px-2.5 py-2.5 rounded-lg",
+                      !readIds.has(n.id) && "bg-sky-50",
+                    )}
+                  >
+                    <p className="text-sm text-ink-800 leading-snug">{n.title}</p>
+                  </li>
+                ))
+              )}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      <LocaleSwitcher />
+
+      {/* User menu */}
+      <div ref={menuRef} className="relative">
+        <button
+          onClick={() => setMenuOpen((o) => !o)}
+          className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-full hover:bg-sky-100"
+          aria-haspopup="menu"
+          aria-expanded={menuOpen}
+        >
+          <span
+            className="w-8 h-8 rounded-full flex items-center justify-center text-white text-xs font-700"
+            style={{ background: user.avatarColor ?? "#1f66ee" }}
+          >
+            {initials(user.name)}
+          </span>
+          <span className="hidden sm:block text-sm font-600 text-ink-800 max-w-[140px] truncate">
+            {user.name}
+          </span>
+          <Icon name="chevD" size={14} className="text-ink-400" />
+        </button>
+        {menuOpen && (
+          <div className="absolute right-0 top-full mt-2 w-56 card p-1.5 z-50">
+            <div className="px-3 py-2 border-b border-ink-100 mb-1">
+              <p className="text-sm font-600 text-ink-900 truncate">
+                {user.name}
+              </p>
+              {user.company && (
+                <p className="text-xs text-ink-500 truncate">{user.company}</p>
+              )}
+              <p className="text-xs text-ink-400 mt-0.5">{user.email}</p>
+            </div>
+            <button
+              disabled={pending}
+              onClick={() => startTransition(() => signOut(locale))}
+              className="w-full flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-ink-700 hover:bg-sky-50 disabled:opacity-50"
+            >
+              <Icon name="arrowRight" size={16} />
+              {t("signOut")}
+            </button>
+          </div>
+        )}
+      </div>
+    </header>
+  );
+}
