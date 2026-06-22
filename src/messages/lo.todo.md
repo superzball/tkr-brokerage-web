@@ -12,6 +12,7 @@ Never invent Lao — replace placeholders with reviewed translations only.
 ## Status by namespace
 - [ ] common
 - [ ] nav — incl. portal sidebar keys (dashboard…support) added as Thai placeholders in Phase 7
+- [ ] auth — Phase 8 auth/onboarding copy added as Thai placeholders
 - [ ] footer
 - [ ] home
 - [ ] worker

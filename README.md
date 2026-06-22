@@ -54,6 +54,14 @@ content. Routes a role's sidebar doesn't list are blocked (403 via `roleCanAcces
 The proxy ([src/proxy.ts](src/proxy.ts)) runs locale routing, then bounces
 anonymous `/app/*` hits to `/login`.
 
+**Auth screens** live in the `(auth)` route group ([src/app/[locale]/(auth)/](src/app/[locale]/(auth)/),
+forms in [src/components/auth/](src/components/auth/)): `/login` (phone+OTP
+primary tab / email+password / 4 social buttons), `/signup` (role cards →
+phone-first form), `/verify-otp` (6-digit, resend timer — shared by phone login
+& signup), `/forgot-password`, `/reset-password`, and `/onboarding/{business,
+individual,agent}` (Stepper wizards; "done" creates the session). Phone login
+and social/demo all funnel through `startSession` → `landingPath(role)`.
+
 Demo accounts (password `demo1234`, OTP `123456`):
 
 | email | phone | role |

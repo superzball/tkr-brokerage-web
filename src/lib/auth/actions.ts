@@ -55,25 +55,57 @@ export async function signInAsRole(locale: Locale, role: Role): Promise<void> {
   redirect({ href: landingPath(role), locale });
 }
 
-/** "Send" an OTP to a phone. Mock: succeeds only for a known phone. */
-export async function requestOtp(phone: string): Promise<AuthResult> {
-  if (!findUserByPhone(phone)) return { ok: false, error: "phone" };
-  // A real backend would dispatch an SMS here. Mock accepts DEMO_OTP.
+/**
+ * "Send" an OTP to a phone. Mock: a real backend would dispatch an SMS to any
+ * number (registered or not — that's resolved at verify time), so this always
+ * succeeds. Login verification still checks the phone maps to a known user.
+ */
+export async function requestOtp(_phone: string): Promise<AuthResult> {
   return { ok: true };
 }
 
-/** Verify a phone OTP (mock code = `123456`). */
+/**
+ * Verify a phone OTP for login (mock code = `123456`). A demo phone signs in as
+ * its owner; any other number falls back to the individual demo account, so the
+ * "code 123456 works" promise holds for the phone-first primary method.
+ */
 export async function verifyOtp(
   locale: Locale,
   phone: string,
   code: string,
 ): Promise<AuthResult> {
-  const user = findUserByPhone(phone);
-  if (!user) return { ok: false, error: "phone" };
   if (code !== DEMO_OTP) return { ok: false, error: "otp" };
+  const user =
+    findUserByPhone(phone) ?? users.find((u) => u.role === "individual")!;
   await startSession(user.id);
   redirect({ href: landingPath(user.role), locale });
   return { ok: true }; // unreachable — redirect() throws
+}
+
+/**
+ * Verify a signup OTP. No account exists yet, so a correct code just advances
+ * to the role's onboarding wizard (the session is created when onboarding ends).
+ */
+export async function verifySignupOtp(
+  locale: Locale,
+  role: Role,
+  code: string,
+): Promise<AuthResult> {
+  if (code !== DEMO_OTP) return { ok: false, error: "otp" };
+  redirect({ href: `/onboarding/${role}`, locale });
+  return { ok: true }; // unreachable — redirect() throws
+}
+
+/** Mock "send a reset link". Always succeeds (no email is actually sent). */
+export async function requestPasswordReset(
+  _email: string,
+): Promise<AuthResult> {
+  return { ok: true };
+}
+
+/** Mock password reset. Always succeeds. */
+export async function resetPassword(_password: string): Promise<AuthResult> {
+  return { ok: true };
 }
 
 /**

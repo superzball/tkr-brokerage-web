@@ -133,6 +133,129 @@
       "note": "The full login screen arrives in Phase 8."
     }
   },
+  "auth": {
+    "login": {
+      "title": "Log in",
+      "subtitle": "Welcome back — sign in to manage your insurance.",
+      "tabPhone": "Phone",
+      "tabEmail": "Email",
+      "phoneLabel": "Phone number",
+      "phoneHint": "We'll send a one-time code to this number.",
+      "sendOtp": "Send OTP",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "remember": "Remember me",
+      "forgot": "Forgot password?",
+      "submit": "Log in",
+      "error": "Incorrect email or password",
+      "noAccount": "Don't have an account?",
+      "signupLink": "Sign up",
+      "or": "or",
+      "demoTitle": "Demo accounts (password demo1234)",
+      "demoNote": "Pick a demo account to sign in instantly.",
+      "demoPhones": "Demo numbers (OTP 123456)"
+    },
+    "signup": {
+      "title": "Create account",
+      "subtitle": "Sign up to get started.",
+      "step1": "Choose account type",
+      "step2": "Your details",
+      "chooseRole": "Who are you?",
+      "name": "Full name",
+      "company": "Company name",
+      "tabPhone": "Sign up with phone",
+      "tabEmail": "Sign up with email",
+      "phoneLabel": "Phone number",
+      "emailLabel": "Email",
+      "passwordLabel": "Password",
+      "continue": "Continue",
+      "back": "Back",
+      "haveAccount": "Already have an account?",
+      "loginLink": "Log in",
+      "or": "or"
+    },
+    "roles": {
+      "business": "Business / Company",
+      "businessDesc": "Buy and manage foreign-worker insurance at scale.",
+      "individual": "Individual",
+      "individualDesc": "Auto, travel, health and fire insurance.",
+      "agent": "Agent / Sub-broker",
+      "agentDesc": "Sell on behalf, track commissions and tier."
+    },
+    "otp": {
+      "title": "Verify code",
+      "subtitle": "Enter the 6-digit code sent to {phone}.",
+      "verify": "Verify",
+      "resend": "Resend code",
+      "resendIn": "Resend code in {seconds}s",
+      "changeNumber": "Change number",
+      "error": "Incorrect code",
+      "hint": "Demo code: 123456"
+    },
+    "forgot": {
+      "title": "Forgot password",
+      "subtitle": "Enter your email and we'll send a reset link.",
+      "emailLabel": "Email",
+      "submit": "Send reset link",
+      "success": "We've sent a password reset link to your email.",
+      "backToLogin": "Back to log in"
+    },
+    "reset": {
+      "title": "Set a new password",
+      "subtitle": "Enter your new password.",
+      "passwordLabel": "New password",
+      "confirmLabel": "Confirm password",
+      "submit": "Save password",
+      "success": "Your password has been changed.",
+      "mismatch": "Passwords don't match",
+      "backToLogin": "Go to log in"
+    },
+    "social": {
+      "continueWith": "Continue with {provider}",
+      "chooseRole": "Continue with {provider}",
+      "chooseRoleSub": "Choose the account type to use."
+    },
+    "onboarding": {
+      "next": "Next",
+      "back": "Back",
+      "finish": "Finish",
+      "goDashboard": "Go to dashboard",
+      "business": {
+        "title": "Set up your company account",
+        "steps": { "company": "Company", "kyc": "Documents", "review": "Review", "done": "Done" },
+        "companyName": "Company name",
+        "taxId": "Tax ID",
+        "address": "Address",
+        "phone": "Contact phone",
+        "kycTitle": "Upload documents (KYC)",
+        "kycSub": "Work permit and company registration.",
+        "workPermit": "Work permit",
+        "companyDocs": "Company registration",
+        "uploadBtn": "Choose file",
+        "statusPending": "Pending review",
+        "reviewTitle": "Review your details",
+        "doneTitle": "Account setup complete",
+        "doneBody": "Your company account is ready to use."
+      },
+      "individual": {
+        "title": "Set up your profile",
+        "steps": { "profile": "Profile", "done": "Done" },
+        "name": "Full name",
+        "phone": "Phone number",
+        "doneTitle": "Welcome",
+        "doneBody": "Your profile is ready to use."
+      },
+      "agent": {
+        "title": "Set up your agent account",
+        "steps": { "profile": "Profile", "done": "Done" },
+        "name": "Full name",
+        "license": "Broker license no.",
+        "phone": "Phone number",
+        "doneTitle": "Welcome to the agent team",
+        "doneBody": "Your agent account is ready to use."
+      }
+    }
+  },
   "footer": {
     "tagline": "A full-service insurance broker and leader in foreign-worker insurance, licensed as a non-life insurance broker No. ว00000/2545",
     "col": {
