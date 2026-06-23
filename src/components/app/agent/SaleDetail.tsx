@@ -1,12 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { useBaht } from "@/lib/format";
+import { Link } from "@/i18n/navigation";
 import { Modal } from "@/components/app/Modal";
 import { StatusBadge, type BadgeTone } from "@/components/app/StatusBadge";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { useToast } from "@/components/app/toast";
+import { cn } from "@/lib/cn";
+import { IOSFrame } from "@/components/device/IOSFrame";
+import { WalletApp } from "@/components/wallet/WalletApp";
 import {
   salePolicyNo,
   salePeriod,
@@ -44,15 +49,38 @@ function Row({ label, value }: { label: string; value: React.ReactNode }) {
   );
 }
 
-export function SaleDetail({ sale, onClose }: { sale: AgentSale | null; onClose: () => void }) {
+export function SaleDetail({
+  sale,
+  onClose,
+  onCancel,
+}: {
+  sale: AgentSale | null;
+  onClose: () => void;
+  onCancel?: (id: string) => void;
+}) {
   const t = useTranslations("agent");
   const tc = useTranslations("business");
   const baht = useBaht();
   const { toast } = useToast();
+  const [walletOpen, setWalletOpen] = useState(false);
 
   if (!sale) return null;
   const policyNo = salePolicyNo(sale);
   const period = salePeriod(sale);
+  const manageable = sale.status === "issued";
+
+  // status timeline
+  type Step = { key: "issued" | "active" | "renewal" | "cancelled"; state: "done" | "current" | "future" | "danger"; meta?: string };
+  const steps: Step[] =
+    sale.status === "cancelled"
+      ? [{ key: "issued", state: "done", meta: sale.date }, { key: "cancelled", state: "danger" }]
+      : sale.status === "pending"
+        ? [{ key: "issued", state: "current" }]
+        : [
+            { key: "issued", state: "done", meta: sale.date },
+            { key: "active", state: "current" },
+            { key: "renewal", state: "future", meta: period.end },
+          ];
 
   function dl(kind: "policy" | "receipt") {
     if (!sale) return;
@@ -103,6 +131,41 @@ export function SaleDetail({ sale, onClose }: { sale: AgentSale | null; onClose:
           </div>
         </dl>
 
+        {/* status timeline */}
+        <div>
+          <h3 className="font-700 text-ink-900 mb-3">{t("sales.detail.timeline.title")}</h3>
+          <ol>
+            {steps.map((s, i) => (
+              <li key={s.key} className="flex gap-3">
+                <div className="flex flex-col items-center">
+                  <span
+                    className={cn(
+                      "w-7 h-7 rounded-full flex items-center justify-center text-white shrink-0",
+                      s.state === "done" ? "bg-emerald-500"
+                        : s.state === "current" ? "bg-brand-500"
+                        : s.state === "danger" ? "bg-rose-500"
+                        : "bg-white border-2 border-ink-100 text-ink-400",
+                    )}
+                  >
+                    {s.state === "done" ? <Icon name="check" size={14} />
+                      : s.state === "danger" ? <Icon name="x" size={14} />
+                      : <span className="text-xs font-700">{i + 1}</span>}
+                  </span>
+                  {i < steps.length - 1 && (
+                    <span className={cn("w-0.5 flex-1 my-1 min-h-[14px]", s.state === "done" ? "bg-emerald-400" : "bg-ink-100")} />
+                  )}
+                </div>
+                <div className="pb-3">
+                  <p className={cn("text-sm", s.state === "future" ? "text-ink-400 font-500" : "text-ink-900 font-600")}>
+                    {t(`sales.detail.timeline.${s.key}`)}
+                  </p>
+                  {s.meta && <p className="text-xs text-ink-400 tabnum">{s.meta}</p>}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+
         <div className="h-px bg-ink-100" />
 
         {/* product-specific */}
@@ -111,7 +174,47 @@ export function SaleDetail({ sale, onClose }: { sale: AgentSale | null; onClose:
         {sale.product === "travel" && <TravelSection sale={sale} />}
         {sale.product === "health" && <HealthSection sale={sale} />}
         {sale.product === "fire" && <FireSection sale={sale} />}
+
+        {/* manage actions */}
+        {(manageable || sale.product === "worker") && (
+          <div className="flex flex-wrap gap-2.5 pt-1">
+            {sale.product === "worker" && (
+              <Button variant="ghost" size="md" onClick={() => setWalletOpen(true)}>
+                <Icon name="wallet" size={16} /> {t("sales.detail.viewWallet")}
+              </Button>
+            )}
+            {manageable && (
+              <>
+                <Link href="/app/quote" className="btn btn-ghost btn-md">
+                  <Icon name="refresh" size={16} /> {t("sales.detail.renew")}
+                </Link>
+                <Button
+                  variant="ghost"
+                  size="md"
+                  className="text-rose-600"
+                  onClick={() => {
+                    onCancel?.(sale.id);
+                    toast(t("sales.detail.cancelled"), "success");
+                  }}
+                >
+                  <Icon name="x" size={16} /> {t("sales.detail.cancel")}
+                </Button>
+              </>
+            )}
+          </div>
+        )}
       </div>
+
+      {/* worker wallet preview */}
+      {walletOpen && (
+        <Modal open onClose={() => setWalletOpen(false)} title={t("sales.detail.walletTitle")} className="max-w-md">
+          <div className="flex justify-center">
+            <IOSFrame>
+              <WalletApp />
+            </IOSFrame>
+          </div>
+        </Modal>
+      )}
     </Modal>
   );
 }

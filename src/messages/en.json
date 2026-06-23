@@ -1895,7 +1895,19 @@
           "house": "House",
           "condo": "Condo",
           "commercial": "Commercial"
-        }
+        },
+        "timeline": {
+          "title": "Policy status",
+          "issued": "Issued",
+          "active": "Active",
+          "renewal": "Renewal due",
+          "cancelled": "Cancelled"
+        },
+        "renew": "Renew",
+        "cancel": "Cancel policy",
+        "cancelled": "Policy cancelled (demo)",
+        "viewWallet": "View wallet card",
+        "walletTitle": "Worker wallet card"
       }
     }
   },

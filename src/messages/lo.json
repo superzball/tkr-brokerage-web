@@ -1895,7 +1895,19 @@
           "house": "บ้าน",
           "condo": "คอนโด",
           "commercial": "อาคารพาณิชย์"
-        }
+        },
+        "timeline": {
+          "title": "สถานะกรมธรรม์",
+          "issued": "ออกกรมธรรม์",
+          "active": "คุ้มครอง",
+          "renewal": "ครบกำหนดต่ออายุ",
+          "cancelled": "ยกเลิก"
+        },
+        "renew": "ต่ออายุ",
+        "cancel": "ยกเลิกกรมธรรม์",
+        "cancelled": "ยกเลิกกรมธรรม์แล้ว (เดโม)",
+        "viewWallet": "ดูบัตร Wallet",
+        "walletTitle": "บัตร Wallet แรงงาน"
       }
     }
   },

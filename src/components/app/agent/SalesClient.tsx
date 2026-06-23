@@ -34,25 +34,32 @@ export function SalesClient({
   const [status, setStatus] = useState<"all" | SaleStatus>("all");
   const [product, setProduct] = useState<"all" | InsuranceType>("all");
   const [detail, setDetail] = useState<AgentSale | null>(null);
-  // sales closed on-behalf (from the quote flow) are mock-persisted locally
-  const [locals, setLocals] = useState<AgentSale[]>([]);
+  // Working copy = seed + on-behalf sales (localStorage). Mutations (cancel)
+  // operate here; a real backend would persist remotely.
+  const [working, setWorking] = useState<AgentSale[]>(sales);
+  const [localIds, setLocalIds] = useState<Set<string>>(new Set());
   useEffect(() => {
+    const local = readLocalSales();
+    if (local.length === 0) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect
-    setLocals(readLocalSales());
+    setLocalIds(new Set(local.map((s) => s.id)));
+    setWorking((cur) => [...local, ...cur]);
   }, []);
 
-  const localIds = useMemo(() => new Set(locals.map((s) => s.id)), [locals]);
-  const all = useMemo(() => [...locals, ...sales], [locals, sales]);
+  function cancelSale(id: string) {
+    setWorking((cur) => cur.map((s) => (s.id === id ? { ...s, status: "cancelled" as SaleStatus } : s)));
+    setDetail(null);
+  }
 
   const rows = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return all.filter((s) => {
+    return working.filter((s) => {
       if (status !== "all" && s.status !== status) return false;
       if (product !== "all" && s.product !== product) return false;
       if (q && !s.clientName.toLowerCase().includes(q)) return false;
       return true;
     });
-  }, [all, search, status, product]);
+  }, [working, search, status, product]);
 
   const columns: Column<AgentSale>[] = [
     {
@@ -136,7 +143,7 @@ export function SalesClient({
         }}
       />
 
-      <SaleDetail sale={detail} onClose={() => setDetail(null)} />
+      <SaleDetail sale={detail} onClose={() => setDetail(null)} onCancel={cancelSale} />
     </div>
   );
 }
