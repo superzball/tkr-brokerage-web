@@ -23,10 +23,13 @@ export function ClaimsClient({
   claims,
   policies,
   workers,
+  claimantName,
 }: {
   claims: Claim[];
   policies: PolicyLite[];
   workers: WorkerLite[];
+  /** When set (individual portal), the claimant is the user — no worker picker. */
+  claimantName?: string;
 }) {
   const t = useTranslations("business");
   const baht = useBaht();
@@ -124,6 +127,7 @@ export function ClaimsClient({
         onClose={() => setWizardOpen(false)}
         policies={policies}
         workers={workers}
+        claimantName={claimantName}
         onSubmit={() => {
           toast(t("claims.wizard.submitted"), "success");
           setWizardOpen(false);
@@ -211,12 +215,14 @@ function NewClaimWizard({
   onClose,
   policies,
   workers,
+  claimantName,
   onSubmit,
 }: {
   open: boolean;
   onClose: () => void;
   policies: PolicyLite[];
   workers: WorkerLite[];
+  claimantName?: string;
   onSubmit: () => void;
 }) {
   const t = useTranslations("business");
@@ -236,10 +242,14 @@ function NewClaimWizard({
   ];
   const policyWorkers = workers.filter((w) => w.policyId === policyId);
   const policyNo = policies.find((p) => p.id === policyId)?.policyNo;
-  const workerName = workers.find((w) => w.id === workerId)?.name;
+  const claimant = claimantName ?? workers.find((w) => w.id === workerId)?.name;
 
   const canNext =
-    step === 0 ? Boolean(policyId && workerId) : step === 1 ? Boolean(date && amount) : true;
+    step === 0
+      ? Boolean(policyId && (claimantName || workerId))
+      : step === 1
+        ? Boolean(date && amount)
+        : true;
 
   function reset() {
     setStep(0);
@@ -311,19 +321,27 @@ function NewClaimWizard({
               </option>
             ))}
           </Select>
-          <Select
-            label={t("claims.wizard.worker")}
-            value={workerId}
-            onChange={(e) => setWorkerId(e.target.value)}
-            disabled={!policyId}
-          >
-            <option value="">{t("claims.wizard.selectWorker")}</option>
-            {policyWorkers.map((w) => (
-              <option key={w.id} value={w.id}>
-                {w.name}
-              </option>
-            ))}
-          </Select>
+          {claimantName ? (
+            <Input
+              label={t("claims.wizard.worker")}
+              value={claimantName}
+              readOnly
+            />
+          ) : (
+            <Select
+              label={t("claims.wizard.worker")}
+              value={workerId}
+              onChange={(e) => setWorkerId(e.target.value)}
+              disabled={!policyId}
+            >
+              <option value="">{t("claims.wizard.selectWorker")}</option>
+              {policyWorkers.map((w) => (
+                <option key={w.id} value={w.id}>
+                  {w.name}
+                </option>
+              ))}
+            </Select>
+          )}
         </div>
       )}
 
@@ -370,7 +388,7 @@ function NewClaimWizard({
           <dl className="space-y-2.5 text-sm">
             {[
               [t("claims.wizard.policy"), policyNo],
-              [t("claims.wizard.worker"), workerName],
+              [t("claims.wizard.worker"), claimant],
               [t("claims.wizard.incidentDate"), date],
               [t("claims.wizard.amount"), amount ? baht(Number(amount)) : "—"],
               [t("claims.wizard.description"), desc || "—"],

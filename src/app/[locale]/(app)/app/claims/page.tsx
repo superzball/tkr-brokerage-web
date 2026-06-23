@@ -21,7 +21,9 @@ export default async function ClaimsPage({ params }: Props) {
   const policies = getPolicies(user.id);
   const policyIds = policies.map((p) => p.id);
   const claims = getClaims(policyIds);
-  const workers = getWorkers(policyIds);
+  const isBusiness = user.role === "business";
+  // Workers only apply to the employer portal; individuals claim for themselves.
+  const workers = isBusiness ? getWorkers(policyIds) : [];
 
   return (
     <>
@@ -34,6 +36,7 @@ export default async function ClaimsPage({ params }: Props) {
           name: w.name,
           policyId: w.policyId,
         }))}
+        claimantName={isBusiness ? undefined : user.name}
       />
     </>
   );

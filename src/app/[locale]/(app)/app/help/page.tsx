@@ -20,6 +20,18 @@ export default async function HelpPage({ params }: Props) {
   if (!roleCanAccess(user.role, "/app/help")) return <Forbidden />;
 
   const t = await getTranslations("business");
+  // FAQ copy is role-specific; the contact card is shared.
+  const ti = await getTranslations("individual");
+  const faq =
+    user.role === "individual"
+      ? FAQ.map((q) => ({
+          q: ti(`help.faq.${q}`),
+          a: ti(`help.faq.${q.replace("q", "a") as "a1" | "a2" | "a3" | "a4"}`),
+        }))
+      : FAQ.map((q) => ({
+          q: t(`help.faq.${q}`),
+          a: t(`help.faq.${q.replace("q", "a") as "a1" | "a2" | "a3" | "a4"}`),
+        }));
 
   return (
     <>
@@ -30,19 +42,17 @@ export default async function HelpPage({ params }: Props) {
         <section className="lg:col-span-2 card p-6">
           <h2 className="font-700 text-ink-900 mb-4">{t("help.faqTitle")}</h2>
           <div className="divide-y divide-ink-50">
-            {FAQ.map((q) => (
-              <details key={q} className="group py-3">
+            {faq.map((item) => (
+              <details key={item.q} className="group py-3">
                 <summary className="flex cursor-pointer items-center justify-between gap-3 font-600 text-ink-900 list-none">
-                  {t(`help.faq.${q}`)}
+                  {item.q}
                   <Icon
                     name="chevD"
                     size={18}
                     className="text-ink-400 transition-transform group-open:rotate-180"
                   />
                 </summary>
-                <p className="mt-2 text-sm text-ink-500">
-                  {t(`help.faq.${q.replace("q", "a") as "a1" | "a2" | "a3" | "a4"}`)}
-                </p>
+                <p className="mt-2 text-sm text-ink-500">{item.a}</p>
               </details>
             ))}
           </div>

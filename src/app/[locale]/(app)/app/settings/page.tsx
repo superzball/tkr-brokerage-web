@@ -22,7 +22,9 @@ export default async function SettingsPage({ params }: Props) {
     <>
       <PageHeader title={t("settings.title")} description={t("settings.desc")} />
       <SettingsClient
-        company={user.company ?? user.name}
+        variant={user.role === "business" ? "business" : "individual"}
+        name={user.name}
+        company={user.company}
         email={user.email ?? ""}
         phone={user.phone ?? ""}
       />

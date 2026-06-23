@@ -1551,5 +1551,68 @@
       },
       "saved": "Settings saved (demo)"
     }
+  },
+  "individual": {
+    "dashboard": {
+      "myPoliciesTitle": "My policies",
+      "myPoliciesEmpty": "You have no policies yet.",
+      "upcomingTitle": "Upcoming renewals",
+      "upcomingEmpty": "No renewals coming up.",
+      "quickTitle": "Quick actions",
+      "quickBuy": "Buy insurance",
+      "quickClaim": "File a claim",
+      "quickPolicies": "View my policies",
+      "viewAll": "View all"
+    },
+    "buy": {
+      "title": "Buy insurance",
+      "desc": "Compare and buy personal insurance.",
+      "tabs": {
+        "auto": "Car",
+        "travel": "Travel",
+        "health": "Health",
+        "fire": "Fire"
+      },
+      "quote": {
+        "heading": "Get a {type} quote",
+        "coverage": "Coverage level",
+        "coverageBasic": "Basic",
+        "coverageStandard": "Standard",
+        "coveragePremium": "Premium",
+        "startDate": "Start date",
+        "sumInsured": "Sum insured (THB)",
+        "destination": "Destination",
+        "days": "Trip length (days)",
+        "age": "Age",
+        "propertyType": "Property type",
+        "propertyHouse": "House",
+        "propertyCondo": "Condo",
+        "propertyShop": "Shop / commercial",
+        "getQuote": "Get quote",
+        "resultTitle": "Your estimated premium",
+        "perYear": "/ year",
+        "proceed": "Proceed to buy",
+        "proceeded": "Quote saved — our team will contact you (demo)",
+        "note": "Estimate only. Final premium is confirmed after underwriting."
+      }
+    },
+    "help": {
+      "faq": {
+        "q1": "How do I renew my policy?",
+        "a1": "Open the policy and tap Renew, or go to Buy.",
+        "q2": "How do I file a claim?",
+        "a2": "Go to Claims → New claim and follow the steps.",
+        "q3": "How long do claims take?",
+        "a3": "Most claims are reviewed within 5–7 business days.",
+        "q4": "Where are my documents?",
+        "a4": "All policy documents and receipts are under Documents."
+      }
+    },
+    "settings": {
+      "profileTitle": "Personal profile",
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone"
+    }
   }
 }

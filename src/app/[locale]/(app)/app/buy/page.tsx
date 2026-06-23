@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/app/PageHeader";
 import { Forbidden } from "@/components/app/Forbidden";
 import { Icon } from "@/components/ui/Icon";
 import { WorkerFlow } from "@/components/worker/WorkerFlow";
+import { PersonalLinesBuy } from "@/components/app/individual/PersonalLinesBuy";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -22,6 +23,18 @@ export default async function BuyPage({ params, searchParams }: Props) {
   if (!user) return null;
   if (!roleCanAccess(user.role, "/app/buy")) return <Forbidden />;
 
+  // Individual / personal-lines buyers get the comparison + quote flow.
+  if (user.role === "individual") {
+    const ti = await getTranslations("individual");
+    return (
+      <>
+        <PageHeader title={ti("buy.title")} description={ti("buy.desc")} />
+        <PersonalLinesBuy />
+      </>
+    );
+  }
+
+  // Business buyers get the foreign-worker purchase flow.
   const t = await getTranslations("business");
   const renewing = renew ? getPolicy(renew) : undefined;
 

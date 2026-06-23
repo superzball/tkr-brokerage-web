@@ -75,7 +75,15 @@ export default async function DashboardPage({ params }: Props) {
       </div>
 
       {user.role === "business" && <BusinessSections userId={user.id} />}
+      {user.role === "individual" && <IndividualSections userId={user.id} />}
     </>
+  );
+}
+
+function daysLeft(endDate: string, now: Date) {
+  return Math.max(
+    0,
+    Math.ceil((new Date(endDate).getTime() - now.getTime()) / 86_400_000),
   );
 }
 
@@ -193,6 +201,123 @@ async function BusinessSections({ userId }: { userId: string }) {
                     {n.time.slice(0, 10)}
                   </p>
                 </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </div>
+  );
+}
+
+const INDIV_QUICK: Array<{ href: string; icon: IconName; key: "quickBuy" | "quickClaim" | "quickPolicies" }> = [
+  { href: "/app/buy", icon: "shieldCheck", key: "quickBuy" },
+  { href: "/app/claims", icon: "doc", key: "quickClaim" },
+  { href: "/app/policies", icon: "eye", key: "quickPolicies" },
+];
+
+async function IndividualSections({ userId }: { userId: string }) {
+  const t = await getTranslations("individual");
+  const tb = await getTranslations("business");
+  const now = new Date();
+  const policies = getPolicies(userId);
+  const renewals = policies
+    .filter((p) => p.status === "expiring" || p.status === "expired")
+    .map((p) => ({ ...p, days: daysLeft(p.endDate, now) }))
+    .sort((a, b) => a.days - b.days);
+
+  return (
+    <div className="mt-6 grid gap-6 lg:grid-cols-3">
+      {/* quick actions */}
+      <section className="card p-6">
+        <h2 className="font-700 text-ink-900 mb-4">{t("dashboard.quickTitle")}</h2>
+        <div className="space-y-2.5">
+          {INDIV_QUICK.map((q) => (
+            <Link
+              key={q.key}
+              href={q.href}
+              className="flex items-center gap-3 rounded-xl border border-ink-100 p-3 hover:border-brand-200 hover:bg-sky-50/60 transition-colors"
+            >
+              <span className="w-9 h-9 rounded-lg bg-sky-100 text-brand-600 flex items-center justify-center shrink-0">
+                <Icon name={q.icon} size={18} />
+              </span>
+              <span className="font-600 text-ink-900 text-sm">
+                {t(`dashboard.${q.key}`)}
+              </span>
+              <Icon name="chevR" size={16} className="ml-auto text-ink-300" />
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* my policies */}
+      <section className="card p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-700 text-ink-900">{t("dashboard.myPoliciesTitle")}</h2>
+          <Link
+            href="/app/policies"
+            className="text-xs font-600 text-brand-600 hover:underline"
+          >
+            {t("dashboard.viewAll")}
+          </Link>
+        </div>
+        {policies.length === 0 ? (
+          <p className="text-sm text-ink-400 py-4 text-center">
+            {t("dashboard.myPoliciesEmpty")}
+          </p>
+        ) : (
+          <ul className="space-y-3">
+            {policies.map((p) => (
+              <li key={p.id} className="flex items-center justify-between gap-3">
+                <Link
+                  href={`/app/policies/${p.id}`}
+                  className="min-w-0 hover:text-brand-600"
+                >
+                  <p className="font-600 text-ink-900 truncate text-sm">
+                    {p.policyNo}
+                  </p>
+                  <p className="text-xs text-ink-500">{tb(`type.${p.type}`)}</p>
+                </Link>
+                <StatusBadge
+                  tone={
+                    p.status === "active"
+                      ? "success"
+                      : p.status === "expired"
+                        ? "danger"
+                        : "warning"
+                  }
+                >
+                  {tb(`policyStatus.${p.status}`)}
+                </StatusBadge>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      {/* upcoming renewals */}
+      <section className="card p-6">
+        <h2 className="font-700 text-ink-900 mb-4">{t("dashboard.upcomingTitle")}</h2>
+        {renewals.length === 0 ? (
+          <p className="text-sm text-ink-400 py-4 text-center">
+            {t("dashboard.upcomingEmpty")}
+          </p>
+        ) : (
+          <ul className="space-y-3">
+            {renewals.map((p) => (
+              <li key={p.id} className="flex items-center justify-between gap-3">
+                <Link
+                  href={`/app/policies/${p.id}`}
+                  className="min-w-0 hover:text-brand-600"
+                >
+                  <p className="font-600 text-ink-900 truncate text-sm">
+                    {p.policyNo}
+                  </p>
+                  <p className="text-xs text-ink-500">{tb(`type.${p.type}`)}</p>
+                </Link>
+                <StatusBadge tone={p.status === "expired" ? "danger" : "warning"}>
+                  {tb("dashboard.expiringIn", { days: p.days })}
+                </StatusBadge>
               </li>
             ))}
           </ul>

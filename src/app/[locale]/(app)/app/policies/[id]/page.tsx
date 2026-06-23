@@ -114,7 +114,8 @@ export default async function PolicyDetailPage({ params }: Props) {
           </dl>
         </section>
 
-        {/* covered workers */}
+        {/* covered workers (worker policies only) */}
+        {policy.type === "worker" && (
         <section className="card p-6 lg:col-span-2">
           <h2 className="font-700 text-ink-900 mb-4 flex items-center gap-2">
             {t("policies.detail.workersTitle")}
@@ -149,6 +150,7 @@ export default async function PolicyDetailPage({ params }: Props) {
             </ul>
           )}
         </section>
+        )}
 
         {/* documents */}
         <section className="card p-6 lg:col-span-3">

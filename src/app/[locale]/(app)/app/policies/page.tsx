@@ -33,7 +33,10 @@ export default async function PoliciesPage({ params }: Props) {
           </Button>
         }
       />
-      <PoliciesTable policies={policies} />
+      <PoliciesTable
+        policies={policies}
+        showWorkers={user.role === "business"}
+      />
     </>
   );
 }

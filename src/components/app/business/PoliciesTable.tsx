@@ -13,7 +13,14 @@ import { policyTone } from "./status";
 
 const STATUSES: PolicyStatus[] = ["active", "expiring", "expired", "pending"];
 
-export function PoliciesTable({ policies }: { policies: Policy[] }) {
+export function PoliciesTable({
+  policies,
+  showWorkers = true,
+}: {
+  policies: Policy[];
+  /** Worker count column — hidden for personal-lines (individual) policies. */
+  showWorkers?: boolean;
+}) {
   const t = useTranslations("business");
   const baht = useBaht();
   const router = useRouter();
@@ -32,7 +39,7 @@ export function PoliciesTable({ policies }: { policies: Policy[] }) {
     });
   }, [policies, search, status]);
 
-  const columns: Column<Policy>[] = [
+  const allColumns: Column<Policy>[] = [
     {
       key: "type",
       header: t("policies.col.type"),
@@ -82,6 +89,9 @@ export function PoliciesTable({ policies }: { policies: Policy[] }) {
       render: (p) => <span className="tabnum">{p.endDate}</span>,
     },
   ];
+  const columns = allColumns.filter(
+    (c) => showWorkers || c.key !== "workers",
+  );
 
   return (
     <div className="space-y-4">

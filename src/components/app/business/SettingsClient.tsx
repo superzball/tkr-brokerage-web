@@ -11,22 +11,28 @@ import { Icon } from "@/components/ui/Icon";
 import { LocaleSwitcher } from "@/components/ui/LocaleSwitcher";
 import { cn } from "@/lib/cn";
 
-type Tab = "company" | "team" | "notifications" | "language";
+type Tab = "company" | "profile" | "team" | "notifications" | "language";
 
 type Member = { id: string; name: string; email: string; role: string };
 
 export function SettingsClient({
+  variant,
+  name,
   company,
   email,
   phone,
 }: {
-  company: string;
+  variant: "business" | "individual";
+  name: string;
+  company?: string;
   email: string;
   phone: string;
 }) {
   const t = useTranslations("business");
+  const ti = useTranslations("individual");
   const { toast } = useToast();
-  const [tab, setTab] = useState<Tab>("company");
+  const business = variant === "business";
+  const [tab, setTab] = useState<Tab>(business ? "company" : "profile");
   const [invite, setInvite] = useState(false);
   const [notif, setNotif] = useState({
     policy: true,
@@ -36,29 +42,33 @@ export function SettingsClient({
   });
 
   const members: Member[] = [
-    { id: "m1", name: "คุณสมชาย เจริญทรัพย์", email, role: t("settings.team.roleOwner") },
+    { id: "m1", name, email, role: t("settings.team.roleOwner") },
     { id: "m2", name: "คุณวิภา ทองดี", email: "hr@tkr.demo", role: t("settings.team.roleAdmin") },
     { id: "m3", name: "คุณอนุชา ศรีสุข", email: "ops@tkr.demo", role: t("settings.team.roleViewer") },
   ];
 
+  const tabs: { key: Tab; label: string }[] = business
+    ? [
+        { key: "company", label: t("settings.tabs.company") },
+        { key: "team", label: t("settings.tabs.team") },
+        { key: "notifications", label: t("settings.tabs.notifications") },
+        { key: "language", label: t("settings.tabs.language") },
+      ]
+    : [
+        { key: "profile", label: ti("settings.profileTitle") },
+        { key: "notifications", label: t("settings.tabs.notifications") },
+        { key: "language", label: t("settings.tabs.language") },
+      ];
+
   return (
     <div className="space-y-5">
-      <Tabs<Tab>
-        tabs={[
-          { key: "company", label: t("settings.tabs.company") },
-          { key: "team", label: t("settings.tabs.team") },
-          { key: "notifications", label: t("settings.tabs.notifications") },
-          { key: "language", label: t("settings.tabs.language") },
-        ]}
-        value={tab}
-        onChange={setTab}
-      />
+      <Tabs<Tab> tabs={tabs} value={tab} onChange={setTab} />
 
       {tab === "company" && (
         <section className="card p-6 max-w-2xl">
           <h2 className="font-700 text-ink-900 mb-5">{t("settings.company.title")}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
-            <Input label={t("settings.company.name")} defaultValue={company} />
+            <Input label={t("settings.company.name")} defaultValue={company ?? name} />
             <Input label={t("settings.company.taxId")} defaultValue="0105551234567" />
             <Input label={t("settings.company.email")} defaultValue={email} type="email" />
             <Input label={t("settings.company.phone")} defaultValue={phone} />
@@ -69,15 +79,21 @@ export function SettingsClient({
               />
             </div>
           </div>
-          <div className="mt-5">
-            <Button
-              variant="primary"
-              size="md"
-              onClick={() => toast(t("settings.saved"), "success")}
-            >
-              {t("common.save")}
-            </Button>
+          <SaveButton onSave={() => toast(t("settings.saved"), "success")} label={t("common.save")} />
+        </section>
+      )}
+
+      {tab === "profile" && (
+        <section className="card p-6 max-w-2xl">
+          <h2 className="font-700 text-ink-900 mb-5">{ti("settings.profileTitle")}</h2>
+          <div className="grid gap-4 sm:grid-cols-2">
+            <div className="sm:col-span-2">
+              <Input label={ti("settings.name")} defaultValue={name} />
+            </div>
+            <Input label={ti("settings.email")} defaultValue={email} type="email" />
+            <Input label={ti("settings.phone")} defaultValue={phone} />
           </div>
+          <SaveButton onSave={() => toast(t("settings.saved"), "success")} label={t("common.save")} />
         </section>
       )}
 
@@ -162,15 +178,7 @@ export function SettingsClient({
               </li>
             ))}
           </ul>
-          <div className="mt-5">
-            <Button
-              variant="primary"
-              size="md"
-              onClick={() => toast(t("settings.saved"), "success")}
-            >
-              {t("common.save")}
-            </Button>
-          </div>
+          <SaveButton onSave={() => toast(t("settings.saved"), "success")} label={t("common.save")} />
         </section>
       )}
 
@@ -183,6 +191,16 @@ export function SettingsClient({
           <LocaleSwitcher />
         </section>
       )}
+    </div>
+  );
+}
+
+function SaveButton({ onSave, label }: { onSave: () => void; label: string }) {
+  return (
+    <div className="mt-5">
+      <Button variant="primary" size="md" onClick={onSave}>
+        {label}
+      </Button>
     </div>
   );
 }
