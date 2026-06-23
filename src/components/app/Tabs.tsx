@@ -5,7 +5,7 @@
 
 import { cn } from "@/lib/cn";
 
-export type TabDef<T extends string> = { key: T; label: string };
+export type TabDef<T extends string> = { key: T; label: string, childClassName?: string };
 
 export function Tabs<T extends string>({
   tabs,
@@ -29,7 +29,7 @@ export function Tabs<T extends string>({
           role="tab"
           aria-selected={value === t.key}
           onClick={() => onChange(t.key)}
-          className={cn("ins-tab", value === t.key && "is-active")}
+          className={cn("ins-tab", value === t.key && "is-active", t.childClassName)}
         >
           {t.label}
         </button>

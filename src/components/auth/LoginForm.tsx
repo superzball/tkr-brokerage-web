@@ -70,8 +70,8 @@ export function LoginForm() {
           value={tab}
           onChange={setTab}
           tabs={[
-            { key: "phone", label: t("tabPhone") },
-            { key: "email", label: t("tabEmail") },
+            { key: "phone", label: t("tabPhone"), childClassName: "flex-1 cursor-pointer" },
+            { key: "email", label: t("tabEmail"), childClassName: "flex-1 cursor-pointer" },
           ]}
         />
 
