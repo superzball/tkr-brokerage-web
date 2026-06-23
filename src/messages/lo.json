@@ -75,7 +75,14 @@
       "wallet": "กระเป๋ากรมธรรม์ดิจิทัล",
       "line": "ผู้ช่วยผ่าน LINE",
       "tracking": "ติดตามการออกกรมธรรม์"
-    }
+    },
+    "team": "ทีมของฉัน",
+    "myTeam": "ผังทีม",
+    "recruit": "ชวนเข้าทีม",
+    "teamSales": "ยอดขายทีม",
+    "teamIncome": "รายได้จากทีม",
+    "leaderboard": "อันดับทีม",
+    "sales": "ยอดขายของฉัน"
   },
   "app": {
     "menu": "เมนู",
@@ -1623,7 +1630,10 @@
       "quickQuote": "สร้างใบเสนอราคา",
       "quickLeads": "ดู Leads",
       "quickCommissions": "ดูคอมมิชชั่น",
-      "viewAll": "ดูทั้งหมด"
+      "viewAll": "ดูทั้งหมด",
+      "renewalsTitle": "ครบกำหนดต่ออายุ",
+      "renewalsEmpty": "ไม่มีการต่ออายุใน 90 วันข้างหน้า",
+      "renewIn": "{days} วัน"
     },
     "clients": {
       "title": "ลูกค้าของฉัน",
@@ -1649,16 +1659,23 @@
         "policiesTitle": "กรมธรรม์ของลูกค้า",
         "policiesEmpty": "ไม่มีกรมธรรม์ในระบบ",
         "historyTitle": "ประวัติคอมมิชชั่น",
-        "historyEmpty": "ไม่มีประวัติคอมมิชชั่น"
+        "historyEmpty": "ไม่มีประวัติคอมมิชชั่น",
+        "createQuote": "สร้างใบเสนอราคา",
+        "salesTitle": "ยอดขาย",
+        "salesEmpty": "ไม่มียอดขายในระบบ"
       },
-      "notFound": "ไม่พบลูกค้า"
+      "notFound": "ไม่พบลูกค้า",
+      "newBadge": "ใหม่"
     },
     "quote": {
       "title": "สร้างใบเสนอราคา",
       "desc": "สร้างใบเสนอราคาในนามของลูกค้า",
       "selectClient": "ลูกค้า",
       "selectClientPlaceholder": "เลือกลูกค้า",
-      "forClient": "เสนอราคาให้ {name}"
+      "forClient": "เสนอราคาให้ {name}",
+      "lineWorker": "ประกันแรงงาน",
+      "linePersonal": "ประกันส่วนบุคคล",
+      "recorded": "บันทึกการขายแล้ว (เดโม)"
     },
     "leads": {
       "title": "Leads",
@@ -1688,7 +1705,46 @@
       "created": "สร้างเมื่อ",
       "stageLabel": "ขั้น",
       "convert": "แปลงเป็นลูกค้า",
-      "converted": "แปลง Lead เป็นลูกค้าแล้ว (เดโม)"
+      "converted": "แปลง Lead เป็นลูกค้าแล้ว (เดโม)",
+      "newLead": "เพิ่ม Lead",
+      "searchPlaceholder": "ค้นหา Lead",
+      "dragHint": "เคล็ดลับ: ลากการ์ดข้ามคอลัมน์เพื่อเปลี่ยนสถานะ",
+      "assignee": "ผู้ดูแล",
+      "assignTo": "มอบหมายให้",
+      "assignSelf": "ฉัน",
+      "assigned": "มอบหมาย Lead แล้ว (เดโม)",
+      "added": "สร้าง Lead แล้ว (เดโม)",
+      "stageChanged": "อัปเดตสถานะแล้ว (เดโม)",
+      "create": {
+        "title": "สร้าง Lead",
+        "name": "ชื่อ",
+        "contact": "เบอร์โทร / ช่องทางติดต่อ",
+        "interest": "สนใจ",
+        "value": "มูลค่าโดยประมาณ (บาท)",
+        "submit": "สร้าง Lead"
+      },
+      "stats": {
+        "open": "ไปป์ไลน์ที่เปิดอยู่",
+        "won": "ปิดได้งวดนี้",
+        "total": "Lead ทั้งหมด"
+      },
+      "filterStage": "สถานะ",
+      "filterAssignee": "ผู้ดูแล",
+      "allStages": "ทุกสถานะ",
+      "allAssignees": "ผู้ดูแลทั้งหมด",
+      "selfAssignee": "ฉัน / ยังไม่มอบหมาย",
+      "sortLabel": "เรียงตาม",
+      "sortRecent": "ล่าสุด",
+      "sortValue": "มูลค่า",
+      "sortName": "ชื่อ",
+      "selectedN": "เลือก {n} รายการ",
+      "bulkAssign": "มอบหมาย…",
+      "bulkStage": "ตั้งสถานะ…",
+      "clearSel": "ล้าง",
+      "bulkApplied": "อัปเดตหลายรายการแล้ว (เดโม)",
+      "moreN": "+อีก {n}",
+      "viewInList": "ดูในรายการ",
+      "showing": "แสดง {shown} จาก {total}"
     },
     "commissions": {
       "title": "คอมมิชชั่น",
@@ -1751,6 +1807,96 @@
       "email": "อีเมล",
       "phone": "โทรศัพท์",
       "license": "เลขที่ใบอนุญาต"
+    },
+    "sales": {
+      "title": "ยอดขายของฉัน",
+      "desc": "กรมธรรม์ที่คุณขาย ทั้งของตัวเองและในนามลูกค้า",
+      "stats": {
+        "gwp": "ยอดขายเดือนนี้",
+        "policies": "กรมธรรม์ที่ออก",
+        "pending": "รอดำเนินการ",
+        "commission": "คอมมิชชั่นปีนี้"
+      },
+      "col": {
+        "date": "วันที่",
+        "client": "ลูกค้า",
+        "product": "ผลิตภัณฑ์",
+        "premium": "เบี้ย",
+        "commission": "คอมมิชชั่น",
+        "status": "สถานะ"
+      },
+      "status": {
+        "issued": "ออกแล้ว",
+        "pending": "รอดำเนินการ",
+        "cancelled": "ยกเลิก"
+      },
+      "filterStatus": "สถานะ",
+      "filterProduct": "ผลิตภัณฑ์",
+      "all": "ทั้งหมด",
+      "newBadge": "ใหม่",
+      "empty": "ยังไม่มียอดขาย",
+      "detail": {
+        "title": "รายละเอียดการขาย",
+        "policyNo": "เลขกรมธรรม์",
+        "period": "ระยะเวลาคุ้มครอง",
+        "premium": "เบี้ย",
+        "commission": "คอมมิชชั่น",
+        "status": "สถานะ",
+        "client": "ลูกค้า",
+        "product": "ผลิตภัณฑ์",
+        "downloadPolicy": "ดาวน์โหลดกรมธรรม์",
+        "downloadReceipt": "ดาวน์โหลดใบเสร็จ",
+        "downloaded": "เริ่มดาวน์โหลดแล้ว (เดโม)",
+        "coverageTitle": "รายละเอียด",
+        "workersTitle": "แรงงานที่คุ้มครอง",
+        "workersCount": "{n} คน",
+        "moreN": "+อีก {n}",
+        "col": {
+          "name": "ชื่อ",
+          "nationality": "สัญชาติ",
+          "passport": "พาสปอร์ต",
+          "job": "งาน"
+        },
+        "vehicle": {
+          "title": "ข้อมูลรถ",
+          "brand": "ยี่ห้อ",
+          "model": "รุ่น",
+          "year": "ปี",
+          "plate": "ทะเบียน",
+          "repair": "ประเภทซ่อม",
+          "sum": "ทุนประกัน",
+          "deductible": "ค่าเสียหายส่วนแรก",
+          "garage": "ซ่อมอู่",
+          "dealer": "ซ่อมศูนย์",
+          "noDeductible": "ไม่มีค่าเสียหายส่วนแรก"
+        },
+        "travel": {
+          "title": "ข้อมูลการเดินทาง",
+          "destination": "ปลายทาง",
+          "days": "จำนวนวัน",
+          "travellers": "จำนวนผู้เดินทาง",
+          "sum": "ทุนประกัน"
+        },
+        "health": {
+          "title": "แผนสุขภาพ",
+          "insured": "ผู้เอาประกัน",
+          "age": "อายุ",
+          "plan": "แผน",
+          "sum": "ทุนประกัน",
+          "basic": "พื้นฐาน",
+          "standard": "มาตรฐาน",
+          "premium": "พรีเมียม"
+        },
+        "fire": {
+          "title": "ข้อมูลทรัพย์สิน",
+          "property": "ประเภททรัพย์สิน",
+          "address": "ที่อยู่",
+          "sum": "ทุนประกัน",
+          "house": "บ้าน",
+          "condo": "คอนโด",
+          "commercial": "อาคารพาณิชย์"
+        }
+      }
     }
   },
   "learn": {
@@ -2047,6 +2193,105 @@
       "emptyTitle": "ไม่มีใบเสนอราคาที่ค้างอยู่",
       "emptyDesc": "เริ่มขอใบเสนอราคา แล้วเราจะนำมาที่นี่ตอนชำระเงิน",
       "emptyCta": "ดูประกันภัย"
+    }
+  },
+  "team": {
+    "compliance": {
+      "noFees": "ไม่มีค่าสมัครหรือค่าชวนทีม — คุณได้รับรายได้ override จากยอดขายกรมธรรม์จริงของทีมที่มีใบอนุญาตเท่านั้น"
+    },
+    "common": {
+      "rank": "ระดับ",
+      "license": "ใบอนุญาต",
+      "personalGwp": "ยอดขายส่วนตัว",
+      "teamGwp": "ยอดขายทีม",
+      "verified": "ยืนยันแล้ว",
+      "pending": "รอยืนยัน",
+      "expired": "หมดอายุ",
+      "notEarning": "ยังไม่นับรายได้ — รอยืนยันใบอนุญาต",
+      "verify": "ยืนยันใบอนุญาต",
+      "verifySent": "ส่งคำขอยืนยันแล้ว (เดโม)",
+      "period": "งวด",
+      "statusPending": "รอจ่าย",
+      "statusPaid": "จ่ายแล้ว",
+      "gen": "ชั้น {n}"
+    },
+    "tree": {
+      "title": "ผังทีม",
+      "desc": "โครงสร้างดาวน์ไลน์ของคุณ — ไม่จำกัดชั้น",
+      "you": "คุณ",
+      "expandAll": "ขยายทั้งหมด",
+      "collapseAll": "ย่อทั้งหมด",
+      "directs": "ทีมตรง {n} คน"
+    },
+    "stats": {
+      "directCount": "ทีมตรง",
+      "teamSize": "ทีมทั้งหมด",
+      "teamGwp": "ยอดขายทีม (ยืนยันแล้ว)",
+      "overrideIncome": "รายได้ override",
+      "pendingLicense": "ใบอนุญาตรอยืนยัน",
+      "deepest": "ชั้นลึกสุด"
+    },
+    "recruit": {
+      "title": "ชวนเข้าทีม",
+      "desc": "ขยายทีมด้วยตัวแทนที่มีใบอนุญาต",
+      "inviteTitle": "ลิงก์เชิญของคุณ",
+      "inviteDesc": "แชร์เพื่อเชิญตัวแทนที่มีใบอนุญาตเข้าทีม",
+      "copy": "คัดลอกลิงก์",
+      "copied": "คัดลอกแล้ว",
+      "formTitle": "เพิ่มตัวแทนย่อย",
+      "name": "ชื่อ-นามสกุล",
+      "license": "เลขที่ใบอนุญาต คปภ.",
+      "licenseHint": "จำเป็น — ตัวแทนย่อยต้องมีใบอนุญาตนายหน้า คปภ. ที่ถูกต้อง",
+      "submit": "ส่งคำเชิญ",
+      "gateTitle": "รอยืนยันใบอนุญาต",
+      "gateDesc": "เพิ่ม {name} เป็นสถานะรอยืนยันแล้ว จะเริ่มมีรายได้ — และนับเข้า override ของคุณ — เมื่อยืนยันใบอนุญาต คปภ. แล้วเท่านั้น",
+      "addAnother": "เพิ่มอีกคน"
+    },
+    "sales": {
+      "title": "ยอดขายทีม",
+      "desc": "ยอดผลิตทั่วทั้งดาวน์ไลน์ของคุณ",
+      "byMember": "รายบุคคล",
+      "byGeneration": "รายชั้น",
+      "col": {
+        "member": "สมาชิก",
+        "generation": "ชั้น",
+        "gwp": "ยอดขาย",
+        "license": "ใบอนุญาต"
+      },
+      "genTotal": "รวมทั้งชั้น"
+    },
+    "income": {
+      "title": "รายได้จากทีม",
+      "desc": "override จากยอดขายทีมที่มีใบอนุญาต",
+      "total": "override รวม (งวดนี้)",
+      "byGeneration": "รายชั้น",
+      "bySource": "รายสมาชิกต้นทาง",
+      "col": {
+        "source": "ต้นทาง",
+        "generation": "ชั้น",
+        "base": "ยอดขายฐาน",
+        "rate": "อัตรา",
+        "amount": "override",
+        "status": "สถานะ"
+      },
+      "pendingTitle": "ยังไม่นับรายได้",
+      "pendingDesc": "สมาชิกเหล่านี้ใบอนุญาตยังไม่ยืนยัน จึงได้รับ 0 และไม่นับเข้า override ของคุณจนกว่าจะยืนยัน"
+    },
+    "leaderboard": {
+      "title": "อันดับทีม",
+      "desc": "ผู้ทำผลงานสูงสุดในทีมงวดนี้",
+      "col": {
+        "member": "สมาชิก",
+        "gwp": "ยอดขาย",
+        "generation": "ชั้น"
+      }
+    },
+    "tier": {
+      "combinedTitle": "ยอดส่วนตัว + ทีม",
+      "personal": "ส่วนตัวปีนี้",
+      "team": "ยอดขายทีม",
+      "combined": "ยอดรวม",
+      "note": "ระดับของคุณสะท้อนทั้งยอดขายส่วนตัวและยอดผลิตของทีมที่มีใบอนุญาต"
     }
   }
 }

@@ -2,7 +2,7 @@ import { setRequestLocale, getTranslations, getFormatter } from "next-intl/serve
 import type { Locale } from "@/i18n/routing";
 import { getSession } from "@/lib/auth/session";
 import { roleCanAccess } from "@/lib/auth/guards";
-import { getAgentTier } from "@/lib/mock/seed";
+import { getAgentTier, teamStats } from "@/lib/mock/seed";
 import { AGENCY_TIERS } from "@/config/agency";
 import { PageHeader } from "@/components/app/PageHeader";
 import { Forbidden } from "@/components/app/Forbidden";
@@ -22,6 +22,7 @@ export default async function TierPage({ params }: Props) {
 
   const t = await getTranslations("agent");
   const tt = await getTranslations("agency.tiers");
+  const tm = await getTranslations("team");
   const format = await getFormatter();
   const baht = (n: number) =>
     format.number(n, {
@@ -32,6 +33,8 @@ export default async function TierPage({ params }: Props) {
     });
 
   const tier = getAgentTier();
+  const team = teamStats();
+  const combined = tier.ytdPremium + team.teamGwp;
   const curKey = tier.current.toLowerCase();
   const curIdx = AGENCY_TIERS.findIndex((x) => x.key === curKey);
   const percent = Math.round(tier.progress * 100);
@@ -78,6 +81,26 @@ export default async function TierPage({ params }: Props) {
           <div className="flex justify-between">
             <span className="text-ink-500">{t("tier.nextAt")}</span>
             <span className="font-600 text-ink-900 tabnum">{baht(tier.nextThreshold)}</span>
+          </div>
+        </div>
+      </section>
+
+      {/* personal + team combined volume (Phase 11.5) */}
+      <section className="card p-6 mb-6">
+        <h2 className="font-700 text-ink-900">{tm("tier.combinedTitle")}</h2>
+        <p className="mt-1 text-sm text-ink-500">{tm("tier.note")}</p>
+        <div className="mt-4 grid gap-4 sm:grid-cols-3">
+          <div className="rounded-xl border border-ink-100 p-4">
+            <p className="text-sm text-ink-500">{tm("tier.personal")}</p>
+            <p className="mt-1.5 text-xl font-700 text-ink-900 tabnum">{baht(tier.ytdPremium)}</p>
+          </div>
+          <div className="rounded-xl border border-ink-100 p-4">
+            <p className="text-sm text-ink-500">{tm("tier.team")}</p>
+            <p className="mt-1.5 text-xl font-700 text-ink-900 tabnum">{baht(team.teamGwp)}</p>
+          </div>
+          <div className="rounded-xl border-2 border-brand-200 bg-sky-50 p-4">
+            <p className="text-sm text-brand-700">{tm("tier.combined")}</p>
+            <p className="mt-1.5 text-xl font-700 text-brand-700 tabnum">{baht(combined)}</p>
           </div>
         </div>
       </section>

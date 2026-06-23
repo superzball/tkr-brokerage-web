@@ -8,6 +8,7 @@ import {
   getPolicies,
   getNotifications,
   getLeads,
+  agentRenewals,
 } from "@/lib/mock/seed";
 import { Link } from "@/i18n/navigation";
 import { PageHeader } from "@/components/app/PageHeader";
@@ -341,7 +342,9 @@ async function AgentSections() {
   const tb = await getTranslations("business");
   const leads = getLeads()
     .filter((l) => l.stage !== "won" && l.stage !== "lost")
-    .sort((a, b) => (a.createdDate < b.createdDate ? 1 : -1));
+    .sort((a, b) => (a.createdDate < b.createdDate ? 1 : -1))
+    .slice(0, 6);
+  const renewals = agentRenewals(new Date(), 90).slice(0, 6);
 
   return (
     <div className="mt-6 grid gap-6 lg:grid-cols-3 items-start">
@@ -397,6 +400,35 @@ async function AgentSections() {
                   </div>
                   <StatusBadge tone="warning">
                     {t(`leads.stage.${l.stage}`)}
+                  </StatusBadge>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        {/* renewals due (book of business) */}
+        <section className="card p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-700 text-ink-900">{t("dashboard.renewalsTitle")}</h2>
+            <Link href="/app/sales" className="text-xs font-600 text-brand-600 hover:underline">
+              {t("dashboard.viewAll")}
+            </Link>
+          </div>
+          {renewals.length === 0 ? (
+            <p className="text-sm text-ink-400 py-4 text-center">
+              {t("dashboard.renewalsEmpty")}
+            </p>
+          ) : (
+            <ul className="space-y-3">
+              {renewals.map((r) => (
+                <li key={r.sale.id} className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-600 text-ink-900 truncate text-sm">{r.sale.clientName}</p>
+                    <p className="text-xs text-ink-500">{tb(`type.${r.sale.product}`)} · {r.renewalDate}</p>
+                  </div>
+                  <StatusBadge tone={r.days <= 30 ? "danger" : "warning"}>
+                    {t("dashboard.renewIn", { days: r.days })}
                   </StatusBadge>
                 </li>
               ))}

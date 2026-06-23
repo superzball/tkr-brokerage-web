@@ -2,7 +2,7 @@ import { setRequestLocale, getTranslations, getFormatter } from "next-intl/serve
 import type { Locale } from "@/i18n/routing";
 import { getSession } from "@/lib/auth/session";
 import { roleCanAccess } from "@/lib/auth/guards";
-import { getClients, getCommissions } from "@/lib/mock/seed";
+import { getClients, getCommissions, getAgentSales } from "@/lib/mock/seed";
 import { Link } from "@/i18n/navigation";
 import { PageHeader } from "@/components/app/PageHeader";
 import { EmptyState } from "@/components/app/EmptyState";
@@ -22,6 +22,7 @@ export default async function ClientDetailPage({ params }: Props) {
   if (!roleCanAccess(user.role, "/app/clients")) return <Forbidden />;
 
   const t = await getTranslations("agent");
+  const tb = await getTranslations("business");
   const format = await getFormatter();
   const baht = (n: number) =>
     format.number(n, {
@@ -51,6 +52,7 @@ export default async function ClientDetailPage({ params }: Props) {
 
   // The agent's commissions for this client double as their policy + history record.
   const history = getCommissions().filter((c) => c.clientName === client.name);
+  const sales = getAgentSales().filter((s) => s.clientName === client.name);
   const policies = Array.from(new Set(history.map((c) => c.policyNo))).map(
     (policyNo) => history.find((c) => c.policyNo === policyNo)!,
   );
@@ -74,6 +76,11 @@ export default async function ClientDetailPage({ params }: Props) {
       <PageHeader
         title={client.name}
         description={t(`clients.type.${client.type}`)}
+        actions={
+          <Button href={`/app/quote?client=${client.id}`} variant="primary" size="md">
+            <Icon name="plus" /> {t("clients.detail.createQuote")}
+          </Button>
+        }
       />
 
       <div className="grid gap-6 lg:grid-cols-3">
@@ -142,6 +149,37 @@ export default async function ClientDetailPage({ params }: Props) {
                     </span>
                     <StatusBadge tone={c.status === "paid" ? "success" : "warning"}>
                       {t(`commissions.status.${c.status}`)}
+                    </StatusBadge>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+
+        {/* sales for this client */}
+        <section className="card p-6 lg:col-span-3">
+          <h2 className="font-700 text-ink-900 mb-4">
+            {t("clients.detail.salesTitle")}
+          </h2>
+          {sales.length === 0 ? (
+            <p className="text-sm text-ink-400 py-6 text-center">
+              {t("clients.detail.salesEmpty")}
+            </p>
+          ) : (
+            <ul className="divide-y divide-ink-50">
+              {sales.map((s) => (
+                <li key={s.id} className="flex items-center justify-between gap-3 py-3">
+                  <div>
+                    <p className="font-600 text-ink-900">{tb(`type.${s.product}`)}</p>
+                    <p className="text-xs text-ink-500">{s.date}</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="font-600 text-ink-900 tabnum">{baht(s.premium)}</span>
+                    <StatusBadge
+                      tone={s.status === "issued" ? "success" : s.status === "pending" ? "warning" : "danger"}
+                    >
+                      {t(`sales.status.${s.status}`)}
                     </StatusBadge>
                   </div>
                 </li>

@@ -20,7 +20,12 @@ const BASE: Record<Exclude<Line, "auto">, number> = {
 };
 const MULT: Record<Coverage, number> = { basic: 0.8, standard: 1, premium: 1.4 };
 
-export function PersonalLinesBuy() {
+export function PersonalLinesBuy({
+  onSale,
+}: {
+  /** Fires when the buyer proceeds (used by the agent on-behalf flow). */
+  onSale?: (line: Line, premium: number) => void;
+} = {}) {
   const t = useTranslations("individual");
   const [line, setLine] = useState<Line>("auto");
 
@@ -37,16 +42,22 @@ export function PersonalLinesBuy() {
 
       {line === "auto" ? (
         <div className="-mx-4 sm:-mx-6 lg:-mx-8">
-          <AutoCompare />
+          <AutoCompare onChoose={onSale ? (price) => onSale("auto", price) : undefined} />
         </div>
       ) : (
-        <GenericQuote line={line} />
+        <GenericQuote line={line} onSale={onSale} />
       )}
     </div>
   );
 }
 
-function GenericQuote({ line }: { line: Exclude<Line, "auto"> }) {
+function GenericQuote({
+  line,
+  onSale,
+}: {
+  line: Exclude<Line, "auto">;
+  onSale?: (line: Line, premium: number) => void;
+}) {
   const t = useTranslations("individual");
   const baht = useBaht();
   const { toast } = useToast();
@@ -125,7 +136,10 @@ function GenericQuote({ line }: { line: Exclude<Line, "auto"> }) {
               variant="primary"
               size="md"
               className="w-full mt-5"
-              onClick={() => toast(t("buy.quote.proceeded"), "success")}
+              onClick={() => {
+                if (onSale && quote != null) onSale(line, quote);
+                else toast(t("buy.quote.proceeded"), "success");
+              }}
             >
               {t("buy.quote.proceed")} <Icon name="arrowRight" />
             </Button>

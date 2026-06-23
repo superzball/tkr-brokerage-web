@@ -7,10 +7,14 @@ import { PageHeader } from "@/components/app/PageHeader";
 import { Forbidden } from "@/components/app/Forbidden";
 import { AgentQuote } from "@/components/app/agent/AgentQuote";
 
-type Props = { params: Promise<{ locale: Locale }> };
+type Props = {
+  params: Promise<{ locale: Locale }>;
+  searchParams: Promise<{ client?: string }>;
+};
 
-export default async function QuotePage({ params }: Props) {
+export default async function QuotePage({ params, searchParams }: Props) {
   const { locale } = await params;
+  const { client } = await searchParams;
   setRequestLocale(locale);
 
   const user = await getSession();
@@ -23,7 +27,7 @@ export default async function QuotePage({ params }: Props) {
   return (
     <>
       <PageHeader title={t("quote.title")} description={t("quote.desc")} />
-      <AgentQuote clients={clients} />
+      <AgentQuote clients={clients} initialClientId={client} />
     </>
   );
 }

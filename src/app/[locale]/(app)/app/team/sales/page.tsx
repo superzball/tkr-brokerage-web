@@ -5,25 +5,24 @@ import { roleCanAccess } from "@/lib/auth/guards";
 import { getDownline } from "@/lib/mock/seed";
 import { PageHeader } from "@/components/app/PageHeader";
 import { Forbidden } from "@/components/app/Forbidden";
-import { LeadsClient } from "@/components/app/agent/LeadsClient";
+import { TeamSalesClient } from "@/components/app/team/TeamSalesClient";
 
 type Props = { params: Promise<{ locale: Locale }> };
 
-export default async function LeadsPage({ params }: Props) {
+export default async function TeamSalesPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
   const user = await getSession();
   if (!user) return null;
-  if (!roleCanAccess(user.role, "/app/leads")) return <Forbidden />;
+  if (!roleCanAccess(user.role, "/app/team/sales")) return <Forbidden />;
 
-  const t = await getTranslations("agent");
-  const team = getDownline().map((m) => ({ id: m.id, name: m.name }));
+  const t = await getTranslations("team");
 
   return (
     <>
-      <PageHeader title={t("leads.title")} description={t("leads.desc")} />
-      <LeadsClient team={team} />
+      <PageHeader title={t("sales.title")} description={t("sales.desc")} />
+      <TeamSalesClient members={getDownline()} period="2026-06" />
     </>
   );
 }

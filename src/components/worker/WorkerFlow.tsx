@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducer, Fragment } from "react";
+import { useReducer, useEffect, useRef, Fragment } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
@@ -82,7 +82,14 @@ function reducer(state: State, action: Action): State {
 
 const STEP_KEYS = ["plan", "fill", "review", "pay"] as const;
 
-export function WorkerFlow({ authed = false }: { authed?: boolean }) {
+export function WorkerFlow({
+  authed = false,
+  onComplete,
+}: {
+  authed?: boolean;
+  /** Fires once when the purchase completes (used by the agent on-behalf flow). */
+  onComplete?: (info: { count: number; total: number }) => void;
+}) {
   const t = useTranslations("worker");
   const baht = useBaht();
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -91,6 +98,14 @@ export function WorkerFlow({ authed = false }: { authed?: boolean }) {
   const count =
     state.mode === "single" ? state.workers.length : WORKER_BULK.valid;
   const total = plan.per * count;
+
+  const completed = useRef(false);
+  useEffect(() => {
+    if (state.step >= 4 && !completed.current) {
+      completed.current = true;
+      onComplete?.({ count, total });
+    }
+  }, [state.step, count, total, onComplete]);
   const pending = {
     product: "worker",
     planLabel: t(`plan.names.${plan.id}`),

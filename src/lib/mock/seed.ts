@@ -7,13 +7,15 @@
 import type {
   User, Policy, Worker, Claim, Invoice, DocItem,
   Client, Commission, Lead, AgentTierInfo, Notification, Role,
+  DownlineMember, TeamOverride, InsuranceType, LeadStage,
+  AgentSale, SaleStatus,
 } from '@/types/portal';
 
 // ============================ USERS (demo accounts) ============================
 export const users: User[] = [
   { id: 'u_biz',   role: 'business',   name: 'คุณสมชาย เจริญทรัพย์', company: 'บริษัท ไทยเจริญ ก่อสร้าง จำกัด', email: 'business@tkr.demo', phone: '081-000-0001', avatarColor: '#1f66ee' },
   { id: 'u_indiv', role: 'individual', name: 'คุณนภัสสร วงศ์ดี',       email: 'me@tkr.demo',       phone: '081-000-0002', avatarColor: '#0f52c7' },
-  { id: 'u_agent', role: 'agent',      name: 'คุณธนกร พาณิชย์',         email: 'agent@tkr.demo',    phone: '081-000-0003', avatarColor: '#e89c12' },
+  { id: 'u_agent', role: 'agent',      name: 'คุณธนกร พาณิชย์',         email: 'agent@tkr.demo',    phone: '081-000-0003', avatarColor: '#e89c12', rank: 'Gold', licenseNo: 'B-0099123', licenseStatus: 'verified' },
 ];
 
 // ============================ POLICIES ============================
@@ -83,14 +85,51 @@ export const commissions: Commission[] = [
 ];
 
 // ============================ AGENT: LEADS ============================
-export const leads: Lead[] = [
+// Hand-authored "interesting" leads (varied stages + assigned demos) kept at
+// the front, then a deterministic bulk so the pipeline holds ~1,200 records —
+// enough to prove the list scales (paginate/filter/sort server-style).
+const baseLeads: Lead[] = [
   { id: 'l1', name: 'บริษัท บูรพา ขนส่ง จำกัด',  contact: '086-221-3344', interest: 'worker', stage: 'new',       value: 88000, createdDate: '2026-06-18' },
-  { id: 'l2', name: 'หจก. รุ่งโรจน์ ก่อสร้าง',   contact: '089-552-1100', interest: 'worker', stage: 'contacted', value: 145000, createdDate: '2026-06-14' },
-  { id: 'l3', name: 'คุณอาทิตย์ แสงทอง',         contact: '081-334-7788', interest: 'auto',   stage: 'quoted',    value: 16500, createdDate: '2026-06-10' },
+  { id: 'l2', name: 'หจก. รุ่งโรจน์ ก่อสร้าง',   contact: '089-552-1100', interest: 'worker', stage: 'contacted', value: 145000, createdDate: '2026-06-14', assignedTo: 'd1' },
+  { id: 'l3', name: 'คุณอาทิตย์ แสงทอง',         contact: '081-334-7788', interest: 'auto',   stage: 'quoted',    value: 16500, createdDate: '2026-06-10', assignedTo: 'd2' },
   { id: 'l4', name: 'บริษัท นครชัย พลาสติก',     contact: '092-110-9988', interest: 'fire',   stage: 'quoted',    value: 31000, createdDate: '2026-06-05' },
   { id: 'l5', name: 'คุณมณีรัตน์ ทองคำ',         contact: '083-447-2299', interest: 'health', stage: 'won',       value: 24000, createdDate: '2026-05-28' },
   { id: 'l6', name: 'ร้าน สมหวัง การช่าง',       contact: '087-665-1122', interest: 'worker', stage: 'lost',      value: 42000, createdDate: '2026-05-20' },
 ];
+
+// Deterministic generator (index-based, NO randomness) so the server and client
+// bundles build the identical array — avoids hydration mismatch.
+const LEAD_NAME_POOL = [
+  'บริษัท ไทยรุ่งเรือง', 'หจก. ศรีสมบูรณ์', 'ร้าน ก้าวหน้าพาณิชย์', 'บริษัท สยามอุตสาหกรรม',
+  'คุณประเสริฐ ทรัพย์มาก', 'คุณสุภาพร ดีงาม', 'บริษัท เจริญยนต์', 'หจก. มงคลก่อสร้าง',
+  'คุณวีระศักดิ์ ใจกล้า', 'ร้าน รวมมิตรวัสดุ', 'บริษัท บางกอกโลจิสติกส์', 'คุณอรทัย พูนสุข',
+];
+const LEAD_INTERESTS: InsuranceType[] = ['worker', 'auto', 'travel', 'health', 'fire'];
+const LEAD_STAGES_GEN: LeadStage[] = ['new', 'contacted', 'quoted', 'won', 'lost'];
+const LEAD_ASSIGNEES: (string | undefined)[] = ['d1', 'd2', 'd5', 'd7', undefined, undefined, undefined, undefined];
+
+function genLeads(n: number): Lead[] {
+  const out: Lead[] = [];
+  for (let i = 0; i < n; i++) {
+    const name = LEAD_NAME_POOL[i % LEAD_NAME_POOL.length]!;
+    const seq = Math.floor(i / LEAD_NAME_POOL.length) + 1;
+    const month = 1 + ((i * 3) % 6); // 2026-01 .. 2026-06
+    const day = 1 + (i % 28);
+    out.push({
+      id: `lg-${i + 1}`,
+      name: `${name} ${seq}`,
+      contact: `08${i % 9}-${String(100 + (i % 900)).padStart(3, '0')}-${String(1000 + (i % 9000)).padStart(4, '0')}`,
+      interest: LEAD_INTERESTS[i % LEAD_INTERESTS.length]!,
+      stage: LEAD_STAGES_GEN[(i * 7) % LEAD_STAGES_GEN.length]!,
+      value: 5000 + ((i * 131) % 200) * 1000,
+      createdDate: `2026-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+      assignedTo: LEAD_ASSIGNEES[i % LEAD_ASSIGNEES.length],
+    });
+  }
+  return out;
+}
+
+export const leads: Lead[] = [...baseLeads, ...genLeads(1200)];
 
 // ============================ AGENT: TIER ============================
 export const agentTier: AgentTierInfo = {
@@ -157,4 +196,190 @@ export function agentStats() {
     activeClients: clients.length,
     openLeads: leads.filter(l => l.stage !== 'won' && l.stage !== 'lost').length,
   };
+}
+
+// ============================ AGENT TEAM / MULTI-TIER OVERRIDE (Phase 11.5) ============================
+// Compliant model: override income accrues on the downline's REAL policy sales
+// (GWP), only for members whose OIC license is verified. No recruitment fees.
+
+/** Override rate by generation; gen >= 4 uses tailRate (unlimited depth). */
+export const overrideSchedule = { gen1: 5, gen2: 3, gen3: 2, tailRate: 1 }; // percent
+export const overrideRate = (gen: number) =>
+  gen === 1 ? overrideSchedule.gen1
+  : gen === 2 ? overrideSchedule.gen2
+  : gen === 3 ? overrideSchedule.gen3
+  : overrideSchedule.tailRate;
+
+export const downline: DownlineMember[] = [
+  { id: 'd1', name: 'คุณศุภชัย มั่งมี',     uplineId: 'u_agent', generation: 1, rank: 'Silver', licenseNo: 'B-0101001', licenseStatus: 'verified', personalGwp: 320000, directs: 2, joinedDate: '2025-02-10' },
+  { id: 'd2', name: 'คุณรัชนี ทองสุข',      uplineId: 'u_agent', generation: 1, rank: 'Silver', licenseNo: 'B-0101002', licenseStatus: 'verified', personalGwp: 210000, directs: 1, joinedDate: '2025-03-22' },
+  { id: 'd3', name: 'คุณกนกพร ใจดี',        uplineId: 'd1',      generation: 2, rank: 'Silver', licenseNo: 'B-0101003', licenseStatus: 'verified', personalGwp: 180000, directs: 0, joinedDate: '2025-05-01' },
+  { id: 'd4', name: 'คุณวิทยา ตั้งใจ',      uplineId: 'd1',      generation: 2, rank: 'Silver', licenseNo: undefined,   licenseStatus: 'pending',  personalGwp: 0,      directs: 1, joinedDate: '2026-06-12' },
+  { id: 'd5', name: 'คุณเอกพงษ์ รุ่งเรือง', uplineId: 'd2',      generation: 2, rank: 'Silver', licenseNo: 'B-0101005', licenseStatus: 'verified', personalGwp: 140000, directs: 1, joinedDate: '2025-06-18' },
+  { id: 'd6', name: 'คุณอำพล สดใส',         uplineId: 'd4',      generation: 3, rank: 'Silver', licenseNo: 'B-0101006', licenseStatus: 'verified', personalGwp: 95000,  directs: 0, joinedDate: '2025-09-03' },
+  { id: 'd7', name: 'คุณมาลี พูนผล',        uplineId: 'd5',      generation: 3, rank: 'Silver', licenseNo: 'B-0101007', licenseStatus: 'verified', personalGwp: 60000,  directs: 1, joinedDate: '2025-11-20' },
+  { id: 'd8', name: 'คุณธวัช ก้าวหน้า',     uplineId: 'd7',      generation: 4, rank: 'Silver', licenseNo: 'B-0101008', licenseStatus: 'verified', personalGwp: 30000,  directs: 0, joinedDate: '2026-01-15' },
+];
+
+/** Override earnings for the current period. d4 (pending license) yields 0. */
+export const teamOverrides: TeamOverride[] = [
+  { id: 'ov1', period: '2026-06', sourceName: 'คุณศุภชัย มั่งมี',     generation: 1, baseGwp: 320000, rate: 5, amount: 16000, status: 'pending' },
+  { id: 'ov2', period: '2026-06', sourceName: 'คุณรัชนี ทองสุข',      generation: 1, baseGwp: 210000, rate: 5, amount: 10500, status: 'pending' },
+  { id: 'ov3', period: '2026-06', sourceName: 'คุณกนกพร ใจดี',        generation: 2, baseGwp: 180000, rate: 3, amount: 5400,  status: 'pending' },
+  { id: 'ov4', period: '2026-06', sourceName: 'คุณเอกพงษ์ รุ่งเรือง', generation: 2, baseGwp: 140000, rate: 3, amount: 4200,  status: 'pending' },
+  { id: 'ov5', period: '2026-06', sourceName: 'คุณอำพล สดใส',         generation: 3, baseGwp: 95000,  rate: 2, amount: 1900,  status: 'pending' },
+  { id: 'ov6', period: '2026-06', sourceName: 'คุณมาลี พูนผล',        generation: 3, baseGwp: 60000,  rate: 2, amount: 1200,  status: 'pending' },
+  { id: 'ov7', period: '2026-06', sourceName: 'คุณธวัช ก้าวหน้า',     generation: 4, baseGwp: 30000,  rate: 1, amount: 300,   status: 'pending' },
+  // คุณวิทยา ตั้งใจ (gen2): license pending → 0 override until verified.
+];
+
+export const getDownline = () => downline;
+export const getTeamOverrides = () => teamOverrides;
+
+/** Nested tree from the flat list (unlimited depth). */
+export interface TeamNode extends DownlineMember { children: TeamNode[]; }
+export function buildDownlineTree(rootId = 'u_agent'): TeamNode[] {
+  const make = (uplineId: string): TeamNode[] =>
+    downline.filter(m => m.uplineId === uplineId)
+            .map(m => ({ ...m, children: make(m.id) }));
+  return make(rootId);
+}
+
+export function teamStats() {
+  const verified = downline.filter(m => m.licenseStatus === 'verified');
+  return {
+    directCount: downline.filter(m => m.uplineId === 'u_agent').length,
+    teamSize: downline.length,
+    pendingLicense: downline.filter(m => m.licenseStatus === 'pending').length,
+    teamGwp: verified.reduce((s, m) => s + m.personalGwp, 0),
+    overrideIncome: teamOverrides.reduce((s, o) => s + o.amount, 0),
+    deepestGeneration: Math.max(...downline.map(m => m.generation)),
+  };
+}
+
+// ============================ LEADS QUERY (server-style, swap-ready) ============================
+// These mirror a real `GET /leads?...` contract: filter + sort + paginate, plus
+// an aggregate summary. Today they run in-memory over the passed array; a real
+// backend would replace the bodies with a DB query (same inputs/outputs).
+export type LeadSort = 'recent' | 'value' | 'name';
+
+export type LeadQuery = {
+  page?: number;          // 0-based
+  pageSize?: number;
+  q?: string;             // matches name / contact
+  stage?: LeadStage;      // omit = any stage
+  assignedTo?: string;    // omit = anyone · 'self' = unassigned (the agent) · else a member id
+  sort?: LeadSort;
+};
+
+function filterLeads(all: Lead[], { q, stage, assignedTo }: LeadQuery): Lead[] {
+  let rows = all;
+  if (stage) rows = rows.filter(l => l.stage === stage);
+  if (assignedTo === 'self') rows = rows.filter(l => !l.assignedTo);
+  else if (assignedTo) rows = rows.filter(l => l.assignedTo === assignedTo);
+  if (q && q.trim()) {
+    const s = q.trim().toLowerCase();
+    rows = rows.filter(l => l.name.toLowerCase().includes(s) || l.contact.includes(s));
+  }
+  return rows;
+}
+
+export function queryLeads(all: Lead[], query: LeadQuery = {}): { rows: Lead[]; total: number } {
+  const { page = 0, pageSize = 25, sort = 'recent' } = query;
+  const rows = [...filterLeads(all, query)].sort((a, b) =>
+    sort === 'value' ? b.value - a.value
+    : sort === 'name' ? a.name.localeCompare(b.name, 'th')
+    : b.createdDate.localeCompare(a.createdDate),
+  );
+  const start = page * pageSize;
+  return { rows: rows.slice(start, start + pageSize), total: rows.length };
+}
+
+// ============================ AGENT SALES (production history) ============================
+const baseSales: AgentSale[] = [
+  { id: 's1', date: '2026-06-19', clientName: 'บริษัท ไทยเจริญ ก่อสร้าง จำกัด', product: 'worker', premium: 124000, commission: 14880, status: 'issued' },
+  { id: 's2', date: '2026-06-15', clientName: 'บริษัท สยามโลจิสติกส์ จำกัด',     product: 'worker', premium: 56000,  commission: 6720,  status: 'issued' },
+  { id: 's3', date: '2026-06-10', clientName: 'คุณวีรพล สุขสันต์',               product: 'auto',   premium: 14200,  commission: 1420,  status: 'issued' },
+  { id: 's4', date: '2026-06-04', clientName: 'ร้าน ก.รุ่งเรืองวัสดุ',           product: 'fire',   premium: 24000,  commission: 2400,  status: 'pending' },
+  { id: 's5', date: '2026-05-28', clientName: 'คุณพิมพ์ชนก ใจงาม',               product: 'health', premium: 22000,  commission: 2200,  status: 'issued' },
+  { id: 's6', date: '2026-05-12', clientName: 'บริษัท สยามโลจิสติกส์ จำกัด',     product: 'travel', premium: 8500,   commission: 850,   status: 'cancelled' },
+];
+
+const SALE_CLIENTS = [
+  'บริษัท ไทยเจริญ ก่อสร้าง จำกัด', 'บริษัท สยามโลจิสติกส์ จำกัด', 'ร้าน ก.รุ่งเรืองวัสดุ',
+  'คุณวีรพล สุขสันต์', 'คุณพิมพ์ชนก ใจงาม', 'หจก. รุ่งโรจน์ ก่อสร้าง',
+];
+const SALE_STATUSES: SaleStatus[] = ['issued', 'issued', 'issued', 'pending', 'cancelled'];
+
+function genSales(n: number): AgentSale[] {
+  const out: AgentSale[] = [];
+  for (let i = 0; i < n; i++) {
+    const product = LEAD_INTERESTS[i % LEAD_INTERESTS.length]!;
+    const premium = 8000 + ((i * 97) % 140) * 1000;
+    // Spread across 2025–2026 so ~1-year renewals fall due across the calendar.
+    const year = 2025 + (i % 2);
+    const month = 1 + ((i * 5) % 12);
+    const day = 1 + (i % 27);
+    out.push({
+      id: `sg-${i + 1}`,
+      date: `${year}-${String(month).padStart(2, '0')}-${String(day).padStart(2, '0')}`,
+      clientName: SALE_CLIENTS[i % SALE_CLIENTS.length]!,
+      product,
+      premium,
+      commission: Math.round(premium * (product === 'worker' ? 0.12 : 0.1)),
+      status: SALE_STATUSES[i % SALE_STATUSES.length]!,
+    });
+  }
+  return out;
+}
+
+export const agentSales: AgentSale[] = [...baseSales, ...genSales(28)];
+
+export const getAgentSales = () => agentSales;
+
+export function agentSalesStats() {
+  const live = agentSales.filter(s => s.status !== 'cancelled');
+  return {
+    gwpThisMonth: live.filter(s => s.date.startsWith('2026-06')).reduce((s, x) => s + x.premium, 0),
+    policiesSold: agentSales.filter(s => s.status === 'issued').length,
+    pending: agentSales.filter(s => s.status === 'pending').length,
+    commissionYtd: live.reduce((s, x) => s + x.commission, 0),
+  };
+}
+
+/**
+ * Agent's book of business due for renewal: issued sales whose 1-year mark falls
+ * within `withinDays` of `now`. (A real backend would track real policy dates.)
+ */
+export function agentRenewals(now: Date, withinDays = 90) {
+  return agentSales
+    .filter(s => s.status === 'issued')
+    .map(s => {
+      const d = new Date(s.date);
+      d.setFullYear(d.getFullYear() + 1);
+      const renewalDate = d.toISOString().slice(0, 10);
+      const days = Math.ceil((d.getTime() - now.getTime()) / 86_400_000);
+      return { sale: s, renewalDate, days };
+    })
+    .filter(r => r.days >= 0 && r.days <= withinDays)
+    .sort((a, b) => a.days - b.days);
+}
+
+/** Per-stage count + ฿ value for the board headers / pipeline cards. */
+export function leadStageSummary(
+  all: Lead[],
+  query: Pick<LeadQuery, 'q' | 'assignedTo'> = {},
+): Record<LeadStage, { count: number; value: number }> {
+  const out: Record<LeadStage, { count: number; value: number }> = {
+    new: { count: 0, value: 0 },
+    contacted: { count: 0, value: 0 },
+    quoted: { count: 0, value: 0 },
+    won: { count: 0, value: 0 },
+    lost: { count: 0, value: 0 },
+  };
+  for (const l of filterLeads(all, query)) {
+    out[l.stage].count += 1;
+    out[l.stage].value += l.value;
+  }
+  return out;
 }

@@ -10,8 +10,10 @@ export type PolicyStatus = 'active' | 'expiring' | 'expired' | 'pending';
 export type ClaimStatus = 'submitted' | 'reviewing' | 'approved' | 'paid' | 'rejected';
 export type InvoiceStatus = 'paid' | 'unpaid' | 'overdue';
 export type LeadStage = 'new' | 'contacted' | 'quoted' | 'won' | 'lost';
+export type SaleStatus = 'issued' | 'pending' | 'cancelled';
 export type Tier = 'Silver' | 'Gold' | 'Platinum' | 'Diamond';
 export type Nationality = 'พม่า' | 'ลาว' | 'กัมพูชา';
+export type LicenseStatus = 'verified' | 'pending' | 'expired';
 
 // ---- identity ----
 export interface User {
@@ -22,6 +24,11 @@ export interface User {
   phone?: string;          // primary login for many users
   company?: string;        // business role only
   avatarColor?: string;    // for initials avatar
+  // agent team fields (Phase 11.5)
+  uplineId?: string;       // null/undefined = top of a tree
+  rank?: Tier;
+  licenseNo?: string;
+  licenseStatus?: LicenseStatus;
 }
 
 // ---- shared insurance entities ----
@@ -110,6 +117,18 @@ export interface Lead {
   stage: LeadStage;
   value: number;           // estimated premium THB
   createdDate: string;
+  assignedTo?: string;     // downline member id; undefined = the agent themselves
+}
+
+// A policy the agent sold (on their own or on behalf of a client).
+export interface AgentSale {
+  id: string;
+  date: string;            // ISO yyyy-mm-dd
+  clientName: string;
+  product: InsuranceType;
+  premium: number;         // GWP, THB
+  commission: number;      // THB earned
+  status: SaleStatus;
 }
 
 export interface AgentTierInfo {
@@ -118,6 +137,31 @@ export interface AgentTierInfo {
   progress: number;        // 0..1 toward next tier
   ytdPremium: number;      // THB sold YTD
   nextThreshold: number;   // THB needed for next tier
+}
+
+// ---- agent team / multi-tier override (Phase 11.5) ----
+export interface DownlineMember {
+  id: string;
+  name: string;
+  uplineId: string;               // who recruited them (their direct upline)
+  generation: number;             // depth relative to the viewing agent (1 = direct)
+  rank: Tier;
+  licenseNo?: string;
+  licenseStatus: LicenseStatus;   // override accrues ONLY when 'verified'
+  personalGwp: number;            // their own sales this period (THB)
+  directs: number;                // their own direct recruits
+  joinedDate: string;
+}
+
+export interface TeamOverride {
+  id: string;
+  period: string;                 // yyyy-mm
+  sourceName: string;             // downline member the override came from
+  generation: number;
+  baseGwp: number;                // the member's real GWP the % applies to
+  rate: number;                   // percent for that generation
+  amount: number;                 // THB earned (0 if source license not verified)
+  status: 'pending' | 'paid';
 }
 
 // ---- system ----

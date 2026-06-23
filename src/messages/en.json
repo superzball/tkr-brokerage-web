@@ -75,7 +75,14 @@
       "wallet": "Digital Policy Wallet",
       "line": "LINE Assistant",
       "tracking": "Policy Issuance Tracking"
-    }
+    },
+    "team": "My Team",
+    "myTeam": "Team Tree",
+    "recruit": "Recruit",
+    "teamSales": "Team Sales",
+    "teamIncome": "Team Income",
+    "leaderboard": "Leaderboard",
+    "sales": "My Sales"
   },
   "app": {
     "menu": "Menu",
@@ -1623,7 +1630,10 @@
       "quickQuote": "Create a quote",
       "quickLeads": "View leads",
       "quickCommissions": "View commissions",
-      "viewAll": "View all"
+      "viewAll": "View all",
+      "renewalsTitle": "Renewals due",
+      "renewalsEmpty": "No renewals in the next 90 days.",
+      "renewIn": "{days} days"
     },
     "clients": {
       "title": "My clients",
@@ -1649,16 +1659,23 @@
         "policiesTitle": "Their policies",
         "policiesEmpty": "No policies on record.",
         "historyTitle": "Commission history",
-        "historyEmpty": "No commission history."
+        "historyEmpty": "No commission history.",
+        "createQuote": "Create a quote",
+        "salesTitle": "Sales",
+        "salesEmpty": "No sales on record."
       },
-      "notFound": "Client not found."
+      "notFound": "Client not found.",
+      "newBadge": "New"
     },
     "quote": {
       "title": "Create a quote",
       "desc": "Build a quote on behalf of a client.",
       "selectClient": "Client",
       "selectClientPlaceholder": "Select a client",
-      "forClient": "Quoting for {name}"
+      "forClient": "Quoting for {name}",
+      "lineWorker": "Worker insurance",
+      "linePersonal": "Personal lines",
+      "recorded": "Sale recorded (demo)"
     },
     "leads": {
       "title": "Leads",
@@ -1688,7 +1705,46 @@
       "created": "Created",
       "stageLabel": "Stage",
       "convert": "Convert to client",
-      "converted": "Lead converted to client (demo)"
+      "converted": "Lead converted to client (demo)",
+      "newLead": "New lead",
+      "searchPlaceholder": "Search leads",
+      "dragHint": "Tip: drag a card between columns to change its stage.",
+      "assignee": "Assignee",
+      "assignTo": "Assign to",
+      "assignSelf": "Me",
+      "assigned": "Lead assigned (demo)",
+      "added": "Lead created (demo)",
+      "stageChanged": "Stage updated (demo)",
+      "create": {
+        "title": "Create lead",
+        "name": "Name",
+        "contact": "Phone / contact",
+        "interest": "Interested in",
+        "value": "Estimated value (THB)",
+        "submit": "Create lead"
+      },
+      "stats": {
+        "open": "Open pipeline",
+        "won": "Won this period",
+        "total": "Total leads"
+      },
+      "filterStage": "Stage",
+      "filterAssignee": "Assignee",
+      "allStages": "All stages",
+      "allAssignees": "All assignees",
+      "selfAssignee": "Me / unassigned",
+      "sortLabel": "Sort",
+      "sortRecent": "Newest",
+      "sortValue": "Value",
+      "sortName": "Name",
+      "selectedN": "{n} selected",
+      "bulkAssign": "Assign…",
+      "bulkStage": "Set stage…",
+      "clearSel": "Clear",
+      "bulkApplied": "Bulk update applied (demo)",
+      "moreN": "+{n} more",
+      "viewInList": "View in list",
+      "showing": "Showing {shown} of {total}"
     },
     "commissions": {
       "title": "Commissions",
@@ -1751,6 +1807,96 @@
       "email": "Email",
       "phone": "Phone",
       "license": "License no."
+    },
+    "sales": {
+      "title": "My Sales",
+      "desc": "Policies you've sold, on your own or for a client.",
+      "stats": {
+        "gwp": "GWP this month",
+        "policies": "Policies issued",
+        "pending": "Pending",
+        "commission": "Commission YTD"
+      },
+      "col": {
+        "date": "Date",
+        "client": "Client",
+        "product": "Product",
+        "premium": "Premium",
+        "commission": "Commission",
+        "status": "Status"
+      },
+      "status": {
+        "issued": "Issued",
+        "pending": "Pending",
+        "cancelled": "Cancelled"
+      },
+      "filterStatus": "Status",
+      "filterProduct": "Product",
+      "all": "All",
+      "newBadge": "New",
+      "empty": "No sales yet.",
+      "detail": {
+        "title": "Sale detail",
+        "policyNo": "Policy no.",
+        "period": "Coverage period",
+        "premium": "Premium",
+        "commission": "Commission",
+        "status": "Status",
+        "client": "Client",
+        "product": "Product",
+        "downloadPolicy": "Download policy",
+        "downloadReceipt": "Download receipt",
+        "downloaded": "Download started (demo)",
+        "coverageTitle": "Details",
+        "workersTitle": "Covered workers",
+        "workersCount": "{n} workers",
+        "moreN": "+{n} more",
+        "col": {
+          "name": "Name",
+          "nationality": "Nationality",
+          "passport": "Passport",
+          "job": "Job"
+        },
+        "vehicle": {
+          "title": "Vehicle",
+          "brand": "Brand",
+          "model": "Model",
+          "year": "Year",
+          "plate": "Plate",
+          "repair": "Repair",
+          "sum": "Sum insured",
+          "deductible": "Deductible",
+          "garage": "Garage",
+          "dealer": "Authorised dealer",
+          "noDeductible": "No deductible"
+        },
+        "travel": {
+          "title": "Trip",
+          "destination": "Destination",
+          "days": "Days",
+          "travellers": "Travellers",
+          "sum": "Sum insured"
+        },
+        "health": {
+          "title": "Health plan",
+          "insured": "Insured",
+          "age": "Age",
+          "plan": "Plan",
+          "sum": "Sum insured",
+          "basic": "Basic",
+          "standard": "Standard",
+          "premium": "Premium"
+        },
+        "fire": {
+          "title": "Property",
+          "property": "Property type",
+          "address": "Address",
+          "sum": "Sum insured",
+          "house": "House",
+          "condo": "Condo",
+          "commercial": "Commercial"
+        }
+      }
     }
   },
   "learn": {
@@ -2047,6 +2193,105 @@
       "emptyTitle": "No quote in progress",
       "emptyDesc": "Start a quote and we'll bring it here at checkout.",
       "emptyCta": "Browse insurance"
+    }
+  },
+  "team": {
+    "compliance": {
+      "noFees": "No join or recruitment fees — you earn override income only on your team's real, licensed policy sales."
+    },
+    "common": {
+      "rank": "Rank",
+      "license": "License",
+      "personalGwp": "Personal GWP",
+      "teamGwp": "Team GWP",
+      "verified": "Verified",
+      "pending": "Pending",
+      "expired": "Expired",
+      "notEarning": "Not yet earning — license unverified",
+      "verify": "Verify license",
+      "verifySent": "Verification requested (demo)",
+      "period": "Period",
+      "statusPending": "Pending",
+      "statusPaid": "Paid",
+      "gen": "Gen {n}"
+    },
+    "tree": {
+      "title": "Team Tree",
+      "desc": "Your downline organisation — unlimited depth.",
+      "you": "You",
+      "expandAll": "Expand all",
+      "collapseAll": "Collapse all",
+      "directs": "{n} directs"
+    },
+    "stats": {
+      "directCount": "Direct recruits",
+      "teamSize": "Total team",
+      "teamGwp": "Team GWP (verified)",
+      "overrideIncome": "Override income",
+      "pendingLicense": "Pending licenses",
+      "deepest": "Deepest generation"
+    },
+    "recruit": {
+      "title": "Recruit",
+      "desc": "Grow your team with licensed sub-agents.",
+      "inviteTitle": "Your invite link",
+      "inviteDesc": "Share to invite a licensed agent to your team.",
+      "copy": "Copy link",
+      "copied": "Copied",
+      "formTitle": "Add a sub-agent",
+      "name": "Full name",
+      "license": "OIC license number",
+      "licenseHint": "Required — sub-agents must hold a valid OIC broker license.",
+      "submit": "Send invitation",
+      "gateTitle": "Pending license verification",
+      "gateDesc": "{name} was added as pending. They start earning — and contribute to your override — only once their OIC license is verified.",
+      "addAnother": "Add another"
+    },
+    "sales": {
+      "title": "Team Sales",
+      "desc": "Production across your downline.",
+      "byMember": "By member",
+      "byGeneration": "By generation",
+      "col": {
+        "member": "Member",
+        "generation": "Gen",
+        "gwp": "GWP",
+        "license": "License"
+      },
+      "genTotal": "Generation total"
+    },
+    "income": {
+      "title": "Team Income",
+      "desc": "Override on your team's licensed GWP.",
+      "total": "Total override (this period)",
+      "byGeneration": "By generation",
+      "bySource": "By source member",
+      "col": {
+        "source": "Source",
+        "generation": "Gen",
+        "base": "Base GWP",
+        "rate": "Rate",
+        "amount": "Override",
+        "status": "Status"
+      },
+      "pendingTitle": "Not yet contributing",
+      "pendingDesc": "These members' licenses are unverified, so they earn 0 and add 0 to your override until verified."
+    },
+    "leaderboard": {
+      "title": "Leaderboard",
+      "desc": "Top performers in your team this period.",
+      "col": {
+        "member": "Member",
+        "gwp": "GWP",
+        "generation": "Gen"
+      }
+    },
+    "tier": {
+      "combinedTitle": "Personal + team volume",
+      "personal": "Personal YTD",
+      "team": "Team GWP",
+      "combined": "Combined volume",
+      "note": "Your rank reflects both your personal sales and your team's licensed production."
     }
   }
 }

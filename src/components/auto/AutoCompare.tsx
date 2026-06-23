@@ -23,7 +23,12 @@ function Stars({ rating }: { rating: number }) {
   );
 }
 
-export function AutoCompare() {
+export function AutoCompare({
+  onChoose,
+}: {
+  /** When set (agent on-behalf flow), "choose" records a sale at this price. */
+  onChoose?: (price: number) => void;
+} = {}) {
   const t = useTranslations("auto");
   const format = useFormatter();
   const baht = useBaht();
@@ -118,7 +123,7 @@ export function AutoCompare() {
         </div>
         <div className="space-y-4">
           {list.map((p) => (
-            <PlanCard key={p.id} plan={p} baht={baht} reviews={format.number(p.reviews)} />
+            <PlanCard key={p.id} plan={p} baht={baht} reviews={format.number(p.reviews)} onChoose={onChoose} />
           ))}
         </div>
       </div>
@@ -130,10 +135,12 @@ function PlanCard({
   plan,
   baht,
   reviews,
+  onChoose,
 }: {
   plan: AutoPlan;
   baht: (n: number) => string;
   reviews: string;
+  onChoose?: (price: number) => void;
 }) {
   const t = useTranslations("auto");
   const co = t(`plans.${plan.id}.co`);
@@ -210,7 +217,11 @@ function PlanCard({
           <p className="font-display font-700 text-3xl text-brand-700 tabnum">
             {baht(plan.price)}
           </p>
-          <button className="btn btn-primary btn-md mt-3 w-full lg:w-auto">
+          <button
+            type="button"
+            onClick={() => onChoose?.(plan.price)}
+            className="btn btn-primary btn-md mt-3 w-full lg:w-auto"
+          >
             {t("plan.choose")}
           </button>
         </div>

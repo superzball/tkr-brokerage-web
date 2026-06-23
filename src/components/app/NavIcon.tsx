@@ -19,6 +19,11 @@ import {
   Megaphone,
   LifeBuoy,
   Settings,
+  Network,
+  UserPlus,
+  TrendingUp,
+  HandCoins,
+  Trophy,
   CircleDot,
   type LucideProps,
 } from "lucide-react";
@@ -39,6 +44,11 @@ const registry: Record<string, React.ComponentType<LucideProps>> = {
   Megaphone,
   LifeBuoy,
   Settings,
+  Network,
+  UserPlus,
+  TrendingUp,
+  HandCoins,
+  Trophy,
 };
 
 export function NavIcon({

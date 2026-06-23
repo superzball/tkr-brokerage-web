@@ -71,8 +71,19 @@ export const portalNav: Record<Role, NavSection[]> = {
       ],
     },
     {
+      key: 'team',
+      items: [
+        { key: 'myTeam',      href: '/app/team',             icon: 'Network' },
+        { key: 'recruit',     href: '/app/team/recruit',     icon: 'UserPlus' },
+        { key: 'teamSales',   href: '/app/team/sales',       icon: 'TrendingUp' },
+        { key: 'teamIncome',  href: '/app/team/income',      icon: 'HandCoins' },
+        { key: 'leaderboard', href: '/app/team/leaderboard', icon: 'Trophy' },
+      ],
+    },
+    {
       key: 'earnings',
       items: [
+        { key: 'sales',       href: '/app/sales',       icon: 'ShoppingCart' },
         { key: 'commissions', href: '/app/commissions', icon: 'Receipt' },
         { key: 'tier',        href: '/app/tier',        icon: 'Award' },
         { key: 'marketing',   href: '/app/marketing',   icon: 'Megaphone' },
