@@ -19,13 +19,15 @@ import { requestOtp } from "@/lib/auth/actions";
 import { isCompleteThaiPhone } from "@/lib/phone";
 import type { Role } from "@/types/portal";
 
-export function SignupForm() {
+export function SignupForm({ initialRole }: { initialRole?: Role }) {
   const t = useTranslations("auth.signup");
   const router = useRouter();
   const [pending, startTransition] = useTransition();
 
-  const [step, setStep] = useState<0 | 1>(0);
-  const [role, setRole] = useState<Role | null>(null);
+  // A product page can preselect the implied role (worker → business, etc.),
+  // jumping straight to the details step.
+  const [step, setStep] = useState<0 | 1>(initialRole ? 1 : 0);
+  const [role, setRole] = useState<Role | null>(initialRole ?? null);
   const [method, setMethod] = useState<"phone" | "email">("phone");
 
   const [name, setName] = useState("");

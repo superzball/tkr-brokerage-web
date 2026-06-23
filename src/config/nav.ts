@@ -18,13 +18,14 @@ export const ROUTES = {
   tracking: "/tracking",
 } as const;
 
-/** Products hover dropdown (worker is featured). travel/health/fire are "#" stubs. */
+/** Products hover dropdown (worker is featured). Each opens its "How it works"
+ *  landing at /insurance/<key>, which then funnels into the quote / signup. */
 export const PRODUCT_MENU: MenuItem<ProductMenuKey>[] = [
-  { key: "worker", href: ROUTES.worker, icon: "star", featured: true },
-  { key: "auto", href: ROUTES.auto, icon: "car" },
-  { key: "travel", href: "#", icon: "plane" },
-  { key: "health", href: "#", icon: "heart" },
-  { key: "fire", href: "#", icon: "flame" },
+  { key: "worker", href: "/insurance/worker", icon: "star", featured: true },
+  { key: "auto", href: "/insurance/auto", icon: "car" },
+  { key: "travel", href: "/insurance/travel", icon: "plane" },
+  { key: "health", href: "/insurance/health", icon: "heart" },
+  { key: "fire", href: "/insurance/fire", icon: "flame" },
 ];
 
 /** Digital Services hover dropdown. */
@@ -55,11 +56,11 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
   {
     key: "products",
     links: [
-      { key: "worker", href: ROUTES.worker },
-      { key: "auto", href: ROUTES.auto },
-      { key: "travel", href: "#" },
-      { key: "health", href: "#" },
-      { key: "fire", href: "#" },
+      { key: "worker", href: "/insurance/worker" },
+      { key: "auto", href: "/insurance/auto" },
+      { key: "travel", href: "/insurance/travel" },
+      { key: "health", href: "/insurance/health" },
+      { key: "fire", href: "/insurance/fire" },
     ],
   },
   {

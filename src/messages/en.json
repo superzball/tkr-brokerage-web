@@ -1752,5 +1752,301 @@
       "phone": "Phone",
       "license": "License no."
     }
+  },
+  "learn": {
+    "common": {
+      "breadcrumbHome": "Home",
+      "whyTitle": "Why buy with TKR",
+      "coverageTitle": "What's covered",
+      "processTitle": "How it works",
+      "plansTitle": "Plans & pricing",
+      "plansSub": "Transparent pricing, no hidden fees.",
+      "trustTitle": "Licensed & trusted",
+      "faqTitle": "Frequently asked questions",
+      "ctaTitle": "Ready to get covered?",
+      "ctaSub": "Start your quote now — it only takes a few minutes.",
+      "startQuote": "Start quote",
+      "getStarted": "Get started",
+      "contact": "Talk to us",
+      "seePlans": "See plans",
+      "signupCta": "Create an account",
+      "perYear": "/ year",
+      "perWorker": "/ worker / year",
+      "choose": "Choose plan",
+      "recommended": "Recommended",
+      "compareCta": "Compare insurers",
+      "compareNote": "Compare live prices from leading insurers.",
+      "planSum": "Sum insured",
+      "planFeature1": "24/7 claims support",
+      "planFeature2": "Instant e-policy",
+      "tiers": {
+        "basic": "Basic",
+        "standard": "Standard",
+        "premium": "Premium"
+      },
+      "steps": [
+        {
+          "title": "Choose a plan",
+          "desc": "Pick the coverage that fits your needs and budget."
+        },
+        {
+          "title": "Enter details",
+          "desc": "Add the people or assets to insure — one by one or in bulk."
+        },
+        {
+          "title": "Pay securely",
+          "desc": "PromptPay, card or bank transfer. Bank-grade encryption."
+        },
+        {
+          "title": "Get covered",
+          "desc": "Your e-policy is issued instantly and stored in your account."
+        }
+      ],
+      "trust": [
+        {
+          "title": "OIC-licensed broker",
+          "desc": "Regulated by the Office of Insurance Commission."
+        },
+        {
+          "title": "Bank-grade security",
+          "desc": "Encrypted payments and data, every transaction."
+        },
+        {
+          "title": "Instant e-policy",
+          "desc": "Documents issued and stored digitally in minutes."
+        }
+      ]
+    },
+    "worker": {
+      "hero": {
+        "title": "Foreign worker insurance, done in minutes",
+        "subtitle": "Cover one worker or hundreds in a single order — compliant, instant, and fully digital.",
+        "badge": "Issued within 24 hours"
+      },
+      "why": [
+        {
+          "title": "Built for employers",
+          "desc": "Bulk upload your whole workforce and insure everyone at once."
+        },
+        {
+          "title": "Compliant by default",
+          "desc": "Coverage meets Ministry of Labour requirements for migrant workers."
+        },
+        {
+          "title": "Manage from one place",
+          "desc": "Renewals, claims and worker cards all live in your portal."
+        }
+      ],
+      "coverage": [
+        "Accidental death & dismemberment up to ฿1,000,000",
+        "Inpatient & outpatient medical expenses",
+        "Repatriation of remains (Standard & Premium)",
+        "24-hour multilingual emergency assistance"
+      ],
+      "faq": [
+        {
+          "q": "Can I insure many workers at once?",
+          "a": "Yes — use bulk upload to add your whole roster from a spreadsheet, then pay once."
+        },
+        {
+          "q": "How fast is the policy issued?",
+          "a": "E-policies and worker cards are issued within 24 hours, usually instantly."
+        },
+        {
+          "q": "Is this accepted for work permits?",
+          "a": "Yes — coverage meets the requirements for migrant-worker permits in Thailand."
+        },
+        {
+          "q": "Can I add workers later?",
+          "a": "Yes — add or renew workers any time from your business portal."
+        }
+      ]
+    },
+    "auto": {
+      "hero": {
+        "title": "Car insurance, compared in one place",
+        "subtitle": "Compare live premiums from leading insurers and buy the plan that fits.",
+        "badge": "Compare in seconds"
+      },
+      "why": [
+        {
+          "title": "Compare real prices",
+          "desc": "Side-by-side premiums from multiple insurers, updated live."
+        },
+        {
+          "title": "Garage or dealer",
+          "desc": "Choose where your car gets repaired — we filter for you."
+        },
+        {
+          "title": "Claims made simple",
+          "desc": "File and track claims from your account, anytime."
+        }
+      ],
+      "coverage": [
+        "Own-damage and third-party liability",
+        "Theft, fire and flood protection",
+        "24-hour roadside assistance"
+      ],
+      "faq": [
+        {
+          "q": "Which insurers can I compare?",
+          "a": "Leading Thai insurers including Viriyah, Dhipaya, Bangkok Insurance and more."
+        },
+        {
+          "q": "Can I choose my garage?",
+          "a": "Yes — filter by garage or authorised dealer repair when comparing."
+        },
+        {
+          "q": "How do I claim?",
+          "a": "File a claim from your account and track its status in real time."
+        }
+      ]
+    },
+    "travel": {
+      "hero": {
+        "title": "Travel insurance for every trip",
+        "subtitle": "Medical, baggage and trip protection at home and abroad.",
+        "badge": "Cover from ฿350"
+      },
+      "why": [
+        {
+          "title": "Worldwide medical",
+          "desc": "Emergency treatment and evacuation wherever you travel."
+        },
+        {
+          "title": "Trip protection",
+          "desc": "Cancellations, delays and lost baggage covered."
+        },
+        {
+          "title": "Buy in minutes",
+          "desc": "Pick dates, get a price, and you're covered instantly."
+        }
+      ],
+      "coverage": [
+        "Overseas medical expenses & evacuation",
+        "Trip cancellation and delay",
+        "Lost or delayed baggage"
+      ],
+      "faq": [
+        {
+          "q": "Single trip or annual?",
+          "a": "Both are available — choose what fits how often you travel."
+        },
+        {
+          "q": "Is COVID covered?",
+          "a": "Standard and Premium plans include overseas COVID medical cover."
+        },
+        {
+          "q": "When does cover start?",
+          "a": "From your selected start date, right after purchase."
+        }
+      ]
+    },
+    "health": {
+      "hero": {
+        "title": "Health insurance that has your back",
+        "subtitle": "Inpatient and outpatient cover for you and your family.",
+        "badge": "Plans for every budget"
+      },
+      "why": [
+        {
+          "title": "Real medical cover",
+          "desc": "Hospital stays, surgery and outpatient visits covered."
+        },
+        {
+          "title": "Wide hospital network",
+          "desc": "Cashless treatment at partner hospitals nationwide."
+        },
+        {
+          "title": "Renew with ease",
+          "desc": "Manage renewals and claims from your account."
+        }
+      ],
+      "coverage": [
+        "Inpatient room, board and surgery",
+        "Outpatient consultations",
+        "Annual health check (Premium)"
+      ],
+      "faq": [
+        {
+          "q": "Is there a waiting period?",
+          "a": "Standard waiting periods apply for certain conditions — details at checkout."
+        },
+        {
+          "q": "Can I add my family?",
+          "a": "Yes — add dependants when you build your quote."
+        },
+        {
+          "q": "Cashless or reimbursement?",
+          "a": "Cashless at network hospitals; reimbursement elsewhere."
+        }
+      ]
+    },
+    "fire": {
+      "hero": {
+        "title": "Fire & property insurance",
+        "subtitle": "Protect your home or business premises against fire and disaster.",
+        "badge": "Cover from ฿2,500"
+      },
+      "why": [
+        {
+          "title": "Property protection",
+          "desc": "Buildings and contents covered against fire and more."
+        },
+        {
+          "title": "Home or commercial",
+          "desc": "Plans for houses, condos and business premises."
+        },
+        {
+          "title": "Fast settlement",
+          "desc": "Straightforward claims with quick assessment."
+        }
+      ],
+      "coverage": [
+        "Fire, lightning and explosion",
+        "Storm, flood and natural disaster",
+        "Contents and equipment (Premium)"
+      ],
+      "faq": [
+        {
+          "q": "What property can I insure?",
+          "a": "Houses, condos and commercial premises are all eligible."
+        },
+        {
+          "q": "Is flood included?",
+          "a": "Standard and Premium plans include natural-disaster cover."
+        },
+        {
+          "q": "How is the sum insured set?",
+          "a": "Based on your property's rebuild value — we guide you at quote."
+        }
+      ]
+    }
+  },
+  "checkout": {
+    "gate": {
+      "title": "Almost there — create your account",
+      "desc": "Sign in or sign up to complete your purchase. Your quote is saved.",
+      "signup": "Sign up & continue",
+      "login": "I already have an account"
+    },
+    "banner": {
+      "title": "You have a quote in progress",
+      "cta": "Complete purchase"
+    },
+    "page": {
+      "title": "Complete your purchase",
+      "summaryTitle": "Order summary",
+      "plan": "Plan",
+      "workers": "Workers",
+      "total": "Total",
+      "confirm": "Confirm & pay",
+      "confirmedTitle": "Purchase complete",
+      "confirmedDesc": "Your policy is being issued and will appear in your account shortly.",
+      "viewPolicies": "View my policies",
+      "emptyTitle": "No quote in progress",
+      "emptyDesc": "Start a quote and we'll bring it here at checkout.",
+      "emptyCta": "Browse insurance"
+    }
   }
 }

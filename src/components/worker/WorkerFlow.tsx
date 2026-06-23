@@ -82,7 +82,7 @@ function reducer(state: State, action: Action): State {
 
 const STEP_KEYS = ["plan", "fill", "review", "pay"] as const;
 
-export function WorkerFlow() {
+export function WorkerFlow({ authed = false }: { authed?: boolean }) {
   const t = useTranslations("worker");
   const baht = useBaht();
   const [state, dispatch] = useReducer(reducer, initialState);
@@ -91,6 +91,12 @@ export function WorkerFlow() {
   const count =
     state.mode === "single" ? state.workers.length : WORKER_BULK.valid;
   const total = plan.per * count;
+  const pending = {
+    product: "worker",
+    planLabel: t(`plan.names.${plan.id}`),
+    count,
+    total,
+  };
 
   return (
     <>
@@ -174,7 +180,12 @@ export function WorkerFlow() {
             ))}
           {state.step === 2 && <ReviewStep plan={plan} count={count} />}
           {state.step === 3 && (
-            <PayStep total={total} onPaid={() => dispatch({ type: "next" })} />
+            <PayStep
+              total={total}
+              authed={authed}
+              pending={pending}
+              onPaid={() => dispatch({ type: "next" })}
+            />
           )}
           {state.step >= 4 && <DoneStep count={count} />}
         </div>
@@ -223,7 +234,7 @@ export function WorkerFlow() {
               </span>
               <span>{t("summary.info")}</span>
             </div>
-            {state.step < 4 && (
+            {state.step < 4 && (authed || state.step !== 3) && (
               <Button
                 variant="primary"
                 size="md"

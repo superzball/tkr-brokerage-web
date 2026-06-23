@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
+import { getSession } from "@/lib/auth/session";
 import { WorkerPageHead } from "@/components/worker/WorkerPageHead";
 import { WorkerFlow } from "@/components/worker/WorkerFlow";
 
@@ -17,11 +18,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function WorkerInsurancePage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const user = await getSession();
 
   return (
     <main>
       <WorkerPageHead />
-      <WorkerFlow />
+      <WorkerFlow authed={!!user} />
     </main>
   );
 }

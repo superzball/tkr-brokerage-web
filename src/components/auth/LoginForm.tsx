@@ -23,7 +23,7 @@ const DEMO_PHONES = users
   .filter((u) => u.phone)
   .map((u) => ({ phone: u.phone as string, role: u.role }));
 
-export function LoginForm() {
+export function LoginForm({ next }: { next?: string }) {
   const t = useTranslations("auth.login");
   const locale = useLocale() as Locale;
   const router = useRouter();
@@ -52,7 +52,7 @@ export function LoginForm() {
     e.preventDefault();
     setError(false);
     startTransition(async () => {
-      const res = await signInWithPassword(locale, email, password);
+      const res = await signInWithPassword(locale, email, password, next);
       if (res && !res.ok) setError(true);
     });
   }
@@ -179,7 +179,7 @@ export function LoginForm() {
               key={role}
               type="button"
               disabled={pending}
-              onClick={() => startTransition(() => signInAsRole(locale, role))}
+              onClick={() => startTransition(() => signInAsRole(locale, role, next))}
               className="btn btn-ghost btn-sm disabled:opacity-50"
             >
               {role}

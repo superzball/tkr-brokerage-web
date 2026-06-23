@@ -2,23 +2,40 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { useBaht } from "@/lib/format";
 import { cn } from "@/lib/cn";
 import { PAYMENT_METHODS } from "@/config/insurance";
+import {
+  PENDING_QUOTE_COOKIE,
+  encodePendingQuote,
+  type PendingQuote,
+} from "@/lib/quote/pending";
 import type { PaymentMethodId } from "@/types";
 
 export function PayStep({
   total,
+  authed,
+  pending,
   onPaid,
 }: {
   total: number;
+  /** Anonymous visitors are gated to sign in / up before completing. */
+  authed: boolean;
+  pending: PendingQuote;
   onPaid: () => void;
 }) {
   const t = useTranslations("worker");
+  const tc = useTranslations("checkout");
   const baht = useBaht();
+  const router = useRouter();
   const [method, setMethod] = useState<PaymentMethodId>("promptpay");
+
+  function stash() {
+    document.cookie = `${PENDING_QUOTE_COOKIE}=${encodePendingQuote(pending)}; path=/; max-age=1800; samesite=lax`;
+  }
 
   return (
     <div className="animate-fade-up">
@@ -58,14 +75,43 @@ export function PayStep({
           />
         </div>
         <p className="mt-4 text-sm text-ink-500">{t("pay.qrHint")}</p>
-        <Button
-          variant="primary"
-          size="lg"
-          className="mt-5"
-          onClick={onPaid}
-        >
-          {t("pay.confirm")} <Icon name="arrowRight" />
-        </Button>
+
+        {authed ? (
+          <Button variant="primary" size="lg" className="mt-5" onClick={onPaid}>
+            {t("pay.confirm")} <Icon name="arrowRight" />
+          </Button>
+        ) : (
+          // Quote-before-login: gate the purchase, stashing the quote first.
+          <div className="mt-6 rounded-2xl border border-brand-100 bg-sky-50/70 p-5 text-left">
+            <p className="font-600 text-ink-900 flex items-center gap-2">
+              <span className="text-brand-600"><Icon name="lock" size={18} /></span>
+              {tc("gate.title")}
+            </p>
+            <p className="mt-1 text-sm text-ink-600">{tc("gate.desc")}</p>
+            <div className="mt-4 flex flex-wrap gap-3">
+              <Button
+                variant="primary"
+                size="md"
+                onClick={() => {
+                  stash();
+                  router.push("/signup?role=business");
+                }}
+              >
+                {tc("gate.signup")} <Icon name="arrowRight" />
+              </Button>
+              <Button
+                variant="ghost"
+                size="md"
+                onClick={() => {
+                  stash();
+                  router.push("/login?next=/app/checkout");
+                }}
+              >
+                {tc("gate.login")}
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

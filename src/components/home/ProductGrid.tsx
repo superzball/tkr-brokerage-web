@@ -11,10 +11,10 @@ type SecondaryProduct = {
 };
 
 const SECONDARY: SecondaryProduct[] = [
-  { key: "auto", icon: "car", href: ROUTES.auto },
-  { key: "travel", icon: "plane", href: "#" },
-  { key: "health", icon: "heart", href: "#" },
-  { key: "fire", icon: "flame", href: "#" },
+  { key: "auto", icon: "car", href: "/insurance/auto" },
+  { key: "travel", icon: "plane", href: "/insurance/travel" },
+  { key: "health", icon: "heart", href: "/insurance/health" },
+  { key: "fire", icon: "flame", href: "/insurance/fire" },
 ];
 
 export function ProductGrid() {

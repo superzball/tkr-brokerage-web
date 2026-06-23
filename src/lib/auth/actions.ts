@@ -29,6 +29,18 @@ async function startSession(userId: string) {
   });
 }
 
+/**
+ * Sanitize a post-login `next` target. Strips a leading locale segment (the
+ * proxy emits locale-prefixed paths) and only allows in-app destinations.
+ */
+function resolveNext(next: string | undefined, locale: Locale): string | undefined {
+  if (!next) return undefined;
+  let p = next;
+  const seg = p.split("/");
+  if (seg[1] === locale) p = "/" + seg.slice(2).join("/");
+  return p.startsWith("/app") ? p : undefined;
+}
+
 export type AuthError = "credentials" | "phone" | "otp";
 export type AuthResult = { ok: true } | { ok: false; error: AuthError };
 
@@ -37,22 +49,27 @@ export async function signInWithPassword(
   locale: Locale,
   email: string,
   password: string,
+  next?: string,
 ): Promise<AuthResult> {
   const user = findUserByEmail(email);
   if (!user || password !== DEMO_PASSWORD) {
     return { ok: false, error: "credentials" };
   }
   await startSession(user.id);
-  redirect({ href: landingPath(user.role), locale });
+  redirect({ href: resolveNext(next, locale) ?? landingPath(user.role), locale });
   return { ok: true }; // unreachable — redirect() throws
 }
 
 /** One-tap demo sign-in used by the placeholder /login screen. */
-export async function signInAsRole(locale: Locale, role: Role): Promise<void> {
+export async function signInAsRole(
+  locale: Locale,
+  role: Role,
+  next?: string,
+): Promise<void> {
   const user = users.find((u) => u.role === role);
   if (!user) return;
   await startSession(user.id);
-  redirect({ href: landingPath(role), locale });
+  redirect({ href: resolveNext(next, locale) ?? landingPath(role), locale });
 }
 
 /**

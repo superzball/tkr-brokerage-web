@@ -34,7 +34,7 @@ export const QUOTE_TABS: QuoteTabConfig[] = [
   },
   {
     id: "travel",
-    href: "#",
+    href: "/insurance/travel",
     fields: [
       { key: "travelDest", type: "text" },
       { key: "travelDays", type: "number" },
@@ -42,7 +42,7 @@ export const QUOTE_TABS: QuoteTabConfig[] = [
   },
   {
     id: "health",
-    href: "#",
+    href: "/insurance/health",
     fields: [
       { key: "healthAge", type: "number" },
       { key: "healthBudget", type: "select", optionCount: 3 },
@@ -50,7 +50,7 @@ export const QUOTE_TABS: QuoteTabConfig[] = [
   },
   {
     id: "fire",
-    href: "#",
+    href: "/insurance/fire",
     fields: [
       { key: "fireProp", type: "select", optionCount: 4 },
       { key: "fireSum", type: "number" },
