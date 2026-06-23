@@ -222,7 +222,12 @@
       "goDashboard": "Go to dashboard",
       "business": {
         "title": "Set up your company account",
-        "steps": { "company": "Company", "kyc": "Documents", "review": "Review", "done": "Done" },
+        "steps": {
+          "company": "Company",
+          "kyc": "Documents",
+          "review": "Review",
+          "done": "Done"
+        },
         "companyName": "Company name",
         "taxId": "Tax ID",
         "address": "Address",
@@ -239,7 +244,10 @@
       },
       "individual": {
         "title": "Set up your profile",
-        "steps": { "profile": "Profile", "done": "Done" },
+        "steps": {
+          "profile": "Profile",
+          "done": "Done"
+        },
         "name": "Full name",
         "phone": "Phone number",
         "doneTitle": "Welcome",
@@ -247,7 +255,10 @@
       },
       "agent": {
         "title": "Set up your agent account",
-        "steps": { "profile": "Profile", "done": "Done" },
+        "steps": {
+          "profile": "Profile",
+          "done": "Done"
+        },
         "name": "Full name",
         "license": "Broker license no.",
         "phone": "Phone number",
@@ -1239,6 +1250,306 @@
     "line": {
       "title": "TKR | Smart Assistant on LINE",
       "description": "Check policies, renew, file claims, and chat with an agent instantly via the LINE Official Account, with Rich Menu and Flex Messages"
+    }
+  },
+  "business": {
+    "common": {
+      "search": "Search",
+      "all": "All",
+      "status": "Status",
+      "actions": "Actions",
+      "view": "View",
+      "download": "Download",
+      "save": "Save changes",
+      "saved": "Changes saved",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "close": "Close",
+      "back": "Back",
+      "next": "Next",
+      "prev": "Previous",
+      "submit": "Submit",
+      "retry": "Try again",
+      "loading": "Loading…",
+      "errorTitle": "Something went wrong",
+      "errorBody": "We couldn't load this page. Please try again.",
+      "range": "{from}–{to} of {total}",
+      "tableEmpty": "No data"
+    },
+    "type": {
+      "worker": "Worker",
+      "auto": "Car",
+      "travel": "Travel",
+      "health": "Health",
+      "fire": "Fire"
+    },
+    "policyStatus": {
+      "active": "Active",
+      "expiring": "Expiring",
+      "expired": "Expired",
+      "pending": "Pending"
+    },
+    "claimStatus": {
+      "submitted": "Submitted",
+      "reviewing": "Reviewing",
+      "approved": "Approved",
+      "paid": "Paid",
+      "rejected": "Rejected"
+    },
+    "invoiceStatus": {
+      "paid": "Paid",
+      "unpaid": "Unpaid",
+      "overdue": "Overdue"
+    },
+    "workerStatus": {
+      "covered": "Covered",
+      "pending": "Pending",
+      "expired": "Expired"
+    },
+    "dashboard": {
+      "expiringTitle": "Expiring soon",
+      "expiringEmpty": "No policies expiring in the next 30 days.",
+      "expiringIn": "{days} days left",
+      "activityTitle": "Recent activity",
+      "activityEmpty": "No recent activity.",
+      "quickTitle": "Quick actions",
+      "quickBuy": "Buy worker insurance",
+      "quickAddWorkers": "Add workers",
+      "quickFileClaim": "File a claim",
+      "viewAll": "View all"
+    },
+    "policies": {
+      "title": "Policies",
+      "desc": "Manage your active insurance policies and renewals.",
+      "buy": "Buy / Renew",
+      "searchPlaceholder": "Search by policy no. or insurer",
+      "empty": "No policies found.",
+      "col": {
+        "type": "Type",
+        "policyNo": "Policy no.",
+        "insurer": "Insurer",
+        "workers": "Workers",
+        "premium": "Premium / yr",
+        "status": "Status",
+        "expiry": "Expiry"
+      },
+      "detail": {
+        "back": "Back to policies",
+        "coverageTitle": "Coverage",
+        "sumInsured": "Sum insured",
+        "premium": "Premium / year",
+        "period": "Coverage period",
+        "insurer": "Insurer",
+        "workersTitle": "Covered workers",
+        "workersCount": "{n} workers",
+        "documentsTitle": "Documents",
+        "renew": "Renew policy",
+        "noWorkers": "No workers linked to this policy."
+      },
+      "notFound": "Policy not found."
+    },
+    "workers": {
+      "title": "Workers",
+      "desc": "Your foreign-worker roster across all policies.",
+      "add": "Add worker",
+      "tabRoster": "Roster",
+      "tabBulk": "Bulk upload",
+      "searchPlaceholder": "Search by name or passport",
+      "filterStatus": "Status",
+      "filterNat": "Nationality",
+      "empty": "No workers found.",
+      "col": {
+        "name": "Name",
+        "nationality": "Nationality",
+        "passport": "Passport",
+        "job": "Job",
+        "policy": "Policy",
+        "status": "Status"
+      },
+      "unassigned": "Unassigned",
+      "addTitle": "Add worker",
+      "edit": "Edit",
+      "editTitle": "Edit worker",
+      "form": {
+        "name": "Full name",
+        "passport": "Passport no.",
+        "nationality": "Nationality",
+        "dob": "Date of birth",
+        "job": "Job"
+      },
+      "added": "Worker added (demo)",
+      "updated": "Worker updated (demo)"
+    },
+    "buy": {
+      "title": "Buy / Renew",
+      "desc": "Purchase worker insurance or renew an existing policy.",
+      "renewNotice": "Renewing policy {policyNo} — details prefilled."
+    },
+    "claims": {
+      "title": "Claims",
+      "desc": "File and track insurance claims.",
+      "new": "New claim",
+      "searchPlaceholder": "Search by claim no. or claimant",
+      "empty": "No claims yet.",
+      "col": {
+        "claimNo": "Claim no.",
+        "policy": "Policy",
+        "claimant": "Claimant",
+        "amount": "Amount",
+        "status": "Status",
+        "submitted": "Submitted"
+      },
+      "wizard": {
+        "title": "New claim",
+        "steps": {
+          "who": "Policy & worker",
+          "details": "Details",
+          "evidence": "Evidence",
+          "review": "Review"
+        },
+        "policy": "Policy",
+        "worker": "Worker / claimant",
+        "incidentDate": "Incident date",
+        "amount": "Claim amount (THB)",
+        "description": "What happened?",
+        "descriptionPlaceholder": "Describe the incident…",
+        "uploadLabel": "Evidence documents",
+        "uploadHint": "Photos, receipts, medical reports (PDF/JPG/PNG)",
+        "uploadButton": "Upload evidence",
+        "reviewTitle": "Review your claim",
+        "submit": "Submit claim",
+        "submitted": "Claim submitted (demo)",
+        "selectPolicy": "Select a policy",
+        "selectWorker": "Select a worker"
+      },
+      "tracker": {
+        "title": "Claim status",
+        "timeline": {
+          "submitted": "Submitted",
+          "reviewing": "Under review",
+          "approved": "Approved",
+          "paid": "Paid",
+          "rejected": "Rejected"
+        }
+      }
+    },
+    "billing": {
+      "title": "Billing",
+      "desc": "Invoices, payments and receipts.",
+      "searchPlaceholder": "Search by invoice no.",
+      "empty": "No invoices.",
+      "col": {
+        "invoiceNo": "Invoice no.",
+        "policy": "Policy",
+        "amount": "Amount",
+        "status": "Status",
+        "issued": "Issued",
+        "due": "Due"
+      },
+      "payNow": "Pay now",
+      "paid": "Payment received (demo)",
+      "detailTitle": "Invoice {invoiceNo}",
+      "historyTitle": "Payment history",
+      "historyEmpty": "No payments yet.",
+      "outstanding": "Outstanding balance"
+    },
+    "documents": {
+      "title": "Documents",
+      "desc": "Policy documents, certificates and receipts.",
+      "searchPlaceholder": "Search documents",
+      "empty": "No documents.",
+      "col": {
+        "name": "Name",
+        "kind": "Type",
+        "date": "Date",
+        "size": "Size"
+      },
+      "kind": {
+        "policy": "Policy",
+        "certificate": "Certificate",
+        "receipt": "Receipt",
+        "kyc": "KYC"
+      },
+      "download": "Download",
+      "downloaded": "Download started (demo)"
+    },
+    "wallet": {
+      "title": "Worker Wallet",
+      "desc": "Issue and manage digital insurance cards for your workers.",
+      "issue": "Issue card",
+      "issued": "Card issued (demo)",
+      "preview": "Preview card",
+      "previewTitle": "Wallet preview",
+      "col": {
+        "worker": "Worker",
+        "policy": "Policy",
+        "status": "Status",
+        "card": "Card"
+      },
+      "cardActive": "Issued",
+      "cardPending": "Not issued",
+      "empty": "No workers to issue cards for."
+    },
+    "help": {
+      "title": "Help Center",
+      "desc": "Guides and support for managing your account.",
+      "searchPlaceholder": "Search help articles",
+      "contactTitle": "Need more help?",
+      "contactDesc": "Our team is available Mon–Fri, 9:00–18:00.",
+      "call": "Call support",
+      "chat": "Live chat",
+      "faqTitle": "Frequently asked questions",
+      "faq": {
+        "q1": "How do I add workers in bulk?",
+        "a1": "Go to Workers → Bulk upload, download the template, then upload your filled file.",
+        "q2": "How do I renew a policy?",
+        "a2": "Open the policy and tap Renew, or go to Buy / Renew.",
+        "q3": "How long do claims take?",
+        "a3": "Most claims are reviewed within 5–7 business days.",
+        "q4": "Where are my receipts?",
+        "a4": "All receipts are under Documents and on each paid invoice."
+      }
+    },
+    "settings": {
+      "title": "Settings",
+      "desc": "Manage your company profile, team and preferences.",
+      "tabs": {
+        "company": "Company",
+        "team": "Team",
+        "notifications": "Notifications",
+        "language": "Language"
+      },
+      "company": {
+        "title": "Company profile",
+        "name": "Company name",
+        "taxId": "Tax ID",
+        "email": "Email",
+        "phone": "Phone",
+        "address": "Address"
+      },
+      "team": {
+        "title": "Team members",
+        "invite": "Invite member",
+        "role": "Role",
+        "email": "Email",
+        "name": "Name",
+        "roleOwner": "Owner",
+        "roleAdmin": "Admin",
+        "roleViewer": "Viewer",
+        "invited": "Invitation sent (demo)"
+      },
+      "notifications": {
+        "title": "Notification preferences",
+        "policy": "Policy & renewal alerts",
+        "claim": "Claim updates",
+        "billing": "Billing & invoices",
+        "marketing": "Product news"
+      },
+      "language": {
+        "title": "Language",
+        "desc": "Choose your preferred language for the portal."
+      },
+      "saved": "Settings saved (demo)"
     }
   }
 }

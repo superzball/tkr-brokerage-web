@@ -5,10 +5,15 @@ import {
   businessStats,
   individualStats,
   agentStats,
+  getPolicies,
+  getNotifications,
 } from "@/lib/mock/seed";
+import { Link } from "@/i18n/navigation";
 import { PageHeader } from "@/components/app/PageHeader";
 import { StatCard } from "@/components/app/StatCard";
-import type { IconName } from "@/components/ui/Icon";
+import { StatusBadge } from "@/components/app/StatusBadge";
+import { Icon, type IconName } from "@/components/ui/Icon";
+import type { Notification } from "@/types/portal";
 
 type Props = { params: Promise<{ locale: Locale }> };
 
@@ -68,6 +73,131 @@ export default async function DashboardPage({ params }: Props) {
           <StatCard key={s.label} icon={s.icon} label={s.label} value={s.value} />
         ))}
       </div>
+
+      {user.role === "business" && <BusinessSections userId={user.id} />}
     </>
+  );
+}
+
+const NOTIF_ICON: Record<Notification["kind"], IconName> = {
+  policy: "shieldCheck",
+  claim: "alertTri",
+  billing: "creditcard",
+  system: "info",
+};
+
+const QUICK: Array<{ href: string; icon: IconName; key: "quickBuy" | "quickAddWorkers" | "quickFileClaim" }> = [
+  { href: "/app/buy", icon: "shieldCheck", key: "quickBuy" },
+  { href: "/app/workers", icon: "users", key: "quickAddWorkers" },
+  { href: "/app/claims", icon: "doc", key: "quickFileClaim" },
+];
+
+async function BusinessSections({ userId }: { userId: string }) {
+  const t = await getTranslations("business");
+  const now = new Date();
+  const policies = getPolicies(userId);
+  const expiring = policies
+    .filter((p) => p.status === "expiring" || p.status === "expired")
+    .map((p) => ({
+      ...p,
+      days: Math.max(
+        0,
+        Math.ceil(
+          (new Date(p.endDate).getTime() - now.getTime()) / 86_400_000,
+        ),
+      ),
+    }))
+    .sort((a, b) => a.days - b.days);
+  const activity = getNotifications();
+
+  return (
+    <div className="mt-6 grid gap-6 lg:grid-cols-3">
+      {/* quick actions */}
+      <section className="card p-6">
+        <h2 className="font-700 text-ink-900 mb-4">{t("dashboard.quickTitle")}</h2>
+        <div className="space-y-2.5">
+          {QUICK.map((q) => (
+            <Link
+              key={q.key}
+              href={q.href}
+              className="flex items-center gap-3 rounded-xl border border-ink-100 p-3 hover:border-brand-200 hover:bg-sky-50/60 transition-colors"
+            >
+              <span className="w-9 h-9 rounded-lg bg-sky-100 text-brand-600 flex items-center justify-center shrink-0">
+                <Icon name={q.icon} size={18} />
+              </span>
+              <span className="font-600 text-ink-900 text-sm">
+                {t(`dashboard.${q.key}`)}
+              </span>
+              <Icon name="chevR" size={16} className="ml-auto text-ink-300" />
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      {/* expiring soon */}
+      <section className="card p-6">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="font-700 text-ink-900">{t("dashboard.expiringTitle")}</h2>
+          <Link
+            href="/app/policies"
+            className="text-xs font-600 text-brand-600 hover:underline"
+          >
+            {t("dashboard.viewAll")}
+          </Link>
+        </div>
+        {expiring.length === 0 ? (
+          <p className="text-sm text-ink-400 py-4 text-center">
+            {t("dashboard.expiringEmpty")}
+          </p>
+        ) : (
+          <ul className="space-y-3">
+            {expiring.map((p) => (
+              <li key={p.id} className="flex items-center justify-between gap-3">
+                <Link
+                  href={`/app/policies/${p.id}`}
+                  className="min-w-0 hover:text-brand-600"
+                >
+                  <p className="font-600 text-ink-900 truncate text-sm">
+                    {p.policyNo}
+                  </p>
+                  <p className="text-xs text-ink-500">{t(`type.${p.type}`)}</p>
+                </Link>
+                <StatusBadge tone={p.status === "expired" ? "danger" : "warning"}>
+                  {t("dashboard.expiringIn", { days: p.days })}
+                </StatusBadge>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+
+      {/* recent activity */}
+      <section className="card p-6">
+        <h2 className="font-700 text-ink-900 mb-4">
+          {t("dashboard.activityTitle")}
+        </h2>
+        {activity.length === 0 ? (
+          <p className="text-sm text-ink-400 py-4 text-center">
+            {t("dashboard.activityEmpty")}
+          </p>
+        ) : (
+          <ul className="space-y-3.5">
+            {activity.map((n) => (
+              <li key={n.id} className="flex gap-3">
+                <span className="w-8 h-8 rounded-lg bg-sky-100 text-brand-600 flex items-center justify-center shrink-0">
+                  <Icon name={NOTIF_ICON[n.kind]} size={16} />
+                </span>
+                <div className="min-w-0">
+                  <p className="text-sm text-ink-800 leading-snug">{n.title}</p>
+                  <p className="text-xs text-ink-400 mt-0.5">
+                    {n.time.slice(0, 10)}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    </div>
   );
 }

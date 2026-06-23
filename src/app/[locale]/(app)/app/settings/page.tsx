@@ -1,12 +1,31 @@
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
-import { PortalPlaceholder } from "@/components/app/PortalPlaceholder";
+import { getSession } from "@/lib/auth/session";
+import { roleCanAccess } from "@/lib/auth/guards";
+import { PageHeader } from "@/components/app/PageHeader";
+import { Forbidden } from "@/components/app/Forbidden";
+import { SettingsClient } from "@/components/app/business/SettingsClient";
 
 type Props = { params: Promise<{ locale: Locale }> };
 
-export default async function Page({ params }: Props) {
+export default async function SettingsPage({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const t = await getTranslations({ locale, namespace: "nav" });
-  return <PortalPlaceholder href="/app/settings" title={t("settings")} />;
+
+  const user = await getSession();
+  if (!user) return null;
+  if (!roleCanAccess(user.role, "/app/settings")) return <Forbidden />;
+
+  const t = await getTranslations("business");
+
+  return (
+    <>
+      <PageHeader title={t("settings.title")} description={t("settings.desc")} />
+      <SettingsClient
+        company={user.company ?? user.name}
+        email={user.email ?? ""}
+        phone={user.phone ?? ""}
+      />
+    </>
+  );
 }
