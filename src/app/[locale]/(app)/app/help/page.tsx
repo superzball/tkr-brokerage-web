@@ -22,16 +22,15 @@ export default async function HelpPage({ params }: Props) {
   const t = await getTranslations("business");
   // FAQ copy is role-specific; the contact card is shared.
   const ti = await getTranslations("individual");
+  const tg = await getTranslations("agent");
+  const ans = (q: (typeof FAQ)[number]) =>
+    q.replace("q", "a") as "a1" | "a2" | "a3" | "a4";
   const faq =
     user.role === "individual"
-      ? FAQ.map((q) => ({
-          q: ti(`help.faq.${q}`),
-          a: ti(`help.faq.${q.replace("q", "a") as "a1" | "a2" | "a3" | "a4"}`),
-        }))
-      : FAQ.map((q) => ({
-          q: t(`help.faq.${q}`),
-          a: t(`help.faq.${q.replace("q", "a") as "a1" | "a2" | "a3" | "a4"}`),
-        }));
+      ? FAQ.map((q) => ({ q: ti(`help.faq.${q}`), a: ti(`help.faq.${ans(q)}`) }))
+      : user.role === "agent"
+        ? FAQ.map((q) => ({ q: tg(`help.faq.${q}`), a: tg(`help.faq.${ans(q)}`) }))
+        : FAQ.map((q) => ({ q: t(`help.faq.${q}`), a: t(`help.faq.${ans(q)}`) }));
 
   return (
     <>

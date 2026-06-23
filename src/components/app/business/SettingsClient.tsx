@@ -22,7 +22,7 @@ export function SettingsClient({
   email,
   phone,
 }: {
-  variant: "business" | "individual";
+  variant: "business" | "individual" | "agent";
   name: string;
   company?: string;
   email: string;
@@ -30,8 +30,11 @@ export function SettingsClient({
 }) {
   const t = useTranslations("business");
   const ti = useTranslations("individual");
+  const tg = useTranslations("agent");
   const { toast } = useToast();
   const business = variant === "business";
+  const agent = variant === "agent";
+  const tp = agent ? tg : ti; // profile-tab labels translator
   const [tab, setTab] = useState<Tab>(business ? "company" : "profile");
   const [invite, setInvite] = useState(false);
   const [notif, setNotif] = useState({
@@ -55,7 +58,7 @@ export function SettingsClient({
         { key: "language", label: t("settings.tabs.language") },
       ]
     : [
-        { key: "profile", label: ti("settings.profileTitle") },
+        { key: "profile", label: tp("settings.profileTitle") },
         { key: "notifications", label: t("settings.tabs.notifications") },
         { key: "language", label: t("settings.tabs.language") },
       ];
@@ -85,13 +88,16 @@ export function SettingsClient({
 
       {tab === "profile" && (
         <section className="card p-6 max-w-2xl">
-          <h2 className="font-700 text-ink-900 mb-5">{ti("settings.profileTitle")}</h2>
+          <h2 className="font-700 text-ink-900 mb-5">{tp("settings.profileTitle")}</h2>
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">
-              <Input label={ti("settings.name")} defaultValue={name} />
+              <Input label={tp("settings.name")} defaultValue={name} />
             </div>
-            <Input label={ti("settings.email")} defaultValue={email} type="email" />
-            <Input label={ti("settings.phone")} defaultValue={phone} />
+            <Input label={tp("settings.email")} defaultValue={email} type="email" />
+            <Input label={tp("settings.phone")} defaultValue={phone} />
+            {agent && (
+              <Input label={tg("settings.license")} defaultValue="ป.๒๕๖๗/๐๐๔๘๒" />
+            )}
           </div>
           <SaveButton onSave={() => toast(t("settings.saved"), "success")} label={t("common.save")} />
         </section>

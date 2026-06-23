@@ -7,6 +7,7 @@ import { redirect } from "@/i18n/navigation";
 import { SessionProvider } from "@/lib/auth/SessionProvider";
 import { ToastProvider } from "@/components/app/toast";
 import { AppShell } from "@/components/app/AppShell";
+import { RevealObserver } from "@/components/RevealObserver";
 
 type Props = {
   children: React.ReactNode;
@@ -32,6 +33,7 @@ export default async function AppLayout({ children, params }: Props) {
   return (
     <SessionProvider user={user}>
       <ToastProvider>
+        <RevealObserver />
         <AppShell role={user.role}>{children}</AppShell>
       </ToastProvider>
     </SessionProvider>

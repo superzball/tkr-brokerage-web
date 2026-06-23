@@ -1614,5 +1614,143 @@
       "email": "Email",
       "phone": "Phone"
     }
+  },
+  "agent": {
+    "dashboard": {
+      "leadsTitle": "Leads needing action",
+      "leadsEmpty": "No leads need action.",
+      "quickTitle": "Quick actions",
+      "quickQuote": "Create a quote",
+      "quickLeads": "View leads",
+      "quickCommissions": "View commissions",
+      "viewAll": "View all"
+    },
+    "clients": {
+      "title": "My clients",
+      "desc": "Your client book and their policies.",
+      "searchPlaceholder": "Search by client name",
+      "empty": "No clients found.",
+      "col": {
+        "name": "Client",
+        "type": "Type",
+        "policies": "Policies",
+        "premiumYtd": "Premium YTD",
+        "since": "Since"
+      },
+      "type": {
+        "business": "Business",
+        "individual": "Individual"
+      },
+      "detail": {
+        "back": "Back to clients",
+        "since": "Client since",
+        "premiumYtd": "Premium YTD",
+        "policiesCount": "Active policies",
+        "policiesTitle": "Their policies",
+        "policiesEmpty": "No policies on record.",
+        "historyTitle": "Commission history",
+        "historyEmpty": "No commission history."
+      },
+      "notFound": "Client not found."
+    },
+    "quote": {
+      "title": "Create a quote",
+      "desc": "Build a quote on behalf of a client.",
+      "selectClient": "Client",
+      "selectClientPlaceholder": "Select a client",
+      "forClient": "Quoting for {name}"
+    },
+    "leads": {
+      "title": "Leads",
+      "desc": "Your sales pipeline.",
+      "empty": "No leads in this stage.",
+      "viewBoard": "Board",
+      "viewList": "List",
+      "stage": {
+        "new": "New",
+        "contacted": "Contacted",
+        "quoted": "Quoted",
+        "won": "Won",
+        "lost": "Lost"
+      },
+      "col": {
+        "name": "Name",
+        "contact": "Contact",
+        "interest": "Interest",
+        "value": "Est. value",
+        "stage": "Stage",
+        "created": "Created"
+      },
+      "detailTitle": "Lead detail",
+      "contact": "Contact",
+      "interest": "Interest",
+      "value": "Estimated value",
+      "created": "Created",
+      "stageLabel": "Stage",
+      "convert": "Convert to client",
+      "converted": "Lead converted to client (demo)"
+    },
+    "commissions": {
+      "title": "Commissions",
+      "desc": "Your commission statement and payouts.",
+      "empty": "No commissions yet.",
+      "statThisMonth": "This month",
+      "statPending": "Pending payout",
+      "statPaidYtd": "Paid YTD",
+      "col": {
+        "period": "Period",
+        "policyNo": "Policy no.",
+        "client": "Client",
+        "base": "Base premium",
+        "rate": "Rate",
+        "amount": "Commission",
+        "status": "Status"
+      },
+      "status": {
+        "pending": "Pending",
+        "paid": "Paid"
+      },
+      "payoutTitle": "Payout history",
+      "payoutEmpty": "No payouts yet.",
+      "download": "Download statement",
+      "downloaded": "Statement download started (demo)"
+    },
+    "tier": {
+      "title": "Agent tier",
+      "desc": "Your loyalty tier, progress and benefits.",
+      "currentTier": "Current tier",
+      "progressTo": "{percent}% to {next}",
+      "maxTier": "You've reached the top tier.",
+      "ytd": "Sales YTD",
+      "nextAt": "Next tier at",
+      "benefitsTitle": "Tier benefits",
+      "youAreHere": "You are here",
+      "nextStep": "Next step",
+      "commLabel": "commission",
+      "cumulative": "Cumulative"
+    },
+    "marketing": {
+      "title": "Marketing",
+      "desc": "Sales media and your personal referral link."
+    },
+    "help": {
+      "faq": {
+        "q1": "How is my commission calculated?",
+        "a1": "Commission is a percentage of each policy's premium, based on your current tier.",
+        "q2": "How do I move up a tier?",
+        "a2": "Tiers are based on cumulative sales YTD — see the Agent tier page for thresholds.",
+        "q3": "How do I convert a lead?",
+        "a3": "Open the lead in Leads and tap Convert to client.",
+        "q4": "When are commissions paid out?",
+        "a4": "Approved commissions are paid monthly; see Payout history under Commissions."
+      }
+    },
+    "settings": {
+      "profileTitle": "Agent profile",
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "license": "License no."
+    }
   }
 }

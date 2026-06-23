@@ -7,11 +7,13 @@ import {
   agentStats,
   getPolicies,
   getNotifications,
+  getLeads,
 } from "@/lib/mock/seed";
 import { Link } from "@/i18n/navigation";
 import { PageHeader } from "@/components/app/PageHeader";
 import { StatCard } from "@/components/app/StatCard";
 import { StatusBadge } from "@/components/app/StatusBadge";
+import { SalesChart } from "@/components/agency/SalesChart";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import type { Notification } from "@/types/portal";
 
@@ -76,6 +78,7 @@ export default async function DashboardPage({ params }: Props) {
 
       {user.role === "business" && <BusinessSections userId={user.id} />}
       {user.role === "individual" && <IndividualSections userId={user.id} />}
+      {user.role === "agent" && <AgentSections />}
     </>
   );
 }
@@ -295,7 +298,7 @@ async function IndividualSections({ userId }: { userId: string }) {
         )}
       </section>
 
-      {/* upcoming renewals */}
+      {/* upcoming renewals (individual) */}
       <section className="card p-6">
         <h2 className="font-700 text-ink-900 mb-4">{t("dashboard.upcomingTitle")}</h2>
         {renewals.length === 0 ? (
@@ -323,6 +326,84 @@ async function IndividualSections({ userId }: { userId: string }) {
           </ul>
         )}
       </section>
+    </div>
+  );
+}
+
+const AGENT_QUICK: Array<{ href: string; icon: IconName; key: "quickQuote" | "quickLeads" | "quickCommissions" }> = [
+  { href: "/app/quote", icon: "doc", key: "quickQuote" },
+  { href: "/app/leads", icon: "target", key: "quickLeads" },
+  { href: "/app/commissions", icon: "coins", key: "quickCommissions" },
+];
+
+async function AgentSections() {
+  const t = await getTranslations("agent");
+  const tb = await getTranslations("business");
+  const leads = getLeads()
+    .filter((l) => l.stage !== "won" && l.stage !== "lost")
+    .sort((a, b) => (a.createdDate < b.createdDate ? 1 : -1));
+
+  return (
+    <div className="mt-6 grid gap-6 lg:grid-cols-3 items-start">
+      <SalesChart />
+
+      <div className="space-y-6">
+        {/* quick actions */}
+        <section className="card p-6">
+          <h2 className="font-700 text-ink-900 mb-4">{t("dashboard.quickTitle")}</h2>
+          <div className="space-y-2.5">
+            {AGENT_QUICK.map((q) => (
+              <Link
+                key={q.key}
+                href={q.href}
+                className="flex items-center gap-3 rounded-xl border border-ink-100 p-3 hover:border-brand-200 hover:bg-sky-50/60 transition-colors"
+              >
+                <span className="w-9 h-9 rounded-lg bg-sky-100 text-brand-600 flex items-center justify-center shrink-0">
+                  <Icon name={q.icon} size={18} />
+                </span>
+                <span className="font-600 text-ink-900 text-sm">
+                  {t(`dashboard.${q.key}`)}
+                </span>
+                <Icon name="chevR" size={16} className="ml-auto text-ink-300" />
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* leads needing action */}
+        <section className="card p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-700 text-ink-900">{t("dashboard.leadsTitle")}</h2>
+            <Link
+              href="/app/leads"
+              className="text-xs font-600 text-brand-600 hover:underline"
+            >
+              {t("dashboard.viewAll")}
+            </Link>
+          </div>
+          {leads.length === 0 ? (
+            <p className="text-sm text-ink-400 py-4 text-center">
+              {t("dashboard.leadsEmpty")}
+            </p>
+          ) : (
+            <ul className="space-y-3">
+              {leads.map((l) => (
+                <li key={l.id} className="flex items-center justify-between gap-3">
+                  <div className="min-w-0">
+                    <p className="font-600 text-ink-900 truncate text-sm">
+                      {l.name}
+                    </p>
+                    <p className="text-xs text-ink-500">{tb(`type.${l.interest}`)}</p>
+                  </div>
+                  <StatusBadge tone="warning">
+                    {t(`leads.stage.${l.stage}`)}
+                  </StatusBadge>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      </div>
     </div>
   );
 }
