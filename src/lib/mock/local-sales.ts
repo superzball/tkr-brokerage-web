@@ -24,3 +24,24 @@ export function addLocalSale(sale: AgentSale): void {
     JSON.stringify([sale, ...readLocalSales()]),
   );
 }
+
+// Cancellations (mock): a real backend would flip the order's status. We keep a
+// set of cancelled sale ids so cancel persists across the list + detail page.
+export const CANCELLED_SALES_KEY = "tkr_cancelled_sales";
+
+export function readCancelledSaleIds(): string[] {
+  if (typeof window === "undefined") return [];
+  try {
+    const raw = window.localStorage.getItem(CANCELLED_SALES_KEY);
+    return raw ? (JSON.parse(raw) as string[]) : [];
+  } catch {
+    return [];
+  }
+}
+
+export function cancelLocalSale(id: string): void {
+  if (typeof window === "undefined") return;
+  const set = new Set(readCancelledSaleIds());
+  set.add(id);
+  window.localStorage.setItem(CANCELLED_SALES_KEY, JSON.stringify([...set]));
+}

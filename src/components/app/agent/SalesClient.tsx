@@ -2,14 +2,14 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useRouter } from "@/i18n/navigation";
 import { useBaht } from "@/lib/format";
 import { DataTable, type Column } from "@/components/app/DataTable";
 import { FilterBar } from "@/components/app/FilterBar";
 import { StatusBadge, type BadgeTone } from "@/components/app/StatusBadge";
 import { StatCard } from "@/components/app/StatCard";
 import { Select } from "@/components/app/form";
-import { readLocalSales } from "@/lib/mock/local-sales";
-import { SaleDetail } from "./SaleDetail";
+import { readLocalSales, readCancelledSaleIds } from "@/lib/mock/local-sales";
 import type { AgentSale, InsuranceType, SaleStatus } from "@/types/portal";
 
 const STATUSES: SaleStatus[] = ["issued", "pending", "cancelled"];
@@ -30,26 +30,25 @@ export function SalesClient({
   const t = useTranslations("agent");
   const tc = useTranslations("business");
   const baht = useBaht();
+  const router = useRouter();
   const [search, setSearch] = useState("");
   const [status, setStatus] = useState<"all" | SaleStatus>("all");
   const [product, setProduct] = useState<"all" | InsuranceType>("all");
-  const [detail, setDetail] = useState<AgentSale | null>(null);
-  // Working copy = seed + on-behalf sales (localStorage). Mutations (cancel)
-  // operate here; a real backend would persist remotely.
+  // Working list = seed + on-behalf sales (localStorage), with cancellations
+  // (also mock-persisted) applied. A real backend would serve this.
   const [working, setWorking] = useState<AgentSale[]>(sales);
   const [localIds, setLocalIds] = useState<Set<string>>(new Set());
   useEffect(() => {
     const local = readLocalSales();
-    if (local.length === 0) return;
+    const cancelled = new Set(readCancelledSaleIds());
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLocalIds(new Set(local.map((s) => s.id)));
-    setWorking((cur) => [...local, ...cur]);
-  }, []);
-
-  function cancelSale(id: string) {
-    setWorking((cur) => cur.map((s) => (s.id === id ? { ...s, status: "cancelled" as SaleStatus } : s)));
-    setDetail(null);
-  }
+    setWorking(
+      [...local, ...sales].map((s) =>
+        cancelled.has(s.id) ? { ...s, status: "cancelled" as SaleStatus } : s,
+      ),
+    );
+  }, [sales]);
 
   const rows = useMemo(() => {
     const q = search.trim().toLowerCase();
@@ -134,7 +133,7 @@ export function SalesClient({
         columns={columns}
         rows={rows}
         getRowKey={(s) => s.id}
-        onRowClick={(s) => setDetail(s)}
+        onRowClick={(s) => router.push(`/app/sales/${s.id}`)}
         labels={{
           empty: t("sales.empty"),
           prev: tc("common.prev"),
@@ -142,8 +141,6 @@ export function SalesClient({
           range: (from, to, total) => tc("common.range", { from, to, total }),
         }}
       />
-
-      <SaleDetail sale={detail} onClose={() => setDetail(null)} onCancel={cancelSale} />
     </div>
   );
 }

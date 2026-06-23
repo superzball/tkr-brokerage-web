@@ -1907,7 +1907,9 @@
         "cancel": "Cancel policy",
         "cancelled": "Policy cancelled (demo)",
         "viewWallet": "View wallet card",
-        "walletTitle": "Worker wallet card"
+        "walletTitle": "Worker wallet card",
+        "back": "Back to sales",
+        "notFound": "Sale not found."
       }
     }
   },

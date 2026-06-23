@@ -1907,7 +1907,9 @@
         "cancel": "ยกเลิกกรมธรรม์",
         "cancelled": "ยกเลิกกรมธรรม์แล้ว (เดโม)",
         "viewWallet": "ดูบัตร Wallet",
-        "walletTitle": "บัตร Wallet แรงงาน"
+        "walletTitle": "บัตร Wallet แรงงาน",
+        "back": "กลับไปที่ยอดขาย",
+        "notFound": "ไม่พบรายการขาย"
       }
     }
   },
