@@ -1323,7 +1323,9 @@
       "errorTitle": "Something went wrong",
       "errorBody": "We couldn't load this page. Please try again.",
       "range": "{from}–{to} of {total}",
-      "tableEmpty": "No data"
+      "tableEmpty": "No data",
+      "edit": "Edit",
+      "delete": "Delete"
     },
     "type": {
       "worker": "Worker",
@@ -1599,6 +1601,17 @@
         "desc": "Choose your preferred language for the portal."
       },
       "saved": "Settings saved (demo)"
+    },
+    "issued": {
+      "title": "Issued worker policies",
+      "desc": "Policies issued for you — view and download certificates (read-only).",
+      "col": {
+        "policyNo": "Policy no.",
+        "product": "Product",
+        "insured": "Insured ID",
+        "coverage": "Coverage",
+        "certificate": "Certificate"
+      }
     }
   },
   "individual": {
@@ -2501,8 +2514,16 @@
       "empty": "No tickets"
     },
     "crm": {
-      "product": { "MOU": "MOU (MOU workers)", "MOTI24": "MOTI24 (general workers)" },
-      "duration": { "3_months": "3 months", "6_months": "6 months", "1_year": "1 year", "15_months": "15 months" },
+      "product": {
+        "MOU": "MOU (MOU workers)",
+        "MOTI24": "MOTI24 (general workers)"
+      },
+      "duration": {
+        "3_months": "3 months",
+        "6_months": "6 months",
+        "1_year": "1 year",
+        "15_months": "15 months"
+      },
       "method": {
         "bank_transfer": "Bank transfer",
         "direct_transfer": "Direct transfer",
@@ -2600,7 +2621,10 @@
         "overpayGuard": "Amount exceeds the remaining balance ({remaining})",
         "overpayHint": "Max {remaining}",
         "credited": "{amount} credited back"
-      }
+      },
+      "thipUpdatedAt": "Underwriter updated",
+      "publicCheckLink": "Status-check link (customer)",
+      "staffVerifyLink": "Underwriter verify link"
     },
     "payments": {
       "title": "Payments",
@@ -3115,6 +3139,164 @@
       "subject": "Subject",
       "customer": "Customer",
       "priority": "Priority"
+    },
+    "issuePolicy": {
+      "title": "Issued policies",
+      "summary": "{issued} issued of {headcount} insured",
+      "viewReport": "View report",
+      "issueCta": "Issue policy",
+      "none": "No policies issued yet",
+      "more": "and {count} more",
+      "col": {
+        "policyNo": "Policy no.",
+        "insured": "Insured ID",
+        "start": "Start",
+        "expiry": "Expiry",
+        "pdf": "File"
+      },
+      "modalTitle": "Issue policies (bulk)",
+      "modalDesc": "One policy is issued per insured person.",
+      "count": "Number of policies",
+      "countHint": "Insured on this ticket: {headcount}",
+      "start": "Coverage start",
+      "expiry": "Expiry",
+      "insuredIds": "Insured ID numbers (one per line)",
+      "insuredPlaceholder": "MB1234567\nLA8821345",
+      "insuredHint": "Optional — IDs are auto-generated if left blank.",
+      "issuing": "Issuing…",
+      "issueSubmit": "Issue {count}",
+      "progress": "Processing {pct}%",
+      "mockNote": "PDF files are mock placeholders.",
+      "audit": "Issued {count} policies",
+      "done": "{count} policies issued",
+      "invalid": "Enter at least 1 policy to issue."
+    },
+    "issued": {
+      "title": "Issued policies report",
+      "desc": "All issued worker policies, by ticket, customer and date range.",
+      "filterTicket": "Ticket / policy no.",
+      "filterTicketPlaceholder": "Ticket or policy number",
+      "filterCustomer": "Customer",
+      "allCustomers": "All customers",
+      "filterFrom": "From date",
+      "filterTo": "To date",
+      "summary": "{policies} policies · {tickets} tickets",
+      "export": "Export CSV",
+      "exportPreparing": "Preparing file…",
+      "exportReady": "Download CSV",
+      "empty": "No policies match these filters",
+      "ticketGroup": "Ticket",
+      "perPage": "Per page",
+      "col": {
+        "policyNo": "Policy no.",
+        "insured": "Insured ID",
+        "ticket": "Ticket",
+        "customer": "Customer",
+        "product": "Product",
+        "start": "Start",
+        "expiry": "Expiry",
+        "issuedAt": "Issued",
+        "pdf": "File"
+      }
+    },
+    "amendments": {
+      "title": "Amendment tickets",
+      "desc": "Policy edit/cancel requests sent to the underwriter (Thip).",
+      "newCta": "New request",
+      "export": "Export CSV",
+      "empty": "No amendment requests yet",
+      "createTitle": "New amendment",
+      "editTitle": "Edit amendment",
+      "free": "No cost",
+      "yes": "Yes",
+      "no": "No",
+      "invalid": "Select a customer and enter at least one policy number.",
+      "created": "Request created",
+      "saved": "Saved",
+      "deleted": "Deleted",
+      "auditCreate": "Created amendment request",
+      "auditEdit": "Edited amendment request",
+      "auditDelete": "Deleted amendment request",
+      "col": {
+        "type": "Type",
+        "customer": "Customer",
+        "policies": "Policies",
+        "hasCost": "Cost",
+        "total": "Total",
+        "created": "Created",
+        "actions": "Actions"
+      },
+      "type": {
+        "edit_name": "Edit name",
+        "edit_address": "Edit address",
+        "edit_birthdate": "Edit birthdate",
+        "edit_id_number": "Edit ID number",
+        "edit_coverage_start": "Edit coverage start",
+        "edit_coverage_duration": "Edit coverage duration",
+        "cancel_policy": "Cancel policy"
+      },
+      "form": {
+        "type": "Amendment type",
+        "customer": "Customer",
+        "freeType": "Type a name (off-system)",
+        "customerFree": "Customer name",
+        "customerFreePlaceholder": "Type customer name",
+        "policies": "Policy numbers (one per line)",
+        "policiesPlaceholder": "MOU-2026-000118\nMOU-2026-000119",
+        "policiesCount": "{count} policies counted",
+        "hasCost": "Has a cost",
+        "pricePerPolicy": "Price per policy (THB)",
+        "total": "Total",
+        "thipStaff": "Underwriter staff",
+        "thipNote": "Note to underwriter",
+        "thipFiles": "Attachments",
+        "thipFilesBtn": "Attach files"
+      }
+    }
+  },
+  "public": {
+    "ticketCheck": {
+      "loading": "Loading…",
+      "notFound": "Ticket not found",
+      "contactFallback": "Need help? Call {phone}",
+      "ticketNo": "Ticket number",
+      "created": "Created",
+      "tokenNote": "This status link is a time-limited token, expiring {date} (mock).",
+      "gateTitle": "View details",
+      "gateDesc": "Enter your 6-digit customer code to view details and downloads.",
+      "wrong": "Wrong code · {left} attempts left",
+      "locked": "Too many attempts. Please try again later.",
+      "reveal": "View details",
+      "detailTitle": "Ticket detail",
+      "product": "Product",
+      "duration": "Duration",
+      "coverageStart": "Coverage start",
+      "headcount": "Headcount",
+      "status": "Status",
+      "downloads": "Downloads",
+      "noDownloads": "No documents available to download yet."
+    },
+    "staffVerify": {
+      "loading": "Loading…",
+      "invalidTitle": "Invalid or expired link",
+      "invalidDesc": "The verification token is not valid. Please check the link.",
+      "doneTitle": "Saved successfully",
+      "doneDesc": "Ticket {ticket} has been updated. Thank you.",
+      "heading": "Underwriter (Thip) verify form",
+      "product": "Product",
+      "duration": "Duration",
+      "coverageStart": "Coverage start",
+      "headcount": "Headcount",
+      "formTitle": "Enter the result",
+      "staffName": "Staff name (required)",
+      "nameRequired": "Please enter the staff name.",
+      "note": "Note (max 2000 characters)",
+      "zipUpload": "Upload ZIP file",
+      "zipHint": "ZIP file up to 100MB (mock).",
+      "zipBtn": "Choose ZIP file",
+      "submit": "Confirm & save",
+      "audit": "Underwriter submitted result",
+      "auditActor": "Thip staff"
     }
   }
 }

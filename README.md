@@ -29,6 +29,11 @@ src/app/[locale]/
 │   ├── page.tsx            # /            (home)
 │   ├── worker-insurance/ auto/ customer/ agency/ wallet/ line/ tracking/
 │   └── login/page.tsx      # /login       (placeholder; full auth = Phase 8)
+├── (auth)/                 # login / signup / OTP / onboarding — focused shell
+├── (admin)/                # back-office console — Sidebar (portalNav.admin) under /admin/*
+│   └── layout.tsx          # reads session, gates by staffRole
+├── (public)/               # UNauthenticated token pages — brand-header shell, no app chrome
+│   └── ticket/check/[ticketNumber]/ · ticket/staff-verify/[ticketNumber]/[token]/
 └── (app)/                  # authenticated portals — Sidebar + TopBar shell
     ├── layout.tsx          # reads session, redirects anon → /login
     └── app/<route>/page.tsx
@@ -120,3 +125,25 @@ is append-only — a ticket-create writes a `debit`, a payment writes a `credit`
 `balanceAfter` is computed from the previous balance, and an over-payment guard
 keeps `paidAmount ≤ totalPrice`. Worker pricing is config-driven
 (`pricingTiers` + `ticketTotal()`), never hardcoded.
+
+**…issue policies / amendments (mock, Phase 16).** "Issue Policy" on a ticket
+detail bulk-mints `IssuedPolicy` rows (one per insured) via `addIssuedPolicies`,
+stamps `ticket.issuedCount`, and writes an audit entry; the report at
+`/admin/ops/issued` (`IssuedReportClient`) groups by ticket, offers page sizes
+25/50/100/200, and a **mocked async CSV export** (idle → preparing → ready →
+download) built with [src/lib/csv.ts](src/lib/csv.ts) (`toCsv`/`downloadCsv`).
+Issued policies surface read-only in the customer portal via
+`IssuedPoliciesReadonly` on `/app/policies`. Amendment tickets
+(`/admin/ops/amendments`, `AmendmentsClient`) are full CRUD over
+`local-crm.ts` (`addAmendment`/`patchAmendment`/`deleteAmendment` +
+`mergeAmendments`). Every issue/amend action writes to `/admin/audit`.
+
+**…add a public (unauthenticated) page.** Put it in the `(public)` route group.
+The proxy only guards `/app/*` and `/admin/*`, so `/{locale}/<anything-else>` is
+reachable without a session — the group just supplies a brand-header shell. The
+two token pages resolve the seed ticket server-side (`getTicketByNumber`) and
+merge locally-created tickets client-side; the status check is gated by the
+6-digit `customerCode` (rate-limited) and the staff-verify form validates the
+URL `token` against `ticket.publicToken` (mock signed/expiring) before letting
+the underwriter patch the ticket's thip fields. Never render the internal credit
+wallet on a public or `/app/*` page.

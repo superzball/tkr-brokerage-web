@@ -2,12 +2,13 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
 import { getSession } from "@/lib/auth/session";
 import { roleCanAccess } from "@/lib/auth/guards";
-import { getPolicies } from "@/lib/mock/seed";
+import { getPolicies, getIssuedPolicies } from "@/lib/mock/seed";
 import { PageHeader } from "@/components/app/PageHeader";
 import { Forbidden } from "@/components/app/Forbidden";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { PoliciesTable } from "@/components/app/business/PoliciesTable";
+import { IssuedPoliciesReadonly } from "@/components/app/business/IssuedPoliciesReadonly";
 
 type Props = { params: Promise<{ locale: Locale }> };
 
@@ -36,6 +37,10 @@ export default async function PoliciesPage({ params }: Props) {
       <PoliciesTable
         policies={policies}
         showWorkers={user.role === "business"}
+      />
+      <IssuedPoliciesReadonly
+        seedIssued={getIssuedPolicies().filter((p) => p.customerId === user.id)}
+        customerId={user.id}
       />
     </>
   );

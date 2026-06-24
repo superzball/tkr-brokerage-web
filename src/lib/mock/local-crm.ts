@@ -13,12 +13,18 @@ import type {
   PolicyTicket,
   CrmPayment,
   CreditTransaction,
+  IssuedPolicy,
+  AmendmentTicket,
 } from "@/types/portal";
 
 const TICKETS_KEY = "tkr_crm_tickets"; // newly created tickets
 const PATCHES_KEY = "tkr_crm_ticket_patches"; // { [id]: Partial<PolicyTicket> }
 const PAYMENTS_KEY = "tkr_crm_payments"; // newly recorded payments
 const LEDGER_KEY = "tkr_crm_ledger"; // appended credit transactions
+const ISSUED_KEY = "tkr_crm_issued"; // IssuedPolicy rows from an Issue-Policy run
+const AMEND_NEW_KEY = "tkr_crm_amend"; // newly created amendment tickets
+const AMEND_PATCH_KEY = "tkr_crm_amend_patches"; // { [id]: Partial<AmendmentTicket> }
+const AMEND_DEL_KEY = "tkr_crm_amend_deleted"; // deleted amendment ids
 
 function readArr<T>(key: string): T[] {
   if (typeof window === "undefined") return [];
@@ -88,6 +94,52 @@ export function addLedgerTx(tx: CreditTransaction): void {
 }
 export function addPayment(p: CrmPayment): void {
   writeArr(PAYMENTS_KEY, [p, ...readNewPayments()]);
+}
+
+// ---- Issued policies (Phase 16) ----
+export const readNewIssued = () => readArr<IssuedPolicy>(ISSUED_KEY);
+/** Seed issued policies + locally-issued rows (an Issue-Policy run appends here). */
+export function mergeIssued(seed: IssuedPolicy[]): IssuedPolicy[] {
+  return [...seed, ...readNewIssued()];
+}
+export function addIssuedPolicies(rows: IssuedPolicy[]): void {
+  writeArr(ISSUED_KEY, [...readNewIssued(), ...rows]);
+}
+
+// ---- Amendment tickets (Phase 16) ----
+export const readNewAmendments = () => readArr<AmendmentTicket>(AMEND_NEW_KEY);
+export const readAmendmentPatches = () =>
+  readObj<Partial<AmendmentTicket>>(AMEND_PATCH_KEY);
+export const readDeletedAmendments = () => readArr<string>(AMEND_DEL_KEY);
+/** Seed amendments with local patches applied and deletions removed, newest local first. */
+export function mergeAmendments(seed: AmendmentTicket[]): AmendmentTicket[] {
+  const patches = readAmendmentPatches();
+  const deleted = new Set(readDeletedAmendments());
+  const patched = seed
+    .filter((a) => !deleted.has(a.id))
+    .map((a) => (patches[a.id] ? { ...a, ...patches[a.id] } : a));
+  const created = readNewAmendments().filter((a) => !deleted.has(a.id));
+  return [...created, ...patched];
+}
+export function addAmendment(a: AmendmentTicket): void {
+  writeArr(AMEND_NEW_KEY, [a, ...readNewAmendments()]);
+}
+export function patchAmendment(id: string, patch: Partial<AmendmentTicket>): void {
+  // a locally-created amendment is edited in place; a seed amendment gets a patch
+  const created = readNewAmendments();
+  const idx = created.findIndex((a) => a.id === id);
+  if (idx >= 0) {
+    created[idx] = { ...created[idx], ...patch } as AmendmentTicket;
+    writeArr(AMEND_NEW_KEY, created);
+    return;
+  }
+  const patches = readAmendmentPatches();
+  patches[id] = { ...patches[id], ...patch };
+  if (typeof window !== "undefined")
+    window.localStorage.setItem(AMEND_PATCH_KEY, JSON.stringify(patches));
+}
+export function deleteAmendment(id: string): void {
+  writeArr(AMEND_DEL_KEY, [...readDeletedAmendments(), id]);
 }
 
 let seq = 0;

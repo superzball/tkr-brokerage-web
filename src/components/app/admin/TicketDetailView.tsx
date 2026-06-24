@@ -8,12 +8,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import { Icon } from "@/components/ui/Icon";
 import type {
   PolicyTicket,
   CreditTransaction,
+  IssuedPolicy,
   TicketStatus,
   PaymentMethod,
 } from "@/types/portal";
@@ -24,7 +25,7 @@ import { Input, Select, FileUpload } from "@/components/app/form";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/app/toast";
 import { useBaht } from "@/lib/format";
-import { basePrice, ticketTotal } from "@/lib/mock/seed";
+import { basePrice, ticketTotal, coverageExpiry } from "@/lib/mock/seed";
 import {
   readNewTickets,
   readPatches,
@@ -32,6 +33,8 @@ import {
   patchTicket,
   addLedgerTx,
   addPayment,
+  mergeIssued,
+  addIssuedPolicies,
   mockId,
 } from "@/lib/mock/local-crm";
 import { addAuditEntry } from "@/lib/mock/local-admin";
@@ -56,21 +59,27 @@ const METHODS: PaymentMethod[] = [
 
 const todayIso = () => new Date().toISOString().slice(0, 10);
 
+const policyPrefix = (p: PolicyTicket["product"]) => p; // MOU / MOTI24
+
 export function TicketDetailView({
   id,
   seedTicket,
   seedLedger,
+  seedIssued,
   customers,
 }: {
   id: string;
   seedTicket: PolicyTicket | null;
   seedLedger: CreditTransaction[];
+  seedIssued: IssuedPolicy[];
   customers: { id: string; name: string }[];
 }) {
   const t = useTranslations("admin.ticketDetail");
   const tc = useTranslations("admin.crm");
   const ts = useTranslations("admin.status");
+  const ti = useTranslations("admin.issuePolicy");
   const tcommon = useTranslations("business.common");
+  const locale = useLocale();
   const { toast } = useToast();
   const baht = useBaht();
 
@@ -89,6 +98,17 @@ export function TicketDetailView({
   const [amount, setAmount] = useState(0);
   const [method, setMethod] = useState<PaymentMethod>("bank_transfer");
   const [ref, setRef] = useState("");
+
+  // ---- Issue Policy (bulk) ----
+  const [issued, setIssued] = useState<IssuedPolicy[]>(seedIssued);
+  useEffect(() => setIssued(mergeIssued(seedIssued)), [seedIssued]);
+  const [issueOpen, setIssueOpen] = useState(false);
+  const [issueCount, setIssueCount] = useState(1);
+  const [issueStart, setIssueStart] = useState(todayIso());
+  const [issueExpiry, setIssueExpiry] = useState("");
+  const [insuredIds, setInsuredIds] = useState("");
+  const [issuing, setIssuing] = useState(false);
+  const [issueProgress, setIssueProgress] = useState(0);
 
   const remaining = ticket ? ticket.totalPrice - ticket.paidAmount : 0;
   const liveTotal = useMemo(
@@ -166,6 +186,67 @@ export function TicketDetailView({
     setAmount(0);
     setRef("");
     toast(t("pay.credited", { amount: baht(amount) }), "success");
+  }
+
+  function openIssue() {
+    if (!ticket) return;
+    setIssueCount(Math.max(1, ticket.headcount - issued.length));
+    setIssueStart(ticket.coverageStart);
+    setIssueExpiry(coverageExpiry(ticket.coverageStart, ticket.duration));
+    setInsuredIds("");
+    setIssueProgress(0);
+    setIssueOpen(true);
+  }
+
+  async function runIssue() {
+    if (!ticket || issueCount < 1) {
+      toast(ti("invalid"), "error");
+      return;
+    }
+    setIssuing(true);
+    const ids = insuredIds
+      .split(/\r?\n/)
+      .map((s) => s.trim())
+      .filter(Boolean);
+    const yr = (issueStart || todayIso()).slice(0, 4);
+    // sequence base derived from existing count so a re-run doesn't collide
+    const base = 100000 + issued.length + Math.floor(Math.random() * 8000);
+    const rows: IssuedPolicy[] = [];
+    for (let i = 0; i < issueCount; i++) {
+      const seq = String(base + i).padStart(6, "0");
+      rows.push({
+        id: mockId("ip"),
+        policyNumber: `${policyPrefix(ticket.product)}-${yr}-${seq}`,
+        insuredIdNumber: ids[i] || `INS-${seq}`,
+        ticketId: ticket.id,
+        product: ticket.product,
+        customerId: ticket.customerId,
+        startDate: issueStart,
+        expiryDate: issueExpiry,
+        issuedAt: todayIso(),
+        issuedBy: "u_admin",
+        pdfUrl: `#mock-pdf/${policyPrefix(ticket.product)}-${yr}-${seq}.pdf`,
+      });
+      // queued/bulk feel: tick progress as each policy is "minted"
+      setIssueProgress(Math.round(((i + 1) / issueCount) * 100));
+      // eslint-disable-next-line no-await-in-loop
+      await new Promise((r) => setTimeout(r, Math.min(40, 800 / issueCount)));
+    }
+    addIssuedPolicies(rows);
+    const newCount = issued.length + rows.length;
+    patchTicket(ticket.id, { issuedCount: newCount });
+    addAuditEntry({
+      id: mockId("au"),
+      actor: "คุณกานต์ ผู้ดูแลระบบ",
+      action: ti("audit", { count: rows.length }),
+      target: ticket.ticketNumber,
+      time: new Date().toISOString(),
+    });
+    setIssued([...issued, ...rows]);
+    setTicket({ ...ticket, issuedCount: newCount });
+    setIssuing(false);
+    setIssueOpen(false);
+    toast(ti("done", { count: rows.length }), "success");
   }
 
   const net = Math.max(0, basePrice(ticket.product, ticket.duration) - ticket.discountPerPerson);
@@ -248,7 +329,26 @@ export function TicketDetailView({
             <Row label={t("thipStaff")} value={ticket.thipStaffName || t("none")} />
             <Row label={t("thipNote")} value={ticket.thipNote || t("none")} />
             <Row label={t("thipFile")} value={ticket.thipFile || t("none")} />
+            <Row label={t("thipUpdatedAt")} value={ticket.thipUpdatedAt ? ticket.thipUpdatedAt.slice(0, 10) : t("none")} />
           </dl>
+          <div className="mt-4 flex flex-col gap-2">
+            <a
+              href={`/${locale}/ticket/check/${encodeURIComponent(ticket.ticketNumber)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost btn-sm justify-start"
+            >
+              <Icon name="link" size={14} /> {t("publicCheckLink")}
+            </a>
+            <a
+              href={`/${locale}/ticket/staff-verify/${encodeURIComponent(ticket.ticketNumber)}/${encodeURIComponent(ticket.publicToken)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn btn-ghost btn-sm justify-start"
+            >
+              <Icon name="link" size={14} /> {t("staffVerifyLink")}
+            </a>
+          </div>
         </section>
 
         {/* task */}
@@ -264,6 +364,66 @@ export function TicketDetailView({
             <Static label={t("dueDate")} value={ticket.dueDate ?? "—"} />
             <Static label={t("createdAt")} value={`${ticket.createdAt} · ${ticket.createdBy}`} />
           </div>
+        </section>
+
+        {/* issued policies */}
+        <section className="card p-5 lg:col-span-2">
+          <div className="flex flex-wrap items-center justify-between gap-3 mb-3">
+            <div>
+              <h2 className="font-700 text-ink-900">{ti("title")}</h2>
+              <p className="text-sm text-ink-500 mt-0.5">
+                {ti("summary", { issued: issued.length, headcount: ticket.headcount })}
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              {issued.length > 0 && (
+                <Link
+                  href={`/admin/ops/issued?ticket=${encodeURIComponent(ticket.ticketNumber)}`}
+                  className="btn btn-ghost btn-sm"
+                >
+                  {ti("viewReport")}
+                </Link>
+              )}
+              <Button variant="primary" size="sm" onClick={openIssue}>
+                <Icon name="shieldCheck" size={16} /> {ti("issueCta")}
+              </Button>
+            </div>
+          </div>
+          {issued.length === 0 ? (
+            <p className="text-sm text-ink-400 py-4 text-center">{ti("none")}</p>
+          ) : (
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-ink-100 bg-sky-50/60 text-ink-600">
+                    <th className="px-3 py-2 text-left font-600">{ti("col.policyNo")}</th>
+                    <th className="px-3 py-2 text-left font-600">{ti("col.insured")}</th>
+                    <th className="px-3 py-2 text-left font-600">{ti("col.start")}</th>
+                    <th className="px-3 py-2 text-left font-600">{ti("col.expiry")}</th>
+                    <th className="px-3 py-2 text-right font-600">{ti("col.pdf")}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {issued.slice(0, 12).map((p) => (
+                    <tr key={p.id} className="border-b border-ink-50 last:border-0">
+                      <td className="px-3 py-2 tabnum font-600 text-ink-900">{p.policyNumber}</td>
+                      <td className="px-3 py-2 tabnum">{p.insuredIdNumber}</td>
+                      <td className="px-3 py-2 tabnum">{p.startDate}</td>
+                      <td className="px-3 py-2 tabnum">{p.expiryDate}</td>
+                      <td className="px-3 py-2 text-right">
+                        <a href={p.pdfUrl} onClick={(e) => e.preventDefault()} className="inline-flex items-center gap-1 text-brand-600 font-600 hover:underline">
+                          <Icon name="download" size={14} /> PDF
+                        </a>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              {issued.length > 12 && (
+                <p className="text-xs text-ink-400 mt-2">{ti("more", { count: issued.length - 12 })}</p>
+              )}
+            </div>
+          )}
         </section>
       </div>
 
@@ -290,6 +450,55 @@ export function TicketDetailView({
           <Input label={t("pay.ref")} value={ref} onChange={(e) => setRef(e.target.value)} />
           <FileUpload label={t("pay.slip")} multiple={false} buttonLabel={t("pay.slipBtn")} accept="image/*,application/pdf" />
           <p className="text-xs text-ink-400">{t("pay.creditNote")}</p>
+        </div>
+      </Modal>
+
+      <Modal
+        open={issueOpen}
+        onClose={() => { if (!issuing) setIssueOpen(false); }}
+        title={ti("modalTitle")}
+        footer={
+          <>
+            <Button variant="ghost" size="sm" disabled={issuing} onClick={() => setIssueOpen(false)}>{tcommon("cancel")}</Button>
+            <Button variant="primary" size="sm" disabled={issuing} onClick={runIssue}>
+              {issuing ? ti("issuing") : ti("issueSubmit", { count: issueCount })}
+            </Button>
+          </>
+        }
+      >
+        <div className="space-y-3">
+          <p className="text-sm text-ink-500">{ti("modalDesc")}</p>
+          <Input
+            type="number"
+            min={1}
+            label={ti("count")}
+            value={issueCount}
+            onChange={(e) => setIssueCount(Math.max(1, Number(e.target.value)))}
+            hint={ti("countHint", { headcount: ticket.headcount })}
+          />
+          <div className="grid grid-cols-2 gap-3">
+            <Input type="date" label={ti("start")} value={issueStart} onChange={(e) => setIssueStart(e.target.value)} />
+            <Input type="date" label={ti("expiry")} value={issueExpiry} onChange={(e) => setIssueExpiry(e.target.value)} />
+          </div>
+          <div>
+            <label className="field-label">{ti("insuredIds")}</label>
+            <textarea
+              className="field min-h-[88px] font-mono text-xs"
+              value={insuredIds}
+              onChange={(e) => setInsuredIds(e.target.value)}
+              placeholder={ti("insuredPlaceholder")}
+            />
+            <p className="mt-1 text-xs text-ink-400">{ti("insuredHint")}</p>
+          </div>
+          {issuing && (
+            <div>
+              <div className="h-2 rounded-full bg-ink-100 overflow-hidden">
+                <div className="h-full bg-brand-500 transition-all" style={{ width: `${issueProgress}%` }} />
+              </div>
+              <p className="mt-1 text-xs text-ink-500 tabnum">{ti("progress", { pct: issueProgress })}</p>
+            </div>
+          )}
+          <p className="text-xs text-ink-400">{ti("mockNote")}</p>
         </div>
       </Modal>
     </>

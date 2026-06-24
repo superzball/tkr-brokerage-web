@@ -526,6 +526,19 @@ export const basePrice = (p: CrmProduct, d: Duration) =>
 export const ticketTotal = (p: CrmProduct, d: Duration, discount: number, headcount: number) =>
   Math.max(0, basePrice(p, d) - discount) * headcount;
 
+const DURATION_MONTHS: Record<Duration, number> = {
+  '3_months': 3, '6_months': 6, '1_year': 12, '15_months': 15,
+};
+/** Coverage expiry = start + duration − 1 day (ISO yyyy-mm-dd). */
+export function coverageExpiry(startIso: string, d: Duration): string {
+  const start = new Date(startIso);
+  if (Number.isNaN(start.getTime())) return startIso;
+  const end = new Date(start);
+  end.setMonth(end.getMonth() + DURATION_MONTHS[d]);
+  end.setDate(end.getDate() - 1);
+  return end.toISOString().slice(0, 10);
+}
+
 export const creditProfiles: CustomerCreditProfile[] = [
   { customerId: 'u_biz', currentCredit: -47700, allowedOverdueDays: 7,  creditLimit: 200000 },
   { customerId: 'cl2',   currentCredit: -37600, allowedOverdueDays: 15, creditLimit: 150000 },
@@ -568,6 +581,7 @@ export const issuedPolicies: IssuedPolicy[] = [
 // ---- helpers ----
 export const getTickets = () => policyTickets;          // policy (CRM) tickets — support inbox uses getSupportTickets
 export const getTicket = (id: string) => policyTickets.find(t => t.id === id);
+export const getTicketByNumber = (no: string) => policyTickets.find(t => t.ticketNumber === no);
 export const getCrmPayments = () => crmPayments;
 export const getCreditLedger = (customerId?: string) =>
   customerId ? creditLedger.filter(c => c.customerId === customerId) : creditLedger;

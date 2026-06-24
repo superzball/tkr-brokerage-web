@@ -4,7 +4,7 @@ import { getSession } from "@/lib/auth/session";
 import { staffCan } from "@/lib/auth/rbac";
 import { AdminForbidden } from "@/components/app/admin/AdminForbidden";
 import { TicketDetailView } from "@/components/app/admin/TicketDetailView";
-import { getTicket, getCreditLedger, crmCustomers } from "@/lib/mock/seed";
+import { getTicket, getCreditLedger, crmCustomers, getIssuedPolicies } from "@/lib/mock/seed";
 
 type Props = { params: Promise<{ locale: Locale; id: string }> };
 
@@ -22,6 +22,7 @@ export default async function TicketDetailPage({ params }: Props) {
       id={id}
       seedTicket={seedTicket}
       seedLedger={getCreditLedger()}
+      seedIssued={getIssuedPolicies(id)}
       customers={crmCustomers()}
     />
   );

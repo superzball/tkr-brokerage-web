@@ -349,6 +349,8 @@ export interface PolicyTicket {
   thipStaffName?: string;
   thipNote?: string;
   thipFile?: string;
+  thipUpdatedAt?: string;      // set when the underwriter submits the public staff-verify form
+  issuedCount?: number;        // # of IssuedPolicy rows produced from this ticket
   publicToken: string;         // signed/expiring (mock)
   customerCode: string;        // 6-digit code shown to customer for status check
   createdBy: string;
