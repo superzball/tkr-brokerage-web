@@ -85,6 +85,9 @@ export function TeamIncomeClient({
       {/* by generation (matches the override schedule) */}
       <section className="card p-6">
         <h2 className="font-700 text-ink-900 mb-4">{t("income.byGeneration")}</h2>
+        {byGen.length === 0 && (
+          <p className="text-sm text-ink-400">{tc("common.tableEmpty")}</p>
+        )}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {byGen.map(([gen, amount]) => (
             <div key={gen} className="rounded-xl border border-ink-100 p-4">

@@ -3,7 +3,8 @@
 
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useId, useRef } from "react";
+import { useTranslations } from "next-intl";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
 
@@ -22,11 +23,17 @@ export function Modal({
   footer?: React.ReactNode;
   className?: string;
 }) {
+  const t = useTranslations("app");
+  const titleId = useId();
+  const panelRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
+    // Move focus into the dialog so keyboard users land inside it.
+    panelRef.current?.focus();
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
@@ -40,23 +47,26 @@ export function Modal({
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
       role="dialog"
       aria-modal="true"
-      aria-label={title}
+      aria-labelledby={title ? titleId : undefined}
     >
       <div
         className="absolute inset-0 bg-ink-950/40 backdrop-blur-sm"
+        aria-hidden="true"
         onClick={onClose}
       />
       <div
+        ref={panelRef}
+        tabIndex={-1}
         className={cn(
-          "relative card card-lg w-full max-w-lg max-h-[85vh] overflow-auto",
+          "relative card card-lg w-full max-w-lg max-h-[85vh] overflow-auto outline-none",
           className,
         )}
       >
         <div className="flex items-center justify-between p-5 border-b border-ink-100">
-          <h2 className="text-lg font-700 text-ink-900">{title}</h2>
+          <h2 id={titleId} className="text-lg font-700 text-ink-900">{title}</h2>
           <button
             onClick={onClose}
-            aria-label="Close"
+            aria-label={t("close")}
             className="w-8 h-8 rounded-lg text-ink-500 hover:bg-ink-50 flex items-center justify-center"
           >
             <Icon name="x" size={18} />

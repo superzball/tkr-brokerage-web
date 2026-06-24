@@ -18,6 +18,7 @@ export function TeamTree({
   rootName: string;
 }) {
   const t = useTranslations("team");
+  const tc = useTranslations("business");
   const [collapsed, setCollapsed] = useState<Set<string>>(new Set());
 
   const allParentIds = (nodes: TeamNode[]): string[] =>
@@ -59,17 +60,23 @@ export function TeamTree({
         </div>
       </div>
 
-      <ul className="border-l-2 border-ink-100 ml-4">
-        {tree.map((n) => (
-          <TreeRow
-            key={n.id}
-            node={n}
-            depth={0}
-            collapsed={collapsed}
-            onToggle={toggle}
-          />
-        ))}
-      </ul>
+      {tree.length === 0 ? (
+        <p className="py-8 text-center text-sm text-ink-400">
+          {tc("common.tableEmpty")}
+        </p>
+      ) : (
+        <ul className="border-l-2 border-ink-100 ml-4">
+          {tree.map((n) => (
+            <TreeRow
+              key={n.id}
+              node={n}
+              depth={0}
+              collapsed={collapsed}
+              onToggle={toggle}
+            />
+          ))}
+        </ul>
+      )}
     </div>
   );
 }
@@ -86,6 +93,7 @@ function TreeRow({
   onToggle: (id: string) => void;
 }) {
   const t = useTranslations("team");
+  const ta = useTranslations("app");
   const baht = useBaht();
   const { toast } = useToast();
   const hasChildren = node.children.length > 0;
@@ -101,7 +109,7 @@ function TreeRow({
         {hasChildren ? (
           <button
             onClick={() => onToggle(node.id)}
-            aria-label="toggle"
+            aria-label={ta("toggleRow")}
             className="w-6 h-6 rounded-md hover:bg-sky-100 text-ink-500 flex items-center justify-center shrink-0"
           >
             <Icon name="chevD" size={16} className={cn(!isOpen && "-rotate-90")} />

@@ -53,6 +53,7 @@ export function LeadsListView({
 }) {
   const t = useTranslations("agent");
   const tc = useTranslations("business");
+  const ta = useTranslations("app");
   const baht = useBaht();
 
   const pageIds = rows.map((r) => r.id);
@@ -126,7 +127,7 @@ export function LeadsListView({
                 <th className="px-3 py-3 w-10">
                   <input
                     type="checkbox"
-                    aria-label="select page"
+                    aria-label={ta("selectPage")}
                     className="w-4 h-4 accent-brand-500"
                     checked={allChecked}
                     onChange={(e) => onTogglePage(pageIds, e.target.checked)}

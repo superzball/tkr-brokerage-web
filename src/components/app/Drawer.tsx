@@ -12,12 +12,15 @@ export function Drawer({
   onClose,
   side = "right",
   className,
+  label,
   children,
 }: {
   open: boolean;
   onClose: () => void;
   side?: "left" | "right";
   className?: string;
+  /** Accessible name for the dialog (e.g. "Navigation menu"). */
+  label?: string;
   children: React.ReactNode;
 }) {
   useEffect(() => {
@@ -56,6 +59,7 @@ export function Drawer({
         )}
         role="dialog"
         aria-modal="true"
+        aria-label={label}
       >
         {children}
       </div>

@@ -5,26 +5,41 @@
 "use client";
 
 import { useEffect, useRef, useState, useTransition } from "react";
-import { useLocale, useTranslations } from "next-intl";
-import { Icon } from "@/components/ui/Icon";
+import { useFormatter, useLocale, useTranslations } from "next-intl";
+import { Icon, type IconName } from "@/components/ui/Icon";
 import { LocaleSwitcher } from "@/components/ui/LocaleSwitcher";
 import { useSession } from "@/lib/auth/SessionProvider";
 import { signOut } from "@/lib/auth/actions";
 import { getNotifications } from "@/lib/mock/seed";
-import type { Locale } from "@/types/portal";
+import type { Locale, Notification } from "@/types/portal";
 import { cn } from "@/lib/cn";
 
+/** Close on outside click and on Escape (keyboard a11y for the dropdowns). */
 function useDismiss<T extends HTMLElement>(onClose: () => void) {
   const ref = useRef<T>(null);
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) onClose();
     };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
     document.addEventListener("mousedown", onClick);
-    return () => document.removeEventListener("mousedown", onClick);
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("mousedown", onClick);
+      document.removeEventListener("keydown", onKey);
+    };
   }, [onClose]);
   return ref;
 }
+
+const NOTIF_ICON: Record<Notification["kind"], IconName> = {
+  policy: "shield",
+  claim: "file",
+  billing: "creditcard",
+  system: "info",
+};
 
 function initials(name: string) {
   const clean = name.replace(/^คุณ\s*/, "");
@@ -34,6 +49,7 @@ function initials(name: string) {
 export function TopBar({ onMenu }: { onMenu: () => void }) {
   const user = useSession();
   const t = useTranslations("app");
+  const format = useFormatter();
   const locale = useLocale() as Locale;
   const [pending, startTransition] = useTransition();
 
@@ -69,6 +85,8 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
         <button
           onClick={() => setBellOpen((o) => !o)}
           aria-label={t("notifications")}
+          aria-haspopup="true"
+          aria-expanded={bellOpen}
           className="relative w-10 h-10 rounded-lg text-ink-600 hover:bg-sky-100 flex items-center justify-center"
         >
           <Icon name="bell" size={20} />
@@ -79,7 +97,11 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
           )}
         </button>
         {bellOpen && (
-          <div className="absolute right-0 top-full mt-2 w-80 card p-2 z-50">
+          <div
+            role="region"
+            aria-label={t("notifications")}
+            className="absolute right-0 top-full mt-2 w-80 max-w-[calc(100vw-2rem)] card p-2 z-50"
+          >
             <div className="flex items-center justify-between px-2 py-1.5">
               <span className="text-sm font-700 text-ink-900">
                 {t("notifications")}
@@ -99,17 +121,43 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
                   {t("noNotifications")}
                 </li>
               ) : (
-                notifications.map((n) => (
-                  <li
-                    key={n.id}
-                    className={cn(
-                      "px-2.5 py-2.5 rounded-lg",
-                      !readIds.has(n.id) && "bg-sky-50",
-                    )}
-                  >
-                    <p className="text-sm text-ink-800 leading-snug">{n.title}</p>
-                  </li>
-                ))
+                notifications.map((n) => {
+                  const isUnread = !readIds.has(n.id);
+                  return (
+                    <li key={n.id}>
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setReadIds((s) => new Set(s).add(n.id))
+                        }
+                        className={cn(
+                          "w-full text-left flex gap-2.5 px-2.5 py-2.5 rounded-lg hover:bg-sky-50",
+                          isUnread && "bg-sky-50",
+                        )}
+                      >
+                        <span className="mt-0.5 w-7 h-7 rounded-lg bg-sky-100 text-brand-600 flex items-center justify-center shrink-0">
+                          <Icon name={NOTIF_ICON[n.kind]} size={15} />
+                        </span>
+                        <span className="min-w-0 flex-1">
+                          <span className="block text-sm text-ink-800 leading-snug">
+                            {n.title}
+                          </span>
+                          <span className="block mt-0.5 text-xs text-ink-400">
+                            {format.dateTime(new Date(n.time), {
+                              day: "numeric",
+                              month: "short",
+                              hour: "2-digit",
+                              minute: "2-digit",
+                            })}
+                          </span>
+                        </span>
+                        {isUnread && (
+                          <span className="mt-1.5 w-2 h-2 rounded-full bg-brand-500 shrink-0" />
+                        )}
+                      </button>
+                    </li>
+                  );
+                })
               )}
             </ul>
           </div>
@@ -138,7 +186,7 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
           <Icon name="chevD" size={14} className="text-ink-400" />
         </button>
         {menuOpen && (
-          <div className="absolute right-0 top-full mt-2 w-56 card p-1.5 z-50">
+          <div role="menu" className="absolute right-0 top-full mt-2 w-56 card p-1.5 z-50">
             <div className="px-3 py-2 border-b border-ink-100 mb-1">
               <p className="text-sm font-600 text-ink-900 truncate">
                 {user.name}

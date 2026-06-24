@@ -83,12 +83,28 @@ export function DataTable<T>({
               {columns.map((c) => (
                 <th
                   key={c.key}
+                  scope="col"
+                  aria-sort={
+                    c.sortValue && sortKey === c.key
+                      ? sortDir === "asc"
+                        ? "ascending"
+                        : "descending"
+                      : undefined
+                  }
+                  role={c.sortValue ? "button" : undefined}
+                  tabIndex={c.sortValue ? 0 : undefined}
                   className={cn(
                     "px-4 py-3 font-600 text-ink-600 whitespace-nowrap",
                     ALIGN[c.align ?? "left"],
                     c.sortValue && "cursor-pointer select-none hover:text-brand-600",
                   )}
                   onClick={() => toggleSort(c)}
+                  onKeyDown={(e) => {
+                    if (c.sortValue && (e.key === "Enter" || e.key === " ")) {
+                      e.preventDefault();
+                      toggleSort(c);
+                    }
+                  }}
                 >
                   <span className="inline-flex items-center gap-1">
                     {c.header}

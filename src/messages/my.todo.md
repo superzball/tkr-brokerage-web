@@ -10,8 +10,11 @@ because the original left them untranslated even in the Burmese view.
 Never invent Burmese — replace placeholders with reviewed translations only.
 
 ## Status by namespace
+Audited Phase 13: of 1542 leaf keys, **18 are real Burmese** (all under
+`wallet.app`); the remaining **1524 are Thai placeholders**. Full namespace list:
 - [ ] common
 - [ ] nav — incl. portal sidebar keys (dashboard…support) added as Thai placeholders in Phase 7
+- [ ] app — portal shell + Phase 13 additions (notFound, close, dismiss, toggleRow, selectPage)
 - [ ] auth — Phase 8 auth/onboarding copy added as Thai placeholders
 - [ ] footer
 - [ ] home
@@ -23,3 +26,9 @@ Never invent Burmese — replace placeholders with reviewed translations only.
 - [x] wallet — `wallet.app` = real Burmese (seeded from `T.my`); `wallet.hero` still placeholder
 - [ ] line
 - [ ] metadata
+- [ ] business — Phase 9 portal copy (shared: common/statuses/table/claims/billing/documents/wallet/settings)
+- [ ] individual — Phase 10 portal copy
+- [ ] agent — Phase 11 portal copy (clients/leads/commissions/sales/quote)
+- [ ] learn — Phase 12 acquisition landings
+- [ ] checkout — Phase 12 quote→signup handoff
+- [ ] team — Phase 11.5 agent-team / override copy

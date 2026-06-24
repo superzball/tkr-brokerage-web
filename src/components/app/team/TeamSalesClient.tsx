@@ -138,6 +138,10 @@ export function TeamSalesClient({
             }}
           />
         </>
+      ) : byGen.length === 0 ? (
+        <div className="card p-10 text-center text-sm text-ink-400">
+          {tc("common.tableEmpty")}
+        </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {byGen.map(([gen, g]) => (

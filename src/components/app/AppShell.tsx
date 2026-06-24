@@ -5,6 +5,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import type { Role } from "@/types/portal";
 import { Sidebar } from "./Sidebar";
 import { TopBar } from "./TopBar";
@@ -18,12 +19,18 @@ export function AppShell({
   children: React.ReactNode;
 }) {
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const t = useTranslations("app");
 
   return (
     <div className="min-h-screen lg:flex bg-[#f6f9fe]">
       <Sidebar role={role} className="hidden lg:flex sticky top-0 h-screen" />
 
-      <Drawer open={drawerOpen} onClose={() => setDrawerOpen(false)} side="left">
+      <Drawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        side="left"
+        label={t("menu")}
+      >
         <Sidebar
           role={role}
           className="w-full border-r-0"

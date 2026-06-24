@@ -8,6 +8,7 @@ import { Icon } from "@/components/ui/Icon";
 /** Top strip shown in the app shell when a quote was stashed before login. */
 export function PendingQuoteBanner() {
   const t = useTranslations("checkout.banner");
+  const ta = useTranslations("app");
   const [hidden, setHidden] = useState(false);
   if (hidden) return null;
 
@@ -25,7 +26,7 @@ export function PendingQuoteBanner() {
         <button
           type="button"
           onClick={() => setHidden(true)}
-          aria-label="Dismiss"
+          aria-label={ta("dismiss")}
           className="shrink-0 opacity-80 hover:opacity-100"
         >
           <Icon name="x" size={18} />
