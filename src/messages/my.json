@@ -119,6 +119,7 @@
   "app": {
     "menu": "เมนู",
     "signOut": "ออกจากระบบ",
+    "userMenu": "เมนูผู้ใช้",
     "notifications": "การแจ้งเตือน",
     "markAllRead": "อ่านทั้งหมด",
     "noNotifications": "ไม่มีการแจ้งเตือน",

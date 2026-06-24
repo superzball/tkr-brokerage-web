@@ -119,6 +119,7 @@
   "app": {
     "menu": "Menu",
     "signOut": "Sign out",
+    "userMenu": "User menu",
     "notifications": "Notifications",
     "markAllRead": "Mark all read",
     "noNotifications": "No notifications",

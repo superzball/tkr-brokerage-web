@@ -189,5 +189,15 @@ export type IconProps = {
 
 export function Icon({ name, size = 20, strokeWidth = 2, className }: IconProps) {
   const Glyph = registry[name];
-  return <Glyph size={size} strokeWidth={strokeWidth} className={className} />;
+  // Icons are decorative — interactive controls supply their own aria-label.
+  // Hide from assistive tech to avoid duplicate/noise announcements.
+  return (
+    <Glyph
+      size={size}
+      strokeWidth={strokeWidth}
+      className={className}
+      aria-hidden="true"
+      focusable={false}
+    />
+  );
 }

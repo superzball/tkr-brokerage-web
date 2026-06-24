@@ -76,7 +76,8 @@ export function DataTable<T>({
 
   return (
     <div className="card overflow-hidden">
-      <div className="overflow-x-auto">
+      {/* Desktop / tablet: full table */}
+      <div className="hidden md:block overflow-x-auto">
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-ink-100 bg-sky-50/60">
@@ -156,6 +157,48 @@ export function DataTable<T>({
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile (<768px): each row as a stacked label/value card */}
+      <div className="md:hidden">
+        {pageRows.length === 0 ? (
+          <div className="px-4 py-12 text-center text-ink-400">{labels.empty}</div>
+        ) : (
+          <ul className="divide-y divide-ink-50">
+            {pageRows.map((row, i) => {
+              const cells = columns.map((c) => (
+                <div
+                  key={c.key}
+                  className="flex items-start justify-between gap-3 py-0.5"
+                >
+                  <span className="text-xs font-600 text-ink-500 shrink-0">
+                    {c.header}
+                  </span>
+                  <span className="text-sm text-ink-800 min-w-0 text-right">
+                    {c.render
+                      ? c.render(row)
+                      : String((row as Record<string, unknown>)[c.key] ?? "")}
+                  </span>
+                </div>
+              ));
+              return (
+                <li key={getRowKey(row, start + i)}>
+                  {onRowClick ? (
+                    <button
+                      type="button"
+                      onClick={() => onRowClick(row)}
+                      className="w-full text-left px-4 py-3 space-y-1 hover:bg-sky-50/70"
+                    >
+                      {cells}
+                    </button>
+                  ) : (
+                    <div className="px-4 py-3 space-y-1">{cells}</div>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        )}
       </div>
 
       {sorted.length > pageSize && (

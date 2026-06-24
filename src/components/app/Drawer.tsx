@@ -4,7 +4,8 @@
 
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { cn } from "@/lib/cn";
 
 export function Drawer({
@@ -23,6 +24,11 @@ export function Drawer({
   label?: string;
   children: React.ReactNode;
 }) {
+  const panelRef = useRef<HTMLDivElement>(null);
+
+  // Move focus into the drawer on open and trap Tab within it.
+  useFocusTrap(panelRef, open);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -47,8 +53,10 @@ export function Drawer({
         )}
       />
       <div
+        ref={panelRef}
+        tabIndex={-1}
         className={cn(
-          "absolute top-0 h-full w-[82%] max-w-[340px] bg-white shadow-card-lg flex flex-col transition-transform duration-300",
+          "absolute top-0 h-full w-[82%] max-w-[340px] bg-white shadow-card-lg flex flex-col outline-none transition-transform duration-300",
           side === "right" ? "right-0" : "left-0",
           open
             ? "translate-x-0"

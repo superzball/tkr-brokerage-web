@@ -137,6 +137,17 @@
   .font-display {
     font-family: var(--font-display);
   }
+
+  /* Keyboard-visible focus ring for every interactive element. Mouse clicks
+     stay clean (focus-visible only); inputs keep their own .field:focus ring. */
+  :focus-visible {
+    outline: 2px solid var(--brand-500);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+  .field:focus-visible {
+    outline: none;
+  }
 }
 
 @layer components {

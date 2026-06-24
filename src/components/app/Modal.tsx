@@ -6,6 +6,7 @@
 import { useEffect, useId, useRef } from "react";
 import { useTranslations } from "next-intl";
 import { Icon } from "@/components/ui/Icon";
+import { useFocusTrap } from "@/hooks/useFocusTrap";
 import { cn } from "@/lib/cn";
 
 export function Modal({
@@ -27,13 +28,14 @@ export function Modal({
   const titleId = useId();
   const panelRef = useRef<HTMLDivElement>(null);
 
+  // Move focus into the dialog and trap Tab within it while open.
+  useFocusTrap(panelRef, open);
+
   useEffect(() => {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
-    // Move focus into the dialog so keyboard users land inside it.
-    panelRef.current?.focus();
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = "";
