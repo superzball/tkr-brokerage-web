@@ -7,28 +7,35 @@
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
 import { portalNav } from "@/config/portal-nav";
-import type { Role } from "@/types/portal";
+import type { NavSection, Role } from "@/types/portal";
 import { Logo } from "@/components/layout/Logo";
 import { NavIcon } from "./NavIcon";
 import { cn } from "@/lib/cn";
 
-function isActive(pathname: string, href: string) {
-  return pathname === href || pathname.startsWith(href + "/");
-}
-
 export function Sidebar({
   role,
+  sections: sectionsProp,
   onNavigate,
   className,
 }: {
-  role: Role;
+  /** Render this role's IA (portalNav[role]) … */
+  role?: Role;
+  /** …or pass pre-filtered sections directly (e.g. RBAC-filtered admin nav). */
+  sections?: NavSection[];
   /** Called after a link is tapped (closes the mobile drawer). */
   onNavigate?: () => void;
   className?: string;
 }) {
   const t = useTranslations("nav");
   const pathname = usePathname();
-  const sections = portalNav[role];
+  const sections = sectionsProp ?? (role ? portalNav[role] : []);
+
+  // Mark only the single most-specific matching href active. (A plain prefix
+  // test would light up the "/admin" overview item on every nested route.)
+  const activeHref = sections
+    .flatMap((s) => s.items.map((i) => i.href))
+    .filter((h) => pathname === h || pathname.startsWith(h + "/"))
+    .sort((a, b) => b.length - a.length)[0];
 
   // NavItem.key / NavSection.key are `string` in the contract; the nav catalog
   // keys are statically present, so assert them to the namespaced key type.
@@ -55,7 +62,7 @@ export function Sidebar({
             )}
             <ul className="space-y-0.5">
               {section.items.map((item) => {
-                const active = isActive(pathname, item.href);
+                const active = item.href === activeHref;
                 return (
                   <li key={item.key}>
                     <Link

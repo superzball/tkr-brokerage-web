@@ -13,11 +13,12 @@ import {
   DEMO_PASSWORD,
   findUserByEmail,
   findUserByPhone,
+  findStaffByRole,
   landingPath,
   type SocialProvider,
 } from "./mock";
 import { users } from "@/lib/mock/seed";
-import type { Locale, Role } from "@/types/portal";
+import type { Locale, Role, StaffRole } from "@/types/portal";
 
 async function startSession(userId: string) {
   const store = await cookies();
@@ -38,7 +39,7 @@ function resolveNext(next: string | undefined, locale: Locale): string | undefin
   let p = next;
   const seg = p.split("/");
   if (seg[1] === locale) p = "/" + seg.slice(2).join("/");
-  return p.startsWith("/app") ? p : undefined;
+  return p.startsWith("/app") || p.startsWith("/admin") ? p : undefined;
 }
 
 export type AuthError = "credentials" | "phone" | "otp";
@@ -70,6 +71,21 @@ export async function signInAsRole(
   if (!user) return;
   await startSession(user.id);
   redirect({ href: resolveNext(next, locale) ?? landingPath(role), locale });
+}
+
+/**
+ * One-tap back-office sign-in as a specific staffRole (superadmin/ops/content/
+ * sales). Powers the admin RBAC demo — each role sees a different sidebar and
+ * 403s on routes outside its permissions.
+ */
+export async function signInAsStaff(
+  locale: Locale,
+  staffRole: StaffRole,
+): Promise<void> {
+  const user = findStaffByRole(staffRole);
+  if (!user) return;
+  await startSession(user.id);
+  redirect({ href: "/admin", locale });
 }
 
 /**

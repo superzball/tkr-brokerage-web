@@ -12,19 +12,22 @@ import { Input } from "@/components/app/form";
 import { Tabs } from "@/components/app/Tabs";
 import { PhoneField } from "./PhoneField";
 import { SocialButtons } from "./SocialButtons";
-import { signInWithPassword, signInAsRole, requestOtp } from "@/lib/auth/actions";
+import { signInWithPassword, signInAsRole, signInAsStaff, requestOtp } from "@/lib/auth/actions";
 import { isCompleteThaiPhone } from "@/lib/phone";
 import { users } from "@/lib/mock/seed";
-import type { Locale, Role } from "@/types/portal";
+import type { Locale, Role, StaffRole } from "@/types/portal";
 
 const DEMO_ROLES: Role[] = ["business", "individual", "agent"];
+/** Back-office staff roles — one-tap sign-in to demo the admin RBAC. */
+const DEMO_STAFF: StaffRole[] = ["superadmin", "ops", "content", "sales"];
 /** Demo phone numbers (from the seed) — tap to fill the phone field. */
 const DEMO_PHONES = users
-  .filter((u) => u.phone)
+  .filter((u) => u.phone && u.role !== "admin")
   .map((u) => ({ phone: u.phone as string, role: u.role }));
 
 export function LoginForm({ next }: { next?: string }) {
   const t = useTranslations("auth.login");
+  const ts = useTranslations("admin.staffRole");
   const locale = useLocale() as Locale;
   const router = useRouter();
   const [tab, setTab] = useState<"phone" | "email">("phone");
@@ -183,6 +186,23 @@ export function LoginForm({ next }: { next?: string }) {
               className="btn btn-ghost btn-sm disabled:opacity-50"
             >
               {role}
+            </button>
+          ))}
+        </div>
+
+        <p className="text-xs font-700 uppercase tracking-wide text-ink-400 mt-4 mb-2">
+          {t("staffTitle")}
+        </p>
+        <div className="grid grid-cols-2 gap-2">
+          {DEMO_STAFF.map((sr) => (
+            <button
+              key={sr}
+              type="button"
+              disabled={pending}
+              onClick={() => startTransition(() => signInAsStaff(locale, sr))}
+              className="btn btn-ghost btn-sm disabled:opacity-50"
+            >
+              {ts(sr)}
             </button>
           ))}
         </div>

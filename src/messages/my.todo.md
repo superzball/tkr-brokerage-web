@@ -13,7 +13,7 @@ Never invent Burmese — replace placeholders with reviewed translations only.
 Audited Phase 13: of 1542 leaf keys, **18 are real Burmese** (all under
 `wallet.app`); the remaining **1524 are Thai placeholders**. Full namespace list:
 - [ ] common
-- [ ] nav — incl. portal sidebar keys (dashboard…support) added as Thai placeholders in Phase 7
+- [ ] nav — incl. portal sidebar keys (dashboard…support) added as Thai placeholders in Phase 7; + Phase 14 admin nav keys (overview…config) added as Thai placeholders
 - [ ] app — portal shell + Phase 13 additions (notFound, close, dismiss, toggleRow, selectPage)
 - [ ] auth — Phase 8 auth/onboarding copy added as Thai placeholders
 - [ ] footer

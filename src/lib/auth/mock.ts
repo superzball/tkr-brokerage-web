@@ -29,8 +29,13 @@ export const findUserById = (id: string): User | undefined =>
   users.find((u) => u.id === id);
 
 /**
- * Where each role lands after authentication. The portal IA (portal-nav.ts)
- * puts every role's home at `/app/dashboard`; the dashboard renders
- * role-specific content. One scheme keeps redirects + guards simple.
+ * Where each role lands after authentication. Customers/agents share the
+ * `/app/dashboard` home (the dashboard renders role-specific content); admin
+ * staff land in the back-office console at `/admin`.
  */
-export const landingPath = (_role: Role): string => "/app/dashboard";
+export const landingPath = (role: Role): string =>
+  role === "admin" ? "/admin" : "/app/dashboard";
+
+/** Find a back-office staff identity by its staffRole (for the demo logins). */
+export const findStaffByRole = (staffRole: string): User | undefined =>
+  users.find((u) => u.role === "admin" && u.staffRole === staffRole);

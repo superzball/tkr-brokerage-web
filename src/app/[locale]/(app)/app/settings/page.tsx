@@ -14,7 +14,9 @@ export default async function SettingsPage({ params }: Props) {
 
   const user = await getSession();
   if (!user) return null;
-  if (!roleCanAccess(user.role, "/app/settings")) return <Forbidden />;
+  // admin uses the back-office /admin/settings, not this customer/agent screen.
+  if (user.role === "admin" || !roleCanAccess(user.role, "/app/settings"))
+    return <Forbidden />;
 
   const t = await getTranslations("business");
 

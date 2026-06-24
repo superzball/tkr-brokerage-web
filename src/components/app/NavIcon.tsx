@@ -25,6 +25,18 @@ import {
   HandCoins,
   Trophy,
   CircleDot,
+  Newspaper,
+  Search,
+  Image,
+  BadgeCheck,
+  FileCheck2,
+  Building2,
+  Banknote,
+  BarChart3,
+  Package,
+  Percent,
+  UserCog,
+  ScrollText,
   type LucideProps,
 } from "lucide-react";
 
@@ -49,6 +61,18 @@ const registry: Record<string, React.ComponentType<LucideProps>> = {
   TrendingUp,
   HandCoins,
   Trophy,
+  Newspaper,
+  Search,
+  Image,
+  BadgeCheck,
+  FileCheck2,
+  Building2,
+  Banknote,
+  BarChart3,
+  Package,
+  Percent,
+  UserCog,
+  ScrollText,
 };
 
 export function NavIcon({

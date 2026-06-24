@@ -91,4 +91,70 @@ export const portalNav: Record<Role, NavSection[]> = {
     },
     help,
   ],
+
+  // ---- Admin / Staff back-office (Phase 14) ----
+  // URL scheme: /admin/* (its own (admin) route group).
+  // `perm` gates by staffRole; superadmin sees all.
+  admin: [
+    {
+      items: [
+        { key: 'overview', href: '/admin', icon: 'LayoutDashboard' },
+      ],
+    },
+    {
+      key: 'content',
+      items: [
+        { key: 'articles', href: '/admin/content/articles', icon: 'Newspaper', perm: 'content' },
+        { key: 'pages',    href: '/admin/content/pages',    icon: 'FileText',  perm: 'content' },
+        { key: 'seo',      href: '/admin/content/seo',      icon: 'Search',    perm: 'content' },
+        { key: 'media',    href: '/admin/content/media',    icon: 'Image',     perm: 'content' },
+      ],
+    },
+    {
+      key: 'sales',
+      items: [
+        { key: 'newOrder', href: '/admin/sales/new',    icon: 'ShoppingCart', perm: 'sales' },
+        { key: 'orders',   href: '/admin/sales/orders', icon: 'ClipboardList', perm: 'sales' },
+      ],
+    },
+    {
+      key: 'operations',
+      items: [
+        { key: 'adminPolicies', href: '/admin/policies',  icon: 'ShieldCheck', perm: 'ops' },
+        { key: 'claimsQueue',   href: '/admin/claims',    icon: 'BadgeCheck',  perm: 'ops' },
+        { key: 'approvals',     href: '/admin/approvals', icon: 'FileCheck2',  perm: 'ops' },
+      ],
+    },
+    {
+      key: 'accounts',
+      items: [
+        { key: 'customers', href: '/admin/customers', icon: 'Building2', perm: 'ops' },
+        { key: 'agents',    href: '/admin/agents',    icon: 'Users',     perm: 'ops' },
+      ],
+    },
+    {
+      key: 'finance',
+      items: [
+        { key: 'adminInvoices', href: '/admin/finance/invoices', icon: 'Receipt',   perm: 'ops' },
+        { key: 'payouts',       href: '/admin/finance/payouts',  icon: 'Banknote',  perm: 'ops' },
+        { key: 'reports',       href: '/admin/finance/reports',  icon: 'BarChart3', perm: 'ops' },
+      ],
+    },
+    {
+      key: 'config',
+      items: [
+        { key: 'catalog',     href: '/admin/catalog/products',    icon: 'Package',  perm: 'superadmin' },
+        { key: 'commRules',   href: '/admin/catalog/commissions', icon: 'Percent',  perm: 'superadmin' },
+        { key: 'staff',       href: '/admin/staff',               icon: 'UserCog',  perm: 'superadmin' },
+        { key: 'sysSettings', href: '/admin/settings',            icon: 'Settings', perm: 'superadmin' },
+        { key: 'audit',       href: '/admin/audit',               icon: 'ScrollText', perm: 'superadmin' },
+      ],
+    },
+    {
+      key: 'support',
+      items: [
+        { key: 'tickets', href: '/admin/support', icon: 'LifeBuoy', perm: 'ops' },
+      ],
+    },
+  ],
 };

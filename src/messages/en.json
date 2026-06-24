@@ -82,7 +82,33 @@
     "teamSales": "Team Sales",
     "teamIncome": "Team Income",
     "leaderboard": "Leaderboard",
-    "sales": "My Sales"
+    "sales": "Sales",
+    "overview": "Overview",
+    "articles": "News / Articles",
+    "pages": "Pages & FAQ",
+    "seo": "SEO & Redirects",
+    "media": "Media",
+    "newOrder": "Create Order",
+    "orders": "Orders",
+    "adminPolicies": "Policies (all)",
+    "claimsQueue": "Claims Queue",
+    "approvals": "Approvals / KYC",
+    "customers": "Customers",
+    "agents": "Agents",
+    "adminInvoices": "Invoices",
+    "payouts": "Commission Payouts",
+    "reports": "Reports",
+    "catalog": "Products & Plans",
+    "commRules": "Commission Rules",
+    "staff": "Staff & Permissions",
+    "sysSettings": "System Settings",
+    "audit": "Audit Log",
+    "tickets": "Support Tickets",
+    "content": "Content",
+    "operations": "Operations",
+    "accounts": "Accounts",
+    "finance": "Finance",
+    "config": "Configuration"
   },
   "app": {
     "menu": "Menu",
@@ -169,7 +195,8 @@
       "or": "or",
       "demoTitle": "Demo accounts (password demo1234)",
       "demoNote": "Pick a demo account to sign in instantly.",
-      "demoPhones": "Demo numbers (OTP 123456)"
+      "demoPhones": "Demo numbers (OTP 123456)",
+      "staffTitle": "Staff (back-office)"
     },
     "signup": {
       "title": "Create account",
@@ -2315,6 +2342,549 @@
       "team": "Team GWP",
       "combined": "Combined volume",
       "note": "Your rank reflects both your personal sales and your team's licensed production."
+    }
+  },
+  "admin": {
+    "forbidden": {
+      "title": "Access denied",
+      "body": "Your staff account doesn’t have permission for this area. Contact a superadmin.",
+      "back": "Back to overview"
+    },
+    "staffRole": {
+      "superadmin": "Superadmin",
+      "ops": "Operations",
+      "content": "Content",
+      "sales": "Sales"
+    },
+    "status": {
+      "draft": "Draft",
+      "awaiting_payment": "Awaiting payment",
+      "issued": "Issued",
+      "cancelled": "Cancelled",
+      "open": "Open",
+      "pending": "Pending",
+      "resolved": "Resolved",
+      "active": "Active",
+      "suspended": "Suspended",
+      "published": "Published",
+      "scheduled": "Scheduled",
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "on": "Active",
+      "off": "Inactive"
+    },
+    "channel": {
+      "phone": "Phone",
+      "walk_in": "Walk-in",
+      "line": "LINE",
+      "online": "Online"
+    },
+    "table": {
+      "empty": "No data"
+    },
+    "dashboard": {
+      "title": "Platform overview",
+      "subtitle": "Real-time summary across the whole platform",
+      "gwp": "Gross written premium",
+      "activePolicies": "Active policies",
+      "pendingClaims": "Pending claims",
+      "openTickets": "Open tickets",
+      "draftArticles": "Draft articles",
+      "queuesTitle": "Needs action",
+      "recentAudit": "Recent activity",
+      "viewAll": "View all",
+      "qClaims": "Claims pending review",
+      "qApprovals": "Approvals / KYC",
+      "qTickets": "Open support tickets",
+      "qOrders": "Orders awaiting payment"
+    },
+    "orders": {
+      "title": "Orders",
+      "desc": "Every order across channels, including agent-originated sales",
+      "newCta": "Create order",
+      "col": {
+        "orderNo": "Order no.",
+        "customer": "Customer",
+        "product": "Product",
+        "premium": "Premium",
+        "channel": "Channel",
+        "status": "Status",
+        "date": "Date",
+        "source": "Source"
+      },
+      "sourceAdmin": "Staff",
+      "sourceAgent": "Agent",
+      "empty": "No orders yet"
+    },
+    "newOrder": {
+      "title": "Create order on behalf",
+      "desc": "Help a customer buy by phone / walk-in / LINE, then issue the order",
+      "step": {
+        "customer": "Customer",
+        "product": "Product",
+        "review": "Review",
+        "done": "Done"
+      },
+      "customerType": "Customer type",
+      "typeBusiness": "Business",
+      "typeIndividual": "Individual",
+      "customerName": "Customer name",
+      "customerPlaceholder": "Search or type a customer name",
+      "channelLabel": "Sales channel",
+      "productLabel": "Product",
+      "planLabel": "Coverage plan",
+      "premiumLabel": "Premium (THB/year)",
+      "next": "Next",
+      "back": "Back",
+      "reviewTitle": "Review before issuing the order",
+      "issue": "Issue order",
+      "successTitle": "Order issued",
+      "successBody": "Order {orderNo} was created and written to the audit log.",
+      "auditLogged": "Audit entry",
+      "auditAction": "Created order on behalf of customer",
+      "viewOrders": "Go to orders",
+      "another": "Create another",
+      "missing": "Please complete all fields"
+    },
+    "audit": {
+      "title": "Audit log",
+      "desc": "Who did what, and when, across the platform",
+      "col": {
+        "time": "Time",
+        "actor": "Actor",
+        "action": "Action",
+        "target": "Target"
+      },
+      "empty": "No entries yet"
+    },
+    "staff": {
+      "title": "Staff & Permissions",
+      "desc": "Manage staff accounts and access (RBAC)",
+      "col": {
+        "name": "Name",
+        "email": "Email",
+        "role": "Role",
+        "status": "Status",
+        "lastActive": "Last active"
+      },
+      "empty": "No staff"
+    },
+    "tickets": {
+      "title": "Support tickets",
+      "desc": "Customer service queue",
+      "col": {
+        "ref": "Ref",
+        "customer": "Customer",
+        "subject": "Subject",
+        "priority": "Priority",
+        "status": "Status",
+        "updated": "Updated"
+      },
+      "empty": "No tickets"
+    },
+    "articles": {
+      "title": "News / Articles",
+      "desc": "Manage content shown on the public site",
+      "newCta": "Write article",
+      "col": {
+        "title": "Title",
+        "category": "Category",
+        "status": "Status",
+        "locales": "Languages",
+        "author": "Author",
+        "published": "Published"
+      },
+      "empty": "No articles yet"
+    },
+    "customers": {
+      "title": "Customers",
+      "desc": "All business and individual customers",
+      "col": {
+        "name": "Name",
+        "type": "Type",
+        "role": "Role",
+        "email": "Email",
+        "phone": "Phone"
+      },
+      "typeBusiness": "Business",
+      "typeIndividual": "Individual",
+      "empty": "No customers"
+    },
+    "agents": {
+      "title": "Agents",
+      "desc": "Agent performance, team and license status",
+      "col": {
+        "name": "Name",
+        "rank": "Rank",
+        "license": "License",
+        "teamSize": "Team size",
+        "teamGwp": "Team GWP",
+        "override": "Override"
+      },
+      "verify": "Verify license",
+      "verifySent": "License verified",
+      "empty": "No agents"
+    },
+    "policies": {
+      "title": "Policies (all)",
+      "desc": "Every policy on the platform",
+      "col": {
+        "policyNo": "Policy no.",
+        "type": "Type",
+        "insurer": "Insurer",
+        "premium": "Premium",
+        "status": "Status",
+        "end": "Ends"
+      },
+      "empty": "No policies"
+    },
+    "claims": {
+      "title": "Claims queue",
+      "desc": "All claims awaiting processing",
+      "col": {
+        "claimNo": "Claim no.",
+        "claimant": "Claimant",
+        "type": "Type",
+        "amount": "Amount",
+        "status": "Status",
+        "date": "Filed"
+      },
+      "empty": "No claims"
+    },
+    "invoices": {
+      "title": "Invoices",
+      "desc": "All invoices and reconciliation",
+      "col": {
+        "invoiceNo": "Invoice no.",
+        "amount": "Amount",
+        "status": "Status",
+        "issued": "Issued",
+        "due": "Due"
+      },
+      "empty": "No invoices"
+    },
+    "payouts": {
+      "title": "Commission payouts",
+      "desc": "Personal commission and team override (verified-license downline only)",
+      "tabCommission": "Commission",
+      "tabOverride": "Team override",
+      "col": {
+        "period": "Period",
+        "name": "Item",
+        "base": "Base",
+        "rate": "Rate",
+        "amount": "Amount",
+        "status": "Status"
+      },
+      "empty": "Nothing to pay out"
+    },
+    "plans": {
+      "title": "Products & Plans",
+      "desc": "Coverage plans and base premiums",
+      "col": {
+        "plan": "Plan",
+        "product": "Product",
+        "insurer": "Insurer",
+        "coverage": "Coverage",
+        "premium": "Base premium",
+        "status": "Status"
+      },
+      "empty": "No plans"
+    },
+    "product": {
+      "worker": "Foreign worker",
+      "auto": "Motor",
+      "travel": "Travel",
+      "health": "Health",
+      "fire": "Fire"
+    },
+    "articlesEditor": {
+      "create": "New article",
+      "edit": "Edit article",
+      "titleLabel": "Title",
+      "slug": "Slug (URL)",
+      "category": "Category",
+      "author": "Author",
+      "statusLabel": "Status",
+      "scheduleDate": "Publish date",
+      "bodyLabel": "Body",
+      "contentTab": "Content",
+      "seoTab": "SEO",
+      "seoSection": "SEO settings",
+      "metaTitle": "Meta title",
+      "metaDescription": "Meta description",
+      "ogImage": "OG image URL",
+      "localeNote": "Language tabs — enter content per locale",
+      "save": "Save",
+      "saved": "Article saved",
+      "deleted": "Article deleted",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "translated": "Translated",
+      "untranslated": "Not translated"
+    },
+    "pages": {
+      "title": "Pages & FAQ",
+      "desc": "Edit public-site copy and frequently asked questions",
+      "col": {
+        "page": "Page",
+        "path": "URL",
+        "faqs": "FAQs",
+        "updated": "Updated"
+      },
+      "empty": "No pages",
+      "editCopy": "Edit copy",
+      "hero": "Hero headline",
+      "body": "Body copy",
+      "faqTitle": "Frequently asked questions",
+      "addFaq": "Add FAQ",
+      "question": "Question",
+      "answer": "Answer",
+      "save": "Save",
+      "saved": "Page saved",
+      "faqAdded": "FAQ added",
+      "faqDeleted": "FAQ deleted",
+      "noFaq": "No FAQs for this page yet"
+    },
+    "seo": {
+      "title": "SEO & Redirects",
+      "desc": "Manage per-page meta, redirects and the sitemap",
+      "metaTab": "Per-page meta",
+      "redirectTab": "Redirects",
+      "col": {
+        "path": "Page",
+        "metaTitle": "Meta title",
+        "metaDescription": "Meta description"
+      },
+      "rCol": {
+        "from": "From",
+        "to": "To",
+        "code": "Type"
+      },
+      "addRedirect": "Add redirect",
+      "redirectAdded": "Redirect added",
+      "redirectDeleted": "Redirect deleted",
+      "from": "From (path)",
+      "to": "To (path)",
+      "code": "Code",
+      "sitemap": "Sitemap",
+      "sitemapDesc": "Generate and submit sitemap.xml automatically",
+      "save": "Save",
+      "saved": "SEO saved",
+      "empty": "Nothing here"
+    },
+    "media": {
+      "title": "Media library",
+      "desc": "Images, documents and videos used across the site",
+      "upload": "Upload file",
+      "uploaded": "File uploaded (demo)",
+      "deleted": "File deleted",
+      "delete": "Delete",
+      "kind": {
+        "image": "Image",
+        "doc": "Document",
+        "video": "Video"
+      },
+      "by": "by",
+      "empty": "No files yet",
+      "count": "{n} files"
+    },
+    "policiesActions": {
+      "manage": "Manage",
+      "modalTitle": "Manage policy",
+      "currentStatus": "Current status",
+      "issue": "Issue",
+      "endorse": "Endorse",
+      "renew": "Renew",
+      "cancel": "Cancel",
+      "issued": "Policy issued",
+      "endorsed": "Endorsement saved",
+      "renewed": "Policy renewed",
+      "cancelled": "Policy cancelled",
+      "auditIssue": "Issued policy",
+      "auditRenew": "Renewed policy",
+      "auditCancel": "Cancelled policy",
+      "close": "Close"
+    },
+    "claimsActions": {
+      "review": "Review",
+      "modalTitle": "Review claim",
+      "claimant": "Claimant",
+      "amount": "Amount",
+      "type": "Type",
+      "incident": "Incident",
+      "approve": "Approve",
+      "reject": "Reject",
+      "requestDocs": "Request documents",
+      "markPaid": "Mark as paid",
+      "approved": "Claim approved",
+      "rejected": "Claim rejected",
+      "docsRequested": "Document request sent",
+      "paid": "Claim marked as paid",
+      "auditApprove": "Approved claim",
+      "auditReject": "Rejected claim",
+      "auditPaid": "Paid claim",
+      "close": "Close"
+    },
+    "approvals": {
+      "title": "Approvals / KYC",
+      "desc": "Agent OIC license approval queue — approving unlocks override income",
+      "col": {
+        "name": "Name",
+        "license": "License no.",
+        "rank": "Rank",
+        "gen": "Gen",
+        "joined": "Joined",
+        "status": "Status"
+      },
+      "verify": "Approve license",
+      "reject": "Reject",
+      "verified": "License approved — override income unlocked",
+      "rejected": "Application rejected",
+      "auditApprove": "Approved agent license",
+      "auditReject": "Rejected agent license",
+      "empty": "No applications pending",
+      "pendingOnly": "Show pending only",
+      "noLicense": "No license number"
+    },
+    "customersActions": {
+      "view": "View details",
+      "modalTitle": "Customer details",
+      "kyc": "KYC status",
+      "verifyKyc": "Verify KYC",
+      "suspend": "Suspend account",
+      "reactivate": "Reactivate",
+      "account": "Account status",
+      "kycVerified": "Verified",
+      "kycUnverified": "Unverified",
+      "accActive": "Active",
+      "accSuspended": "Suspended",
+      "kycDone": "KYC verified",
+      "suspended": "Account suspended",
+      "reactivated": "Account reactivated",
+      "auditVerify": "Verified customer KYC",
+      "auditSuspend": "Suspended customer account",
+      "kycCol": "KYC"
+    },
+    "agentsActions": {
+      "view": "View performance",
+      "modalTitle": "Agent performance",
+      "teamSize": "Team size",
+      "teamGwp": "Team GWP",
+      "override": "Override earned",
+      "personalGwp": "Personal GWP",
+      "directs": "Direct recruits",
+      "verifyDone": "License verified",
+      "auditVerify": "Verified agent license"
+    },
+    "invoicesActions": {
+      "reconcile": "Reconcile",
+      "markPaid": "Mark as paid",
+      "reconciled": "Reconciled",
+      "paidDone": "Payment recorded",
+      "auditReconcile": "Reconciled invoice",
+      "pendingTotal": "Outstanding total"
+    },
+    "payoutsActions": {
+      "approveRun": "Approve & run",
+      "markPaid": "Mark paid",
+      "batchDone": "All payouts approved",
+      "paidDone": "Payout recorded",
+      "auditPayout": "Approved commission payout",
+      "pendingTotal": "Pending total"
+    },
+    "reports": {
+      "title": "Reports",
+      "desc": "Performance summary across the whole platform",
+      "gwpByProduct": "GWP by product",
+      "policiesByStatus": "Policies by status",
+      "ordersByChannel": "Orders by channel",
+      "claimsByStatus": "Claims by status",
+      "totalGwp": "Total GWP",
+      "totalPolicies": "Total policies",
+      "totalClaims": "Total claims",
+      "totalOrders": "Total orders"
+    },
+    "productsActions": {
+      "edit": "Edit",
+      "modalTitle": "Edit product plan",
+      "planName": "Plan name",
+      "insurer": "Insurer",
+      "coverage": "Coverage (THB)",
+      "basePremium": "Base premium (THB)",
+      "active": "Active",
+      "save": "Save",
+      "saved": "Plan saved",
+      "toggled": "Plan status updated"
+    },
+    "commissions": {
+      "title": "Commission rules",
+      "desc": "Commission rates by product and agent tier",
+      "col": {
+        "product": "Product",
+        "tier": "Tier",
+        "rate": "Rate (%)",
+        "status": "Status"
+      },
+      "addRule": "Add rule",
+      "edit": "Edit rule",
+      "rate": "Rate (%)",
+      "active": "Active",
+      "save": "Save",
+      "saved": "Commission rule saved",
+      "added": "Rule added",
+      "toggled": "Rule status updated",
+      "empty": "No rules yet"
+    },
+    "staffActions": {
+      "edit": "Manage access",
+      "modalTitle": "Manage staff",
+      "assignRole": "Role (staffRole)",
+      "suspend": "Suspend",
+      "activate": "Activate",
+      "save": "Save",
+      "saved": "Access saved",
+      "suspended": "Staff account suspended",
+      "activated": "Account activated",
+      "auditRole": "Changed staff permissions"
+    },
+    "settings": {
+      "title": "System settings",
+      "desc": "Org settings, feature flags, notification templates and integrations",
+      "general": "General",
+      "orgName": "Organisation name",
+      "defaultLocale": "Default language",
+      "features": "Feature flags",
+      "flagWallet": "Worker Wallet",
+      "flagLine": "LINE Concierge",
+      "flagTeam": "Agent team (override)",
+      "flagMaintenance": "Maintenance mode",
+      "notifications": "Notification templates",
+      "tplOtp": "OTP message",
+      "tplPolicy": "Policy issued",
+      "tplClaim": "Claim update",
+      "integrations": "Integrations",
+      "lineToken": "LINE channel access token",
+      "paymentKey": "Payment gateway API key",
+      "placeholder": "(sample — not actually connected)",
+      "save": "Save settings",
+      "saved": "Settings saved"
+    },
+    "auditFilter": {
+      "search": "Search actor / action / target"
+    },
+    "supportActions": {
+      "reply": "Reply",
+      "modalTitle": "Support ticket",
+      "replyPlaceholder": "Type a reply...",
+      "send": "Send reply",
+      "sent": "Reply sent",
+      "setStatus": "Change status",
+      "statusUpdated": "Status updated",
+      "subject": "Subject",
+      "customer": "Customer",
+      "priority": "Priority"
     }
   }
 }

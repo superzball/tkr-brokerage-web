@@ -2,8 +2,11 @@
 // Central type contracts for the TKR product portals. Every mock query,
 // table, and screen references these — keep this the single source of truth.
 
-export type Role = 'business' | 'individual' | 'agent';
+export type Role = 'business' | 'individual' | 'agent' | 'admin';
 export type Locale = 'th' | 'en' | 'my' | 'lo';
+
+// ---- RBAC for back-office (Phase 14) ----
+export type StaffRole = 'superadmin' | 'ops' | 'content' | 'sales';
 
 export type InsuranceType = 'worker' | 'auto' | 'travel' | 'health' | 'fire';
 export type PolicyStatus = 'active' | 'expiring' | 'expired' | 'pending';
@@ -29,6 +32,9 @@ export interface User {
   rank?: Tier;
   licenseNo?: string;
   licenseStatus?: LicenseStatus;
+  // back-office staff fields (Phase 14) — only set for role === 'admin'
+  staffRole?: StaffRole;
+  permissions?: string[];  // optional fine-grained override
 }
 
 // ---- shared insurance entities ----
@@ -178,8 +184,121 @@ export interface NavItem {
   key: string;             // i18n key under the `nav` namespace
   href: string;
   icon: string;            // lucide-react icon name
+  perm?: string;           // when set, item shows only if the user has it (RBAC)
 }
 export interface NavSection {
   key?: string;            // optional section heading (i18n key); omit for top group
   items: NavItem[];
+  perm?: string;           // when set, section shows only if the user has it
+}
+
+// ============== admin entities (Phase 14) ==============
+export type ArticleStatus = 'draft' | 'scheduled' | 'published';
+export interface Article {
+  id: string;
+  title: string;
+  slug: string;
+  status: ArticleStatus;
+  category: string;
+  author: string;
+  locales: Locale[];           // which languages are translated
+  publishedAt?: string;
+  seo: { metaTitle: string; metaDescription: string; ogImage?: string };
+}
+
+export type OrderStatus = 'draft' | 'awaiting_payment' | 'issued' | 'cancelled';
+export type OrderChannel = 'phone' | 'walk_in' | 'line' | 'online';
+export interface Order {
+  id: string;
+  orderNo: string;
+  customerName: string;
+  customerType: 'business' | 'individual';
+  product: InsuranceType;
+  premium: number;
+  status: OrderStatus;
+  channel: OrderChannel;
+  createdBy: string;           // staff user id (on-behalf) or 'self'
+  createdDate: string;
+}
+
+export interface StaffUser {
+  id: string;
+  name: string;
+  email: string;
+  staffRole: StaffRole;
+  status: 'active' | 'suspended';
+  lastActive: string;
+}
+
+export type TicketStatus = 'open' | 'pending' | 'resolved';
+export interface SupportTicket {
+  id: string;
+  ref: string;
+  customer: string;
+  subject: string;
+  status: TicketStatus;
+  priority: 'low' | 'medium' | 'high';
+  updatedAt: string;
+}
+
+export interface ProductPlan {
+  id: string;
+  product: InsuranceType;
+  planName: string;
+  insurer: string;
+  coverage: number;
+  basePremium: number;
+  active: boolean;
+}
+
+export interface AuditEntry {
+  id: string;
+  actor: string;               // staff name
+  action: string;              // e.g. "ออกกรมธรรม์", "อนุมัติเคลม"
+  target: string;              // e.g. policy/claim no
+  time: string;
+}
+
+// ---- admin content management (Phase 14 build-out) ----
+export interface CmsPage {
+  id: string;
+  path: string;                // public route, e.g. /worker-insurance
+  title: string;
+  hero: string;                // hero headline copy
+  body: string;                // intro/body copy
+  faqCount: number;
+  updatedAt: string;
+}
+
+export interface Faq {
+  id: string;
+  pageId: string;              // which CmsPage it belongs to
+  question: string;
+  answer: string;
+}
+
+export type MediaKind = 'image' | 'doc' | 'video';
+export interface MediaAsset {
+  id: string;
+  name: string;
+  kind: MediaKind;
+  sizeKb: number;
+  uploadedBy: string;
+  uploadedAt: string;
+}
+
+export interface Redirect {
+  id: string;
+  from: string;
+  to: string;
+  code: 301 | 302;
+}
+
+// ---- admin commission rules (Phase 14 build-out) ----
+export interface CommissionRule {
+  id: string;
+  product: InsuranceType;
+  tier: Tier;
+  rate: number;                // percent
+  active: boolean;
 }

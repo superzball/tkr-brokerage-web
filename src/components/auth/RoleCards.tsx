@@ -9,7 +9,9 @@ import { Icon, type IconName } from "@/components/ui/Icon";
 import type { Role } from "@/types/portal";
 import { cn } from "@/lib/cn";
 
-const ROLE_META: { role: Role; icon: IconName; descKey: string }[] = [
+// Only the 3 public signup roles — `admin` is internal (created back-office, not self-signup).
+type SignupRole = Exclude<Role, "admin">;
+const ROLE_META: { role: SignupRole; icon: IconName; descKey: string }[] = [
   { role: "business", icon: "building", descKey: "businessDesc" },
   { role: "individual", icon: "user", descKey: "individualDesc" },
   { role: "agent", icon: "headset", descKey: "agentDesc" },

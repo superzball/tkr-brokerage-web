@@ -19,9 +19,11 @@ const intlMiddleware = createMiddleware(routing);
 export default function proxy(req: NextRequest): NextResponse {
   const segments = req.nextUrl.pathname.split("/");
   const locale = segments[1] || routing.defaultLocale;
-  const isAppRoute = segments[2] === "app";
+  // Both the customer/agent portal (/app/*) and the back-office (/admin/*)
+  // require a session; role/staffRole gating happens per-layout & per-page.
+  const isProtected = segments[2] === "app" || segments[2] === "admin";
 
-  if (isAppRoute && !req.cookies.get(SESSION_COOKIE)) {
+  if (isProtected && !req.cookies.get(SESSION_COOKIE)) {
     const url = req.nextUrl.clone();
     url.pathname = `/${locale}/login`;
     url.searchParams.set("next", req.nextUrl.pathname);

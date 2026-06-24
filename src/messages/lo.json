@@ -82,7 +82,33 @@
     "teamSales": "ยอดขายทีม",
     "teamIncome": "รายได้จากทีม",
     "leaderboard": "อันดับทีม",
-    "sales": "ยอดขายของฉัน"
+    "sales": "การขาย",
+    "overview": "ภาพรวม",
+    "articles": "ข่าว / บทความ",
+    "pages": "หน้าเว็บ & FAQ",
+    "seo": "SEO & Redirect",
+    "media": "คลังสื่อ",
+    "newOrder": "สร้างรายการขาย",
+    "orders": "รายการขายทั้งหมด",
+    "adminPolicies": "กรมธรรม์ (ทั้งระบบ)",
+    "claimsQueue": "คิวพิจารณาเคลม",
+    "approvals": "อนุมัติ / KYC",
+    "customers": "ลูกค้า",
+    "agents": "ตัวแทน",
+    "adminInvoices": "ใบแจ้งหนี้",
+    "payouts": "จ่ายคอมมิชชั่น",
+    "reports": "รายงาน",
+    "catalog": "ผลิตภัณฑ์ & แผน",
+    "commRules": "กฎคอมมิชชั่น",
+    "staff": "ทีมงาน & สิทธิ์",
+    "sysSettings": "ตั้งค่าระบบ",
+    "audit": "บันทึกการใช้งาน",
+    "tickets": "เรื่องร้องเรียน",
+    "content": "คอนเทนต์",
+    "operations": "ปฏิบัติการ",
+    "accounts": "บัญชีผู้ใช้",
+    "finance": "การเงิน",
+    "config": "ตั้งค่า"
   },
   "app": {
     "menu": "เมนู",
@@ -169,7 +195,8 @@
       "or": "หรือ",
       "demoTitle": "บัญชีทดลอง (รหัสผ่าน demo1234)",
       "demoNote": "เลือกบัญชีทดลองเพื่อเข้าสู่ระบบทันที",
-      "demoPhones": "เบอร์ทดลอง (OTP 123456)"
+      "demoPhones": "เบอร์ทดลอง (OTP 123456)",
+      "staffTitle": "ทีมงาน (Back-office)"
     },
     "signup": {
       "title": "สมัครสมาชิก",
@@ -2315,6 +2342,549 @@
       "team": "ยอดขายทีม",
       "combined": "ยอดรวม",
       "note": "ระดับของคุณสะท้อนทั้งยอดขายส่วนตัวและยอดผลิตของทีมที่มีใบอนุญาต"
+    }
+  },
+  "admin": {
+    "forbidden": {
+      "title": "ไม่มีสิทธิ์เข้าถึง",
+      "body": "บัญชีทีมงานของคุณไม่มีสิทธิ์ในส่วนนี้ กรุณาติดต่อผู้ดูแลระบบ",
+      "back": "กลับสู่ภาพรวม"
+    },
+    "staffRole": {
+      "superadmin": "ผู้ดูแลสูงสุด",
+      "ops": "ฝ่ายปฏิบัติการ",
+      "content": "ฝ่ายคอนเทนต์",
+      "sales": "ฝ่ายขาย"
+    },
+    "status": {
+      "draft": "ฉบับร่าง",
+      "awaiting_payment": "รอชำระเงิน",
+      "issued": "ออกแล้ว",
+      "cancelled": "ยกเลิก",
+      "open": "เปิด",
+      "pending": "รอดำเนินการ",
+      "resolved": "แก้ไขแล้ว",
+      "active": "ใช้งาน",
+      "suspended": "ระงับ",
+      "published": "เผยแพร่",
+      "scheduled": "ตั้งเวลา",
+      "low": "ต่ำ",
+      "medium": "ปานกลาง",
+      "high": "สูง",
+      "on": "เปิดใช้งาน",
+      "off": "ปิด"
+    },
+    "channel": {
+      "phone": "โทรศัพท์",
+      "walk_in": "หน้าร้าน",
+      "line": "LINE",
+      "online": "ออนไลน์"
+    },
+    "table": {
+      "empty": "ไม่มีข้อมูล"
+    },
+    "dashboard": {
+      "title": "ภาพรวมระบบ",
+      "subtitle": "สรุปภาพรวมทั้งแพลตฟอร์มแบบเรียลไทม์",
+      "gwp": "เบี้ยรับรวม (GWP)",
+      "activePolicies": "กรมธรรม์ที่ใช้งาน",
+      "pendingClaims": "เคลมรอพิจารณา",
+      "openTickets": "เรื่องร้องเรียนค้าง",
+      "draftArticles": "บทความรอเผยแพร่",
+      "queuesTitle": "งานที่ต้องดำเนินการ",
+      "recentAudit": "กิจกรรมล่าสุด",
+      "viewAll": "ดูทั้งหมด",
+      "qClaims": "เคลมรอพิจารณา",
+      "qApprovals": "รออนุมัติ / KYC",
+      "qTickets": "เรื่องร้องเรียนเปิดอยู่",
+      "qOrders": "ออเดอร์รอชำระเงิน"
+    },
+    "orders": {
+      "title": "รายการขายทั้งหมด",
+      "desc": "ออเดอร์ทุกช่องทาง รวมถึงที่ตัวแทนเป็นผู้ขาย",
+      "newCta": "สร้างรายการขาย",
+      "col": {
+        "orderNo": "เลขออเดอร์",
+        "customer": "ลูกค้า",
+        "product": "ผลิตภัณฑ์",
+        "premium": "เบี้ย",
+        "channel": "ช่องทาง",
+        "status": "สถานะ",
+        "date": "วันที่",
+        "source": "ที่มา"
+      },
+      "sourceAdmin": "ทีมงาน",
+      "sourceAgent": "ตัวแทน",
+      "empty": "ยังไม่มีออเดอร์"
+    },
+    "newOrder": {
+      "title": "สร้างรายการขายแทนลูกค้า",
+      "desc": "ช่วยลูกค้าซื้อประกันทางโทรศัพท์ / หน้าร้าน / LINE แล้วออกออเดอร์",
+      "step": {
+        "customer": "ลูกค้า",
+        "product": "ผลิตภัณฑ์",
+        "review": "ตรวจสอบ",
+        "done": "เสร็จสิ้น"
+      },
+      "customerType": "ประเภทลูกค้า",
+      "typeBusiness": "นิติบุคคล",
+      "typeIndividual": "บุคคลธรรมดา",
+      "customerName": "ชื่อลูกค้า",
+      "customerPlaceholder": "ค้นหาหรือพิมพ์ชื่อลูกค้า",
+      "channelLabel": "ช่องทางการขาย",
+      "productLabel": "ผลิตภัณฑ์",
+      "planLabel": "แผนความคุ้มครอง",
+      "premiumLabel": "เบี้ยประกัน (บาท/ปี)",
+      "next": "ถัดไป",
+      "back": "ย้อนกลับ",
+      "reviewTitle": "ตรวจสอบรายการก่อนออกออเดอร์",
+      "issue": "ออกออเดอร์",
+      "successTitle": "ออกออเดอร์สำเร็จ",
+      "successBody": "สร้างออเดอร์ {orderNo} แล้ว และบันทึกลงประวัติการใช้งานเรียบร้อย",
+      "auditLogged": "บันทึกกิจกรรม",
+      "auditAction": "สร้างออเดอร์แทนลูกค้า",
+      "viewOrders": "ไปที่รายการขาย",
+      "another": "สร้างรายการใหม่",
+      "missing": "กรุณากรอกข้อมูลให้ครบ"
+    },
+    "audit": {
+      "title": "บันทึกการใช้งาน",
+      "desc": "ใครทำอะไร เมื่อไหร่ ทั่วทั้งระบบ",
+      "col": {
+        "time": "เวลา",
+        "actor": "ผู้ดำเนินการ",
+        "action": "การกระทำ",
+        "target": "เป้าหมาย"
+      },
+      "empty": "ยังไม่มีบันทึก"
+    },
+    "staff": {
+      "title": "ทีมงาน & สิทธิ์",
+      "desc": "จัดการบัญชีทีมงานและสิทธิ์การเข้าถึง (RBAC)",
+      "col": {
+        "name": "ชื่อ",
+        "email": "อีเมล",
+        "role": "บทบาท",
+        "status": "สถานะ",
+        "lastActive": "ใช้งานล่าสุด"
+      },
+      "empty": "ไม่มีทีมงาน"
+    },
+    "tickets": {
+      "title": "เรื่องร้องเรียน",
+      "desc": "คิวบริการลูกค้า",
+      "col": {
+        "ref": "เลขที่",
+        "customer": "ลูกค้า",
+        "subject": "เรื่อง",
+        "priority": "ความสำคัญ",
+        "status": "สถานะ",
+        "updated": "อัปเดต"
+      },
+      "empty": "ไม่มีเรื่องร้องเรียน"
+    },
+    "articles": {
+      "title": "ข่าว / บทความ",
+      "desc": "จัดการเนื้อหาที่แสดงบนหน้าเว็บสาธารณะ",
+      "newCta": "เขียนบทความ",
+      "col": {
+        "title": "หัวข้อ",
+        "category": "หมวดหมู่",
+        "status": "สถานะ",
+        "locales": "ภาษา",
+        "author": "ผู้เขียน",
+        "published": "เผยแพร่"
+      },
+      "empty": "ยังไม่มีบทความ"
+    },
+    "customers": {
+      "title": "ลูกค้า",
+      "desc": "ลูกค้านิติบุคคลและบุคคลธรรมดาทั้งหมด",
+      "col": {
+        "name": "ชื่อ",
+        "type": "ประเภท",
+        "role": "บทบาท",
+        "email": "อีเมล",
+        "phone": "โทรศัพท์"
+      },
+      "typeBusiness": "นิติบุคคล",
+      "typeIndividual": "บุคคลธรรมดา",
+      "empty": "ไม่มีลูกค้า"
+    },
+    "agents": {
+      "title": "ตัวแทน",
+      "desc": "ผลงาน ทีม และสถานะใบอนุญาตของตัวแทน",
+      "col": {
+        "name": "ชื่อ",
+        "rank": "ระดับ",
+        "license": "ใบอนุญาต",
+        "teamSize": "ขนาดทีม",
+        "teamGwp": "GWP ทีม",
+        "override": "โอเวอร์ไรด์"
+      },
+      "verify": "ยืนยันใบอนุญาต",
+      "verifySent": "ยืนยันใบอนุญาตแล้ว",
+      "empty": "ไม่มีตัวแทน"
+    },
+    "policies": {
+      "title": "กรมธรรม์ (ทั้งระบบ)",
+      "desc": "กรมธรรม์ทั้งหมดบนแพลตฟอร์ม",
+      "col": {
+        "policyNo": "เลขกรมธรรม์",
+        "type": "ประเภท",
+        "insurer": "บริษัทประกัน",
+        "premium": "เบี้ย",
+        "status": "สถานะ",
+        "end": "สิ้นสุด"
+      },
+      "empty": "ไม่มีกรมธรรม์"
+    },
+    "claims": {
+      "title": "คิวพิจารณาเคลม",
+      "desc": "เคลมทั้งหมดที่รอดำเนินการ",
+      "col": {
+        "claimNo": "เลขเคลม",
+        "claimant": "ผู้เคลม",
+        "type": "ประเภท",
+        "amount": "จำนวน",
+        "status": "สถานะ",
+        "date": "วันที่ยื่น"
+      },
+      "empty": "ไม่มีเคลม"
+    },
+    "invoices": {
+      "title": "ใบแจ้งหนี้",
+      "desc": "ใบแจ้งหนี้และการกระทบยอดทั้งหมด",
+      "col": {
+        "invoiceNo": "เลขใบแจ้งหนี้",
+        "amount": "จำนวน",
+        "status": "สถานะ",
+        "issued": "วันที่ออก",
+        "due": "ครบกำหนด"
+      },
+      "empty": "ไม่มีใบแจ้งหนี้"
+    },
+    "payouts": {
+      "title": "จ่ายคอมมิชชั่น",
+      "desc": "คอมมิชชั่นส่วนตัวและโอเวอร์ไรด์ทีม (เฉพาะดาวน์ไลน์ที่ยืนยันใบอนุญาต)",
+      "tabCommission": "คอมมิชชั่น",
+      "tabOverride": "โอเวอร์ไรด์ทีม",
+      "col": {
+        "period": "งวด",
+        "name": "รายการ",
+        "base": "ฐาน",
+        "rate": "อัตรา",
+        "amount": "จำนวน",
+        "status": "สถานะ"
+      },
+      "empty": "ไม่มีรายการจ่าย"
+    },
+    "plans": {
+      "title": "ผลิตภัณฑ์ & แผน",
+      "desc": "แผนความคุ้มครองและเบี้ยพื้นฐาน",
+      "col": {
+        "plan": "แผน",
+        "product": "ผลิตภัณฑ์",
+        "insurer": "บริษัทประกัน",
+        "coverage": "ทุนประกัน",
+        "premium": "เบี้ยพื้นฐาน",
+        "status": "สถานะ"
+      },
+      "empty": "ไม่มีแผน"
+    },
+    "product": {
+      "worker": "แรงงานต่างด้าว",
+      "auto": "รถยนต์",
+      "travel": "เดินทาง",
+      "health": "สุขภาพ",
+      "fire": "อัคคีภัย"
+    },
+    "articlesEditor": {
+      "create": "เขียนบทความใหม่",
+      "edit": "แก้ไขบทความ",
+      "titleLabel": "หัวข้อ",
+      "slug": "Slug (URL)",
+      "category": "หมวดหมู่",
+      "author": "ผู้เขียน",
+      "statusLabel": "สถานะ",
+      "scheduleDate": "วันที่เผยแพร่",
+      "bodyLabel": "เนื้อหา",
+      "contentTab": "เนื้อหา",
+      "seoTab": "SEO",
+      "seoSection": "การตั้งค่า SEO",
+      "metaTitle": "Meta Title",
+      "metaDescription": "Meta Description",
+      "ogImage": "OG Image URL",
+      "localeNote": "แท็บภาษา — กรอกเนื้อหาแยกแต่ละภาษา",
+      "save": "บันทึก",
+      "saved": "บันทึกบทความแล้ว",
+      "deleted": "ลบบทความแล้ว",
+      "delete": "ลบ",
+      "cancel": "ยกเลิก",
+      "translated": "แปลแล้ว",
+      "untranslated": "ยังไม่แปล"
+    },
+    "pages": {
+      "title": "หน้าเว็บ & FAQ",
+      "desc": "แก้ไขข้อความบนหน้าเว็บสาธารณะและคำถามที่พบบ่อย",
+      "col": {
+        "page": "หน้า",
+        "path": "URL",
+        "faqs": "FAQ",
+        "updated": "อัปเดต"
+      },
+      "empty": "ไม่มีหน้า",
+      "editCopy": "แก้ไขข้อความ",
+      "hero": "หัวข้อหลัก (Hero)",
+      "body": "เนื้อหา",
+      "faqTitle": "คำถามที่พบบ่อย",
+      "addFaq": "เพิ่ม FAQ",
+      "question": "คำถาม",
+      "answer": "คำตอบ",
+      "save": "บันทึก",
+      "saved": "บันทึกหน้าแล้ว",
+      "faqAdded": "เพิ่ม FAQ แล้ว",
+      "faqDeleted": "ลบ FAQ แล้ว",
+      "noFaq": "ยังไม่มี FAQ สำหรับหน้านี้"
+    },
+    "seo": {
+      "title": "SEO & Redirect",
+      "desc": "จัดการ meta ต่อหน้า, การ redirect และ sitemap",
+      "metaTab": "Meta ต่อหน้า",
+      "redirectTab": "Redirect",
+      "col": {
+        "path": "หน้า",
+        "metaTitle": "Meta Title",
+        "metaDescription": "Meta Description"
+      },
+      "rCol": {
+        "from": "จาก",
+        "to": "ไปยัง",
+        "code": "ประเภท"
+      },
+      "addRedirect": "เพิ่ม Redirect",
+      "redirectAdded": "เพิ่ม redirect แล้ว",
+      "redirectDeleted": "ลบ redirect แล้ว",
+      "from": "จาก (path)",
+      "to": "ไปยัง (path)",
+      "code": "รหัส",
+      "sitemap": "Sitemap",
+      "sitemapDesc": "สร้างและส่ง sitemap.xml อัตโนมัติ",
+      "save": "บันทึก",
+      "saved": "บันทึก SEO แล้ว",
+      "empty": "ไม่มีรายการ"
+    },
+    "media": {
+      "title": "คลังสื่อ",
+      "desc": "ไฟล์ภาพ เอกสาร และวิดีโอที่ใช้บนเว็บไซต์",
+      "upload": "อัปโหลดไฟล์",
+      "uploaded": "อัปโหลดไฟล์แล้ว (เดโม)",
+      "deleted": "ลบไฟล์แล้ว",
+      "delete": "ลบ",
+      "kind": {
+        "image": "รูปภาพ",
+        "doc": "เอกสาร",
+        "video": "วิดีโอ"
+      },
+      "by": "โดย",
+      "empty": "ยังไม่มีไฟล์ในคลัง",
+      "count": "{n} ไฟล์"
+    },
+    "policiesActions": {
+      "manage": "จัดการ",
+      "modalTitle": "จัดการกรมธรรม์",
+      "currentStatus": "สถานะปัจจุบัน",
+      "issue": "ออกกรมธรรม์",
+      "endorse": "สลักหลัง (แก้ไข)",
+      "renew": "ต่ออายุ",
+      "cancel": "ยกเลิก",
+      "issued": "ออกกรมธรรม์แล้ว",
+      "endorsed": "บันทึกการสลักหลังแล้ว",
+      "renewed": "ต่ออายุกรมธรรม์แล้ว",
+      "cancelled": "ยกเลิกกรมธรรม์แล้ว",
+      "auditIssue": "ออกกรมธรรม์",
+      "auditRenew": "ต่ออายุกรมธรรม์",
+      "auditCancel": "ยกเลิกกรมธรรม์",
+      "close": "ปิด"
+    },
+    "claimsActions": {
+      "review": "พิจารณา",
+      "modalTitle": "พิจารณาเคลม",
+      "claimant": "ผู้เคลม",
+      "amount": "จำนวนเงิน",
+      "type": "ประเภท",
+      "incident": "เหตุการณ์",
+      "approve": "อนุมัติ",
+      "reject": "ปฏิเสธ",
+      "requestDocs": "ขอเอกสารเพิ่ม",
+      "markPaid": "ทำเครื่องหมายว่าจ่ายแล้ว",
+      "approved": "อนุมัติเคลมแล้ว",
+      "rejected": "ปฏิเสธเคลมแล้ว",
+      "docsRequested": "ส่งคำขอเอกสารแล้ว",
+      "paid": "บันทึกการจ่ายเคลมแล้ว",
+      "auditApprove": "อนุมัติเคลม",
+      "auditReject": "ปฏิเสธเคลม",
+      "auditPaid": "จ่ายเคลม",
+      "close": "ปิด"
+    },
+    "approvals": {
+      "title": "อนุมัติ / KYC",
+      "desc": "คิวอนุมัติใบอนุญาตตัวแทน (OIC) — อนุมัติแล้วจึงเริ่มรับโอเวอร์ไรด์",
+      "col": {
+        "name": "ชื่อ",
+        "license": "เลขใบอนุญาต",
+        "rank": "ระดับ",
+        "gen": "ชั้น",
+        "joined": "เข้าร่วม",
+        "status": "สถานะ"
+      },
+      "verify": "อนุมัติใบอนุญาต",
+      "reject": "ปฏิเสธ",
+      "verified": "อนุมัติใบอนุญาตแล้ว — เริ่มรับโอเวอร์ไรด์",
+      "rejected": "ปฏิเสธคำขอแล้ว",
+      "auditApprove": "อนุมัติใบอนุญาตตัวแทน",
+      "auditReject": "ปฏิเสธใบอนุญาตตัวแทน",
+      "empty": "ไม่มีคำขอรออนุมัติ",
+      "pendingOnly": "แสดงเฉพาะที่รอตรวจสอบ",
+      "noLicense": "ไม่มีเลขใบอนุญาต"
+    },
+    "customersActions": {
+      "view": "ดูรายละเอียด",
+      "modalTitle": "ข้อมูลลูกค้า",
+      "kyc": "สถานะ KYC",
+      "verifyKyc": "ยืนยัน KYC",
+      "suspend": "ระงับบัญชี",
+      "reactivate": "เปิดใช้งานอีกครั้ง",
+      "account": "สถานะบัญชี",
+      "kycVerified": "ยืนยันแล้ว",
+      "kycUnverified": "ยังไม่ยืนยัน",
+      "accActive": "ใช้งาน",
+      "accSuspended": "ระงับ",
+      "kycDone": "ยืนยัน KYC แล้ว",
+      "suspended": "ระงับบัญชีแล้ว",
+      "reactivated": "เปิดใช้งานบัญชีแล้ว",
+      "auditVerify": "ยืนยัน KYC ลูกค้า",
+      "auditSuspend": "ระงับบัญชีลูกค้า",
+      "kycCol": "KYC"
+    },
+    "agentsActions": {
+      "view": "ดูผลงาน",
+      "modalTitle": "ผลงานตัวแทน",
+      "teamSize": "ขนาดทีม",
+      "teamGwp": "GWP ทีม",
+      "override": "โอเวอร์ไรด์ที่ได้รับ",
+      "personalGwp": "GWP ส่วนตัว",
+      "directs": "ลูกทีมตรง",
+      "verifyDone": "ยืนยันใบอนุญาตแล้ว",
+      "auditVerify": "ยืนยันใบอนุญาตตัวแทน"
+    },
+    "invoicesActions": {
+      "reconcile": "กระทบยอด",
+      "markPaid": "ทำเครื่องหมายว่าจ่ายแล้ว",
+      "reconciled": "กระทบยอดแล้ว",
+      "paidDone": "บันทึกการชำระแล้ว",
+      "auditReconcile": "กระทบยอดใบแจ้งหนี้",
+      "pendingTotal": "ยอดค้างชำระรวม"
+    },
+    "payoutsActions": {
+      "approveRun": "อนุมัติและจ่าย",
+      "markPaid": "จ่ายแล้ว",
+      "batchDone": "อนุมัติการจ่ายทั้งหมดแล้ว",
+      "paidDone": "บันทึกการจ่ายแล้ว",
+      "auditPayout": "อนุมัติการจ่ายคอมมิชชั่น",
+      "pendingTotal": "ยอดรอจ่ายรวม"
+    },
+    "reports": {
+      "title": "รายงาน",
+      "desc": "สรุปผลการดำเนินงานทั่วทั้งแพลตฟอร์ม",
+      "gwpByProduct": "GWP แยกตามผลิตภัณฑ์",
+      "policiesByStatus": "กรมธรรม์แยกตามสถานะ",
+      "ordersByChannel": "ออเดอร์แยกตามช่องทาง",
+      "claimsByStatus": "เคลมแยกตามสถานะ",
+      "totalGwp": "GWP รวม",
+      "totalPolicies": "กรมธรรม์ทั้งหมด",
+      "totalClaims": "เคลมทั้งหมด",
+      "totalOrders": "ออเดอร์ทั้งหมด"
+    },
+    "productsActions": {
+      "edit": "แก้ไข",
+      "modalTitle": "แก้ไขแผนผลิตภัณฑ์",
+      "planName": "ชื่อแผน",
+      "insurer": "บริษัทประกัน",
+      "coverage": "ทุนประกัน (บาท)",
+      "basePremium": "เบี้ยพื้นฐาน (บาท)",
+      "active": "เปิดใช้งาน",
+      "save": "บันทึก",
+      "saved": "บันทึกแผนแล้ว",
+      "toggled": "อัปเดตสถานะแผนแล้ว"
+    },
+    "commissions": {
+      "title": "กฎคอมมิชชั่น",
+      "desc": "อัตราคอมมิชชั่นแยกตามผลิตภัณฑ์และระดับตัวแทน",
+      "col": {
+        "product": "ผลิตภัณฑ์",
+        "tier": "ระดับ",
+        "rate": "อัตรา (%)",
+        "status": "สถานะ"
+      },
+      "addRule": "เพิ่มกฎ",
+      "edit": "แก้ไขกฎ",
+      "rate": "อัตรา (%)",
+      "active": "เปิดใช้งาน",
+      "save": "บันทึก",
+      "saved": "บันทึกกฎคอมมิชชั่นแล้ว",
+      "added": "เพิ่มกฎแล้ว",
+      "toggled": "อัปเดตสถานะกฎแล้ว",
+      "empty": "ยังไม่มีกฎ"
+    },
+    "staffActions": {
+      "edit": "จัดการสิทธิ์",
+      "modalTitle": "จัดการทีมงาน",
+      "assignRole": "บทบาท (staffRole)",
+      "suspend": "ระงับ",
+      "activate": "เปิดใช้งาน",
+      "save": "บันทึก",
+      "saved": "บันทึกสิทธิ์แล้ว",
+      "suspended": "ระงับบัญชีทีมงานแล้ว",
+      "activated": "เปิดใช้งานบัญชีแล้ว",
+      "auditRole": "เปลี่ยนสิทธิ์ทีมงาน"
+    },
+    "settings": {
+      "title": "ตั้งค่าระบบ",
+      "desc": "การตั้งค่าองค์กร ฟีเจอร์ เทมเพลตการแจ้งเตือน และการเชื่อมต่อ",
+      "general": "ทั่วไป",
+      "orgName": "ชื่อองค์กร",
+      "defaultLocale": "ภาษาเริ่มต้น",
+      "features": "ฟีเจอร์ (Feature Flags)",
+      "flagWallet": "Worker Wallet",
+      "flagLine": "LINE Concierge",
+      "flagTeam": "ระบบทีมตัวแทน (Override)",
+      "flagMaintenance": "โหมดปิดปรับปรุง",
+      "notifications": "เทมเพลตการแจ้งเตือน",
+      "tplOtp": "ข้อความ OTP",
+      "tplPolicy": "แจ้งออกกรมธรรม์",
+      "tplClaim": "แจ้งอัปเดตเคลม",
+      "integrations": "การเชื่อมต่อ (Integrations)",
+      "lineToken": "LINE Channel Access Token",
+      "paymentKey": "Payment Gateway API Key",
+      "placeholder": "(ตัวอย่าง — ยังไม่เชื่อมต่อจริง)",
+      "save": "บันทึกการตั้งค่า",
+      "saved": "บันทึกการตั้งค่าแล้ว"
+    },
+    "auditFilter": {
+      "search": "ค้นหาผู้ดำเนินการ / การกระทำ / เป้าหมาย"
+    },
+    "supportActions": {
+      "reply": "ตอบกลับ",
+      "modalTitle": "เรื่องร้องเรียน",
+      "replyPlaceholder": "พิมพ์ข้อความตอบกลับ...",
+      "send": "ส่งคำตอบ",
+      "sent": "ส่งคำตอบแล้ว",
+      "setStatus": "เปลี่ยนสถานะ",
+      "statusUpdated": "อัปเดตสถานะแล้ว",
+      "subject": "เรื่อง",
+      "customer": "ลูกค้า",
+      "priority": "ความสำคัญ"
     }
   }
 }

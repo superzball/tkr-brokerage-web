@@ -9,6 +9,8 @@ import type {
   Client, Commission, Lead, AgentTierInfo, Notification, Role,
   DownlineMember, TeamOverride, InsuranceType, LeadStage,
   AgentSale, SaleStatus,
+  Article, Order, StaffUser, SupportTicket, ProductPlan, AuditEntry,
+  CmsPage, Faq, MediaAsset, Redirect, CommissionRule,
 } from '@/types/portal';
 
 // ============================ USERS (demo accounts) ============================
@@ -16,6 +18,11 @@ export const users: User[] = [
   { id: 'u_biz',   role: 'business',   name: 'คุณสมชาย เจริญทรัพย์', company: 'บริษัท ไทยเจริญ ก่อสร้าง จำกัด', email: 'business@tkr.demo', phone: '081-000-0001', avatarColor: '#1f66ee' },
   { id: 'u_indiv', role: 'individual', name: 'คุณนภัสสร วงศ์ดี',       email: 'me@tkr.demo',       phone: '081-000-0002', avatarColor: '#0f52c7' },
   { id: 'u_agent', role: 'agent',      name: 'คุณธนกร พาณิชย์',         email: 'agent@tkr.demo',    phone: '081-000-0003', avatarColor: '#e89c12', rank: 'Gold', licenseNo: 'B-0099123', licenseStatus: 'verified' },
+  { id: 'u_admin', role: 'admin',      name: 'คุณกานต์ ผู้ดูแลระบบ',     email: 'admin@tkr.demo',    phone: '081-000-0004', staffRole: 'superadmin', avatarColor: '#0b2a6b' },
+  // additional staff identities (login-able) so RBAC can be demoed per staffRole
+  { id: 'u_ops',     role: 'admin', name: 'คุณปาริชาต ฝ่ายปฏิบัติการ', email: 'ops@tkr.demo',     phone: '081-000-0005', staffRole: 'ops',     avatarColor: '#0f7a52' },
+  { id: 'u_content', role: 'admin', name: 'คุณธีรเดช คอนเทนต์',        email: 'content@tkr.demo', phone: '081-000-0006', staffRole: 'content', avatarColor: '#8a4bd1' },
+  { id: 'u_sales',   role: 'admin', name: 'คุณรัตติกาล ฝ่ายขาย',       email: 'sales@tkr.demo',   phone: '081-000-0007', staffRole: 'sales',   avatarColor: '#c2410c' },
 ];
 
 // ============================ POLICIES ============================
@@ -383,3 +390,116 @@ export function leadStageSummary(
   }
   return out;
 }
+
+// ============================ ADMIN / BACK-OFFICE (Phase 14) ============================
+export const articles: Article[] = [
+  { id: 'a1', title: 'ประกันแรงงานต่างด้าวปี 2569 ต้องรู้อะไรบ้าง', slug: 'foreign-worker-insurance-2026', status: 'published', category: 'ความรู้ประกัน', author: 'ทีม TKR', locales: ['th','en'], publishedAt: '2026-06-01', seo: { metaTitle: 'ประกันแรงงานต่างด้าว 2569 | TKR', metaDescription: 'คู่มือฉบับสมบูรณ์เรื่องประกันแรงงานต่างด้าวสำหรับนายจ้าง' } },
+  { id: 'a2', title: '5 ข้อควรรู้ก่อนต่ออายุประกันรถยนต์', slug: 'car-insurance-renewal-tips', status: 'published', category: 'ประกันรถยนต์', author: 'ทีม TKR', locales: ['th'], publishedAt: '2026-05-18', seo: { metaTitle: 'ต่อประกันรถยนต์อย่างไรให้คุ้ม | TKR', metaDescription: 'เคล็ดลับเลือกและต่อประกันรถยนต์' } },
+  { id: 'a3', title: 'Worker Wallet คืออะไร ใช้งานอย่างไร', slug: 'what-is-worker-wallet', status: 'scheduled', category: 'ผลิตภัณฑ์', author: 'ทีม TKR', locales: ['th','my','lo'], publishedAt: '2026-07-01', seo: { metaTitle: 'Worker Wallet | TKR', metaDescription: 'กระเป๋าดิจิทัลสำหรับแรงงาน' } },
+  { id: 'a4', title: 'ร่างประกาศโปรโมชั่นกลางปี', slug: 'mid-year-promo', status: 'draft', category: 'โปรโมชั่น', author: 'ทีม TKR', locales: ['th'], seo: { metaTitle: '', metaDescription: '' } },
+];
+
+export const orders: Order[] = [
+  { id: 'o1', orderNo: 'ORD-2026-1188', customerName: 'บริษัท บูรพา ขนส่ง จำกัด', customerType: 'business', product: 'worker', premium: 88000, status: 'awaiting_payment', channel: 'phone', createdBy: 'u_admin', createdDate: '2026-06-20' },
+  { id: 'o2', orderNo: 'ORD-2026-1175', customerName: 'คุณอาทิตย์ แสงทอง', customerType: 'individual', product: 'auto', premium: 16500, status: 'issued', channel: 'line', createdBy: 'u_admin', createdDate: '2026-06-15' },
+  { id: 'o3', orderNo: 'ORD-2026-1162', customerName: 'ร้าน ก.รุ่งเรืองวัสดุ', customerType: 'business', product: 'fire', premium: 24000, status: 'issued', channel: 'walk_in', createdBy: 'u_admin', createdDate: '2026-06-09' },
+  { id: 'o4', orderNo: 'ORD-2026-1150', customerName: 'คุณมณีรัตน์ ทองคำ', customerType: 'individual', product: 'health', premium: 24000, status: 'draft', channel: 'phone', createdBy: 'u_admin', createdDate: '2026-06-05' },
+];
+
+export const staffUsers: StaffUser[] = [
+  { id: 's1', name: 'คุณกานต์ ผู้ดูแลระบบ', email: 'admin@tkr.demo', staffRole: 'superadmin', status: 'active', lastActive: '2026-06-23' },
+  { id: 's2', name: 'คุณปาริชาต ฝ่ายปฏิบัติการ', email: 'ops@tkr.demo', staffRole: 'ops', status: 'active', lastActive: '2026-06-22' },
+  { id: 's3', name: 'คุณธีรเดช คอนเทนต์', email: 'content@tkr.demo', staffRole: 'content', status: 'active', lastActive: '2026-06-21' },
+  { id: 's4', name: 'คุณรัตติกาล ฝ่ายขาย', email: 'sales@tkr.demo', staffRole: 'sales', status: 'suspended', lastActive: '2026-05-30' },
+];
+
+export const tickets: SupportTicket[] = [
+  { id: 't1', ref: 'TKT-2026-3391', customer: 'บริษัท ไทยเจริญ ก่อสร้าง จำกัด', subject: 'ขอแก้ไขรายชื่อแรงงานในกรมธรรม์', status: 'open', priority: 'high', updatedAt: '2026-06-23' },
+  { id: 't2', ref: 'TKT-2026-3380', customer: 'คุณนภัสสร วงศ์ดี', subject: 'สอบถามขั้นตอนเคลมประกันรถ', status: 'pending', priority: 'medium', updatedAt: '2026-06-22' },
+  { id: 't3', ref: 'TKT-2026-3361', customer: 'คุณวีรพล สุขสันต์', subject: 'ขอใบเสร็จย้อนหลัง', status: 'resolved', priority: 'low', updatedAt: '2026-06-20' },
+];
+
+export const productPlans: ProductPlan[] = [
+  { id: 'pp1', product: 'worker', planName: 'แรงงาน Essential', insurer: 'ทิพยประกันภัย',   coverage: 500000,  basePremium: 500,  active: true },
+  { id: 'pp2', product: 'worker', planName: 'แรงงาน Plus',      insurer: 'วิริยะประกันภัย',  coverage: 1000000, basePremium: 850,  active: true },
+  { id: 'pp3', product: 'auto',   planName: 'รถยนต์ชั้น 1',      insurer: 'วิริยะประกันภัย',  coverage: 1000000, basePremium: 14200, active: true },
+  { id: 'pp4', product: 'health', planName: 'สุขภาพเหมาจ่าย',    insurer: 'เมืองไทยประกันภัย', coverage: 1500000, basePremium: 22000, active: true },
+  { id: 'pp5', product: 'fire',   planName: 'อัคคีภัยธุรกิจ',    insurer: 'กรุงเทพประกันภัย',  coverage: 8000000, basePremium: 18500, active: false },
+];
+
+export const auditLog: AuditEntry[] = [
+  { id: 'au1', actor: 'คุณกานต์ ผู้ดูแลระบบ', action: 'สร้างออเดอร์แทนลูกค้า', target: 'ORD-2026-1188', time: '2026-06-20T14:22:00+07:00' },
+  { id: 'au2', actor: 'คุณปาริชาต ฝ่ายปฏิบัติการ', action: 'อนุมัติเคลม', target: 'CLM-2026-09887', time: '2026-06-21T10:05:00+07:00' },
+  { id: 'au3', actor: 'คุณธีรเดช คอนเทนต์', action: 'เผยแพร่บทความ', target: 'foreign-worker-insurance-2026', time: '2026-06-01T09:00:00+07:00' },
+];
+
+// helpers
+export const getArticles = () => articles;
+export const getOrders = () => orders;
+export const getStaff = () => staffUsers;
+export const getTickets = () => tickets;
+export const getProductPlans = () => productPlans;
+export const getAuditLog = () => auditLog;
+export const getAllPolicies = () => policies;   // admin sees platform-wide
+export const getAllClaims = () => claims;
+export const getAllCustomers = () => users.filter(u => u.role === 'business' || u.role === 'individual');
+
+export function adminStats() {
+  const gwp = policies.reduce((s, p) => s + p.premium, 0);
+  return {
+    gwp,                                                   // gross written premium
+    activePolicies: policies.filter(p => p.status === 'active').length,
+    pendingClaims: claims.filter(c => c.status === 'submitted' || c.status === 'reviewing').length,
+    openTickets: tickets.filter(t => t.status !== 'resolved').length,
+    draftArticles: articles.filter(a => a.status !== 'published').length,
+  };
+}
+
+// ============================ ADMIN CONTENT (Phase 14 build-out) ============================
+export const cmsPages: CmsPage[] = [
+  { id: 'cp1', path: '/',                 title: 'หน้าแรก',              hero: 'ประกันที่เข้าใจคนทำงาน',                 body: 'TKR ช่วยให้นายจ้างและแรงงานเข้าถึงประกันที่จำเป็นได้ง่าย รวดเร็ว และโปร่งใส', faqCount: 3, updatedAt: '2026-06-18' },
+  { id: 'cp2', path: '/worker-insurance', title: 'ประกันแรงงานต่างด้าว', hero: 'คุ้มครองแรงงานครบ จบในที่เดียว',          body: 'ซื้อประกันแรงงานต่างด้าวออนไลน์ ออกกรมธรรม์ไว พร้อมระบบจัดการรายชื่อแรงงาน', faqCount: 4, updatedAt: '2026-06-15' },
+  { id: 'cp3', path: '/auto',             title: 'ประกันรถยนต์',         hero: 'ประกันรถที่เปรียบเทียบได้จริง',           body: 'เทียบเบี้ยจากหลายบริษัทในที่เดียว เลือกแผนที่ใช่สำหรับคุณ',                  faqCount: 2, updatedAt: '2026-06-10' },
+  { id: 'cp4', path: '/customer',         title: 'สำหรับลูกค้า',          hero: 'จัดการกรมธรรม์ของคุณได้ทุกที่',           body: 'ดูกรมธรรม์ เคลม และชำระเบี้ยได้จากที่เดียว',                                  faqCount: 2, updatedAt: '2026-06-08' },
+  { id: 'cp5', path: '/agency',           title: 'สำหรับตัวแทน',          hero: 'เติบโตไปกับ TKR',                          body: 'เครื่องมือครบสำหรับตัวแทนและทีมขาย พร้อมระบบคอมมิชชั่นโปร่งใส',               faqCount: 3, updatedAt: '2026-06-05' },
+];
+
+export const faqs: Faq[] = [
+  { id: 'f1', pageId: 'cp2', question: 'ซื้อประกันแรงงานต่างด้าวต้องใช้เอกสารอะไรบ้าง', answer: 'ใช้สำเนาพาสปอร์ตและใบอนุญาตทำงานของแรงงาน พร้อมข้อมูลนายจ้าง' },
+  { id: 'f2', pageId: 'cp2', question: 'ออกกรมธรรม์ใช้เวลานานไหม',                       answer: 'เมื่อชำระเบี้ยแล้ว ระบบจะออกกรมธรรม์ภายใน 24 ชั่วโมง' },
+  { id: 'f3', pageId: 'cp2', question: 'เพิ่ม-ลดรายชื่อแรงงานระหว่างปีได้หรือไม่',          answer: 'ได้ ผ่านระบบจัดการแรงงานในพอร์ทัลของนายจ้าง' },
+  { id: 'f4', pageId: 'cp3', question: 'เทียบเบี้ยประกันรถยนต์อย่างไร',                    answer: 'กรอกข้อมูลรถและความต้องการ ระบบจะแสดงเบี้ยจากหลายบริษัทให้เลือก' },
+  { id: 'f5', pageId: 'cp1', question: 'TKR คืออะไร',                                     answer: 'แพลตฟอร์มประกันสำหรับนายจ้าง แรงงาน และบุคคลทั่วไป' },
+];
+
+export const mediaAssets: MediaAsset[] = [
+  { id: 'm1', name: 'hero-worker.jpg',        kind: 'image', sizeKb: 248, uploadedBy: 'คุณธีรเดช คอนเทนต์', uploadedAt: '2026-06-18' },
+  { id: 'm2', name: 'brochure-worker-2026.pdf', kind: 'doc', sizeKb: 1840, uploadedBy: 'คุณธีรเดช คอนเทนต์', uploadedAt: '2026-06-12' },
+  { id: 'm3', name: 'og-default.png',         kind: 'image', sizeKb: 96,  uploadedBy: 'ทีม TKR',           uploadedAt: '2026-06-01' },
+  { id: 'm4', name: 'explainer-wallet.mp4',   kind: 'video', sizeKb: 15200, uploadedBy: 'ทีม TKR',         uploadedAt: '2026-05-28' },
+  { id: 'm5', name: 'logo-tkr.png',           kind: 'image', sizeKb: 42,  uploadedBy: 'ทีม TKR',           uploadedAt: '2026-05-20' },
+  { id: 'm6', name: 'agency-tiers.png',       kind: 'image', sizeKb: 180, uploadedBy: 'คุณธีรเดช คอนเทนต์', uploadedAt: '2026-05-15' },
+];
+
+export const redirects: Redirect[] = [
+  { id: 'r1', from: '/insurance', to: '/worker-insurance', code: 301 },
+  { id: 'r2', from: '/promo',     to: '/insurance/worker',  code: 302 },
+  { id: 'r3', from: '/agent',     to: '/agency',            code: 301 },
+];
+
+export const commissionRules: CommissionRule[] = [
+  { id: 'cr1', product: 'worker', tier: 'Silver',   rate: 8,  active: true },
+  { id: 'cr2', product: 'worker', tier: 'Gold',     rate: 10, active: true },
+  { id: 'cr3', product: 'worker', tier: 'Platinum', rate: 12, active: true },
+  { id: 'cr4', product: 'auto',   tier: 'Gold',     rate: 12, active: true },
+  { id: 'cr5', product: 'auto',   tier: 'Platinum', rate: 14, active: true },
+  { id: 'cr6', product: 'health', tier: 'Gold',     rate: 15, active: true },
+  { id: 'cr7', product: 'fire',   tier: 'Diamond',  rate: 16, active: false },
+];
+
+export const getCmsPages = () => cmsPages;
+export const getFaqs = (pageId?: string) =>
+  pageId ? faqs.filter(f => f.pageId === pageId) : faqs;
+export const getMedia = () => mediaAssets;
+export const getRedirects = () => redirects;
+export const getCommissionRules = () => commissionRules;
