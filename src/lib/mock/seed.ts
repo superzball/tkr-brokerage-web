@@ -11,6 +11,8 @@ import type {
   AgentSale, SaleStatus,
   Article, Order, StaffUser, SupportTicket, ProductPlan, AuditEntry,
   CmsPage, Faq, MediaAsset, Redirect, CommissionRule,
+  CrmProduct, Duration, PricingTier, CustomerCreditProfile,
+  PolicyTicket, CrmPayment, CreditTransaction, AmendmentTicket, IssuedPolicy,
 } from '@/types/portal';
 
 // ============================ USERS (demo accounts) ============================
@@ -437,7 +439,7 @@ export const auditLog: AuditEntry[] = [
 export const getArticles = () => articles;
 export const getOrders = () => orders;
 export const getStaff = () => staffUsers;
-export const getTickets = () => tickets;
+export const getSupportTickets = () => tickets;
 export const getProductPlans = () => productPlans;
 export const getAuditLog = () => auditLog;
 export const getAllPolicies = () => policies;   // admin sees platform-wide
@@ -503,3 +505,117 @@ export const getFaqs = (pageId?: string) =>
 export const getMedia = () => mediaAssets;
 export const getRedirects = () => redirects;
 export const getCommissionRules = () => commissionRules;
+
+// ============================ CRM OPS CORE (Phase 15) ============================
+// Worker-insurance fulfillment (MOU / MOTI24 → underwriter "Thip").
+// Credit wallet + ledger are INTERNAL ONLY — never surface in a customer portal.
+
+// ---- pricing config (source of truth; per-customer discounts handle variance) ----
+export const pricingTiers: PricingTier[] = [
+  { product: 'MOU',    duration: '3_months',  basePrice: 590 },
+  { product: 'MOU',    duration: '6_months',  basePrice: 990 },
+  { product: 'MOU',    duration: '1_year',    basePrice: 1790 },
+  { product: 'MOU',    duration: '15_months', basePrice: 2290 },
+  { product: 'MOTI24', duration: '3_months',  basePrice: 590 },
+  { product: 'MOTI24', duration: '6_months',  basePrice: 990 },
+  { product: 'MOTI24', duration: '1_year',    basePrice: 1790 },
+  { product: 'MOTI24', duration: '15_months', basePrice: 2290 },
+];
+export const basePrice = (p: CrmProduct, d: Duration) =>
+  pricingTiers.find(t => t.product === p && t.duration === d)?.basePrice ?? 0;
+export const ticketTotal = (p: CrmProduct, d: Duration, discount: number, headcount: number) =>
+  Math.max(0, basePrice(p, d) - discount) * headcount;
+
+export const creditProfiles: CustomerCreditProfile[] = [
+  { customerId: 'u_biz', currentCredit: -47700, allowedOverdueDays: 7,  creditLimit: 200000 },
+  { customerId: 'cl2',   currentCredit: -37600, allowedOverdueDays: 15, creditLimit: 150000 },
+];
+
+export const policyTickets: PolicyTicket[] = [
+  { id: 'tk1', ticketNumber: 'TKR-20260115-A3F9', status: 'completed',     customerId: 'u_biz', product: 'MOU',    duration: '1_year',   coverageStart: '2026-01-20', headcount: 50, discountPerPerson: 90,  totalPrice: 85000, paymentStatus: 'paid',    paidAmount: 85000, priority: 'normal', dueDate: '2026-01-27', publicToken: 'tok_8f2a…', customerCode: '418205', createdBy: 'u_admin', createdAt: '2026-01-15' },
+  { id: 'tk2', ticketNumber: 'TKR-20260610-B7C2', status: 'sent_to_thip',  customerId: 'u_biz', product: 'MOTI24', duration: '6_months', coverageStart: '2026-06-20', headcount: 30, discountPerPerson: 0,   totalPrice: 29700, paymentStatus: 'pending', paidAmount: 0,     priority: 'high',   dueDate: '2026-06-27', publicToken: 'tok_2b9d…', customerCode: '739114', createdBy: 'u_admin', createdAt: '2026-06-10' },
+  { id: 'tk3', ticketNumber: 'TKR-20260618-C1D8', status: 'draft',         customerId: 'u_biz', product: 'MOU',    duration: '6_months', coverageStart: '2026-07-01', headcount: 20, discountPerPerson: 90,  totalPrice: 18000, paymentStatus: 'pending', paidAmount: 0,     priority: 'normal', dueDate: '2026-07-08', publicToken: 'tok_5e1c…', customerCode: '205837', createdBy: 'u_admin', createdAt: '2026-06-18' },
+  { id: 'tk4', ticketNumber: 'TKR-20260605-D4E6', status: 'thip_processing',customerId: 'cl2',  product: 'MOTI24', duration: '1_year',   coverageStart: '2026-06-15', headcount: 40, discountPerPerson: 100, totalPrice: 67600, paymentStatus: 'partial', paidAmount: 30000, priority: 'urgent', dueDate: '2026-06-30', publicToken: 'tok_9a3f…', customerCode: '660421', createdBy: 'u_admin', createdAt: '2026-06-05' },
+];
+
+export const crmPayments: CrmPayment[] = [
+  { id: 'cp1', paymentDate: '2026-01-22', customerId: 'u_biz', ticketId: 'tk1', amount: 85000, method: 'bank_transfer', referenceNumber: 'TXN-118842', status: 'confirmed' },
+  { id: 'cp2', paymentDate: '2026-06-12', customerId: 'cl2',   ticketId: 'tk4', amount: 30000, method: 'k_shop',        referenceNumber: 'KS-558210',  status: 'confirmed' },
+];
+
+// append-only ledger: debit on ticket-create, credit on payment (net 0 when paid)
+export const creditLedger: CreditTransaction[] = [
+  { id: 'ct1', customerId: 'u_biz', ticketId: 'tk1', type: 'debit',  amount: 85000, balanceAfter: -85000, description: 'ซื้อตั๋วประกัน #TKR-20260115-A3F9 (MOU 1 ปี 50 คน)', createdAt: '2026-01-15' },
+  { id: 'ct2', customerId: 'u_biz', ticketId: 'tk1', type: 'credit', amount: 85000, balanceAfter: 0,      description: 'คืนเครดิตจากการชำระตั๋วประกัน #TKR-20260115-A3F9', createdAt: '2026-01-22' },
+  { id: 'ct3', customerId: 'u_biz', ticketId: 'tk2', type: 'debit',  amount: 29700, balanceAfter: -29700, description: 'ซื้อตั๋วประกัน #TKR-20260610-B7C2 (MOTI24 6 เดือน 30 คน)', createdAt: '2026-06-10' },
+  { id: 'ct4', customerId: 'u_biz', ticketId: 'tk3', type: 'debit',  amount: 18000, balanceAfter: -47700, description: 'ซื้อตั๋วประกัน #TKR-20260618-C1D8 (MOU 6 เดือน 20 คน)', createdAt: '2026-06-18' },
+  { id: 'ct5', customerId: 'cl2',   ticketId: 'tk4', type: 'debit',  amount: 67600, balanceAfter: -67600, description: 'ซื้อตั๋วประกัน #TKR-20260605-D4E6 (MOTI24 1 ปี 40 คน)', createdAt: '2026-06-05' },
+  { id: 'ct6', customerId: 'cl2',   ticketId: 'tk4', type: 'credit', amount: 30000, balanceAfter: -37600, description: 'คืนเครดิตบางส่วนจากการชำระ #TKR-20260605-D4E6', createdAt: '2026-06-12' },
+];
+
+export const amendmentTickets: AmendmentTicket[] = [
+  { id: 'am1', amendmentType: 'edit_name', customerRef: 'บริษัท ไทยเจริญ ก่อสร้าง จำกัด', policyNumbers: ['MOU-2026-000118', 'MOU-2026-000119'], hasCost: true, pricePerPolicy: 50, totalCost: 100, createdBy: 'u_admin', createdAt: '2026-02-02' },
+  { id: 'am2', amendmentType: 'cancel_policy', customerRef: 'คุณวีรพล สุขสันต์ (นอกระบบ)', policyNumbers: ['MOTI24-2026-002041'], hasCost: false, pricePerPolicy: 0, totalCost: 0, createdBy: 'u_admin', createdAt: '2026-05-19' },
+];
+
+// tk1 (completed) issued 50 policies; seed a few representative rows.
+export const issuedPolicies: IssuedPolicy[] = [
+  { id: 'ip1', policyNumber: 'MOU-2026-000118', insuredIdNumber: 'MB1234567', ticketId: 'tk1', product: 'MOU', customerId: 'u_biz', startDate: '2026-01-20', expiryDate: '2027-01-19', issuedAt: '2026-01-23', issuedBy: 'u_admin' },
+  { id: 'ip2', policyNumber: 'MOU-2026-000119', insuredIdNumber: 'MB2345678', ticketId: 'tk1', product: 'MOU', customerId: 'u_biz', startDate: '2026-01-20', expiryDate: '2027-01-19', issuedAt: '2026-01-23', issuedBy: 'u_admin' },
+  { id: 'ip3', policyNumber: 'MOU-2026-000120', insuredIdNumber: 'LA8821345', ticketId: 'tk1', product: 'MOU', customerId: 'u_biz', startDate: '2026-01-20', expiryDate: '2027-01-19', issuedAt: '2026-01-23', issuedBy: 'u_admin' },
+];
+
+// ---- helpers ----
+export const getTickets = () => policyTickets;          // policy (CRM) tickets — support inbox uses getSupportTickets
+export const getTicket = (id: string) => policyTickets.find(t => t.id === id);
+export const getCrmPayments = () => crmPayments;
+export const getCreditLedger = (customerId?: string) =>
+  customerId ? creditLedger.filter(c => c.customerId === customerId) : creditLedger;
+export const getCreditProfile = (customerId: string) => creditProfiles.find(c => c.customerId === customerId);
+export const getAmendments = () => amendmentTickets;
+export const getIssuedPolicies = (ticketId?: string) =>
+  ticketId ? issuedPolicies.filter(p => p.ticketId === ticketId) : issuedPolicies;
+
+// AR aging: bucket each unpaid/partial ticket by dueDate vs today
+export function debtorAging(today = new Date('2026-06-24')) {
+  const open = policyTickets.filter(t => t.paymentStatus !== 'paid' && t.paymentStatus !== 'refunded');
+  const bucketOf = (due?: string) => {
+    if (!due) return 'not_due';
+    const days = Math.floor((today.getTime() - new Date(due).getTime()) / 86400000);
+    if (days < 0) return 'not_due';
+    if (days === 0) return 'due_today';
+    if (days <= 3) return 'overdue_1_3';
+    return 'overdue_gt_3';
+  };
+  return open.map(t => ({
+    ticket: t,
+    remaining: t.totalPrice - t.paidAmount,
+    bucket: bucketOf(t.dueDate),
+  }));
+}
+export function debtorsByCustomer(today = new Date('2026-06-24')) {
+  const rows = debtorAging(today);
+  const map = new Map<string, number>();
+  rows.forEach(r => map.set(r.ticket.customerId, (map.get(r.ticket.customerId) ?? 0) + r.remaining));
+  return [...map.entries()].map(([customerId, outstanding]) => ({ customerId, outstanding }));
+}
+
+export function creditDashboard() {
+  return {
+    lowCredit: creditProfiles.filter(c => c.currentCredit > -1000 && c.currentCredit < 0).length,
+    negativeCredit: creditProfiles.filter(c => c.currentCredit < 0).length,
+    totalOutstanding: creditProfiles.reduce((s, c) => s + Math.min(0, c.currentCredit), 0),
+  };
+}
+
+// resolve a CRM customerId → display name (business users prefer company name;
+// clients carry their own name). Falls back to the raw id for unknown refs.
+export function crmCustomerName(id: string): string {
+  const u = users.find(x => x.id === id);
+  if (u) return u.company ?? u.name;
+  const c = clients.find(x => x.id === id);
+  return c?.name ?? id;
+}
+// customers that carry an internal credit wallet (the AR-tracked accounts)
+export const crmCustomers = () =>
+  creditProfiles.map(p => ({ id: p.customerId, name: crmCustomerName(p.customerId) }));

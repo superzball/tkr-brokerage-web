@@ -5,7 +5,7 @@ import { staffCan } from "@/lib/auth/rbac";
 import { AdminForbidden } from "@/components/app/admin/AdminForbidden";
 import { PageHeader } from "@/components/app/PageHeader";
 import { SupportClient } from "@/components/app/admin/SupportClient";
-import { getTickets } from "@/lib/mock/seed";
+import { getSupportTickets } from "@/lib/mock/seed";
 
 type Props = { params: Promise<{ locale: Locale }> };
 
@@ -18,7 +18,7 @@ export default async function SupportPage({ params }: Props) {
   return (
     <>
       <PageHeader title={t("title")} description={t("desc")} />
-      <SupportClient initial={getTickets()} />
+      <SupportClient initial={getSupportTickets()} />
     </>
   );
 }

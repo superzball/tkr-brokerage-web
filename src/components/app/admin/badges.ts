@@ -6,10 +6,13 @@
 import type { BadgeTone } from "@/components/app/StatusBadge";
 import type {
   OrderStatus,
-  TicketStatus,
+  SupportTicketStatus,
   ArticleStatus,
   SupportTicket,
   StaffUser,
+  TicketStatus,
+  TicketPaymentStatus,
+  TicketPriority,
 } from "@/types/portal";
 
 export const orderTone: Record<OrderStatus, BadgeTone> = {
@@ -19,7 +22,7 @@ export const orderTone: Record<OrderStatus, BadgeTone> = {
   cancelled: "danger",
 };
 
-export const ticketTone: Record<TicketStatus, BadgeTone> = {
+export const supportTicketTone: Record<SupportTicketStatus, BadgeTone> = {
   open: "warning",
   pending: "info",
   resolved: "success",
@@ -40,4 +43,36 @@ export const articleTone: Record<ArticleStatus, BadgeTone> = {
 export const staffStatusTone: Record<StaffUser["status"], BadgeTone> = {
   active: "success",
   suspended: "danger",
+};
+
+// ---- CRM ops (Phase 15) ----
+export const policyTicketTone: Record<TicketStatus, BadgeTone> = {
+  draft: "neutral",
+  pending_send: "warning",
+  sent_to_thip: "info",
+  thip_processing: "info",
+  completed: "success",
+  rejected: "danger",
+};
+
+export const ticketPaymentTone: Record<TicketPaymentStatus, BadgeTone> = {
+  pending: "warning",
+  partial: "info",
+  paid: "success",
+  refunded: "neutral",
+};
+
+export const ticketPriorityTone: Record<TicketPriority, BadgeTone> = {
+  low: "neutral",
+  normal: "info",
+  high: "warning",
+  urgent: "danger",
+};
+
+// AR aging buckets (debtorAging)
+export const bucketTone: Record<string, BadgeTone> = {
+  not_due: "neutral",
+  due_today: "warning",
+  overdue_1_3: "warning",
+  overdue_gt_3: "danger",
 };

@@ -32,3 +32,4 @@ Audited Phase 13: of 1542 leaf keys, **18 are real Burmese** (all under
 - [ ] learn — Phase 12 acquisition landings
 - [ ] checkout — Phase 12 quote→signup handoff
 - [ ] team — Phase 11.5 agent-team / override copy
+- [ ] crm — Phase 15 CRM ops core copy (nav + admin.ops/finance tickets/credit/debtors), Thai placeholders

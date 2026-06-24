@@ -6,16 +6,16 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import type { SupportTicket, TicketStatus } from "@/types/portal";
+import type { SupportTicket, SupportTicketStatus } from "@/types/portal";
 import { DataTable, type Column } from "@/components/app/DataTable";
 import { StatusBadge } from "@/components/app/StatusBadge";
 import { Modal } from "@/components/app/Modal";
 import { Select, Field } from "@/components/app/form";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/app/toast";
-import { ticketTone, priorityTone } from "./badges";
+import { supportTicketTone, priorityTone } from "./badges";
 
-const STATUSES: TicketStatus[] = ["open", "pending", "resolved"];
+const STATUSES: SupportTicketStatus[] = ["open", "pending", "resolved"];
 
 export function SupportClient({ initial }: { initial: SupportTicket[] }) {
   const t = useTranslations("admin.tickets");
@@ -28,7 +28,7 @@ export function SupportClient({ initial }: { initial: SupportTicket[] }) {
   const [active, setActive] = useState<SupportTicket | null>(null);
   const [reply, setReply] = useState("");
 
-  function setStatus(status: TicketStatus) {
+  function setStatus(status: SupportTicketStatus) {
     if (!active) return;
     setActive({ ...active, status });
     setList((prev) => prev.map((x) => (x.id === active.id ? { ...x, status } : x)));
@@ -46,7 +46,7 @@ export function SupportClient({ initial }: { initial: SupportTicket[] }) {
     { key: "customer", header: t("col.customer"), sortValue: (k) => k.customer },
     { key: "subject", header: t("col.subject") },
     { key: "priority", header: t("col.priority"), render: (k) => <StatusBadge tone={priorityTone[k.priority]}>{ts(k.priority)}</StatusBadge> },
-    { key: "status", header: t("col.status"), sortValue: (k) => k.status, render: (k) => <StatusBadge tone={ticketTone[k.status]}>{ts(k.status)}</StatusBadge> },
+    { key: "status", header: t("col.status"), sortValue: (k) => k.status, render: (k) => <StatusBadge tone={supportTicketTone[k.status]}>{ts(k.status)}</StatusBadge> },
     { key: "updated", header: t("col.updated"), render: (k) => k.updatedAt },
   ];
 
@@ -84,7 +84,7 @@ export function SupportClient({ initial }: { initial: SupportTicket[] }) {
               <div className="flex justify-between gap-3 items-center"><span className="text-ink-500">{ta("priority")}</span><StatusBadge tone={priorityTone[active.priority]}>{ts(active.priority)}</StatusBadge></div>
             </div>
 
-            <Select label={ta("setStatus")} value={active.status} onChange={(e) => setStatus(e.target.value as TicketStatus)}>
+            <Select label={ta("setStatus")} value={active.status} onChange={(e) => setStatus(e.target.value as SupportTicketStatus)}>
               {STATUSES.map((s) => <option key={s} value={s}>{ts(s)}</option>)}
             </Select>
 

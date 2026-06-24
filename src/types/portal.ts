@@ -230,13 +230,13 @@ export interface StaffUser {
   lastActive: string;
 }
 
-export type TicketStatus = 'open' | 'pending' | 'resolved';
+export type SupportTicketStatus = 'open' | 'pending' | 'resolved';
 export interface SupportTicket {
   id: string;
   ref: string;
   customer: string;
   subject: string;
-  status: TicketStatus;
+  status: SupportTicketStatus;
   priority: 'low' | 'medium' | 'high';
   updatedAt: string;
 }
@@ -301,4 +301,107 @@ export interface CommissionRule {
   tier: Tier;
   rate: number;                // percent
   active: boolean;
+}
+
+// ============================ CRM OPS CORE (Phase 15) ============================
+// Worker-insurance fulfillment (MOU / MOTI24 → underwriter "Thip" / ทิพยประกันภัย).
+// The credit wallet + ledger are INTERNAL ONLY — admin/finance see them, customers never do.
+export type CrmProduct = 'MOU' | 'MOTI24';                 // worker-insurance products
+export type Duration = '3_months' | '6_months' | '1_year' | '15_months';
+export type TicketStatus =
+  'draft' | 'pending_send' | 'sent_to_thip' | 'thip_processing' | 'completed' | 'rejected';
+export type TicketPaymentStatus = 'pending' | 'partial' | 'paid' | 'refunded';
+export type PaymentMethod =
+  'bank_transfer' | 'direct_transfer' | 'k_shop' | 'cash' | 'credit_card' | 'other';
+export type TicketPriority = 'low' | 'normal' | 'high' | 'urgent';
+export type CreditType = 'credit' | 'debit';
+export type AmendmentType =
+  'edit_name' | 'edit_address' | 'edit_birthdate' | 'edit_id_number'
+  | 'edit_coverage_start' | 'edit_coverage_duration' | 'cancel_policy';
+
+export interface PricingTier { product: CrmProduct; duration: Duration; basePrice: number; } // THB/person
+
+// internal-only credit/AR profile per business customer (NOT shown to customers)
+export interface CustomerCreditProfile {
+  customerId: string;
+  currentCredit: number;       // wallet balance; NEGATIVE = outstanding exposure
+  allowedOverdueDays: number;  // per-customer AR grace period
+  creditLimit?: number;
+}
+
+export interface PolicyTicket {
+  id: string;
+  ticketNumber: string;        // TKR-YYYYMMDD-XXXX
+  status: TicketStatus;
+  customerId: string;
+  product: CrmProduct;
+  duration: Duration;
+  coverageStart: string;
+  headcount: number;
+  discountPerPerson: number;
+  totalPrice: number;          // = (basePrice − discount) × headcount
+  paymentStatus: TicketPaymentStatus;
+  paidAmount: number;
+  priority: TicketPriority;
+  assignedTo?: string;
+  dueDate?: string;            // coverageStart/created + allowedOverdueDays
+  recipientFile?: string;      // insured list sent to underwriter
+  thipStaffName?: string;
+  thipNote?: string;
+  thipFile?: string;
+  publicToken: string;         // signed/expiring (mock)
+  customerCode: string;        // 6-digit code shown to customer for status check
+  createdBy: string;
+  createdAt: string;
+}
+
+export interface CrmPayment {
+  id: string;
+  paymentDate: string;
+  customerId: string;
+  ticketId: string;
+  amount: number;
+  method: PaymentMethod;
+  referenceNumber?: string;
+  status: 'confirmed' | 'pending';
+  slip?: string;
+}
+
+export interface CreditTransaction {
+  id: string;
+  customerId: string;
+  ticketId?: string;
+  type: CreditType;            // debit on ticket-create, credit on payment
+  amount: number;
+  balanceAfter: number;        // running balance (append-only ledger)
+  description: string;
+  createdAt: string;
+}
+
+export interface AmendmentTicket {
+  id: string;
+  amendmentType: AmendmentType;
+  customerRef: string;         // existing customer name OR free-typed
+  policyNumbers: string[];
+  hasCost: boolean;
+  pricePerPolicy: number;
+  totalCost: number;
+  thipStaffName?: string;
+  thipNote?: string;
+  createdBy: string;
+  createdAt: string;
+}
+
+export interface IssuedPolicy {
+  id: string;
+  policyNumber: string;
+  insuredIdNumber: string;
+  ticketId: string;
+  product: CrmProduct;
+  customerId: string;
+  startDate: string;
+  expiryDate: string;
+  issuedAt: string;
+  issuedBy: string;
+  pdfUrl?: string;
 }

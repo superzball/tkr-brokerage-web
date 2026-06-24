@@ -108,3 +108,15 @@ sections + active state from it. A section gets a heading by giving the
 [src/i18n/routing.ts](src/i18n/routing.ts). `th.json` is the typed source of
 truth (see [src/global.d.ts](src/global.d.ts)); add keys there + `en`, and Thai
 placeholders for `my`/`lo` (never invent Burmese/Lao — track in `*.todo.md`).
+
+**…add a CRM mutation (mock, Phase 15).** Server admin pages pass *seed* arrays
+(`getTickets`, `getCreditLedger`, `getCrmPayments`) to a client component, which
+merges client-only changes from
+[src/lib/mock/local-crm.ts](src/lib/mock/local-crm.ts) on mount (`mergeTickets`
+/ `mergeLedger` / `mergePayments`) — the same swap-ready pattern as
+`local-admin.ts`. The credit **wallet + ledger are internal-only**: render them
+only under `/admin/finance/*`, never in an `/app/*` customer portal. The ledger
+is append-only — a ticket-create writes a `debit`, a payment writes a `credit`,
+`balanceAfter` is computed from the previous balance, and an over-payment guard
+keeps `paidAmount ≤ totalPrice`. Worker pricing is config-driven
+(`pricingTiers` + `ticketTotal()`), never hardcoded.

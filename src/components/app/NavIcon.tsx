@@ -37,6 +37,11 @@ import {
   Percent,
   UserCog,
   ScrollText,
+  Ticket,
+  FilePenLine,
+  FileBadge,
+  WalletCards,
+  AlertCircle,
   type LucideProps,
 } from "lucide-react";
 
@@ -73,6 +78,11 @@ const registry: Record<string, React.ComponentType<LucideProps>> = {
   Percent,
   UserCog,
   ScrollText,
+  Ticket,
+  FilePenLine,
+  FileBadge,
+  WalletCards,
+  AlertCircle,
 };
 
 export function NavIcon({

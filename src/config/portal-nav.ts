@@ -123,6 +123,9 @@ export const portalNav: Record<Role, NavSection[]> = {
         { key: 'adminPolicies', href: '/admin/policies',  icon: 'ShieldCheck', perm: 'ops' },
         { key: 'claimsQueue',   href: '/admin/claims',    icon: 'BadgeCheck',  perm: 'ops' },
         { key: 'approvals',     href: '/admin/approvals', icon: 'FileCheck2',  perm: 'ops' },
+        { key: 'policyTickets', href: '/admin/ops/tickets',     icon: 'Ticket',       perm: 'ops' },
+        { key: 'amendments',    href: '/admin/ops/amendments',  icon: 'FilePenLine',  perm: 'ops' },
+        { key: 'issued',        href: '/admin/ops/issued',      icon: 'FileBadge',    perm: 'ops' },
       ],
     },
     {
@@ -138,6 +141,9 @@ export const portalNav: Record<Role, NavSection[]> = {
         { key: 'adminInvoices', href: '/admin/finance/invoices', icon: 'Receipt',   perm: 'ops' },
         { key: 'payouts',       href: '/admin/finance/payouts',  icon: 'Banknote',  perm: 'ops' },
         { key: 'reports',       href: '/admin/finance/reports',  icon: 'BarChart3', perm: 'ops' },
+        { key: 'payments',     href: '/admin/finance/payments', icon: 'Wallet',       perm: 'ops' },
+        { key: 'creditWallet', href: '/admin/finance/credit',   icon: 'WalletCards',  perm: 'ops' },
+        { key: 'debtors',      href: '/admin/finance/debtors',  icon: 'AlertCircle',  perm: 'ops' },
       ],
     },
     {
