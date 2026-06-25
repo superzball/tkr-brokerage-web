@@ -20,6 +20,9 @@ const SIZE: Record<ButtonSize, string> = {
 type CommonProps = {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  /** Shows a spinner, marks aria-busy, and blocks interaction. Optional —
+   *  existing call sites are unaffected. */
+  loading?: boolean;
   className?: string;
   children?: ReactNode;
 };
@@ -40,9 +43,11 @@ const isInternal = (href: string) => href.startsWith("/");
 
 /**
  * Brand button. Renders a locale-aware link when `href` is an internal route,
- * a plain anchor for `#`/external hrefs, or a <button> otherwise.
+ * a plain anchor for `#`/external hrefs, or a <button> otherwise. Styling reads
+ * the semantic --ui-* tokens, so it adapts to the friendly/premium zone.
  */
 export function Button(props: ButtonProps) {
+  const loading = props.loading ?? false;
   const cls = cn(
     "btn",
     VARIANT[props.variant ?? "primary"],
@@ -50,25 +55,60 @@ export function Button(props: ButtonProps) {
     props.className,
   );
 
+  const content = (
+    <>
+      {loading && <span className="btn-spinner" aria-hidden="true" />}
+      {props.children}
+    </>
+  );
+
   if (props.href !== undefined) {
-    const { variant: _v, size: _s, className: _c, href, children, ...rest } =
-      props;
+    const {
+      variant: _v,
+      size: _s,
+      loading: _l,
+      className: _c,
+      href,
+      children: _ch,
+      ...rest
+    } = props;
+    const linkProps = {
+      className: cn(cls, loading && "pointer-events-none"),
+      "data-loading": loading || undefined,
+      "aria-busy": loading || undefined,
+      "aria-disabled": loading || undefined,
+      ...rest,
+    };
     return isInternal(href) ? (
-      <Link href={href} className={cls} {...rest}>
-        {children}
+      <Link href={href} {...linkProps}>
+        {content}
       </Link>
     ) : (
-      <a href={href} className={cls} {...rest}>
-        {children}
+      <a href={href} {...linkProps}>
+        {content}
       </a>
     );
   }
 
-  const { variant: _v, size: _s, className: _c, href: _h, children, ...rest } =
-    props;
+  const {
+    variant: _v,
+    size: _s,
+    loading: _l,
+    className: _c,
+    href: _h,
+    children: _ch,
+    disabled,
+    ...rest
+  } = props;
   return (
-    <button className={cls} {...rest}>
-      {children}
+    <button
+      className={cls}
+      data-loading={loading || undefined}
+      aria-busy={loading || undefined}
+      disabled={disabled || loading}
+      {...rest}
+    >
+      {content}
     </button>
   );
 }

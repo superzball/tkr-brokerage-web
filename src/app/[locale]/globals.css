@@ -58,6 +58,50 @@
   --color-gold-500: #e89c12;
   --color-gold-600: #c47a06;
 
+  /* ---- Mint — fresh secondary accent (Phase 19, friendly zone) ---- */
+  --color-mint-50: #ecfdf6;
+  --color-mint-100: #d2f7e6;
+  --color-mint-200: #a7efce;
+  --color-mint-300: #6fe0b2;
+  --color-mint-400: #34c98f;
+  --color-mint-500: #14ad76;
+  --color-mint-600: #0a8a5e;
+
+  /* ---- Peach — warm secondary accent (Phase 19, friendly zone) ---- */
+  --color-peach-50: #fff5ed;
+  --color-peach-100: #ffe6d2;
+  --color-peach-200: #ffc9a3;
+  --color-peach-300: #ffa86d;
+  --color-peach-400: #fb8a3c;
+  --color-peach-500: #f2701a;
+  --color-peach-600: #d2570c;
+
+  /* ---- Shared type scale (Phase 19) — Anuphan display→caption.
+     Additive `text-*` utilities; existing sizes untouched. ---- */
+  --text-display: 3.5rem;
+  --text-display--line-height: 1.05;
+  --text-display--letter-spacing: -0.02em;
+  --text-display--font-weight: 700;
+  --text-h1: 2.5rem;
+  --text-h1--line-height: 1.1;
+  --text-h1--letter-spacing: -0.018em;
+  --text-h1--font-weight: 700;
+  --text-h2: 1.75rem;
+  --text-h2--line-height: 1.2;
+  --text-h2--letter-spacing: -0.012em;
+  --text-h2--font-weight: 700;
+  --text-h3: 1.25rem;
+  --text-h3--line-height: 1.3;
+  --text-h3--letter-spacing: -0.008em;
+  --text-h3--font-weight: 600;
+  --text-body: 0.95rem;
+  --text-body--line-height: 1.55;
+  --text-small: 0.8125rem;
+  --text-small--line-height: 1.25rem;
+  --text-caption: 0.6875rem;
+  --text-caption--line-height: 1rem;
+  --text-caption--letter-spacing: 0.02em;
+
   /* ---- Shadows ---- */
   --shadow-card: 0 1px 2px rgba(11, 34, 64, 0.04),
     0 8px 24px -12px rgba(11, 34, 64, 0.18);
@@ -98,6 +142,11 @@
       transform: translateX(100%);
     }
   }
+  @keyframes spin {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
 }
 
 /* ============================================================
@@ -126,17 +175,17 @@
    ============================================================ */
 :root,
 [data-theme="friendly"] {
-  /* radii — friendly is rounder */
-  --ui-radius-btn: 0.75rem;
-  --ui-radius-card: 1.25rem;
-  --ui-radius-field: 0.75rem;
+  /* radii — friendly is round & soft; primary buttons are full pills */
+  --ui-radius-btn: 9999px;
+  --ui-radius-card: 1.5rem;
+  --ui-radius-field: 0.9rem;
   --ui-radius-chip: 999px;
 
-  /* primary (CTA) — vivid brand blue */
+  /* primary (CTA) — vivid brand blue, warm glow */
   --ui-primary-bg: linear-gradient(135deg, #1f66ee, #0f52c7);
   --ui-primary-fg: #ffffff;
-  --ui-primary-shadow: 0 8px 22px -8px rgba(31, 102, 238, 0.55);
-  --ui-primary-shadow-hover: 0 12px 28px -8px rgba(31, 102, 238, 0.7);
+  --ui-primary-shadow: 0 10px 24px -8px rgba(31, 102, 238, 0.55);
+  --ui-primary-shadow-hover: 0 16px 32px -8px rgba(31, 102, 238, 0.72);
 
   /* ghost / secondary */
   --ui-ghost-bg: #ffffff;
@@ -146,18 +195,18 @@
   --ui-ghost-hover-border: #7caaff;
   --ui-ghost-hover-fg: #0f52c7;
 
-  /* gold accent */
-  --ui-gold-bg: linear-gradient(135deg, #f2b736, #e89c12);
+  /* gold accent — the warmth lever */
+  --ui-gold-bg: linear-gradient(135deg, #f6cf6b, #e89c12);
   --ui-gold-fg: #3a2a02;
-  --ui-gold-shadow: 0 8px 22px -8px rgba(232, 156, 18, 0.6);
+  --ui-gold-shadow: 0 10px 24px -8px rgba(232, 156, 18, 0.55);
 
-  /* card surface */
+  /* card surface — borderless, soft brand-tinted shadow (not a thin grey line) */
   --ui-card-bg: #ffffff;
-  --ui-card-border: #e7eef9;
-  --ui-card-shadow: 0 1px 2px rgba(11, 34, 64, 0.04),
-    0 8px 24px -12px rgba(11, 34, 64, 0.18);
-  --ui-card-shadow-hover: 0 2px 4px rgba(11, 34, 64, 0.05),
-    0 24px 48px -20px rgba(11, 34, 64, 0.28);
+  --ui-card-border: #eef3fb;
+  --ui-card-shadow: 0 2px 6px -2px rgba(11, 34, 64, 0.06),
+    0 12px 28px -10px rgba(31, 102, 238, 0.14);
+  --ui-card-shadow-hover: 0 6px 14px -4px rgba(11, 34, 64, 0.08),
+    0 26px 48px -16px rgba(31, 102, 238, 0.26);
   --ui-card-hover-border: #c3dbfd;
 
   /* form field */
@@ -172,8 +221,34 @@
   --ui-chip-bg: #eaf2fe;
   --ui-chip-fg: #0f52c7;
 
+  /* surfaces */
+  --ui-surface-page: #f6f9fe;
+  --ui-surface-muted: #f4f9ff;
+
+  /* text */
+  --ui-text-strong: #0b2240;
+  --ui-text: #1d3a5e;
+  --ui-text-muted: #5b7596;
+
+  /* accents (brand primary + soft secondary) */
+  --ui-accent: #1f66ee;
+  --ui-accent-mint: #0a8a5e;
+  --ui-accent-peach: #d2570c;
+
+  /* danger / error */
+  --ui-danger: #e11d48;
+  --ui-field-error-border: #f43f5e;
+  --ui-field-error-ring: 0 0 0 4px rgba(244, 63, 94, 0.12);
+
   /* keyboard focus ring */
   --ui-focus: #1f66ee;
+
+  /* motion — friendly is springy and lifts on hover */
+  --ui-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ui-dur: 0.22s;
+  --ui-dur-fast: 0.14s;
+  --ui-press: 0.96;
+  --ui-lift: -6px;
 }
 
 [data-theme="premium"] {
@@ -223,8 +298,34 @@
   --ui-chip-bg: #f1f5fa;
   --ui-chip-fg: #102d52;
 
+  /* surfaces */
+  --ui-surface-page: #f3f6fb;
+  --ui-surface-muted: #f3f6fb;
+
+  /* text */
+  --ui-text-strong: #071834;
+  --ui-text: #243b59;
+  --ui-text-muted: #64748b;
+
+  /* accents (gold precision primary + secondary) */
+  --ui-accent: #c47a06;
+  --ui-accent-mint: #0a8a5e;
+  --ui-accent-peach: #d2570c;
+
+  /* danger / error */
+  --ui-danger: #be123c;
+  --ui-field-error-border: #e11d48;
+  --ui-field-error-ring: 0 0 0 3px rgba(225, 29, 72, 0.14);
+
   /* keyboard focus ring — gold in the premium zone */
   --ui-focus: #c47a06;
+
+  /* motion — premium is restrained; cards do not lift */
+  --ui-ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --ui-dur: 0.16s;
+  --ui-dur-fast: 0.1s;
+  --ui-press: 0.985;
+  --ui-lift: 0px;
 }
 
 @layer base {
@@ -261,6 +362,19 @@
   }
   .field:focus-visible {
     outline: none;
+  }
+}
+
+/* Honor the OS "reduce motion" setting everywhere (Phase 19, AA). Kept outside
+   @layer so the !important reset always wins over component transitions. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
@@ -303,14 +417,38 @@
     gap: 0.5rem;
     font-weight: 600;
     border-radius: var(--ui-radius-btn);
-    transition: all 0.22s var(--ease-out);
+    transition:
+      transform var(--ui-dur-fast) var(--ui-ease),
+      box-shadow var(--ui-dur) var(--ui-ease),
+      background-color var(--ui-dur) var(--ui-ease),
+      border-color var(--ui-dur) var(--ui-ease),
+      color var(--ui-dur) var(--ui-ease);
     cursor: pointer;
     white-space: nowrap;
     line-height: 1;
     border: 1px solid transparent;
   }
-  .btn:active {
-    transform: translateY(1px);
+  /* Tactile press — scale rather than nudge, restrained in premium via token. */
+  .btn:not(:disabled):not([aria-disabled="true"]):active {
+    transform: scale(var(--ui-press));
+  }
+  .btn:disabled,
+  .btn[aria-disabled="true"] {
+    opacity: 0.6;
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  .btn[data-loading="true"] {
+    cursor: progress;
+  }
+  .btn-spinner {
+    width: 1em;
+    height: 1em;
+    border-radius: 999px;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    animation: spin 0.6s linear infinite;
+    flex: none;
   }
   .btn-primary {
     background: var(--ui-primary-bg);
@@ -319,7 +457,6 @@
   }
   .btn-primary:hover {
     box-shadow: var(--ui-primary-shadow-hover);
-    transform: translateY(-1px);
   }
   .btn-ghost {
     background: var(--ui-ghost-bg);
@@ -338,7 +475,7 @@
     box-shadow: var(--ui-gold-shadow);
   }
   .btn-gold:hover {
-    transform: translateY(-1px);
+    box-shadow: var(--ui-card-shadow-hover);
   }
   .btn-lg {
     padding: 0.95rem 1.6rem;
@@ -362,12 +499,14 @@
   }
   .card-hover {
     transition:
-      transform 0.28s var(--ease-out),
-      box-shadow 0.28s var(--ease-out),
-      border-color 0.28s;
+      transform var(--ui-dur) var(--ui-ease),
+      box-shadow var(--ui-dur) var(--ui-ease),
+      border-color var(--ui-dur) var(--ui-ease);
   }
+  /* The lift is a token: -4px in friendly, 0 in premium (restrained). The
+     shadow + border still react in both zones. */
   .card-hover:hover {
-    transform: translateY(-4px);
+    transform: translateY(var(--ui-lift));
     box-shadow: var(--ui-card-shadow-hover);
     border-color: var(--ui-card-hover-border);
   }
@@ -381,6 +520,64 @@
     border-radius: var(--ui-radius-chip);
     font-size: 0.8125rem;
     font-weight: 600;
+  }
+
+  /* ---- Badge (StatusBadge) — semantic tones, zone-aware.
+     friendly = soft tonal fill · premium = outline + leading dot. ---- */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: var(--ui-radius-chip);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    line-height: 1;
+    background: var(--badge-bg);
+    color: var(--badge-fg);
+    border: 1px solid transparent;
+  }
+  [data-theme="premium"] .badge {
+    background: transparent;
+    border-color: var(--badge-border);
+  }
+  [data-theme="premium"] .badge::before {
+    content: "";
+    width: 0.45rem;
+    height: 0.45rem;
+    border-radius: 999px;
+    background: var(--badge-dot);
+    flex: none;
+  }
+  .badge[data-tone="success"] {
+    --badge-bg: #ecfdf6;
+    --badge-fg: #047857;
+    --badge-border: #a7efce;
+    --badge-dot: #14ad76;
+  }
+  .badge[data-tone="warning"] {
+    --badge-bg: #fff8ea;
+    --badge-fg: #b45309;
+    --badge-border: #f6cf6b;
+    --badge-dot: #e89c12;
+  }
+  .badge[data-tone="danger"] {
+    --badge-bg: #fff1f2;
+    --badge-fg: #be123c;
+    --badge-border: #fecdd3;
+    --badge-dot: #f43f5e;
+  }
+  .badge[data-tone="info"] {
+    --badge-bg: #eaf2fe;
+    --badge-fg: #0f52c7;
+    --badge-border: #aecbff;
+    --badge-dot: #1f66ee;
+  }
+  .badge[data-tone="neutral"] {
+    --badge-bg: #f1f5f9;
+    --badge-fg: #475569;
+    --badge-border: #cbd5e1;
+    --badge-dot: #94a3b8;
   }
 
   /* ---- Form fields ---- */
@@ -399,7 +596,9 @@
     background: var(--ui-field-bg);
     color: var(--ui-field-fg);
     font-size: 0.95rem;
-    transition: all 0.18s;
+    transition:
+      border-color var(--ui-dur-fast) var(--ui-ease),
+      box-shadow var(--ui-dur-fast) var(--ui-ease);
     font-family: inherit;
   }
   .field::placeholder {
@@ -409,6 +608,41 @@
     outline: none;
     border-color: var(--ui-field-focus-border);
     box-shadow: var(--ui-field-focus-ring);
+  }
+  /* invalid state — semantic danger ring */
+  .field[aria-invalid="true"] {
+    border-color: var(--ui-field-error-border);
+  }
+  .field[aria-invalid="true"]:focus {
+    box-shadow: var(--ui-field-error-ring);
+  }
+  /* unit / ฿ prefix: wrap the input, absolutely place the affix */
+  .field-affixed {
+    position: relative;
+    display: block;
+  }
+  .field-affixed > .field-affix {
+    position: absolute;
+    left: 0.9rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--ui-text-muted);
+    font-weight: 600;
+    pointer-events: none;
+    line-height: 1;
+  }
+  .field-affixed > .field {
+    padding-left: 2rem;
+  }
+  /* helper / error message under a control */
+  .field-help {
+    font-size: 0.78rem;
+    margin-top: 0.35rem;
+    color: var(--ui-text-muted);
+  }
+  .field-help[data-error="true"] {
+    color: var(--ui-danger);
+    font-weight: 500;
   }
   select.field {
     appearance: none;
