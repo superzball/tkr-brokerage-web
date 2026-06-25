@@ -1,19 +1,26 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { useBaht } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { EmptyState } from "@/components/app/EmptyState";
 import { clearPendingQuote } from "@/lib/quote/actions";
+import { readPendingDetail, clearPendingDetail, type PendingDetail } from "@/lib/quote/local";
 import type { PendingQuote } from "@/lib/quote/pending";
 
 export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
   const t = useTranslations("checkout.page");
+  const tw = useTranslations("worker");
   const baht = useBaht();
   const [done, setDone] = useState(false);
   const [pending, start] = useTransition();
+
+  // The full worker rows ride in localStorage — rehydrate after the sign-in hop.
+  const [detail, setDetail] = useState<PendingDetail | null>(null);
+  useEffect(() => setDetail(readPendingDetail()), []);
+  const workers = detail?.workers ?? [];
 
   if (!quote) {
     return (
@@ -63,6 +70,25 @@ export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
           <dd className="font-700 text-2xl text-brand-700 tabnum">{baht(quote.total)}</dd>
         </div>
       </dl>
+
+      {workers.length > 0 && (
+        <div className="mt-5">
+          <p className="text-sm font-600 text-ink-700 mb-2">{t("workersList")}</p>
+          <ul className="rounded-xl border border-ink-100 divide-y divide-ink-50 text-sm">
+            {workers.map((w, i) => (
+              <li key={i} className="flex items-center justify-between gap-3 px-3 py-2">
+                <span className="font-500 text-ink-900 truncate">
+                  {[w.title, w.name].filter(Boolean).join(" ") || "—"}
+                </span>
+                <span className="shrink-0 text-ink-400 tabnum">
+                  {w.passport || "—"} · {tw(`nat.${w.nat}`)}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+
       <Button
         variant="primary"
         size="lg"
@@ -70,6 +96,7 @@ export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
         disabled={pending}
         onClick={() => start(async () => {
           await clearPendingQuote();
+          clearPendingDetail();
           setDone(true);
         })}
       >

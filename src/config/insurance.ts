@@ -82,12 +82,19 @@ export const WORKER_NATIONALITIES: NationalityCode[] = ["mm", "la", "vn"];
 
 /** Pre-filled sample worker (single mode, first row). */
 export const WORKER_SAMPLE: SingleWorker = {
+  title: "MR.",
   name: "Aung Min",
   passport: "MB1234567",
   nat: "mm",
   dob: "1992-03-14",
   job: "ก่อสร้าง",
+  occupation: "ช่างก่อสร้าง",
+  address: "",
+  phone: "",
 };
+
+/** Honorific options for the worker name prefix. */
+export const TITLE_PREFIXES = ["MR.", "MS.", "MRS.", "MISS"] as const;
 
 /** Bulk-upload demo: aggregate counts + the sample validation rows. */
 export const WORKER_BULK = {

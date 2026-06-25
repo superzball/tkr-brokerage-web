@@ -1,8 +1,11 @@
 // src/components/app/admin/NewOrderClient.tsx
 // On-behalf assisted sale (Phase 14 centrepiece): staff helps a customer buy by
-// phone / walk-in / LINE, then issues an order. Issuing writes BOTH an Order and
-// an AuditEntry to the mock local store (swap-ready for a real orders table +
-// audit service); the Orders and Audit Log screens pick them up immediately.
+// phone / walk-in / LINE, then issues an order. Mirrors the agent on-behalf flow
+// (AgentQuote): capture the customer, then drive the SAME product flows —
+// WorkerFlow (multi-worker entry / bulk upload) and PersonalLinesBuy. Completing
+// the flow writes BOTH an Order and an AuditEntry to the mock local store
+// (swap-ready for a real orders table + audit service); the Orders and Audit Log
+// screens pick them up immediately.
 
 "use client";
 
@@ -13,58 +16,51 @@ import type {
   InsuranceType,
   Order,
   OrderChannel,
-  ProductPlan,
 } from "@/types/portal";
 import { useSession } from "@/lib/auth/SessionProvider";
 import { useToast } from "@/components/app/toast";
-import { Stepper } from "@/components/app/Stepper";
+import { Tabs } from "@/components/app/Tabs";
 import { Input, Select } from "@/components/app/form";
 import { Button } from "@/components/ui/Button";
 import { StatusBadge } from "@/components/app/StatusBadge";
 import { Icon } from "@/components/ui/Icon";
-import { useBaht } from "@/lib/format";
+import { WorkerFlow } from "@/components/worker/WorkerFlow";
+import { PersonalLinesBuy } from "@/components/app/individual/PersonalLinesBuy";
 import { addLocalOrder, addAuditEntry } from "@/lib/mock/local-admin";
 
 const CHANNELS: OrderChannel[] = ["phone", "walk_in", "line", "online"];
 
-export function NewOrderClient({
-  plans,
-  customers,
-}: {
-  plans: ProductPlan[];
-  customers: string[];
-}) {
+type Line = "worker" | "personal";
+
+export function NewOrderClient({ customers }: { customers: string[] }) {
   const t = useTranslations("admin.newOrder");
   const tc = useTranslations("admin.channel");
-  const ty = useTranslations("business.type");
   const user = useSession();
   const { toast } = useToast();
-  const baht = useBaht();
-
-  const steps = [t("step.customer"), t("step.product"), t("step.review"), t("step.done")];
-  const [step, setStep] = useState(0);
 
   const [customerType, setCustomerType] = useState<"business" | "individual">("business");
   const [customerName, setCustomerName] = useState("");
   const [channel, setChannel] = useState<OrderChannel>("phone");
-  const [planId, setPlanId] = useState("");
-  const [premium, setPremium] = useState<number>(0);
+  const [confirmed, setConfirmed] = useState(false);
+  const [line, setLine] = useState<Line>("worker");
   const [issued, setIssued] = useState<{ order: Order; audit: AuditEntry } | null>(null);
 
-  const plan = plans.find((p) => p.id === planId);
-  const product: InsuranceType | undefined = plan?.product;
+  const canCustomer = customerName.trim().length > 0;
 
-  function selectPlan(id: string) {
-    setPlanId(id);
-    const p = plans.find((x) => x.id === id);
-    if (p) setPremium(p.basePremium);
+  // Worker insurance is a business line; personal lines suit individuals. Default
+  // the tab to match the customer type, but the staff can override either way.
+  function confirmCustomer() {
+    if (!canCustomer) {
+      toast(t("missing"), "error");
+      return;
+    }
+    setLine(customerType === "business" ? "worker" : "personal");
+    setConfirmed(true);
   }
 
-  const canCustomer = customerName.trim().length > 0;
-  const canProduct = Boolean(plan) && premium > 0;
-
-  function issue() {
-    if (!plan || !product || !canCustomer) {
+  // Called once the product flow completes — writes the Order + AuditEntry.
+  function recordOrder(product: InsuranceType, premium: number) {
+    if (!canCustomer) {
       toast(t("missing"), "error");
       return;
     }
@@ -92,27 +88,60 @@ export function NewOrderClient({
     addLocalOrder(order);
     addAuditEntry(audit);
     setIssued({ order, audit });
-    setStep(3);
   }
 
   function reset() {
     setCustomerName("");
-    setPlanId("");
-    setPremium(0);
     setChannel("phone");
     setCustomerType("business");
+    setConfirmed(false);
+    setLine("worker");
     setIssued(null);
-    setStep(0);
   }
 
-  return (
-    <div className="max-w-2xl">
-      <div className="mb-6">
-        <Stepper steps={steps} current={step} />
-      </div>
+  // ---- done: order + audit entry written ----
+  if (issued) {
+    return (
+      <div className="max-w-2xl">
+        <div className="card p-6 text-center">
+          <div className="mx-auto w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+            <Icon name="checkCircle" size={28} />
+          </div>
+          <h2 className="text-lg font-700 text-ink-900">{t("successTitle")}</h2>
+          <p className="mt-1.5 text-sm text-ink-500">
+            {t("successBody", { orderNo: issued.order.orderNo })}
+          </p>
 
-      {/* Step 1 — customer */}
-      {step === 0 && (
+          {/* the audit entry that was just written */}
+          <div className="mt-5 text-left rounded-xl border border-ink-100 p-4">
+            <div className="flex items-center gap-2 mb-2 text-xs font-700 uppercase tracking-wide text-ink-400">
+              <Icon name="clock" size={14} /> {t("auditLogged")}
+              <StatusBadge tone="success" className="ml-auto text-[11px]">
+                {issued.audit.target}
+              </StatusBadge>
+            </div>
+            <p className="text-sm text-ink-800">
+              <span className="font-600">{issued.audit.actor}</span> · {issued.audit.action}
+            </p>
+          </div>
+
+          <div className="mt-6 flex justify-center gap-3">
+            <Button href="/admin/sales/orders" variant="primary" size="md">
+              {t("viewOrders")}
+            </Button>
+            <Button variant="ghost" size="md" onClick={reset}>
+              {t("another")}
+            </Button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // ---- step 1: capture the customer ----
+  if (!confirmed) {
+    return (
+      <div className="max-w-2xl">
         <div className="card p-6 space-y-4">
           <Select
             label={t("customerType")}
@@ -149,116 +178,52 @@ export function NewOrderClient({
           </Select>
 
           <div className="flex justify-end">
-            <Button variant="primary" size="md" onClick={() => setStep(1)} disabled={!canCustomer}>
+            <Button variant="primary" size="md" onClick={confirmCustomer} disabled={!canCustomer}>
               {t("next")}
             </Button>
           </div>
         </div>
-      )}
+      </div>
+    );
+  }
 
-      {/* Step 2 — product / plan */}
-      {step === 1 && (
-        <div className="card p-6 space-y-4">
-          <Select
-            label={t("planLabel")}
-            value={planId}
-            onChange={(e) => selectPlan(e.target.value)}
-          >
-            <option value="" disabled>
-              —
-            </option>
-            {plans
-              .filter((p) => p.active)
-              .map((p) => (
-                <option key={p.id} value={p.id}>
-                  {ty(p.product)} · {p.planName} · {p.insurer}
-                </option>
-              ))}
-          </Select>
-
-          <Input
-            label={t("premiumLabel")}
-            type="number"
-            value={premium || ""}
-            onChange={(e) => setPremium(Number(e.target.value))}
-          />
-
-          <div className="flex justify-between">
-            <Button variant="ghost" size="md" onClick={() => setStep(0)}>
-              {t("back")}
-            </Button>
-            <Button variant="primary" size="md" onClick={() => setStep(2)} disabled={!canProduct}>
-              {t("next")}
-            </Button>
-          </div>
-        </div>
-      )}
-
-      {/* Step 3 — review */}
-      {step === 2 && plan && product && (
-        <div className="card p-6">
-          <h2 className="font-700 text-ink-900 mb-4">{t("reviewTitle")}</h2>
-          <dl className="divide-y divide-ink-50 text-sm">
-            <Row label={t("customerType")} value={customerType === "business" ? t("typeBusiness") : t("typeIndividual")} />
-            <Row label={t("customerName")} value={customerName} />
-            <Row label={t("channelLabel")} value={tc(channel)} />
-            <Row label={t("productLabel")} value={`${ty(product)} · ${plan.planName}`} />
-            <Row label={t("premiumLabel")} value={baht(premium)} />
-          </dl>
-          <div className="mt-5 flex justify-between">
-            <Button variant="ghost" size="md" onClick={() => setStep(1)}>
-              {t("back")}
-            </Button>
-            <Button variant="primary" size="md" onClick={issue}>
-              {t("issue")}
-            </Button>
-          </div>
-        </div>
-      )}
-
-      {/* Step 4 — done (order + audit entry written) */}
-      {step === 3 && issued && (
-        <div className="card p-6 text-center">
-          <div className="mx-auto w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
-            <Icon name="checkCircle" size={28} />
-          </div>
-          <h2 className="text-lg font-700 text-ink-900">{t("successTitle")}</h2>
-          <p className="mt-1.5 text-sm text-ink-500">
-            {t("successBody", { orderNo: issued.order.orderNo })}
-          </p>
-
-          {/* the audit entry that was just written */}
-          <div className="mt-5 text-left rounded-xl border border-ink-100 p-4">
-            <div className="flex items-center gap-2 mb-2 text-xs font-700 uppercase tracking-wide text-ink-400">
-              <Icon name="clock" size={14} /> {t("auditLogged")}
-              <StatusBadge tone="success" className="ml-auto text-[11px]">
-                {issued.audit.target}
-              </StatusBadge>
-            </div>
-            <p className="text-sm text-ink-800">
-              <span className="font-600">{issued.audit.actor}</span> · {issued.audit.action}
-            </p>
-          </div>
-
-          <div className="mt-6 flex justify-center gap-3">
-            <Button href="/admin/sales/orders" variant="primary" size="md">
-              {t("viewOrders")}
-            </Button>
-            <Button variant="ghost" size="md" onClick={reset}>
-              {t("another")}
-            </Button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function Row({ label, value }: { label: string; value: string }) {
+  // ---- step 2: pick the product line and run the buying flow on behalf ----
   return (
-    <div className="flex items-center justify-between py-2.5">
-      <dt className="text-ink-500">{label}</dt>
-      <dd className="font-600 text-ink-900">{value}</dd>
+    <div className="space-y-5">
+      {/* who we're selling to (editable) */}
+      <div className="flex items-center justify-between gap-2.5 rounded-xl bg-sky-100 p-3.5 text-sm text-brand-700">
+        <span className="flex items-center gap-2.5">
+          <Icon name="user" size={18} />
+          {t("forCustomer", { name: customerName })}
+          <span className="text-brand-700/70">
+            · {customerType === "business" ? t("typeBusiness") : t("typeIndividual")} · {tc(channel)}
+          </span>
+        </span>
+        <button
+          type="button"
+          onClick={() => setConfirmed(false)}
+          className="shrink-0 font-600 hover:underline"
+        >
+          {t("editCustomer")}
+        </button>
+      </div>
+
+      <Tabs<Line>
+        tabs={[
+          { key: "worker", label: t("lineWorker") },
+          { key: "personal", label: t("linePersonal") },
+        ]}
+        value={line}
+        onChange={setLine}
+      />
+
+      {line === "worker" ? (
+        <div className="-mx-4 sm:-mx-6 lg:-mx-8">
+          <WorkerFlow authed onComplete={({ total }) => recordOrder("worker", total)} />
+        </div>
+      ) : (
+        <PersonalLinesBuy onSale={(l, premium) => recordOrder(l as InsuranceType, premium)} />
+      )}
     </div>
   );
 }

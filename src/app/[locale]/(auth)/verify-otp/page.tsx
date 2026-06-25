@@ -6,7 +6,7 @@ import type { Role } from "@/types/portal";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
-  searchParams: Promise<{ phone?: string; purpose?: string; role?: string }>;
+  searchParams: Promise<{ phone?: string; purpose?: string; role?: string; next?: string }>;
 };
 
 const ROLES: Role[] = ["business", "individual", "agent"];
@@ -15,7 +15,7 @@ export default async function VerifyOtpPage({ params, searchParams }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const { phone, purpose, role } = await searchParams;
+  const { phone, purpose, role, next } = await searchParams;
   // No phone in the flow → start over at login.
   if (!phone) redirect({ href: "/login", locale });
 
@@ -23,6 +23,6 @@ export default async function VerifyOtpPage({ params, searchParams }: Props) {
   const validRole = role && ROLES.includes(role as Role) ? (role as Role) : undefined;
 
   return (
-    <OtpForm phone={phone ?? ""} purpose={validPurpose} role={validRole} />
+    <OtpForm phone={phone ?? ""} purpose={validPurpose} role={validRole} next={next} />
   );
 }

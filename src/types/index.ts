@@ -100,13 +100,20 @@ export type WorkerMode = "single" | "bulk";
 /** Nationality codes; display names live in `worker.nat.*`. */
 export type NationalityCode = "mm" | "la" | "vn";
 
-/** A single-entry worker row (sample/seed data). */
+/** Honorific prefix on a worker's name. */
+export type TitlePrefix = "MR." | "MS." | "MRS." | "MISS";
+
+/** A single-entry worker row (sample/seed data). Age is derived from `dob`. */
 export interface SingleWorker {
+  title: TitlePrefix | "";
   name: string;
   passport: string;
   nat: NationalityCode;
   dob: string;
-  job: string;
+  job: string;          // ลักษณะงาน (work category)
+  occupation: string;   // อาชีพ (specific job title)
+  address: string;      // ที่อยู่ปัจจุบัน
+  phone: string;        // เบอร์โทร
 }
 
 /** Which cell a bulk validation error highlights. */

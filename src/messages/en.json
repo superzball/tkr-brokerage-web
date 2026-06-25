@@ -635,7 +635,17 @@
         "nationality": "Nationality",
         "dob": "Date of birth",
         "job": "Job type",
-        "jobPh": "e.g. construction, housekeeping, factory"
+        "jobPh": "e.g. construction, housekeeping, factory",
+        "title": "Title",
+        "age": "Age",
+        "agePh": "From date of birth",
+        "occupation": "Occupation",
+        "occupationPh": "e.g. Construction worker",
+        "address": "Current address",
+        "addressPh": "No. / Moo / Sub-district / District / Province",
+        "phone": "Phone",
+        "phonePh": "e.g. 08x-xxx-xxxx",
+        "ageYears": "{n} yrs"
       }
     },
     "bulk": {
@@ -2262,7 +2272,19 @@
       "viewPolicies": "View my policies",
       "emptyTitle": "No quote in progress",
       "emptyDesc": "Start a quote and we'll bring it here at checkout.",
-      "emptyCta": "Browse insurance"
+      "emptyCta": "Browse insurance",
+      "workersList": "Worker list"
+    },
+    "verify": {
+      "title": "Verify your phone before paying",
+      "desc": "Enter your phone to receive an OTP — no sign-up required, you can create an account later.",
+      "phoneLabel": "Phone number",
+      "phonePh": "e.g. 0812345678",
+      "phoneError": "Please enter a valid phone number",
+      "sendOtp": "Send OTP",
+      "verifiedNote": "Phone {phone} verified",
+      "changePhone": "Change number",
+      "haveAccount": "Already have an account? Sign in"
     }
   },
   "team": {
@@ -2476,7 +2498,11 @@
       "auditAction": "Created order on behalf of customer",
       "viewOrders": "Go to orders",
       "another": "Create another",
-      "missing": "Please complete all fields"
+      "missing": "Please complete all fields",
+      "lineWorker": "Worker insurance",
+      "linePersonal": "Personal lines",
+      "forCustomer": "Selling to {name}",
+      "editCustomer": "Edit customer"
     },
     "audit": {
       "title": "Audit log",
@@ -2764,7 +2790,15 @@
       },
       "typeBusiness": "Business",
       "typeIndividual": "Individual",
-      "empty": "No customers"
+      "empty": "No customers",
+      "field": {
+        "company": "Legal name",
+        "taxId": "Tax ID",
+        "nationalId": "National ID",
+        "address": "Address",
+        "contactPerson": "Contact person",
+        "note": "Internal note"
+      }
     },
     "agents": {
       "title": "Agents",
@@ -3020,7 +3054,18 @@
       "reactivated": "Account reactivated",
       "auditVerify": "Verified customer KYC",
       "auditSuspend": "Suspended customer account",
-      "kycCol": "KYC"
+      "kycCol": "KYC",
+      "add": "Add customer",
+      "edit": "Edit",
+      "createTitle": "Add new customer",
+      "editTitle": "Edit customer",
+      "save": "Save",
+      "cancel": "Cancel",
+      "created": "Customer added",
+      "updated": "Customer updated",
+      "auditCreate": "Added customer",
+      "auditEdit": "Edited customer",
+      "required": "Please enter the customer name"
     },
     "agentsActions": {
       "view": "View performance",

@@ -27,6 +27,12 @@ export interface User {
   phone?: string;          // primary login for many users
   company?: string;        // business role only
   avatarColor?: string;    // for initials avatar
+  // customer profile fields (admin CRM, Phase 14) — optional, for role business/individual
+  taxId?: string;          // นิติบุคคล: เลขประจำตัวผู้เสียภาษี (13 หลัก)
+  nationalId?: string;     // บุคคลธรรมดา: เลขบัตรประชาชน
+  address?: string;        // billing / contact address
+  contactPerson?: string;  // business: primary contact name
+  note?: string;           // internal note (staff-only)
   // agent team fields (Phase 11.5)
   uplineId?: string;       // null/undefined = top of a tree
   rank?: Tier;

@@ -5,7 +5,7 @@ import { staffCan } from "@/lib/auth/rbac";
 import { AdminForbidden } from "@/components/app/admin/AdminForbidden";
 import { PageHeader } from "@/components/app/PageHeader";
 import { NewOrderClient } from "@/components/app/admin/NewOrderClient";
-import { getProductPlans, getAllCustomers } from "@/lib/mock/seed";
+import { getAllCustomers } from "@/lib/mock/seed";
 
 type Props = { params: Promise<{ locale: Locale }> };
 
@@ -21,10 +21,7 @@ export default async function NewOrderPage({ params }: Props) {
   return (
     <>
       <PageHeader title={t("title")} description={t("desc")} />
-      <NewOrderClient
-        plans={getProductPlans()}
-        customers={getAllCustomers().map((c) => c.name)}
-      />
+      <NewOrderClient customers={getAllCustomers().map((c) => c.name)} />
     </>
   );
 }

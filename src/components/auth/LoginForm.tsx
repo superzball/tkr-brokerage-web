@@ -45,8 +45,9 @@ export function LoginForm({ next }: { next?: string }) {
     if (!isCompleteThaiPhone(phone)) return;
     startTransition(async () => {
       await requestOtp(phone);
+      const nextParam = next ? `&next=${encodeURIComponent(next)}` : "";
       router.push(
-        `/verify-otp?phone=${encodeURIComponent(phone)}&purpose=login`,
+        `/verify-otp?phone=${encodeURIComponent(phone)}&purpose=login${nextParam}`,
       );
     });
   }

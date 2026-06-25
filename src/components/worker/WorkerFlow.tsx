@@ -35,14 +35,19 @@ type Action =
   | { type: "next" }
   | { type: "back" }
   | { type: "addWorker" }
-  | { type: "delWorker"; id: number };
+  | { type: "delWorker"; id: number }
+  | { type: "editWorker"; id: number; patch: Partial<SingleWorker> };
 
 const EMPTY_WORKER: SingleWorker = {
+  title: "",
   name: "",
   passport: "",
   nat: "mm",
   dob: "",
   job: "",
+  occupation: "",
+  address: "",
+  phone: "",
 };
 
 const initialState: State = {
@@ -74,6 +79,13 @@ function reducer(state: State, action: Action): State {
       return {
         ...state,
         workers: state.workers.filter((w) => w.id !== action.id),
+      };
+    case "editWorker":
+      return {
+        ...state,
+        workers: state.workers.map((w) =>
+          w.id === action.id ? { ...w, ...action.patch } : w,
+        ),
       };
     default:
       return state;
@@ -184,6 +196,7 @@ export function WorkerFlow({
                 workers={state.workers}
                 onAdd={() => dispatch({ type: "addWorker" })}
                 onDel={(id) => dispatch({ type: "delWorker", id })}
+                onEdit={(id, patch) => dispatch({ type: "editWorker", id, patch })}
                 onSwitchBulk={() => dispatch({ type: "setMode", mode: "bulk" })}
               />
             ) : (
@@ -199,6 +212,7 @@ export function WorkerFlow({
               total={total}
               authed={authed}
               pending={pending}
+              workers={state.mode === "single" ? state.workers : []}
               onPaid={() => dispatch({ type: "next" })}
             />
           )}

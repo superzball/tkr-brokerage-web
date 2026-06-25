@@ -20,10 +20,13 @@ export function OtpForm({
   phone,
   purpose,
   role,
+  next,
 }: {
   phone: string;
   purpose: "login" | "signup";
   role?: Role;
+  /** Post-login redirect target (carried from the login link, e.g. checkout). */
+  next?: string;
 }) {
   const t = useTranslations("auth.otp");
   const locale = useLocale() as Locale;
@@ -73,7 +76,7 @@ export function OtpForm({
       const res =
         purpose === "signup" && role
           ? await verifySignupOtp(locale, role, code)
-          : await verifyOtp(locale, phone, code);
+          : await verifyOtp(locale, phone, code, next);
       if (res && !res.ok) setError(true);
     });
   }

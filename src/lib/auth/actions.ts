@@ -106,12 +106,13 @@ export async function verifyOtp(
   locale: Locale,
   phone: string,
   code: string,
+  next?: string,
 ): Promise<AuthResult> {
   if (code !== DEMO_OTP) return { ok: false, error: "otp" };
   const user =
     findUserByPhone(phone) ?? users.find((u) => u.role === "individual")!;
   await startSession(user.id);
-  redirect({ href: landingPath(user.role), locale });
+  redirect({ href: resolveNext(next, locale) ?? landingPath(user.role), locale });
   return { ok: true }; // unreachable — redirect() throws
 }
 

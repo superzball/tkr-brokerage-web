@@ -50,7 +50,8 @@ export default async function BuyPage({ params, searchParams }: Props) {
       )}
 
       <div className="-mx-4 sm:-mx-6 lg:-mx-8">
-        <WorkerFlow />
+        {/* Reached only by a logged-in business user (guarded above). */}
+        <WorkerFlow authed />
       </div>
     </>
   );
