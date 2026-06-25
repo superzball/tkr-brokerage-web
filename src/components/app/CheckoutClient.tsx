@@ -2,18 +2,18 @@
 
 import { useEffect, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { useBaht } from "@/lib/format";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { EmptyState } from "@/components/app/EmptyState";
 import { clearPendingQuote } from "@/lib/quote/actions";
 import { readPendingDetail, clearPendingDetail, type PendingDetail } from "@/lib/quote/local";
 import type { PendingQuote } from "@/lib/quote/pending";
+import { CouponInstallment } from "@/components/conversion/CouponInstallment";
+import type { InsuranceType } from "@/types/portal";
 
 export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
   const t = useTranslations("checkout.page");
   const tw = useTranslations("worker");
-  const baht = useBaht();
   const [done, setDone] = useState(false);
   const [pending, start] = useTransition();
 
@@ -64,12 +64,15 @@ export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
           <dt className="text-ink-500">{t("workers")}</dt>
           <dd className="font-600 text-ink-900 tabnum">{quote.count}</dd>
         </div>
-        <div className="h-px bg-ink-100 my-1" />
-        <div className="flex justify-between items-center gap-4">
-          <dt className="text-ink-600 font-500">{t("total")}</dt>
-          <dd className="font-700 text-2xl text-brand-700 tabnum">{baht(quote.total)}</dd>
-        </div>
       </dl>
+
+      {/* coupon + installment selector */}
+      <div className="mt-5 pt-5 border-t border-ink-100">
+        <CouponInstallment
+          product={quote.product as InsuranceType}
+          subtotal={quote.total}
+        />
+      </div>
 
       {workers.length > 0 && (
         <div className="mt-5">

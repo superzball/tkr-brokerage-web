@@ -5,6 +5,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { RevealObserver } from "@/components/RevealObserver";
+import { LineChatWidget } from "@/components/conversion/LineChatWidget";
 
 type Props = {
   children: React.ReactNode;
@@ -27,6 +28,7 @@ export default async function MarketingLayout({ children, params }: Props) {
       {children}
       <Footer />
       <RevealObserver />
+      <LineChatWidget />
     </>
   );
 }

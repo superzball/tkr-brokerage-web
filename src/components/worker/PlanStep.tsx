@@ -6,6 +6,7 @@ import { Icon } from "@/components/ui/Icon";
 import { useBaht } from "@/lib/format";
 import { cn } from "@/lib/cn";
 import { WORKER_PLANS } from "@/config/insurance";
+import { TrustBadge } from "@/components/conversion/TrustBadge";
 import type { WorkerMode, WorkerPlanId } from "@/types";
 
 export type PlanStepProps = {
@@ -25,6 +26,9 @@ export function PlanStep({ plan, mode, onPlan, onMode }: PlanStepProps) {
         {t("plan.heading")}
       </h2>
       <p className="text-ink-600 mt-1.5">{t("plan.sub")}</p>
+
+      {/* Privacy-first: a real price is visible here with zero personal data. */}
+      <TrustBadge variant="block" className="mt-4 max-w-md" />
 
       <div className="mt-6 grid sm:grid-cols-3 gap-4">
         {WORKER_PLANS.map((p) => (

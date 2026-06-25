@@ -39,3 +39,4 @@ Thai placeholders**. Largest backlogs: `admin` ~716, `business` ~237, `agent`
 - [ ] team — Phase 11.5 agent-team / override copy
 - [ ] crm — Phase 15 CRM ops core copy (nav + admin.ops/finance tickets/credit/debtors), Thai placeholders
 - [ ] phase16 — Issuance/amendments/public token copy (admin.issuePolicy/issued/amendments, public.ticketCheck/staffVerify, business.issued), Thai placeholders
+- [ ] phase17 — Conversion & Trust copy (conversion, promotions, reviewsPage, seo, admin.coupons/reviews/partners, nav.coupons/reviews/partners/promotions/allProducts/quickRenew), Thai placeholders

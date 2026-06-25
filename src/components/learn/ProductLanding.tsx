@@ -12,6 +12,10 @@ import { cn } from "@/lib/cn";
 import { LEARN_PRODUCTS, type LearnProductKey } from "@/config/learn";
 import { WORKER_PLANS, AUTO_PLANS } from "@/config/insurance";
 import { ROUTES } from "@/config/nav";
+import { TrustBadge } from "@/components/conversion/TrustBadge";
+import { GlossarySection } from "@/components/conversion/Glossary";
+import { Reviews } from "@/components/conversion/Reviews";
+import { getReviews } from "@/lib/mock/seed";
 
 type Pair = { title: string; desc: string };
 type Qa = { q: string; a: string };
@@ -84,6 +88,10 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
                 <Button href="#plans" variant="ghost" size="lg">
                   {t("common.seePlans")}
                 </Button>
+              </div>
+              {/* Privacy-first: a price is visible without entering personal data. */}
+              <div className="mt-5">
+                <TrustBadge />
               </div>
               <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-500">
                 <span className="flex items-center gap-2">
@@ -275,7 +283,15 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
             })}
           </div>
         )}
+
+        {/* plain-language layer */}
+        <div className="mt-10">
+          <GlossarySection />
+        </div>
       </section>
+
+      {/* ── Social proof ── */}
+      <Reviews reviews={getReviews()} limit={3} />
 
       {/* ── Trust / credentials ── */}
       <section className="bg-ink-950 text-white relative overflow-hidden">

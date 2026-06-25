@@ -6,6 +6,9 @@ import { ProductGrid } from "@/components/home/ProductGrid";
 import { WhyTKR } from "@/components/home/WhyTKR";
 import { TrustStats } from "@/components/home/TrustStats";
 import { AgentCTA } from "@/components/home/AgentCTA";
+import { Reviews } from "@/components/conversion/Reviews";
+import { QuickRenew } from "@/components/conversion/QuickRenew";
+import { getReviews } from "@/lib/mock/seed";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -27,6 +30,10 @@ export default async function HomePage({ params }: Props) {
       <ProductGrid />
       <WhyTKR />
       <TrustStats />
+      <Reviews reviews={getReviews()} limit={3} />
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-4">
+        <QuickRenew />
+      </section>
       <AgentCTA />
     </main>
   );

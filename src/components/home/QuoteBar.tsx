@@ -7,6 +7,7 @@ import { FieldLabel, TextField, SelectField } from "@/components/ui/Field";
 import { QUOTE_TABS } from "@/config/insurance";
 import type { QuoteFieldConfig, QuoteTabConfig } from "@/types";
 import { cn } from "@/lib/cn";
+import { TrustBadge } from "@/components/conversion/TrustBadge";
 
 export function QuoteBar() {
   const t = useTranslations("home.quote");
@@ -41,6 +42,11 @@ export function QuoteBar() {
         >
           {t(`cta.${active.id}`)}
         </Button>
+      </div>
+
+      {/* Privacy-first: see a price without entering any personal data. */}
+      <div className="mt-2.5 px-1">
+        <TrustBadge />
       </div>
     </div>
   );

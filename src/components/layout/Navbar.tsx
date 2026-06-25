@@ -59,6 +59,7 @@ export function Navbar() {
             <ProductMenu active={PRODUCT_ACTIVE_KEYS.includes(activeKey)} />
             {navLink("customer", ROUTES.customer, t("customer"))}
             {navLink("agency", ROUTES.agency, t("agency"))}
+            {navLink("promotions", ROUTES.promotions, t("promotions"))}
             <ServicesMenu active={SERVICE_ACTIVE_KEYS.includes(activeKey)} />
           </div>
 

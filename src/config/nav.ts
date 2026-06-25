@@ -16,6 +16,9 @@ export const ROUTES = {
   wallet: "/wallet",
   line: "/line",
   tracking: "/tracking",
+  insurance: "/insurance",
+  promotions: "/promotions",
+  reviews: "/reviews",
 } as const;
 
 /** Products hover dropdown (worker is featured). Each opens its "How it works"
@@ -38,10 +41,13 @@ export const SERVICE_MENU: MenuItem<ServiceMenuKey>[] = [
 /** Full ordered list for the mobile drawer. */
 export const MOBILE_NAV: NavRoute[] = [
   { key: "home", href: ROUTES.home },
+  { key: "allProducts", href: ROUTES.insurance },
   { key: "worker", href: ROUTES.worker },
   { key: "auto", href: ROUTES.auto },
   { key: "customer", href: ROUTES.customer },
   { key: "agency", href: ROUTES.agency },
+  { key: "promotions", href: ROUTES.promotions },
+  { key: "reviews", href: ROUTES.reviews },
   { key: "wallet", href: ROUTES.wallet },
   { key: "line", href: ROUTES.line },
   { key: "tracking", href: ROUTES.tracking },

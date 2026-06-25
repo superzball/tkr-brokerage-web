@@ -114,7 +114,13 @@
     "operations": "Operations",
     "accounts": "Accounts",
     "finance": "Finance",
-    "config": "Configuration"
+    "config": "Configuration",
+    "coupons": "Coupons & Promotions",
+    "reviews": "Reviews",
+    "partners": "Insurer Partners",
+    "promotions": "Promotions",
+    "allProducts": "All Insurance",
+    "quickRenew": "Renew (existing customer)"
   },
   "app": {
     "menu": "Menu",
@@ -3298,6 +3304,58 @@
         "thipFiles": "Attachments",
         "thipFilesBtn": "Attach files"
       }
+    },
+    "coupons": {
+      "title": "Coupons & Promotions",
+      "desc": "Manage discount codes shown on the promotions page and applied at checkout",
+      "empty": "No coupons yet",
+      "add": "Add coupon",
+      "code": "Code",
+      "description": "Description",
+      "discount": "Discount",
+      "products": "Products",
+      "status": "Status",
+      "expiry": "Expiry",
+      "active": "Active",
+      "inactive": "Inactive",
+      "percent": "Percent",
+      "fixed": "Baht",
+      "allProducts": "All products",
+      "delete": "Delete",
+      "toggle": "Toggle",
+      "created": "Coupon added",
+      "deleted": "Coupon deleted",
+      "activated": "Coupon activated",
+      "deactivated": "Coupon deactivated",
+      "count": "{n} coupons"
+    },
+    "reviews": {
+      "title": "Customer reviews",
+      "desc": "Manage reviews shown on the site — display only real, consented reviews",
+      "placeholderBanner": "Sample data for demo — replace with real reviews before going live",
+      "empty": "No reviews yet",
+      "author": "Author",
+      "product": "Product",
+      "channel": "Channel",
+      "reaction": "Reaction",
+      "date": "Date",
+      "delete": "Delete",
+      "deleted": "Review deleted",
+      "count": "{n} reviews",
+      "channelSurvey": "Survey",
+      "channelSocial": "Social"
+    },
+    "partners": {
+      "title": "Insurer partners",
+      "desc": "Manage the insurers shown in the trust section and comparison pages",
+      "empty": "No partners yet",
+      "add": "Add partner",
+      "name": "Company name",
+      "namePlaceholder": "e.g. Dhipaya Insurance",
+      "delete": "Delete",
+      "created": "Partner added",
+      "deleted": "Partner deleted",
+      "count": "{n} companies"
     }
   },
   "public": {
@@ -3343,6 +3401,205 @@
       "submit": "Confirm & save",
       "audit": "Underwriter submitted result",
       "auditActor": "Thip staff"
+    }
+  },
+  "conversion": {
+    "trustBadge": {
+      "title": "See your price — no personal data needed",
+      "noData": "View a real price without entering personal data",
+      "noCall": "No sales calls, no spam"
+    },
+    "channel": {
+      "heading": "Choose how to proceed",
+      "sub": "Buy it all yourself, or let a licensed agent help — same price either way",
+      "selfTitle": "Buy it myself",
+      "selfDesc": "Complete and pay on your own, right now — fast and simple",
+      "agentTitle": "Let an agent help",
+      "agentDesc": "A licensed agent guides and handles it for you, at no extra cost",
+      "continue": "Continue",
+      "formName": "Name",
+      "formPhone": "Callback phone",
+      "formNote": "Additional notes (optional)",
+      "request": "Request a callback",
+      "requested": "Request sent — an agent will contact you shortly",
+      "keepSelf": "Switch to doing it myself"
+    },
+    "glossary": {
+      "toggle": "Plain-language mode",
+      "on": "Showing plain-language explanations",
+      "hint": "Tap the underlined terms for a plain explanation"
+    },
+    "compare": {
+      "title": "Compare across insurers",
+      "sortBy": "Sort by",
+      "price": "Lowest premium",
+      "coverage": "Highest coverage",
+      "rating": "Review score",
+      "results": "{count} plans from partner insurers",
+      "sum": "Sum insured",
+      "deductible": "Deductible",
+      "noDeduct": "None",
+      "perYear": "/yr",
+      "choose": "Choose this plan",
+      "byInsurer": "by {insurer}",
+      "empty": "No plans match the selected filters",
+      "best": "Recommended",
+      "value": "Best value"
+    },
+    "coupon": {
+      "label": "Discount code / coupon",
+      "placeholder": "Enter a code, e.g. EVFIRST10",
+      "apply": "Apply",
+      "applied": "Coupon {code} applied",
+      "invalid": "Code is invalid or not valid for this product",
+      "remove": "Remove",
+      "discount": "Discount",
+      "available": "See available coupons",
+      "condition": "Condition: {cond}",
+      "subtotal": "Subtotal"
+    },
+    "installment": {
+      "label": "Payment method",
+      "perMonth": "{amount}/mo",
+      "months": "{n} months",
+      "full": "Pay in full",
+      "interestFree": "0% interest"
+    },
+    "reviews": {
+      "title": "What customers say",
+      "sub": "Feedback from real customers and agents who use TKR",
+      "placeholderNote": "Sample for demo — to be replaced with real, consented reviews",
+      "viewAll": "View all reviews"
+    },
+    "trust": {
+      "title": "Why trust TKR",
+      "oicTitle": "Licensed insurance broker",
+      "insurersTitle": "Partner insurers",
+      "insurersValue": "{n} companies",
+      "customersTitle": "Customers served",
+      "claimsTitle": "Claims-paid rate",
+      "partnersTitle": "Partner insurers",
+      "awardsTitle": "Awards & recognition",
+      "awardsEmpty": "Reserved for real awards — we only display awards we have actually received"
+    },
+    "lineChat": {
+      "title": "Chat with TKR",
+      "sub": "Here to help, 24/7",
+      "greeting": "Hi 👋 Welcome to TKR. How can we help you today?",
+      "openLine": "Open LINE chat",
+      "hours": "Answered by our team 24/7",
+      "ariaOpen": "Open chat",
+      "ariaClose": "Close chat"
+    },
+    "quickRenew": {
+      "title": "Renew as an existing customer",
+      "sub": "Sign in to renew your existing policy in a few clicks",
+      "cta": "Renew now"
+    }
+  },
+  "promotions": {
+    "title": "Coupons & Promotions",
+    "desc": "All the discounts and perks available now — use the code at checkout",
+    "empty": "No promotions available right now",
+    "code": "Code",
+    "copy": "Copy code",
+    "copied": "Copied",
+    "expires": "Valid until {date}",
+    "minSpend": "Min. spend {amount}",
+    "forProducts": "Valid for: {products}",
+    "allProducts": "All products",
+    "use": "Use this code",
+    "terms": "Terms apply as set by the company. Images/samples for demonstration."
+  },
+  "reviewsPage": {
+    "title": "Customer reviews",
+    "desc": "Feedback from real customers and agents who use TKR",
+    "empty": "No reviews yet",
+    "placeholderBanner": "Sample data for demo — real content will come from consented customer surveys",
+    "filterAll": "All"
+  },
+  "seo": {
+    "index": {
+      "title": "Insurance for every need",
+      "desc": "Browse each insurance type and see a price instantly — no personal data required",
+      "badge": "All insurance",
+      "flagshipTitle": "Foreign-worker insurance (flagship)",
+      "flagshipDesc": "TKR's strength — bulk policy issuance, end-to-end service",
+      "moreTitle": "Personal lines",
+      "view": "View details"
+    },
+    "cat": {
+      "auto": "Motor insurance",
+      "travel": "Travel insurance",
+      "home": "Home & condo insurance",
+      "health": "Health insurance",
+      "tax": "Tax-deductible insurance"
+    },
+    "sub": {
+      "startQuote": "See price instantly",
+      "comparePlans": "Compare plans",
+      "contact": "Talk to us",
+      "backToAll": "View all insurance",
+      "relatedTitle": "In the same category",
+      "from": "from"
+    },
+    "items": {
+      "auto-ev": {
+        "label": "EV car insurance",
+        "tagline": "Built for electric vehicles, incl. battery and electrical systems"
+      },
+      "auto-class1": {
+        "label": "Class 1 motor",
+        "tagline": "Most complete cover, dealer or garage repair"
+      },
+      "auto-2plus": {
+        "label": "Class 2+ / 2",
+        "tagline": "Covers third party and your car in a collision — great value"
+      },
+      "auto-3plus": {
+        "label": "Class 3+ / 3",
+        "tagline": "Budget premium, covers third party and named collisions"
+      },
+      "auto-shortterm": {
+        "label": "Short-term motor",
+        "tagline": "Pick the coverage period you actually need"
+      },
+      "auto-van": {
+        "label": "Van / pickup insurance",
+        "tagline": "For commercial-use vehicles"
+      },
+      "travel-domestic": {
+        "label": "Domestic travel",
+        "tagline": "Peace of mind on every trip in Thailand, premiums from a few baht"
+      },
+      "travel-international": {
+        "label": "International travel",
+        "tagline": "Medical and trip cover, Schengen-visa ready"
+      },
+      "home-house": {
+        "label": "House insurance",
+        "tagline": "Covers the building and contents from fire and natural perils"
+      },
+      "home-condo": {
+        "label": "Condo insurance",
+        "tagline": "Covers the unit and its contents"
+      },
+      "health-ci": {
+        "label": "Critical illness",
+        "tagline": "Lump sum on diagnosis of a covered critical illness"
+      },
+      "health-cancer": {
+        "label": "Cancer insurance",
+        "tagline": "Low starting premium, lump sum on a cancer diagnosis"
+      },
+      "tax-savings": {
+        "label": "Savings insurance",
+        "tagline": "Save with protection and a tax deduction"
+      },
+      "tax-annuity": {
+        "label": "Annuity insurance",
+        "tagline": "Plan for retirement, receive an annuity, deduct tax"
+      }
     }
   }
 }

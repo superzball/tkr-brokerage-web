@@ -413,3 +413,47 @@ export interface IssuedPolicy {
   issuedBy: string;
   pdfUrl?: string;
 }
+
+// ============== conversion & trust layer (Phase 17) ==============
+// D2C UX upgrade — coupons, social proof, plain-language glossary, installments,
+// partner trust signals. Mock-only; sample reviews are PLACEHOLDERS until real,
+// consented customer feedback exists. TKR keeps its agent channel throughout.
+export type CouponDiscountType = 'percent' | 'fixed';
+export interface Coupon {
+  id: string;
+  code: string;
+  description: string;
+  discountType: CouponDiscountType;
+  value: number;                 // percent or THB
+  minSpend?: number;
+  products: (InsuranceType | 'all')[];
+  paymentCondition?: string;     // e.g. "บัตรเครดิต ผ่อน 0% 3 เดือน"
+  expiry: string;
+  active: boolean;
+}
+
+export interface Review {
+  id: string;
+  authorLabel: string;           // masked, e.g. "ลูกค้า TKR" — PLACEHOLDER
+  channel: 'survey' | 'social';
+  product: InsuranceType;
+  text: string;                  // PLACEHOLDER copy
+  reaction: 'heart' | 'like' | 'celebrate';
+  date: string;
+}
+
+export interface InsurerPartner { id: string; name: string; logo?: string; }
+
+export interface GlossaryTerm {
+  term: string;
+  plain: string;                 // plain-Thai explanation
+}
+
+export interface InstallmentPlan {
+  months: number;                // 0 = pay in full
+  rate: number;                  // percent; 0 = interest-free
+  label: string;
+}
+
+// Channel the customer picks at quote/checkout — TKR's edge over pure D2C.
+export type SalesChannel = 'self' | 'agent';

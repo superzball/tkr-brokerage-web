@@ -42,6 +42,9 @@ import {
   FileBadge,
   WalletCards,
   AlertCircle,
+  TicketPercent,
+  Star,
+  Handshake,
   type LucideProps,
 } from "lucide-react";
 
@@ -83,6 +86,9 @@ const registry: Record<string, React.ComponentType<LucideProps>> = {
   FileBadge,
   WalletCards,
   AlertCircle,
+  TicketPercent,
+  Star,
+  Handshake,
 };
 
 export function NavIcon({

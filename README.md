@@ -138,6 +138,31 @@ Issued policies surface read-only in the customer portal via
 `local-crm.ts` (`addAmendment`/`patchAmendment`/`deleteAmendment` +
 `mergeAmendments`). Every issue/amend action writes to `/admin/audit`.
 
+**…add a conversion/trust piece (Phase 17).** Reusable D2C building blocks live
+in [src/components/conversion/](src/components/conversion): `TrustBadge`
+(privacy-first "see a price with no personal data" badge — drop near every quote
+entry), `ChannelChoice` (the non-negotiable ซื้อเอง / ให้ตัวแทนช่วย step — `onSelf`
+continues the self-serve flow, the agent path is self-contained; **never remove
+it**), `CouponInstallment` (apply-coupon via `applyCoupon` + 0% installment
+selector, used in `PayStep` + `CheckoutClient`), `CompareTable` (reusable
+multi-insurer comparison — feed it `comparePlansFor(product, base)` from
+[src/config/conversion.ts](src/config/conversion.ts)), `Glossary`
+(`PlainLanguageProvider`/`GlossarySection` for the "อ่านแบบเข้าใจง่าย" toggle +
+jargon tooltips, copy from `glossary` seed), `Reviews` + `TrustCredentials`
+(social proof + OIC/partner wall — **only real signals; the awards slot stays
+empty**), `LineChatWidget` (floating 24/7 LINE CTA in the marketing layout), and
+`QuickRenew`. Coupons/reviews/partners are managed under `/admin/content/*`
+(perm `content`). Sample reviews + `trustStats` are **placeholders** — never
+present them as real customer quotes or fabricated awards.
+
+**…add an SEO landing page (Phase 17).** Flagship lines stay in
+`LEARN_PRODUCTS`; expanded personal-lines sub-products are config rows in
+`SEO_LANDINGS` ([src/config/conversion.ts](src/config/conversion.ts)) with copy
+under the `seo.items.<slug>` namespace. The single `/insurance/[product]` route
+renders `ProductLanding` for flagship keys and the lighter `SubLanding` for sub
+slugs; `/insurance` is the taxonomy index. Add a row + its `seo.items` copy and
+it's picked up by `generateStaticParams` automatically.
+
 **…add a public (unauthenticated) page.** Put it in the `(public)` route group.
 The proxy only guards `/app/*` and `/admin/*`, so `/{locale}/<anything-else>` is
 reachable without a session — the group just supplies a brand-header shell. The

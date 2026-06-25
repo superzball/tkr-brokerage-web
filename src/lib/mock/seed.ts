@@ -13,6 +13,7 @@ import type {
   CmsPage, Faq, MediaAsset, Redirect, CommissionRule,
   CrmProduct, Duration, PricingTier, CustomerCreditProfile,
   PolicyTicket, CrmPayment, CreditTransaction, AmendmentTicket, IssuedPolicy,
+  Coupon, Review, InsurerPartner, GlossaryTerm, InstallmentPlan,
 } from '@/types/portal';
 
 // ============================ USERS (demo accounts) ============================
@@ -633,3 +634,61 @@ export function crmCustomerName(id: string): string {
 // customers that carry an internal credit wallet (the AR-tracked accounts)
 export const crmCustomers = () =>
   creditProfiles.map(p => ({ id: p.customerId, name: crmCustomerName(p.customerId) }));
+
+// ============================ CONVERSION & TRUST (Phase 17) ============================
+// D2C UX upgrade. Coupons/installments/glossary are real config; reviews + trust
+// stats are PLACEHOLDERS to be replaced with real, consented, verifiable content.
+export const coupons: Coupon[] = [
+  { id: 'cpn1', code: 'TKRWORKER300', description: 'ลด ฿300 ต่อกรมธรรม์ประกันแรงงานต่างด้าว', discountType: 'fixed', value: 300, minSpend: 5000, products: ['worker'], expiry: '2026-12-31', active: true },
+  { id: 'cpn2', code: 'EVFIRST10',    description: 'ลด 10% ประกันรถ EV ลูกค้าใหม่', discountType: 'percent', value: 10, products: ['auto'], paymentCondition: 'บัตรเครดิต ผ่อน 0% นาน 3 เดือน', expiry: '2026-09-30', active: true },
+  { id: 'cpn3', code: 'TRAVEL150',    description: 'ลด ฿150 ประกันเดินทาง', discountType: 'fixed', value: 150, products: ['travel'], expiry: '2026-08-31', active: false },
+];
+
+// PLACEHOLDER reviews — replace with real, consented TKR customer feedback.
+export const reviews: Review[] = [
+  { id: 'rv1', authorLabel: 'ลูกค้า TKR (สำรวจหลังบริการ)', channel: 'survey', product: 'worker', text: 'ออกกรมธรรม์แรงงานเป็นชุดได้เร็ว ไม่ต้องเดินเอกสารเอง', reaction: 'heart', date: '2026-05-30' },
+  { id: 'rv2', authorLabel: 'ลูกค้า TKR (สำรวจหลังบริการ)', channel: 'survey', product: 'auto',   text: 'เทียบราคาเองได้ เห็นเบี้ยทันที ไม่มีใครโทรตาม', reaction: 'like', date: '2026-05-12' },
+  { id: 'rv3', authorLabel: 'ตัวแทน TKR', channel: 'survey', product: 'worker', text: 'พอร์ทัลตัวแทนดูยอดทีมและคอมมิชชั่นได้ในที่เดียว', reaction: 'celebrate', date: '2026-04-20' },
+];
+
+export const insurerPartners: InsurerPartner[] = [
+  { id: 'ip_thip', name: 'ทิพยประกันภัย' }, { id: 'ip_viriya', name: 'วิริยะประกันภัย' },
+  { id: 'ip_bki', name: 'กรุงเทพประกันภัย' }, { id: 'ip_mti', name: 'เมืองไทยประกันภัย' },
+  { id: 'ip_msig', name: 'MSIG' }, { id: 'ip_axa', name: 'AXA' },
+];
+
+export const glossary: GlossaryTerm[] = [
+  { term: 'ทุนประกัน', plain: 'จำนวนเงินสูงสุดที่บริษัทจะจ่ายเมื่อเกิดเหตุ' },
+  { term: 'ค่าเสียหายส่วนแรก (Deductible)', plain: 'ส่วนที่เราต้องจ่ายเองก่อน บริษัทจ่ายส่วนที่เหลือ' },
+  { term: 'ความคุ้มครอง', plain: 'เหตุการณ์หรือความเสียหายที่กรมธรรม์นี้ดูแลให้' },
+  { term: 'เบี้ยประกัน', plain: 'เงินที่เราจ่ายเพื่อซื้อความคุ้มครอง' },
+];
+
+export const installmentPlans: InstallmentPlan[] = [
+  { months: 0, rate: 0, label: 'ชำระเต็มจำนวน' },
+  { months: 3, rate: 0, label: 'ผ่อน 0% นาน 3 เดือน (บัตรเครดิต)' },
+  { months: 6, rate: 0, label: 'ผ่อน 0% นาน 6 เดือน (บัตรเครดิต)' },
+];
+
+// honest trust stats (use only verifiable numbers in production)
+export const trustStats = {
+  oicLicense: 'ใบอนุญาตนายหน้าประกันวินาศภัย เลขที่ —',  // fill with real license
+  insurers: insurerPartners.length,
+  customersServed: 12800,
+  claimsPaidPct: 98,
+};
+
+export const getCoupons = () => coupons;
+export const getReviews = () => reviews;
+export const getInsurerPartners = () => insurerPartners;
+export const getGlossary = () => glossary;
+export const getInstallmentPlans = () => installmentPlans;
+
+/** THB discount for a coupon code on a given product + subtotal (0 if it doesn't apply). */
+export const applyCoupon = (code: string, product: InsuranceType, subtotal: number): number => {
+  const c = coupons.find(x => x.active && x.code === code &&
+    (x.products.includes('all') || x.products.includes(product)) &&
+    (!x.minSpend || subtotal >= x.minSpend));
+  if (!c) return 0;
+  return c.discountType === 'percent' ? Math.round(subtotal * c.value / 100) : c.value;
+};
