@@ -15,7 +15,9 @@ import { ROUTES } from "@/config/nav";
 import { TrustBadge } from "@/components/conversion/TrustBadge";
 import { GlossarySection } from "@/components/conversion/Glossary";
 import { Reviews } from "@/components/conversion/Reviews";
-import { getReviews } from "@/lib/mock/seed";
+import { ProductPlans } from "@/components/conversion/ProductPlans";
+import { getReviews, getPlanCards } from "@/lib/mock/seed";
+import type { InsuranceType } from "@/types/portal";
 
 type Pair = { title: string; desc: string };
 type Qa = { q: string; a: string };
@@ -281,6 +283,20 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
                 </div>
               );
             })}
+          </div>
+        )}
+
+        {/* decision tools — guided recommender + plan-card grid with shortlist
+            (Phase 18). Renders only for products with plan cards (worker/auto). */}
+        {getPlanCards(product as InsuranceType).length > 0 && (
+          <div className="mt-12">
+            <div className="text-center max-w-2xl mx-auto mb-8">
+              <Chip className="bg-brand-50 text-brand-600 mb-3">{t("common.recommenderBadge")}</Chip>
+              <h3 className="font-display font-700 text-2xl sm:text-3xl text-ink-900 tracking-tight">
+                {t("common.recommenderTitle")}
+              </h3>
+            </div>
+            <ProductPlans product={product as InsuranceType} chooseHref={primaryHref} />
           </div>
         )}
 

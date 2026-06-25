@@ -2008,6 +2008,8 @@
       "recommended": "Recommended",
       "compareCta": "Compare insurers",
       "compareNote": "Compare live prices from leading insurers.",
+      "recommenderBadge": "Plan finder",
+      "recommenderTitle": "Find your plan in a minute",
       "planSum": "Sum insured",
       "planFeature1": "24/7 claims support",
       "planFeature2": "Instant e-policy",
@@ -3495,7 +3497,78 @@
       "title": "Renew as an existing customer",
       "sub": "Sign in to renew your existing policy in a few clicks",
       "cta": "Renew now"
+    },
+    "recommender": {
+      "title": "Not sure which plan to pick?",
+      "sub": "Answer a few questions and we'll recommend a plan that fits",
+      "progress": "Question {n}/{total}",
+      "back": "Back",
+      "recommendedTitle": "Our recommendation for you",
+      "viewPlan": "View this plan",
+      "restart": "Start over"
+    },
+    "planCards": {
+      "from": "From",
+      "buy": "Choose plan",
+      "detail": "Details",
+      "favorite": "Add to shortlist",
+      "favorited": "Saved to shortlist",
+      "recommendedTag": "Recommended for you",
+      "couponOnCard": "Code {code}",
+      "couponLabel": "Coupon code",
+      "placeholderNote": "Sample plan data for demo — real data comes from the product catalog",
+      "shortlist": {
+        "title": "{n} shortlisted",
+        "compare": "Compare ({n})",
+        "clear": "Clear"
+      },
+      "modal": {
+        "benefitsTitle": "Coverage & benefits",
+        "startingPremium": "Starting premium",
+        "insurer": "Insurer"
+      },
+      "compare": {
+        "title": "Compare plans",
+        "benefit": "Benefit",
+        "startingPremium": "Starting premium"
+      }
+    },
+    "payment": {
+      "title": "Choose a payment method",
+      "partnerBadge": "Finance partner required",
+      "instantTitle": "Instant coverage",
+      "instantNote": "Coverage starts the moment your first installment is paid — for Class 1 motor, interim Class 3 cover applies while inspection/approval is pending.",
+      "methods": {
+        "full": { "label": "Pay in full", "detail": "One-time payment" },
+        "card_installment": { "label": "Credit-card 0% installments", "detail": "Up to 10 months on participating cards" },
+        "qr_promptpay": { "label": "QR PromptPay", "detail": "Scan to pay via any bank's mobile banking" },
+        "cash_installment": { "label": "Cash installments (no card)", "detail": "First installment ฿1,000 via a finance partner" }
+      }
     }
+  },
+  "tax": {
+    "title": "Tax-saving calculator",
+    "sub": "Estimate your tax before and after deductions to plan tax-deductible insurance",
+    "disclaimer": "This tool is a planning estimate only and cannot be used to file actual taxes. Verify the rules with the Revenue Department for the relevant tax year.",
+    "inputs": {
+      "annualIncome": { "label": "Annual income", "hint": "Total yearly income before expenses" },
+      "personalAllowance": { "label": "Personal allowance", "hint": "Personal allowance and base expenses" },
+      "socialSecurity": { "label": "Social security", "hint": "Yearly social-security contributions (max ฿9,000)" },
+      "existingInsurance": { "label": "Life/health insurance premium", "hint": "Deductible premiums (combined max ฿100,000)" },
+      "funds": { "label": "Deductible funds (SSF/RMF/PVD)", "hint": "Deductible investment amount" }
+    },
+    "capsTitle": "Deduction caps (per Revenue rules — verify yearly)",
+    "cap": "Max {amount}",
+    "results": {
+      "taxSaved": "Tax saved",
+      "taxableIncome": "Net taxable income",
+      "taxBefore": "Tax before insurance deductions",
+      "taxAfter": "Tax after insurance deductions"
+    },
+    "suggestTitle": "Plans that reduce your tax",
+    "suggestSub": "See sample savings/annuity plans eligible for deductions",
+    "plans": { "savings": "Endowment plan", "annuity": "Annuity plan" },
+    "footnote": "Figures are demo estimates using progressive tax brackets. Consult a tax professional before deciding."
   },
   "promotions": {
     "title": "Coupons & Promotions",

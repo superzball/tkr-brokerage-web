@@ -457,3 +457,47 @@ export interface InstallmentPlan {
 
 // Channel the customer picks at quote/checkout — TKR's edge over pure D2C.
 export type SalesChannel = 'self' | 'agent';
+
+// ============== decision tools & payment experience (Phase 18) ==============
+// Reusable conversion tools — guided recommender, richer plan-card comparison
+// with shortlist, and the checkout payment experience. All plan data is GENERIC
+// PLACEHOLDER; real plan numbers come from the admin catalog later.
+
+// richer comparison plan card (generalizes the existing auto comparison)
+export interface PlanCard {
+  id: string;
+  product: InsuranceType;
+  insurer: string;
+  planName: string;
+  highlights: string[];          // 2–4 short bullets
+  startingPremium: number;       // THB
+  period: string;                // e.g. "ต่อปี"
+  couponCode?: string;           // shown on the card if present
+  badge?: string;                // e.g. "แนะนำ" / "ขายดี"
+  favoritable: boolean;          // can be added to shortlist
+}
+
+// guided product-fit recommender
+export interface FitOption { label: string; value: string; recommends: string; } // recommends = PlanCard.id or a plan tag
+export interface FitQuestion { id: string; question: string; options: FitOption[]; }
+
+// payment experience
+export type CheckoutMethod = 'full' | 'card_installment' | 'qr_promptpay' | 'cash_installment';
+export interface CheckoutOption {
+  method: CheckoutMethod;
+  label: string;
+  detail?: string;               // e.g. "ผ่อน 0% สูงสุด 10 งวด" / "งวดแรก ฿1,000"
+  maxInstallments?: number;
+  partnerRequired?: boolean;     // cash_installment needs a finance partner (mark clearly)
+}
+
+// optional tax tools (behind FEATURES.taxTools) — caps are public Revenue rules; verify yearly
+export interface TaxDeductionCap { key: string; label: string; cap: number; note?: string; }
+export interface TaxCalcInput {
+  annualIncome: number;
+  personalAllowance: number;
+  socialSecurity: number;
+  existingInsurance: number;
+  funds: number;                 // SSF/RMF/PVD etc.
+}
+export interface TaxCalcResult { taxableIncome: number; taxBefore: number; taxAfter: number; taxSaved: number; }

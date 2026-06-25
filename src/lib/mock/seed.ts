@@ -14,6 +14,7 @@ import type {
   CrmProduct, Duration, PricingTier, CustomerCreditProfile,
   PolicyTicket, CrmPayment, CreditTransaction, AmendmentTicket, IssuedPolicy,
   Coupon, Review, InsurerPartner, GlossaryTerm, InstallmentPlan,
+  PlanCard, FitQuestion, CheckoutOption, TaxDeductionCap,
 } from '@/types/portal';
 
 // ============================ USERS (demo accounts) ============================
@@ -692,3 +693,55 @@ export const applyCoupon = (code: string, product: InsuranceType, subtotal: numb
   if (!c) return 0;
   return c.discountType === 'percent' ? Math.round(subtotal * c.value / 100) : c.value;
 };
+
+// ============================ DECISION TOOLS & PAYMENT (Phase 18) ============================
+// Generic PLACEHOLDER plan data only — NO real insurer product numbers. Real plan
+// data comes from the admin catalog later. The recommender + plan-card grid +
+// checkout payment options reuse these across personal lines and worker.
+export const planCards: PlanCard[] = [
+  { id: 'plan_w_ess',  product: 'worker', insurer: 'ทิพยประกันภัย',  planName: 'แรงงาน Essential', highlights: ['คุ้มครองอุบัติเหตุ/สุขภาพพื้นฐาน', 'ออกเป็นชุดได้', 'เบี้ยเริ่มต้นต่ำ'], startingPremium: 500, period: 'ต่อคน/ปี', badge: 'ขายดี', favoritable: true },
+  { id: 'plan_w_plus', product: 'worker', insurer: 'วิริยะประกันภัย', planName: 'แรงงาน Plus', highlights: ['ทุนประกันสูงขึ้น', 'ครอบคลุม รพ. มากขึ้น'], startingPremium: 850, period: 'ต่อคน/ปี', couponCode: 'TKRWORKER300', favoritable: true },
+  { id: 'plan_a_c1',   product: 'auto',   insurer: 'วิริยะประกันภัย', planName: 'รถยนต์ชั้น 1', highlights: ['ซ่อมห้าง/ศูนย์', 'คุ้มครองชน-ไฟไหม้-สูญหาย'], startingPremium: 14200, period: 'ต่อปี', badge: 'แนะนำ', favoritable: true },
+  { id: 'plan_a_c2p',  product: 'auto',   insurer: 'MSIG',          planName: 'รถยนต์ชั้น 2+', highlights: ['คุ้มครองคู่กรณี + รถหาย/ไฟไหม้', 'เบี้ยคุ้มค่า'], startingPremium: 7900, period: 'ต่อปี', favoritable: true },
+];
+
+export const fitQuestions: FitQuestion[] = [
+  { id: 'q1', question: 'คุณต้องการคุ้มครองแบบไหน?', options: [
+    { label: 'ครอบคลุมสูงสุด', value: 'max', recommends: 'plan_a_c1' },
+    { label: 'คุ้มค่า เน้นคู่กรณี', value: 'value', recommends: 'plan_a_c2p' },
+  ]},
+  { id: 'q2', question: 'ทีมแรงงานของคุณกี่คน?', options: [
+    { label: 'เริ่มต้น/จำนวนน้อย', value: 'small', recommends: 'plan_w_ess' },
+    { label: 'จำนวนมาก ต้องการทุนสูง', value: 'large', recommends: 'plan_w_plus' },
+  ]},
+];
+
+export const checkoutOptions: CheckoutOption[] = [
+  { method: 'full',             label: 'ชำระเต็มจำนวน' },
+  { method: 'card_installment', label: 'ผ่อนบัตรเครดิต 0%', detail: 'สูงสุด 10 งวด', maxInstallments: 10 },
+  { method: 'qr_promptpay',     label: 'QR PromptPay', detail: 'ผ่าน Mobile Banking ทุกธนาคาร' },
+  { method: 'cash_installment', label: 'ผ่อนเงินสด (ไม่ใช้บัตร)', detail: 'งวดแรก ฿1,000 · ต้องมีพาร์ทเนอร์สินเชื่อ', maxInstallments: 10, partnerRequired: true },
+];
+
+// instant coverage on first payment — keep as a configurable note (match the
+// actual underwriter terms before production; do NOT hardcode in components).
+export const instantCoverage = {
+  enabled: true,
+  note: 'คุ้มครองทันทีเมื่อชำระงวดแรก — สำหรับรถชั้น 1 ระหว่างรอตรวจสภาพ/อนุมัติ จะได้รับความคุ้มครองแบบชั้น 3 ไปก่อน',
+};
+
+// optional tax tools (FEATURES.taxTools) — verify caps against the current tax year
+export const taxDeductionCaps: TaxDeductionCap[] = [
+  { key: 'health',     label: 'ประกันสุขภาพ',                 cap: 25000 },
+  { key: 'lifeHealth', label: 'ประกันชีวิต+สุขภาพ (รวม)',     cap: 100000 },
+  { key: 'annuity',    label: 'ประกันบำนาญ (15% ของรายได้)', cap: 200000 },
+  { key: 'ssf',        label: 'SSF (30% ของรายได้)',         cap: 200000 },
+  { key: 'rmf',        label: 'RMF (30% ของรายได้)',         cap: 500000 },
+  { key: 'social',     label: 'ประกันสังคม',                 cap: 9000 },
+];
+
+export const getPlanCards = (product?: InsuranceType) =>
+  product ? planCards.filter(p => p.product === product) : planCards;
+export const getFitQuestions = () => fitQuestions;
+export const getCheckoutOptions = () => checkoutOptions;
+export const getTaxDeductionCaps = () => taxDeductionCaps;

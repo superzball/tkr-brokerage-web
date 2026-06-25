@@ -9,6 +9,8 @@ import { clearPendingQuote } from "@/lib/quote/actions";
 import { readPendingDetail, clearPendingDetail, type PendingDetail } from "@/lib/quote/local";
 import type { PendingQuote } from "@/lib/quote/pending";
 import { CouponInstallment } from "@/components/conversion/CouponInstallment";
+import { ChannelChoice } from "@/components/conversion/ChannelChoice";
+import { PaymentMethods } from "@/components/conversion/PaymentMethods";
 import type { InsuranceType } from "@/types/portal";
 
 export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
@@ -16,6 +18,8 @@ export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
   const tw = useTranslations("worker");
   const [done, setDone] = useState(false);
   const [pending, start] = useTransition();
+  // Channel choice (ซื้อเอง / ตัวแทน) gates the self-serve payment panel — Phase 17/18.
+  const [selfServe, setSelfServe] = useState(false);
 
   // The full worker rows ride in localStorage — rehydrate after the sign-in hop.
   const [detail, setDetail] = useState<PendingDetail | null>(null);
@@ -66,13 +70,27 @@ export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
         </div>
       </dl>
 
-      {/* coupon + installment selector */}
-      <div className="mt-5 pt-5 border-t border-ink-100">
-        <CouponInstallment
-          product={quote.product as InsuranceType}
-          subtotal={quote.total}
-        />
-      </div>
+      {/* channel choice (ซื้อเอง / ตัวแทน) — keep the agent path (Phase 17) */}
+      {!selfServe ? (
+        <div className="mt-5 pt-5 border-t border-ink-100">
+          <ChannelChoice onSelf={() => setSelfServe(true)} />
+        </div>
+      ) : (
+        <>
+          {/* coupon + installment selector */}
+          <div className="mt-5 pt-5 border-t border-ink-100">
+            <CouponInstallment
+              product={quote.product as InsuranceType}
+              subtotal={quote.total}
+            />
+          </div>
+
+          {/* payment method + instant-coverage note */}
+          <div className="mt-5 pt-5 border-t border-ink-100">
+            <PaymentMethods />
+          </div>
+        </>
+      )}
 
       {workers.length > 0 && (
         <div className="mt-5">
@@ -92,19 +110,21 @@ export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
         </div>
       )}
 
-      <Button
-        variant="primary"
-        size="lg"
-        className="w-full mt-6"
-        disabled={pending}
-        onClick={() => start(async () => {
-          await clearPendingQuote();
-          clearPendingDetail();
-          setDone(true);
-        })}
-      >
-        {t("confirm")} <Icon name="arrowRight" />
-      </Button>
+      {selfServe && (
+        <Button
+          variant="primary"
+          size="lg"
+          className="w-full mt-6"
+          disabled={pending}
+          onClick={() => start(async () => {
+            await clearPendingQuote();
+            clearPendingDetail();
+            setDone(true);
+          })}
+        >
+          {t("confirm")} <Icon name="arrowRight" />
+        </Button>
+      )}
     </div>
   );
 }

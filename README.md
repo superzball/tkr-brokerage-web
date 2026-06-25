@@ -172,3 +172,25 @@ merge locally-created tickets client-side; the status check is gated by the
 URL `token` against `ticket.publicToken` (mock signed/expiring) before letting
 the underwriter patch the ticket's thip fields. Never render the internal credit
 wallet on a public or `/app/*` page.
+
+**…add a decision tool / payment option (Phase 18).** More reusable conversion
+pieces live in [src/components/conversion/](src/components/conversion):
+`FitRecommender` (guided Q&A from `getFitQuestions`, filtered to the product's
+plan cards, → a recommended plan), `ProductPlans` (the upgraded PlanCard grid
+from `getPlanCards(product)` — highlights, starting premium, coupon-on-card,
+badge, a session **shortlist** with a side-by-side compare modal, and a detail
+modal; owns the shortlist state shared with the recommender), and
+`PaymentMethods` (checkout payment experience from `getCheckoutOptions()` +
+the `instantCoverage` note). `ProductPlans` mounts in `ProductLanding`'s
+`#plans` section and renders only for products that have plan cards
+(worker/auto). The checkout (`CheckoutClient`) keeps the `ChannelChoice` gate,
+then reveals coupon/installment + `PaymentMethods`. All plan data is **generic
+placeholder** — real numbers come from the admin catalog.
+
+**…gate a vertical behind a feature flag.** Build-time flags live in
+[src/config/features.ts](src/config/features.ts) (`FEATURES`). `cashInstallment`
+(default OFF) hides the partner-dependent cash-installment payment option in
+`PaymentMethods`. `taxTools` (default OFF) gates the LIFE / tax-deduction
+vertical: the `/tools/tax-calculator` route (`TaxCalculator`) calls `notFound()`
+while the flag is off, so the UI is fully built but 404s until TKR decides to
+sell it. Read the flag from the page/component — never hardcode the gate inline.
