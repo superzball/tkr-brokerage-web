@@ -113,6 +113,120 @@
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/* ============================================================
+   SEMANTIC TOKENS — Phase 19 dual-zone (friendly | premium)
+   ------------------------------------------------------------
+   One component set. The ui/ primitives (.btn / .card / .field /
+   .chip) read ONLY these --ui-* tokens; the palette above stays
+   as-is. Tokens swap by `data-theme` on the shell roots:
+     • friendly → public site + customer/agent portals
+     • premium  → admin / back-office console
+   :root carries the friendly defaults so anything rendered
+   outside a themed shell still looks correct.
+   ============================================================ */
+:root,
+[data-theme="friendly"] {
+  /* radii — friendly is rounder */
+  --ui-radius-btn: 0.75rem;
+  --ui-radius-card: 1.25rem;
+  --ui-radius-field: 0.75rem;
+  --ui-radius-chip: 999px;
+
+  /* primary (CTA) — vivid brand blue */
+  --ui-primary-bg: linear-gradient(135deg, #1f66ee, #0f52c7);
+  --ui-primary-fg: #ffffff;
+  --ui-primary-shadow: 0 8px 22px -8px rgba(31, 102, 238, 0.55);
+  --ui-primary-shadow-hover: 0 12px 28px -8px rgba(31, 102, 238, 0.7);
+
+  /* ghost / secondary */
+  --ui-ghost-bg: #ffffff;
+  --ui-ghost-fg: #102d52;
+  --ui-ghost-border: #d6e4f5;
+  --ui-ghost-hover-bg: #f4f9ff;
+  --ui-ghost-hover-border: #7caaff;
+  --ui-ghost-hover-fg: #0f52c7;
+
+  /* gold accent */
+  --ui-gold-bg: linear-gradient(135deg, #f2b736, #e89c12);
+  --ui-gold-fg: #3a2a02;
+  --ui-gold-shadow: 0 8px 22px -8px rgba(232, 156, 18, 0.6);
+
+  /* card surface */
+  --ui-card-bg: #ffffff;
+  --ui-card-border: #e7eef9;
+  --ui-card-shadow: 0 1px 2px rgba(11, 34, 64, 0.04),
+    0 8px 24px -12px rgba(11, 34, 64, 0.18);
+  --ui-card-shadow-hover: 0 2px 4px rgba(11, 34, 64, 0.05),
+    0 24px 48px -20px rgba(11, 34, 64, 0.28);
+  --ui-card-hover-border: #c3dbfd;
+
+  /* form field */
+  --ui-field-bg: #ffffff;
+  --ui-field-border: #d6e4f5;
+  --ui-field-fg: #0b2240;
+  --ui-field-placeholder: #9db4d0;
+  --ui-field-focus-border: #1f66ee;
+  --ui-field-focus-ring: 0 0 0 4px rgba(31, 102, 238, 0.12);
+
+  /* chip fallback (most call sites still pass their own bg/text) */
+  --ui-chip-bg: #eaf2fe;
+  --ui-chip-fg: #0f52c7;
+
+  /* keyboard focus ring */
+  --ui-focus: #1f66ee;
+}
+
+[data-theme="premium"] {
+  /* radii — premium is tight + precise */
+  --ui-radius-btn: 0.5rem;
+  --ui-radius-card: 0.75rem;
+  --ui-radius-field: 0.5rem;
+  --ui-radius-chip: 0.5rem;
+
+  /* primary (CTA) — deep institutional ink */
+  --ui-primary-bg: linear-gradient(135deg, #102d52, #0b2240);
+  --ui-primary-fg: #ffffff;
+  --ui-primary-shadow: 0 8px 22px -10px rgba(7, 24, 52, 0.55);
+  --ui-primary-shadow-hover: 0 12px 28px -10px rgba(7, 24, 52, 0.72);
+
+  /* ghost / secondary — gold-tinted on hover */
+  --ui-ghost-bg: #ffffff;
+  --ui-ghost-fg: #102d52;
+  --ui-ghost-border: #dce3ee;
+  --ui-ghost-hover-bg: #f6f3ea;
+  --ui-ghost-hover-border: #d4b876;
+  --ui-ghost-hover-fg: #8a5d04;
+
+  /* gold accent (the premium precision accent) */
+  --ui-gold-bg: linear-gradient(135deg, #f2b736, #e89c12);
+  --ui-gold-fg: #3a2a02;
+  --ui-gold-shadow: 0 8px 22px -8px rgba(232, 156, 18, 0.55);
+
+  /* card surface — cooler, crisper */
+  --ui-card-bg: #ffffff;
+  --ui-card-border: #e2e8f2;
+  --ui-card-shadow: 0 1px 2px rgba(7, 24, 52, 0.05),
+    0 6px 18px -12px rgba(7, 24, 52, 0.22);
+  --ui-card-shadow-hover: 0 2px 4px rgba(7, 24, 52, 0.06),
+    0 18px 36px -20px rgba(7, 24, 52, 0.3);
+  --ui-card-hover-border: #d4b876;
+
+  /* form field */
+  --ui-field-bg: #ffffff;
+  --ui-field-border: #dce3ee;
+  --ui-field-fg: #071834;
+  --ui-field-placeholder: #94a3b8;
+  --ui-field-focus-border: #c47a06;
+  --ui-field-focus-ring: 0 0 0 3px rgba(196, 122, 6, 0.15);
+
+  /* chip fallback */
+  --ui-chip-bg: #f1f5fa;
+  --ui-chip-fg: #102d52;
+
+  /* keyboard focus ring — gold in the premium zone */
+  --ui-focus: #c47a06;
+}
+
 @layer base {
   * {
     -webkit-font-smoothing: antialiased;
@@ -141,7 +255,7 @@
   /* Keyboard-visible focus ring for every interactive element. Mouse clicks
      stay clean (focus-visible only); inputs keep their own .field:focus ring. */
   :focus-visible {
-    outline: 2px solid var(--brand-500);
+    outline: 2px solid var(--ui-focus, var(--brand-500));
     outline-offset: 2px;
     border-radius: 2px;
   }
@@ -188,7 +302,7 @@
     justify-content: center;
     gap: 0.5rem;
     font-weight: 600;
-    border-radius: 0.75rem;
+    border-radius: var(--ui-radius-btn);
     transition: all 0.22s var(--ease-out);
     cursor: pointer;
     white-space: nowrap;
@@ -199,29 +313,29 @@
     transform: translateY(1px);
   }
   .btn-primary {
-    background: linear-gradient(135deg, #1f66ee, #0f52c7);
-    color: #fff;
-    box-shadow: 0 8px 22px -8px rgba(31, 102, 238, 0.55);
+    background: var(--ui-primary-bg);
+    color: var(--ui-primary-fg);
+    box-shadow: var(--ui-primary-shadow);
   }
   .btn-primary:hover {
-    box-shadow: 0 12px 28px -8px rgba(31, 102, 238, 0.7);
+    box-shadow: var(--ui-primary-shadow-hover);
     transform: translateY(-1px);
   }
   .btn-ghost {
-    background: #fff;
-    color: #102d52;
-    border-color: #d6e4f5;
+    background: var(--ui-ghost-bg);
+    color: var(--ui-ghost-fg);
+    border-color: var(--ui-ghost-border);
     box-shadow: 0 1px 2px rgba(11, 34, 64, 0.05);
   }
   .btn-ghost:hover {
-    border-color: #7caaff;
-    color: #0f52c7;
-    background: #f4f9ff;
+    border-color: var(--ui-ghost-hover-border);
+    color: var(--ui-ghost-hover-fg);
+    background: var(--ui-ghost-hover-bg);
   }
   .btn-gold {
-    background: linear-gradient(135deg, #f2b736, #e89c12);
-    color: #3a2a02;
-    box-shadow: 0 8px 22px -8px rgba(232, 156, 18, 0.6);
+    background: var(--ui-gold-bg);
+    color: var(--ui-gold-fg);
+    box-shadow: var(--ui-gold-shadow);
   }
   .btn-gold:hover {
     transform: translateY(-1px);
@@ -241,12 +355,10 @@
 
   /* ---- Cards ---- */
   .card {
-    background: #fff;
-    border: 1px solid #e7eef9;
-    border-radius: 1.25rem;
-    box-shadow:
-      0 1px 2px rgba(11, 34, 64, 0.04),
-      0 8px 24px -12px rgba(11, 34, 64, 0.18);
+    background: var(--ui-card-bg);
+    border: 1px solid var(--ui-card-border);
+    border-radius: var(--ui-radius-card);
+    box-shadow: var(--ui-card-shadow);
   }
   .card-hover {
     transition:
@@ -256,10 +368,8 @@
   }
   .card-hover:hover {
     transform: translateY(-4px);
-    box-shadow:
-      0 2px 4px rgba(11, 34, 64, 0.05),
-      0 24px 48px -20px rgba(11, 34, 64, 0.28);
-    border-color: #c3dbfd;
+    box-shadow: var(--ui-card-shadow-hover);
+    border-color: var(--ui-card-hover-border);
   }
 
   /* pill / chip */
@@ -268,7 +378,7 @@
     align-items: center;
     gap: 0.4rem;
     padding: 0.35rem 0.8rem;
-    border-radius: 999px;
+    border-radius: var(--ui-radius-chip);
     font-size: 0.8125rem;
     font-weight: 600;
   }
@@ -284,21 +394,21 @@
   .field {
     width: 100%;
     padding: 0.75rem 0.9rem;
-    border-radius: 0.75rem;
-    border: 1px solid #d6e4f5;
-    background: #fff;
-    color: #0b2240;
+    border-radius: var(--ui-radius-field);
+    border: 1px solid var(--ui-field-border);
+    background: var(--ui-field-bg);
+    color: var(--ui-field-fg);
     font-size: 0.95rem;
     transition: all 0.18s;
     font-family: inherit;
   }
   .field::placeholder {
-    color: #9db4d0;
+    color: var(--ui-field-placeholder);
   }
   .field:focus {
     outline: none;
-    border-color: #1f66ee;
-    box-shadow: 0 0 0 4px rgba(31, 102, 238, 0.12);
+    border-color: var(--ui-field-focus-border);
+    box-shadow: var(--ui-field-focus-ring);
   }
   select.field {
     appearance: none;

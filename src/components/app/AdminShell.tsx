@@ -23,7 +23,8 @@ export function AdminShell({
   const t = useTranslations("app");
 
   return (
-    <div className="min-h-screen lg:flex bg-[#f6f9fe]">
+    // Phase 19: premium visual zone (back-office console).
+    <div data-theme="premium" className="min-h-screen lg:flex bg-[#f6f9fe]">
       <Sidebar
         sections={sections}
         className="hidden lg:flex sticky top-0 h-screen"

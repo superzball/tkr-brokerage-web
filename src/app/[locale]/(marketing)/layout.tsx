@@ -23,12 +23,14 @@ export default async function MarketingLayout({ children, params }: Props) {
   setRequestLocale(locale as Locale);
 
   return (
-    <>
+    // Phase 19: friendly visual zone (public site). `contents` keeps the shell
+    // structurally flat — it only carries the data-theme token scope.
+    <div data-theme="friendly" className="contents">
       <Navbar />
       {children}
       <Footer />
       <RevealObserver />
       <LineChatWidget />
-    </>
+    </div>
   );
 }

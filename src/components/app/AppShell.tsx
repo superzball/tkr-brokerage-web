@@ -22,7 +22,8 @@ export function AppShell({
   const t = useTranslations("app");
 
   return (
-    <div className="min-h-screen lg:flex bg-[#f6f9fe]">
+    // Phase 19: friendly visual zone (customer + agent portals).
+    <div data-theme="friendly" className="min-h-screen lg:flex bg-[#f6f9fe]">
       <Sidebar role={role} className="hidden lg:flex sticky top-0 h-screen" />
 
       <Drawer
