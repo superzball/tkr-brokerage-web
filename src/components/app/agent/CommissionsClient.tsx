@@ -76,9 +76,9 @@ export function CommissionsClient({
   return (
     <div className="space-y-5">
       <div className="grid gap-4 sm:grid-cols-3">
-        <StatCard icon="coins" label={t("commissions.statThisMonth")} value={baht(stats.thisMonth)} />
-        <StatCard icon="clock" label={t("commissions.statPending")} value={baht(stats.pending)} deltaTone="flat" />
-        <StatCard icon="wallet" label={t("commissions.statPaidYtd")} value={baht(stats.paidYtd)} />
+        <StatCard icon="coins" label={t("commissions.statThisMonth")} value={baht(stats.thisMonth)} tone="brand" />
+        <StatCard icon="clock" label={t("commissions.statPending")} value={baht(stats.pending)} deltaTone="flat" tone="gold" />
+        <StatCard icon="wallet" label={t("commissions.statPaidYtd")} value={baht(stats.paidYtd)} tone="mint" />
       </div>
 
       <div className="flex justify-end">

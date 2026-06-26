@@ -32,11 +32,11 @@ const PAGE_SIZE = 25;
 
 const STAGE_BAR: Record<LeadStage, string> = {
   new: "border-l-brand-400", contacted: "border-l-gold-400", quoted: "border-l-sky-400",
-  won: "border-l-emerald-400", lost: "border-l-rose-300",
+  won: "border-l-mint-400", lost: "border-l-rose-300",
 };
 const STAGE_DOT: Record<LeadStage, string> = {
   new: "bg-brand-500", contacted: "bg-gold-400", quoted: "bg-sky-400",
-  won: "bg-emerald-500", lost: "bg-rose-400",
+  won: "bg-mint-500", lost: "bg-rose-400",
 };
 
 export function LeadsClient({ team }: { team: TeamMember[] }) {
@@ -146,9 +146,9 @@ export function LeadsClient({ team }: { team: TeamMember[] }) {
     <div className="space-y-5">
       {/* pipeline stats */}
       <div className="grid gap-4 sm:grid-cols-3">
-        <StatCard icon="coins" label={t("leads.stats.open")} value={baht(stats.open)} />
-        <StatCard icon="trophy" label={t("leads.stats.won")} value={baht(stats.won)} />
-        <StatCard icon="target" label={t("leads.stats.total")} value={stats.total} />
+        <StatCard icon="coins" label={t("leads.stats.open")} value={baht(stats.open)} tone="brand" />
+        <StatCard icon="trophy" label={t("leads.stats.won")} value={baht(stats.won)} tone="gold" />
+        <StatCard icon="target" label={t("leads.stats.total")} value={stats.total} tone="mint" />
       </div>
 
       <div className="flex flex-wrap items-center justify-between gap-3">

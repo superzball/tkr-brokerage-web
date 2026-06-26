@@ -65,10 +65,10 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
   const unread = notifications.filter((n) => !readIds.has(n.id)).length;
 
   return (
-    <header className="sticky top-0 z-30 h-[68px] bg-white/85 backdrop-blur-xl border-b border-ink-100 flex items-center gap-2 px-4 sm:px-6">
+    <header className="sticky top-0 z-30 h-[68px] bg-white/85 backdrop-blur-xl border-b border-ink-100 shadow-[0_1px_0_rgba(11,34,64,0.02),0_8px_24px_-20px_rgba(11,34,64,0.25)] flex items-center gap-2 px-4 sm:px-6">
       <button
         onClick={onMenu}
-        className="lg:hidden w-10 h-10 rounded-lg text-ink-700 hover:bg-sky-100 flex items-center justify-center"
+        className="lg:hidden w-10 h-10 rounded-xl text-ink-700 hover:bg-sky-100 flex items-center justify-center"
         aria-label={t("menu")}
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
@@ -87,7 +87,7 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
           aria-label={t("notifications")}
           aria-haspopup="true"
           aria-expanded={bellOpen}
-          className="relative w-10 h-10 rounded-lg text-ink-600 hover:bg-sky-100 flex items-center justify-center"
+          className="relative w-10 h-10 rounded-xl text-ink-600 hover:bg-sky-100 flex items-center justify-center"
         >
           <Icon name="bell" size={20} />
           {unread > 0 && (

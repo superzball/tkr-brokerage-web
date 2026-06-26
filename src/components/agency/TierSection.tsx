@@ -104,7 +104,7 @@ export function TierSection() {
                   <Icon name={tier.icon} />
                 </span>
                 {done && (
-                  <span className="text-emerald-500">
+                  <span className="text-mint-500">
                     <Icon name="checkCircle" />
                   </span>
                 )}
@@ -125,7 +125,7 @@ export function TierSection() {
               <ul className="mt-3 space-y-1.5 text-xs text-ink-600">
                 {perks.map((p) => (
                   <li key={p} className="flex items-center gap-1.5">
-                    <span className="text-emerald-500 shrink-0">
+                    <span className="text-mint-500 shrink-0">
                       <Icon name="check" size={14} />
                     </span>
                     {p}

@@ -202,18 +202,18 @@ export function SaleDetailView({
                     <span
                       className={cn(
                         "w-7 h-7 rounded-full flex items-center justify-center text-white shrink-0",
-                        s.state === "done" ? "bg-emerald-500"
-                          : s.state === "current" ? "bg-brand-500"
+                        s.state === "done" ? "bg-gradient-to-br from-mint-400 to-mint-600 shadow-[0_6px_14px_-6px_rgba(10,138,94,0.6)]"
+                          : s.state === "current" ? "bg-gradient-to-br from-brand-500 to-brand-600 ring-4 ring-brand-100 shadow-[0_8px_18px_-8px_rgba(31,102,238,0.7)]"
                           : s.state === "danger" ? "bg-rose-500"
                           : "bg-white border-2 border-ink-100 text-ink-400",
                       )}
                     >
-                      {s.state === "done" ? <Icon name="check" size={14} />
+                      {s.state === "done" ? <Icon name="check" size={14} strokeWidth={2.6} />
                         : s.state === "danger" ? <Icon name="x" size={14} />
                         : <span className="text-xs font-700">{i + 1}</span>}
                     </span>
                     {i < steps.length - 1 && (
-                      <span className={cn("w-0.5 flex-1 my-1 min-h-[14px]", s.state === "done" ? "bg-emerald-400" : "bg-ink-100")} />
+                      <span className={cn("w-0.5 flex-1 my-1 min-h-[14px]", s.state === "done" ? "bg-mint-400" : "bg-ink-100")} />
                     )}
                   </div>
                   <div className="pb-3">

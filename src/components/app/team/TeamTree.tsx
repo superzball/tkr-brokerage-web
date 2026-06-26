@@ -39,7 +39,7 @@ export function TeamTree({
       <div className="flex items-center justify-between gap-3 mb-3">
         {/* root = the viewing agent */}
         <div className="flex items-center gap-2.5 min-w-0">
-          <span className="w-9 h-9 rounded-xl bg-brand-500 text-white flex items-center justify-center shrink-0">
+          <span className="w-9 h-9 rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 text-white flex items-center justify-center shrink-0 shadow-[0_8px_18px_-8px_rgba(31,102,238,0.7)]">
             <Icon name="user" size={18} />
           </span>
           <div className="min-w-0">
@@ -103,7 +103,7 @@ function TreeRow({
   return (
     <li>
       <div
-        className="flex flex-wrap items-center gap-2.5 py-2.5 pl-3 border-b border-ink-50"
+        className="flex flex-wrap items-center gap-2.5 py-2.5 pl-3 pr-2 border-b border-ink-50 rounded-lg hover:bg-sky-50/70 transition-colors"
         style={{ marginLeft: depth * 8 }}
       >
         {hasChildren ? (

@@ -28,11 +28,11 @@ export default async function TeamPage({ params }: Props) {
   const stats = teamStats();
   const tree = buildDownlineTree();
 
-  const cards: Array<{ icon: IconName; label: string; value: string | number }> = [
-    { icon: "users", label: t("stats.directCount"), value: stats.directCount },
-    { icon: "users", label: t("stats.teamSize"), value: stats.teamSize },
-    { icon: "coins", label: t("stats.teamGwp"), value: baht(stats.teamGwp) },
-    { icon: "wallet", label: t("stats.overrideIncome"), value: baht(stats.overrideIncome) },
+  const cards: Array<{ icon: IconName; label: string; value: string | number; tone: "brand" | "mint" | "gold" | "peach" }> = [
+    { icon: "users", label: t("stats.directCount"), value: stats.directCount, tone: "brand" },
+    { icon: "users", label: t("stats.teamSize"), value: stats.teamSize, tone: "mint" },
+    { icon: "coins", label: t("stats.teamGwp"), value: baht(stats.teamGwp), tone: "gold" },
+    { icon: "wallet", label: t("stats.overrideIncome"), value: baht(stats.overrideIncome), tone: "peach" },
   ];
 
   return (
@@ -47,7 +47,7 @@ export default async function TeamPage({ params }: Props) {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-6">
         {cards.map((c) => (
-          <StatCard key={c.label} icon={c.icon} label={c.label} value={c.value} />
+          <StatCard key={c.label} icon={c.icon} label={c.label} value={c.value} tone={c.tone} />
         ))}
       </div>
 

@@ -70,13 +70,22 @@ export function Sidebar({
                       onClick={onNavigate}
                       aria-current={active ? "page" : undefined}
                       className={cn(
-                        "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-500 transition-colors",
+                        "group relative flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-500 transition-all duration-200",
                         active
-                          ? "bg-sky-100 text-brand-700 font-600"
+                          ? "bg-gradient-to-r from-brand-500 to-brand-600 text-white font-600 shadow-[0_10px_22px_-10px_rgba(31,102,238,0.7)]"
                           : "text-ink-600 hover:bg-sky-50 hover:text-ink-900",
                       )}
                     >
-                      <NavIcon name={item.icon} size={19} />
+                      <span
+                        className={cn(
+                          "flex items-center justify-center transition-colors",
+                          active
+                            ? "text-white"
+                            : "text-ink-400 group-hover:text-brand-600",
+                        )}
+                      >
+                        <NavIcon name={item.icon} size={19} />
+                      </span>
                       {t(item.key as NavKey)}
                     </Link>
                   </li>

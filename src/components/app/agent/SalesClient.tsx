@@ -108,10 +108,10 @@ export function SalesClient({
   return (
     <div className="space-y-5">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard icon="coins" label={t("sales.stats.gwp")} value={baht(stats.gwpThisMonth)} />
-        <StatCard icon="shieldCheck" label={t("sales.stats.policies")} value={stats.policiesSold} />
-        <StatCard icon="clock" label={t("sales.stats.pending")} value={stats.pending} deltaTone="flat" />
-        <StatCard icon="wallet" label={t("sales.stats.commission")} value={baht(stats.commissionYtd)} />
+        <StatCard icon="coins" label={t("sales.stats.gwp")} value={baht(stats.gwpThisMonth)} tone="brand" />
+        <StatCard icon="shieldCheck" label={t("sales.stats.policies")} value={stats.policiesSold} tone="mint" />
+        <StatCard icon="clock" label={t("sales.stats.pending")} value={stats.pending} deltaTone="flat" tone="gold" />
+        <StatCard icon="wallet" label={t("sales.stats.commission")} value={baht(stats.commissionYtd)} tone="peach" />
       </div>
 
       <FilterBar search={search} onSearch={setSearch} placeholder={t("clients.searchPlaceholder")}>

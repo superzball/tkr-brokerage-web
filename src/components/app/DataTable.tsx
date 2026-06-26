@@ -6,7 +6,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Icon } from "@/components/ui/Icon";
+import { Icon, type IconName } from "@/components/ui/Icon";
+import { Skeleton } from "./Skeleton";
 import { cn } from "@/lib/cn";
 
 export type Column<T> = {
@@ -35,6 +36,10 @@ export function DataTable<T>({
   getRowKey,
   onRowClick,
   labels,
+  loading = false,
+  error,
+  emptyIcon = "box",
+  emptyState,
 }: {
   columns: Column<T>[];
   rows: T[];
@@ -42,6 +47,14 @@ export function DataTable<T>({
   getRowKey: (row: T, index: number) => string;
   onRowClick?: (row: T) => void;
   labels: DataTableLabels;
+  /** Render shimmering placeholder rows instead of data. */
+  loading?: boolean;
+  /** Show an error panel (with the empty cell layout) when set. */
+  error?: string | null;
+  /** Icon for the built-in empty state. */
+  emptyIcon?: IconName;
+  /** Custom empty body (icon + CTA). Falls back to `labels.empty`. */
+  emptyState?: React.ReactNode;
 }) {
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
@@ -73,6 +86,24 @@ export function DataTable<T>({
     }
     setPage(0);
   }
+
+  const emptyBlock = emptyState ?? (
+    <div className="flex flex-col items-center text-center">
+      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-sky-100 to-brand-100 text-brand-600 flex items-center justify-center ring-1 ring-brand-100 mb-3">
+        <Icon name={emptyIcon} size={22} />
+      </div>
+      <p className="text-sm text-ink-400">{labels.empty}</p>
+    </div>
+  );
+
+  const errorBlock = (
+    <div className="flex flex-col items-center text-center" role="alert">
+      <div className="w-12 h-12 rounded-2xl bg-rose-50 text-rose-500 flex items-center justify-center ring-1 ring-rose-100 mb-3">
+        <Icon name="alertTri" size={22} />
+      </div>
+      <p className="text-sm text-ink-500 max-w-sm">{error}</p>
+    </div>
+  );
 
   return (
     <div className="card overflow-hidden">
@@ -122,13 +153,26 @@ export function DataTable<T>({
             </tr>
           </thead>
           <tbody>
-            {pageRows.length === 0 ? (
+            {loading ? (
+              Array.from({ length: Math.min(pageSize, 6) }).map((_, r) => (
+                <tr key={r} className="border-b border-ink-50 last:border-0">
+                  {columns.map((c) => (
+                    <td key={c.key} className={cn("px-4 py-3.5", ALIGN[c.align ?? "left"])}>
+                      <Skeleton className="h-4 w-[70%] max-w-[140px]" />
+                    </td>
+                  ))}
+                </tr>
+              ))
+            ) : error ? (
               <tr>
-                <td
-                  colSpan={columns.length}
-                  className="px-4 py-12 text-center text-ink-400"
-                >
-                  {labels.empty}
+                <td colSpan={columns.length} className="px-4 py-12">
+                  {errorBlock}
+                </td>
+              </tr>
+            ) : pageRows.length === 0 ? (
+              <tr>
+                <td colSpan={columns.length} className="px-4 py-14">
+                  {emptyBlock}
                 </td>
               </tr>
             ) : (
@@ -161,8 +205,19 @@ export function DataTable<T>({
 
       {/* Mobile (<768px): each row as a stacked label/value card */}
       <div className="md:hidden">
-        {pageRows.length === 0 ? (
-          <div className="px-4 py-12 text-center text-ink-400">{labels.empty}</div>
+        {loading ? (
+          <div className="divide-y divide-ink-50">
+            {Array.from({ length: 4 }).map((_, r) => (
+              <div key={r} className="px-4 py-4 space-y-2">
+                <Skeleton className="h-3.5 w-1/3" />
+                <Skeleton className="h-3.5 w-2/3" />
+              </div>
+            ))}
+          </div>
+        ) : error ? (
+          <div className="px-4 py-12">{errorBlock}</div>
+        ) : pageRows.length === 0 ? (
+          <div className="px-4 py-12">{emptyBlock}</div>
         ) : (
           <ul className="divide-y divide-ink-50">
             {pageRows.map((row, i) => {
@@ -201,7 +256,7 @@ export function DataTable<T>({
         )}
       </div>
 
-      {sorted.length > pageSize && (
+      {!loading && !error && sorted.length > pageSize && (
         <div className="flex items-center justify-between gap-3 px-4 py-3 border-t border-ink-100">
           <span className="text-xs text-ink-500 tabnum">
             {labels.range(start + 1, Math.min(start + pageSize, sorted.length), sorted.length)}

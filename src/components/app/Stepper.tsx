@@ -24,15 +24,15 @@ export function Stepper({
           <Fragment key={label}>
             <li className="flex items-center gap-2 shrink-0">
               {done ? (
-                <span className="w-8 h-8 rounded-full bg-emerald-500 text-white inline-flex items-center justify-center shrink-0">
-                  <Icon name="check" />
+                <span className="w-8 h-8 rounded-full bg-gradient-to-br from-mint-400 to-mint-600 text-white inline-flex items-center justify-center shrink-0 shadow-[0_6px_14px_-6px_rgba(10,138,94,0.6)]">
+                  <Icon name="check" strokeWidth={2.6} />
                 </span>
               ) : (
                 <span
                   className={cn(
-                    "w-8 h-8 rounded-full inline-flex items-center justify-center font-600 text-sm shrink-0",
+                    "w-8 h-8 rounded-full inline-flex items-center justify-center font-600 text-sm shrink-0 transition-all",
                     on
-                      ? "bg-brand-500 text-white"
+                      ? "bg-gradient-to-br from-brand-500 to-brand-600 text-white ring-4 ring-brand-100 shadow-[0_8px_18px_-8px_rgba(31,102,238,0.7)]"
                       : "bg-white border-2 border-ink-100 text-ink-400",
                   )}
                 >
@@ -45,7 +45,7 @@ export function Stepper({
                   on
                     ? "font-600 text-ink-900"
                     : done
-                      ? "font-500 text-emerald-600"
+                      ? "font-500 text-mint-600"
                       : "font-500 text-ink-400",
                 )}
               >
@@ -55,8 +55,8 @@ export function Stepper({
             {i < steps.length - 1 && (
               <li
                 className={cn(
-                  "h-0.5 w-6 sm:w-14 rounded-full shrink-0",
-                  i < current ? "bg-emerald-400" : "bg-ink-100",
+                  "h-0.5 w-6 sm:w-14 rounded-full shrink-0 transition-colors",
+                  i < current ? "bg-mint-400" : "bg-ink-100",
                 )}
               />
             )}

@@ -166,9 +166,9 @@ function ClaimTracker({ claim, onClose }: { claim: Claim; onClose: () => void })
                     danger && on
                       ? "bg-rose-500"
                       : done
-                        ? "bg-emerald-500"
+                        ? "bg-gradient-to-br from-mint-400 to-mint-600 shadow-[0_6px_14px_-6px_rgba(10,138,94,0.6)]"
                         : on
-                          ? "bg-brand-500"
+                          ? "bg-gradient-to-br from-brand-500 to-brand-600 ring-4 ring-brand-100 shadow-[0_8px_18px_-8px_rgba(31,102,238,0.7)]"
                           : "bg-white border-2 border-ink-100 text-ink-400",
                   )}
                 >
@@ -184,7 +184,7 @@ function ClaimTracker({ claim, onClose }: { claim: Claim; onClose: () => void })
                   <span
                     className={cn(
                       "w-0.5 flex-1 my-1 min-h-[18px]",
-                      done ? "bg-emerald-400" : "bg-ink-100",
+                      done ? "bg-mint-400" : "bg-ink-100",
                     )}
                   />
                 )}

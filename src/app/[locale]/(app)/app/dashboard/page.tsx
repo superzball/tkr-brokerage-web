@@ -20,7 +20,13 @@ import type { Notification } from "@/types/portal";
 
 type Props = { params: Promise<{ locale: Locale }> };
 
-type Stat = { icon: IconName; label: string; value: string | number };
+type Tone = "brand" | "mint" | "gold" | "peach";
+type Stat = {
+  icon: IconName;
+  label: string;
+  value: string | number;
+  tone?: Tone;
+};
 
 export default async function DashboardPage({ params }: Props) {
   const { locale } = await params;
@@ -43,25 +49,25 @@ export default async function DashboardPage({ params }: Props) {
   if (user.role === "business") {
     const s = businessStats(user.id);
     stats = [
-      { icon: "shieldCheck", label: t("business.activePolicies"), value: s.activePolicies },
-      { icon: "users", label: t("business.workersCovered"), value: s.workersCovered },
-      { icon: "clock", label: t("business.expiringSoon"), value: s.expiringSoon },
-      { icon: "alertTri", label: t("business.openClaims"), value: s.openClaims },
+      { icon: "shieldCheck", label: t("business.activePolicies"), value: s.activePolicies, tone: "brand" },
+      { icon: "users", label: t("business.workersCovered"), value: s.workersCovered, tone: "mint" },
+      { icon: "clock", label: t("business.expiringSoon"), value: s.expiringSoon, tone: "gold" },
+      { icon: "alertTri", label: t("business.openClaims"), value: s.openClaims, tone: "peach" },
     ];
   } else if (user.role === "individual") {
     const s = individualStats(user.id);
     stats = [
-      { icon: "shieldCheck", label: t("individual.activePolicies"), value: s.activePolicies },
-      { icon: "refresh", label: t("individual.renewalsDue"), value: s.renewalsDue },
-      { icon: "alertTri", label: t("individual.openClaims"), value: s.openClaims },
+      { icon: "shieldCheck", label: t("individual.activePolicies"), value: s.activePolicies, tone: "brand" },
+      { icon: "refresh", label: t("individual.renewalsDue"), value: s.renewalsDue, tone: "gold" },
+      { icon: "alertTri", label: t("individual.openClaims"), value: s.openClaims, tone: "peach" },
     ];
   } else {
     const s = agentStats();
     stats = [
-      { icon: "coins", label: t("agent.commissionThisMonth"), value: baht(s.commissionThisMonth) },
-      { icon: "trophy", label: t("agent.tier"), value: s.tier },
-      { icon: "users", label: t("agent.activeClients"), value: s.activeClients },
-      { icon: "target", label: t("agent.openLeads"), value: s.openLeads },
+      { icon: "coins", label: t("agent.commissionThisMonth"), value: baht(s.commissionThisMonth), tone: "brand" },
+      { icon: "trophy", label: t("agent.tier"), value: s.tier, tone: "gold" },
+      { icon: "users", label: t("agent.activeClients"), value: s.activeClients, tone: "mint" },
+      { icon: "target", label: t("agent.openLeads"), value: s.openLeads, tone: "peach" },
     ];
   }
 
@@ -73,7 +79,7 @@ export default async function DashboardPage({ params }: Props) {
       />
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         {stats.map((s) => (
-          <StatCard key={s.label} icon={s.icon} label={s.label} value={s.value} />
+          <StatCard key={s.label} icon={s.icon} label={s.label} value={s.value} tone={s.tone} />
         ))}
       </div>
 

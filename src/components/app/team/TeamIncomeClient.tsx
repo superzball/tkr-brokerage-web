@@ -79,7 +79,7 @@ export function TeamIncomeClient({
   return (
     <div className="space-y-5">
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard icon="coins" label={t("income.total")} value={baht(total)} />
+        <StatCard icon="coins" label={t("income.total")} value={baht(total)} tone="gold" />
       </div>
 
       {/* by generation (matches the override schedule) */}
@@ -90,11 +90,17 @@ export function TeamIncomeClient({
         )}
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {byGen.map(([gen, amount]) => (
-            <div key={gen} className="rounded-xl border border-ink-100 p-4">
-              <p className="text-sm text-ink-500">
-                {t("common.gen", { n: gen })} · {overrideRate(gen)}%
-              </p>
-              <p className="mt-1.5 text-xl font-700 text-brand-700 tabnum">{baht(amount)}</p>
+            <div
+              key={gen}
+              className="rounded-2xl bg-gradient-to-br from-sky-50 to-white border border-sky-100 p-4"
+            >
+              <div className="flex items-center justify-between gap-2">
+                <span className="chip bg-sky-100 text-brand-700 text-xs">
+                  {t("common.gen", { n: gen })}
+                </span>
+                <span className="text-xs font-600 text-ink-400 tabnum">{overrideRate(gen)}%</span>
+              </div>
+              <p className="mt-2.5 text-xl font-700 text-ink-900 tabnum">{baht(amount)}</p>
             </div>
           ))}
         </div>
