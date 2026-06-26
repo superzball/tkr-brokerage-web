@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { useBaht } from "@/lib/format";
@@ -11,46 +10,33 @@ import { PAYMENT_METHODS } from "@/config/insurance";
 import { GuestVerify } from "./GuestVerify";
 import { ChannelChoice } from "@/components/conversion/ChannelChoice";
 import { CouponInstallment, type CouponInstallmentState } from "@/components/conversion/CouponInstallment";
-import {
-  PENDING_QUOTE_COOKIE,
-  encodePendingQuote,
-  type PendingQuote,
-} from "@/lib/quote/pending";
-import { savePendingDetail } from "@/lib/quote/local";
-import type { PaymentMethodId, SingleWorker } from "@/types";
+import type { PaymentMethodId } from "@/types";
 
 export function PayStep({
   total,
   authed,
-  pending,
-  workers = [],
   onPaid,
+  onGuestVerified,
 }: {
   total: number;
-  /** Anonymous visitors are gated to sign in / up before completing. */
+  /** Logged-in users skip the phone-verify step. */
   authed: boolean;
-  pending: PendingQuote;
-  /** Single-mode worker rows, stashed so they survive the sign-in detour. */
-  workers?: SingleWorker[];
   onPaid: () => void;
+  /** Reports the verified guest phone (undefined when an existing account was
+   *  resumed) so the success step can prompt to complete the profile. */
+  onGuestVerified?: (guestPhone?: string) => void;
 }) {
   const t = useTranslations("worker");
   const tc = useTranslations("checkout");
   const ti = useTranslations("conversion.installment");
   const baht = useBaht();
-  const router = useRouter();
   const [method, setMethod] = useState<PaymentMethodId>("promptpay");
-  // Guest checkout: phone verified via OTP unlocks payment without forcing signup.
+  // Guest checkout: phone verified via OTP starts a silent session + unlocks pay.
   const [verifiedPhone, setVerifiedPhone] = useState<string | null>(null);
   // Channel choice (TKR's edge): self-serve vs hand off to an agent.
   const [selfServe, setSelfServe] = useState(false);
   // Coupon + installment, applied to the worker subtotal.
   const [ci, setCi] = useState<CouponInstallmentState>({ code: null, discount: 0, total, months: 0 });
-
-  function stash() {
-    document.cookie = `${PENDING_QUOTE_COOKIE}=${encodePendingQuote(pending)}; path=/; max-age=1800; samesite=lax`;
-    savePendingDetail({ workers });
-  }
 
   // Step 1 — channel choice. The agent path is fully handled inside the component.
   if (!selfServe) {
@@ -73,12 +59,12 @@ export function PayStep({
       {showPayment && <p className="text-ink-600 mt-1.5">{t("pay.sub")}</p>}
 
       {!showPayment ? (
-        // Returning users can still sign in — that path stashes the quote first.
+        // Phone verify = delivery/identity, never a login wall. Re-verifying an
+        // existing phone silently resumes that account.
         <GuestVerify
-          onVerified={setVerifiedPhone}
-          onLogin={() => {
-            stash();
-            router.push("/login?next=/app/checkout");
+          onVerified={(phone, isGuest) => {
+            setVerifiedPhone(phone);
+            onGuestVerified?.(isGuest ? phone : undefined);
           }}
         />
       ) : (

@@ -12,6 +12,8 @@ const Confetti = dynamic(
   { ssr: false },
 );
 import { EmptyState } from "@/components/app/EmptyState";
+import { ProgressiveProfile } from "@/components/guest/ProgressiveProfile";
+import { useSession } from "@/lib/auth/SessionProvider";
 import { clearPendingQuote } from "@/lib/quote/actions";
 import { readPendingDetail, clearPendingDetail, type PendingDetail } from "@/lib/quote/local";
 import type { PendingQuote } from "@/lib/quote/pending";
@@ -23,6 +25,7 @@ import type { InsuranceType } from "@/types/portal";
 export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
   const t = useTranslations("checkout.page");
   const tw = useTranslations("worker");
+  const user = useSession();
   const [done, setDone] = useState(false);
   const [pending, start] = useTransition();
   // Channel choice (ซื้อเอง / ตัวแทน) gates the self-serve payment panel — Phase 17/18.
@@ -60,6 +63,9 @@ export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
         <Button href="/app/policies" variant="primary" size="md" className="mt-5">
           {t("viewPolicies")} <Icon name="arrowRight" />
         </Button>
+        {user.status === "guest" && (
+          <ProgressiveProfile className="mt-7 w-full max-w-md text-left" />
+        )}
       </div>
     );
   }

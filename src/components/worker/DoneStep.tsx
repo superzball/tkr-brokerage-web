@@ -4,6 +4,7 @@ import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
+import { ProgressiveProfile } from "@/components/guest/ProgressiveProfile";
 import { ROUTES } from "@/config/nav";
 
 // Lazy: confetti JS ships only when the success step renders.
@@ -12,7 +13,14 @@ const Confetti = dynamic(
   { ssr: false },
 );
 
-export function DoneStep({ count }: { count: number }) {
+export function DoneStep({
+  count,
+  guestPhone,
+}: {
+  count: number;
+  /** Set when a brand-new guest just verified — show the optional profile card. */
+  guestPhone?: string;
+}) {
   const t = useTranslations("worker");
 
   return (
@@ -38,6 +46,11 @@ export function DoneStep({ count }: { count: number }) {
           {t("done.toCustomer")}
         </Button>
       </div>
+
+      {/* optional progressive profile (guest checkout only) */}
+      {guestPhone && (
+        <ProgressiveProfile className="mt-8 max-w-lg mx-auto text-left" />
+      )}
     </div>
   );
 }

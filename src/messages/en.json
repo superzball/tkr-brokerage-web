@@ -2383,8 +2383,8 @@
       "workersList": "Worker list"
     },
     "verify": {
-      "title": "Verify your phone before paying",
-      "desc": "Enter your phone to receive an OTP — no sign-up required, you can create an account later.",
+      "title": "Verify your phone to receive your policy",
+      "desc": "We'll send your policy and status updates to this number • no password needed",
       "phoneLabel": "Phone number",
       "phonePh": "e.g. 0812345678",
       "phoneError": "Please enter a valid phone number",
@@ -4032,6 +4032,26 @@
       "title": "Find answers fast",
       "desc": "Many questions are already answered in our Help Center",
       "cta": "Go to Help Center"
+    }
+  },
+  "guest": {
+    "banner": {
+      "text": "Complete your profile to get the most out of TKR",
+      "cta": "Add details",
+      "dismiss": "Dismiss"
+    },
+    "profile": {
+      "optional": "Optional",
+      "title": "Complete your profile",
+      "desc": "Add your name and email to manage your policy more easily — skippable",
+      "name": "Full name",
+      "email": "Email",
+      "address": "Address",
+      "save": "Save details",
+      "skip": "Skip for now",
+      "saved": "Profile saved",
+      "savedNote": "Your profile details have been saved",
+      "dismiss": "Dismiss"
     }
   }
 }

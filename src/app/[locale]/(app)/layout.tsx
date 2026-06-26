@@ -10,6 +10,7 @@ import { SessionProvider } from "@/lib/auth/SessionProvider";
 import { ToastProvider } from "@/components/app/toast";
 import { AppShell } from "@/components/app/AppShell";
 import { PendingQuoteBanner } from "@/components/app/PendingQuoteBanner";
+import { GuestProfileBanner } from "@/components/app/GuestProfileBanner";
 import { RevealObserver } from "@/components/RevealObserver";
 
 type Props = {
@@ -41,6 +42,7 @@ export default async function AppLayout({ children, params }: Props) {
       <ToastProvider>
         <RevealObserver />
         {hasPendingQuote && <PendingQuoteBanner />}
+        {user.status === "guest" && <GuestProfileBanner />}
         <AppShell role={user.role}>{children}</AppShell>
       </ToastProvider>
     </SessionProvider>

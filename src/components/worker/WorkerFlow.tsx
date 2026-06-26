@@ -27,6 +27,7 @@ type State = {
   mode: WorkerMode;
   workers: WorkerEntry[];
   nextId: number;
+  guestPhone?: string; // set when a new guest verified at checkout (post-purchase prompt)
 };
 
 type Action =
@@ -36,7 +37,8 @@ type Action =
   | { type: "back" }
   | { type: "addWorker" }
   | { type: "delWorker"; id: number }
-  | { type: "editWorker"; id: number; patch: Partial<SingleWorker> };
+  | { type: "editWorker"; id: number; patch: Partial<SingleWorker> }
+  | { type: "setGuest"; phone?: string };
 
 const EMPTY_WORKER: SingleWorker = {
   title: "",
@@ -64,6 +66,8 @@ function reducer(state: State, action: Action): State {
       return { ...state, plan: action.plan };
     case "setMode":
       return { ...state, mode: action.mode };
+    case "setGuest":
+      return { ...state, guestPhone: action.phone };
     case "next":
       // 0→1→2→3, then 3→4 (done). Never past 4.
       return state.step < 4 ? { ...state, step: state.step + 1 } : state;
@@ -118,12 +122,6 @@ export function WorkerFlow({
       onComplete?.({ count, total });
     }
   }, [state.step, count, total, onComplete]);
-  const pending = {
-    product: "worker",
-    planLabel: t(`plan.names.${plan.id}`),
-    count,
-    total,
-  };
 
   return (
     <>
@@ -211,12 +209,11 @@ export function WorkerFlow({
             <PayStep
               total={total}
               authed={authed}
-              pending={pending}
-              workers={state.mode === "single" ? state.workers : []}
               onPaid={() => dispatch({ type: "next" })}
+              onGuestVerified={(phone) => dispatch({ type: "setGuest", phone })}
             />
           )}
-          {state.step >= 4 && <DoneStep count={count} />}
+          {state.step >= 4 && <DoneStep count={count} guestPhone={state.guestPhone} />}
         </div>
 
         {/* summary sidebar */}

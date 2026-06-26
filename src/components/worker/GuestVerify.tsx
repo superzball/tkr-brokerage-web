@@ -11,16 +11,18 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
+import { startGuestSession } from "@/lib/auth/actions";
 import { cn } from "@/lib/cn";
 
-const DEMO_OTP = "123456";
 const RESEND_SECONDS = 30;
 
 export function GuestVerify({
   onVerified,
   onLogin,
 }: {
-  onVerified: (phone: string) => void;
+  /** Called after the OTP verifies + a silent session starts. `isGuest` is
+   *  false when the phone resumed an existing full account. */
+  onVerified: (phone: string, isGuest: boolean) => void;
   /** Optional escape hatch for returning users who'd rather sign in. */
   onLogin?: () => void;
 }) {
@@ -32,6 +34,7 @@ export function GuestVerify({
   const [digits, setDigits] = useState<string[]>(Array(6).fill(""));
   const [otpErr, setOtpErr] = useState(false);
   const [seconds, setSeconds] = useState(RESEND_SECONDS);
+  const [verifying, setVerifying] = useState(false);
   const refs = useRef<Array<HTMLInputElement | null>>([]);
 
   useEffect(() => {
@@ -79,10 +82,14 @@ export function GuestVerify({
     refs.current[Math.min(pasted.length, 5)]?.focus();
   }
 
-  function verify(e: React.FormEvent) {
+  async function verify(e: React.FormEvent) {
     e.preventDefault();
-    if (code.length !== 6) return;
-    if (code === DEMO_OTP) onVerified(cleanPhone);
+    if (code.length !== 6 || verifying) return;
+    setVerifying(true);
+    // OTP success silently starts a session (guest or resumed account).
+    const res = await startGuestSession(cleanPhone, code);
+    setVerifying(false);
+    if (res.ok) onVerified(cleanPhone, res.guest);
     else setOtpErr(true);
   }
 
@@ -163,7 +170,7 @@ export function GuestVerify({
           {otpErr && <p className="mt-2 text-xs text-rose-600">{to("error")}</p>}
           <p className="mt-2 text-xs text-ink-400">{to("hint")}</p>
 
-          <Button type="submit" variant="primary" className="mt-4" disabled={code.length !== 6}>
+          <Button type="submit" variant="primary" className="mt-4" disabled={code.length !== 6} loading={verifying}>
             {to("verify")}
           </Button>
 

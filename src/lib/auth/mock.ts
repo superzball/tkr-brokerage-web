@@ -39,3 +39,42 @@ export const landingPath = (role: Role): string =>
 /** Find a back-office staff identity by its staffRole (for the demo logins). */
 export const findStaffByRole = (staffRole: string): User | undefined =>
   users.find((u) => u.role === "admin" && u.staffRole === staffRole);
+
+/**
+ * Guest checkout: resolve a phone to an account. If the phone already belongs to
+ * a user (guest OR full), return it — so re-verifying the same phone RESUMES that
+ * account and never creates a duplicate. Otherwise silently create a `guest`
+ * (phone is a valid identity; no password). Mock persistence = the in-memory
+ * `users` array (a real backend would dedupe by phone in the DB).
+ */
+export function findOrCreateGuestByPhone(phone: string): User {
+  const existing = findUserByPhone(phone);
+  if (existing) return existing;
+  const clean = normPhone(phone);
+  const guest: User = {
+    id: `u_guest_${clean}`,
+    role: "individual",
+    name: clean, // progressive — replaced when the profile is completed
+    phone: clean,
+    status: "guest",
+    profileComplete: false,
+    avatarColor: "#1f66ee",
+  };
+  users.push(guest);
+  return guest;
+}
+
+/** Promote a guest to a full account once they add profile details. */
+export function completeProfile(
+  userId: string,
+  fields: Partial<Pick<User, "name" | "email" | "address">>,
+): User | undefined {
+  const u = findUserById(userId);
+  if (!u) return undefined;
+  if (fields.name?.trim()) u.name = fields.name.trim();
+  if (fields.email?.trim()) u.email = fields.email.trim();
+  if (fields.address?.trim()) u.address = fields.address.trim();
+  u.status = "active";
+  u.profileComplete = true;
+  return u;
+}

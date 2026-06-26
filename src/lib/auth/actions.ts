@@ -14,6 +14,8 @@ import {
   findUserByEmail,
   findUserByPhone,
   findStaffByRole,
+  findOrCreateGuestByPhone,
+  completeProfile,
   landingPath,
   type SocialProvider,
 } from "./mock";
@@ -156,6 +158,39 @@ export async function signInSocial(
   if (!user) return;
   await startSession(user.id);
   redirect({ href: landingPath(role), locale });
+}
+
+/**
+ * Guest checkout: verify a phone OTP RIGHT BEFORE payment and start a session
+ * silently — framed as "verify to receive your policy", never register/login.
+ * Returns `guest: false` when the phone resolved to an existing full account
+ * (so the buyer resumes that account — login without saying so). No redirect;
+ * the checkout flow continues in place.
+ */
+export async function startGuestSession(
+  phone: string,
+  code: string,
+): Promise<{ ok: true; guest: boolean } | { ok: false; error: AuthError }> {
+  if (code !== DEMO_OTP) return { ok: false, error: "otp" };
+  const user = findOrCreateGuestByPhone(phone);
+  await startSession(user.id);
+  return { ok: true, guest: user.status === "guest" && !user.profileComplete };
+}
+
+/**
+ * Progressive profile: a guest adds name/email/address after purchase, which
+ * promotes them to a full `active` account. Reads the current session cookie.
+ */
+export async function completeGuestProfile(fields: {
+  name?: string;
+  email?: string;
+  address?: string;
+}): Promise<AuthResult> {
+  const store = await cookies();
+  const id = store.get(SESSION_COOKIE)?.value;
+  if (!id) return { ok: false, error: "credentials" };
+  completeProfile(id, fields);
+  return { ok: true };
 }
 
 export async function signOut(locale: Locale): Promise<void> {

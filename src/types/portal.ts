@@ -21,12 +21,18 @@ export type Nationality = 'พม่า' | 'ลาว' | 'กัมพูชา'
 export type LicenseStatus = 'verified' | 'pending' | 'expired';
 
 // ---- identity ----
+/** Guest = silently created via phone-OTP checkout; active = full account. */
+export type AccountStatus = 'guest' | 'active';
+
 export interface User {
   id: string;
   role: Role;
   name: string;
   email?: string;
   phone?: string;          // primary login for many users
+  // guest checkout (Phase 7 / guest-checkout additions) — phone is the identity
+  status?: AccountStatus;  // 'guest' until the profile is completed
+  profileComplete?: boolean;
   company?: string;        // business role only
   avatarColor?: string;    // for initials avatar
   // customer profile fields (admin CRM, Phase 14) — optional, for role business/individual
