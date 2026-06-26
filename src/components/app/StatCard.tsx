@@ -7,20 +7,23 @@
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
 
-/** Icon-tile accent. Defaults to brand so existing usage is unchanged. */
-type Tone = "brand" | "mint" | "gold" | "peach";
+/** Icon-tile accent. Defaults to brand so existing usage is unchanged.
+ *  "ink" is the neutral/institutional tile used by the premium (admin) zone. */
+type Tone = "brand" | "mint" | "gold" | "peach" | "ink";
 
 const TONE_TILE: Record<Tone, string> = {
   brand: "bg-sky-100 text-brand-600",
   mint: "bg-mint-50 text-mint-600",
   gold: "bg-gold-50 text-gold-600",
   peach: "bg-peach-50 text-peach-600",
+  ink: "bg-ink-50 text-ink-600",
 };
 const SPARK_STROKE: Record<Tone, string> = {
   brand: "#1f66ee",
   mint: "#14ad76",
   gold: "#e89c12",
   peach: "#f2701a",
+  ink: "#475569",
 };
 
 /** Tiny inline sparkline (no axes/labels) — decorative trend cue. */

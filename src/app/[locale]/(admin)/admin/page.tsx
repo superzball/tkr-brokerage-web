@@ -5,20 +5,27 @@ import { Icon, type IconName } from "@/components/ui/Icon";
 import { PageHeader } from "@/components/app/PageHeader";
 import { StatCard } from "@/components/app/StatCard";
 import { StatusBadge } from "@/components/app/StatusBadge";
+import { BarChart, type Bar } from "@/components/app/admin/BarChart";
 import {
   adminStats,
   getAuditLog,
   getOrders,
   getDownline,
+  getAllPolicies,
 } from "@/lib/mock/seed";
+import type { InsuranceType } from "@/types/portal";
 
 type Props = { params: Promise<{ locale: Locale }> };
+
+type Tone = "brand" | "mint" | "gold" | "peach" | "ink";
 
 export default async function AdminDashboard({ params }: Props) {
   const { locale } = await params;
   setRequestLocale(locale);
 
   const t = await getTranslations("admin.dashboard");
+  const tr = await getTranslations("admin.reports");
+  const ty = await getTranslations("business.type");
   const format = await getFormatter();
   const baht = (n: number) =>
     format.number(n, {
@@ -37,12 +44,22 @@ export default async function AdminDashboard({ params }: Props) {
   ).length;
   const recent = getAuditLog().slice(0, 6);
 
-  const cards: { icon: IconName; label: string; value: string | number }[] = [
-    { icon: "coins", label: t("gwp"), value: baht(stats.gwp) },
-    { icon: "shieldCheck", label: t("activePolicies"), value: stats.activePolicies },
-    { icon: "file", label: t("pendingClaims"), value: stats.pendingClaims },
-    { icon: "headset", label: t("openTickets"), value: stats.openTickets },
-    { icon: "doc", label: t("draftArticles"), value: stats.draftArticles },
+  // GWP by product — real aggregation over all policies (same basis as Reports).
+  const byProduct = new Map<InsuranceType, number>();
+  getAllPolicies().forEach((p) =>
+    byProduct.set(p.type, (byProduct.get(p.type) ?? 0) + p.premium),
+  );
+  const gwpBars: Bar[] = [...byProduct.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .map(([k, v]) => ({ label: ty(k), value: v, display: baht(v) }));
+
+  // Premium dashboard: mostly neutral (ink) tiles, gold on the key figure only.
+  const cards: { icon: IconName; label: string; value: string | number; tone: Tone }[] = [
+    { icon: "coins", label: t("gwp"), value: baht(stats.gwp), tone: "gold" },
+    { icon: "shieldCheck", label: t("activePolicies"), value: stats.activePolicies, tone: "ink" },
+    { icon: "file", label: t("pendingClaims"), value: stats.pendingClaims, tone: "ink" },
+    { icon: "headset", label: t("openTickets"), value: stats.openTickets, tone: "ink" },
+    { icon: "doc", label: t("draftArticles"), value: stats.draftArticles, tone: "ink" },
   ];
 
   const queues: { href: string; icon: IconName; label: string; count: number }[] = [
@@ -58,9 +75,15 @@ export default async function AdminDashboard({ params }: Props) {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
         {cards.map((c) => (
-          <StatCard key={c.label} icon={c.icon} label={c.label} value={c.value} />
+          <StatCard key={c.label} icon={c.icon} label={c.label} value={c.value} tone={c.tone} />
         ))}
       </div>
+
+      {/* GWP by product — clean horizontal bars (real aggregation) */}
+      <section className="card p-5 mt-6">
+        <h2 className="font-700 text-ink-900 mb-4">{tr("gwpByProduct")}</h2>
+        <BarChart bars={gwpBars} />
+      </section>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         {/* needs-action queues */}
@@ -71,9 +94,9 @@ export default async function AdminDashboard({ params }: Props) {
               <li key={q.href}>
                 <Link
                   href={q.href}
-                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-sky-50 transition-colors"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-lg hover:bg-ink-50 transition-colors"
                 >
-                  <span className="w-9 h-9 rounded-xl bg-sky-100 text-brand-600 flex items-center justify-center shrink-0">
+                  <span className="w-9 h-9 rounded-lg bg-ink-50 text-ink-600 flex items-center justify-center shrink-0">
                     <Icon name={q.icon} size={18} />
                   </span>
                   <span className="flex-1 text-sm text-ink-700">{q.label}</span>
@@ -89,7 +112,7 @@ export default async function AdminDashboard({ params }: Props) {
         <section className="card p-5">
           <div className="flex items-center justify-between mb-3">
             <h2 className="font-700 text-ink-900">{t("recentAudit")}</h2>
-            <Link href="/admin/audit" className="text-xs font-600 text-brand-600 hover:underline">
+            <Link href="/admin/audit" className="text-xs font-600 text-gold-600 hover:underline">
               {t("viewAll")}
             </Link>
           </div>

@@ -46,7 +46,19 @@ function initials(name: string) {
   return clean.slice(0, 2);
 }
 
-export function TopBar({ onMenu }: { onMenu: () => void }) {
+export function TopBar({
+  onMenu,
+  tone = "friendly",
+}: {
+  onMenu: () => void;
+  /** "premium" → refined back-office bar (same light palette, sharper, neutral
+   *  tool-like hovers). */
+  tone?: "friendly" | "premium";
+}) {
+  const premium = tone === "premium";
+  const iconBtn = premium
+    ? "rounded-md text-ink-500 hover:bg-ink-50 hover:text-ink-800"
+    : "rounded-xl text-ink-600 hover:bg-sky-100";
   const user = useSession();
   const t = useTranslations("app");
   const format = useFormatter();
@@ -65,10 +77,17 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
   const unread = notifications.filter((n) => !readIds.has(n.id)).length;
 
   return (
-    <header className="sticky top-0 z-30 h-[68px] bg-white/85 backdrop-blur-xl border-b border-ink-100 shadow-[0_1px_0_rgba(11,34,64,0.02),0_8px_24px_-20px_rgba(11,34,64,0.25)] flex items-center gap-2 px-4 sm:px-6">
+    <header
+      className={cn(
+        "sticky top-0 z-30 h-[68px] bg-white/85 backdrop-blur-xl border-b border-ink-100 flex items-center gap-2 px-4 sm:px-6",
+        premium
+          ? "shadow-[0_1px_0_rgba(11,34,64,0.04)]"
+          : "shadow-[0_1px_0_rgba(11,34,64,0.02),0_8px_24px_-20px_rgba(11,34,64,0.25)]",
+      )}
+    >
       <button
         onClick={onMenu}
-        className="lg:hidden w-10 h-10 rounded-xl text-ink-700 hover:bg-sky-100 flex items-center justify-center"
+        className={cn("lg:hidden w-10 h-10 flex items-center justify-center", iconBtn)}
         aria-label={t("menu")}
       >
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
@@ -87,7 +106,7 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
           aria-label={t("notifications")}
           aria-haspopup="true"
           aria-expanded={bellOpen}
-          className="relative w-10 h-10 rounded-xl text-ink-600 hover:bg-sky-100 flex items-center justify-center"
+          className={cn("relative w-10 h-10 flex items-center justify-center", iconBtn)}
         >
           <Icon name="bell" size={20} />
           {unread > 0 && (
@@ -170,7 +189,10 @@ export function TopBar({ onMenu }: { onMenu: () => void }) {
       <div ref={menuRef} className="relative">
         <button
           onClick={() => setMenuOpen((o) => !o)}
-          className="flex items-center gap-2 pl-1 pr-2 py-1 rounded-full hover:bg-sky-100"
+          className={cn(
+            "flex items-center gap-2 pl-1 pr-2 py-1 rounded-full",
+            premium ? "hover:bg-ink-50" : "hover:bg-sky-100",
+          )}
           aria-label={t("userMenu")}
           aria-haspopup="menu"
           aria-expanded={menuOpen}
