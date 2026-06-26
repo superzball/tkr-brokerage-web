@@ -160,7 +160,7 @@ function PlanCard({
         </Chip>
       )}
       {plan.value && (
-        <Chip className="bg-emerald-500 text-white absolute -top-3 left-6 text-xs">
+        <Chip className="bg-mint-500 text-white absolute -top-3 left-6 text-xs">
           {t("plan.cheapest")}
         </Chip>
       )}
@@ -190,7 +190,7 @@ function PlanCard({
             <p className="text-ink-400 text-xs">{t("plan.deductible")}</p>
             <p className="font-600 text-ink-900">
               {plan.deduct === null ? (
-                <span className="text-emerald-600">{t("plan.noDeduct")}</span>
+                <span className="text-mint-600">{t("plan.noDeduct")}</span>
               ) : (
                 baht(plan.deduct)
               )}
@@ -203,7 +203,7 @@ function PlanCard({
                   key={f}
                   className="chip bg-sky-50 text-ink-600 text-[0.7rem] !py-0.5 !px-2"
                 >
-                  <span className="text-emerald-500">
+                  <span className="text-mint-500">
                     <Icon name="check" size={12} />
                   </span>
                   {f}

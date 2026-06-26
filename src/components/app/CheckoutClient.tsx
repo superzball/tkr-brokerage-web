@@ -1,9 +1,16 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useEffect, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
+
+// Lazy: confetti JS ships only when the confirmation renders.
+const Confetti = dynamic(
+  () => import("@/components/ui/Confetti").then((m) => m.Confetti),
+  { ssr: false },
+);
 import { EmptyState } from "@/components/app/EmptyState";
 import { clearPendingQuote } from "@/lib/quote/actions";
 import { readPendingDetail, clearPendingDetail, type PendingDetail } from "@/lib/quote/local";
@@ -44,7 +51,8 @@ export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
   if (done) {
     return (
       <div className="card p-10 flex flex-col items-center text-center">
-        <span className="w-16 h-16 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center mb-4">
+        <Confetti />
+        <span className="w-16 h-16 rounded-full bg-mint-50 text-mint-500 flex items-center justify-center mb-4">
           <Icon name="checkCircle" size={36} />
         </span>
         <h2 className="text-xl font-700 text-ink-900">{t("confirmedTitle")}</h2>

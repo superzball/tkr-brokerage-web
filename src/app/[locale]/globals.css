@@ -149,6 +149,19 @@
   }
 }
 
+/* Confetti fall — top-level so it's always emitted (it's referenced by inline
+   styles in Confetti.tsx, not by an --animate-* token). */
+@keyframes confetti-fall {
+  0% {
+    transform: translateY(-12vh) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(112vh) rotate(680deg);
+    opacity: 0;
+  }
+}
+
 /* ============================================================
    BRAND  — ported from assets/brand.css
    CSS vars + base styles + component classes.

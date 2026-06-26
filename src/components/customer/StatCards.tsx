@@ -13,7 +13,7 @@ export function StatCards() {
     cls: string;
     value: string;
   }> = [
-    { key: "active", icon: "shieldCheck", cls: "bg-emerald-50 text-emerald-600", value: String(CUSTOMER_STATS.active) },
+    { key: "active", icon: "shieldCheck", cls: "bg-mint-50 text-mint-600", value: String(CUSTOMER_STATS.active) },
     { key: "expiring", icon: "clock", cls: "bg-amber-50 text-amber-600", value: String(CUSTOMER_STATS.expiring) },
     { key: "premium", icon: "coins", cls: "bg-sky-100 text-brand-600", value: baht(CUSTOMER_STATS.premium) },
     { key: "documents", icon: "doc", cls: "bg-sky-100 text-brand-600", value: String(CUSTOMER_STATS.documents) },

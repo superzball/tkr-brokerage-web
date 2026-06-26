@@ -112,7 +112,7 @@ export function ProductPlans({
               <ul className="space-y-2">
                 {detail.highlights.map((h) => (
                   <li key={h} className="flex items-start gap-2.5 text-sm text-ink-700">
-                    <span className="text-emerald-500 shrink-0 mt-0.5"><Icon name="checkCircle" size={16} /></span>
+                    <span className="text-mint-500 shrink-0 mt-0.5"><Icon name="checkCircle" size={16} /></span>
                     {h}
                   </li>
                 ))}
@@ -201,14 +201,14 @@ function PlanCardItem({
       <ul className="mt-4 space-y-2 text-sm text-ink-600 flex-1">
         {card.highlights.map((h) => (
           <li key={h} className="flex items-start gap-2">
-            <span className="text-emerald-500 shrink-0 mt-0.5"><Icon name="check" size={14} /></span>
+            <span className="text-mint-500 shrink-0 mt-0.5"><Icon name="check" size={14} /></span>
             {h}
           </li>
         ))}
       </ul>
 
       {card.couponCode && (
-        <div className="mt-3 inline-flex items-center gap-1.5 self-start chip bg-emerald-50 text-emerald-700 text-xs">
+        <div className="mt-3 inline-flex items-center gap-1.5 self-start chip bg-mint-50 text-mint-600 text-xs">
           <Icon name="gift" size={13} /> {t("couponOnCard", { code: card.couponCode })}
         </div>
       )}
@@ -269,7 +269,7 @@ function CompareShortlist({
               {plans.map((p) => (
                 <td key={p.id} className="p-2 text-center">
                   {p.highlights.includes(h) ? (
-                    <span className="text-emerald-500 inline-flex"><Icon name="checkCircle" size={16} /></span>
+                    <span className="text-mint-500 inline-flex"><Icon name="checkCircle" size={16} /></span>
                   ) : (
                     <span className="text-ink-300">—</span>
                   )}

@@ -84,7 +84,7 @@ export function PayStep({
       ) : (
         <>
           {verifiedPhone && (
-            <p className="mt-4 inline-flex items-center gap-1.5 text-sm font-600 text-emerald-600">
+            <p className="mt-4 inline-flex items-center gap-1.5 text-sm font-600 text-mint-600">
               <Icon name="checkCircle" size={16} />
               {tc("verify.verifiedNote", { phone: verifiedPhone })}
             </p>

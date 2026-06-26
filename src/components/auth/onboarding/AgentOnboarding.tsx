@@ -45,7 +45,7 @@ export function AgentOnboarding() {
           </div>
         ) : (
           <div className="flex flex-col items-center text-center py-6">
-            <span className="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+            <span className="w-14 h-14 rounded-2xl bg-mint-50 text-mint-600 flex items-center justify-center mb-4">
               <Icon name="checkCircle" size={28} />
             </span>
             <h2 className="text-lg font-700 text-ink-900">{ta("doneTitle")}</h2>

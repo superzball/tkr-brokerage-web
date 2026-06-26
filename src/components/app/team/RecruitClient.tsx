@@ -45,7 +45,7 @@ export function RecruitClient() {
             {copied ? t("recruit.copied") : t("recruit.copy")}
           </button>
         </div>
-        <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-emerald-200 bg-emerald-50 p-3 text-xs text-emerald-800">
+        <div className="mt-5 flex items-start gap-2.5 rounded-xl border border-mint-200 bg-mint-50 p-3 text-xs text-mint-600">
           <Icon name="shieldCheck" size={16} className="shrink-0 mt-0.5" />
           {t("compliance.noFees")}
         </div>

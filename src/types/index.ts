@@ -185,7 +185,7 @@ export interface TimelineStep {
   state: TimelineState;
 }
 
-export type NotifColor = "amber" | "emerald" | "brand";
+export type NotifColor = "amber" | "mint" | "brand";
 export interface NotifItem {
   key: "n1" | "n2" | "n3";
   icon: IconName;

@@ -26,7 +26,7 @@ export function WorkerPageHead() {
             </h1>
             <p className="mt-2 text-ink-600">{t("subtitle")}</p>
           </div>
-          <Chip className="bg-white border border-emerald-200 text-emerald-600 shadow-card">
+          <Chip className="bg-white border border-mint-200 text-mint-600 shadow-card">
             <Icon name="shieldCheck" /> {t("badge24h")}
           </Chip>
         </div>

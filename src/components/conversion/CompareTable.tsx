@@ -88,7 +88,7 @@ export function CompareTable({
                   </Chip>
                 )}
                 {p.value && !p.best && (
-                  <Chip className="bg-emerald-500 text-white absolute -top-3 left-6 text-xs">
+                  <Chip className="bg-mint-500 text-white absolute -top-3 left-6 text-xs">
                     {t("value")}
                   </Chip>
                 )}
@@ -115,7 +115,7 @@ export function CompareTable({
                       <p className="text-ink-400 text-xs">{t("deductible")}</p>
                       <p className="font-600 text-ink-900">
                         {p.deduct === null ? (
-                          <span className="text-emerald-600">{t("noDeduct")}</span>
+                          <span className="text-mint-600">{t("noDeduct")}</span>
                         ) : (
                           baht(p.deduct)
                         )}

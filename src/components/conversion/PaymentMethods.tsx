@@ -76,11 +76,11 @@ export function PaymentMethods({
 
       {/* instant-coverage note — keep as configurable, match underwriter terms */}
       {instantCoverage.enabled && (
-        <div className="flex items-start gap-3 rounded-xl bg-emerald-50 border border-emerald-100 p-3.5">
-          <span className="text-emerald-500 shrink-0 mt-0.5"><Icon name="shieldCheck" size={18} /></span>
+        <div className="flex items-start gap-3 rounded-xl bg-mint-50 border border-mint-100 p-3.5">
+          <span className="text-mint-500 shrink-0 mt-0.5"><Icon name="shieldCheck" size={18} /></span>
           <div>
-            <p className="text-sm font-600 text-emerald-800">{t("instantTitle")}</p>
-            <p className="text-sm text-emerald-700 mt-0.5">{t("instantNote")}</p>
+            <p className="text-sm font-600 text-mint-600">{t("instantTitle")}</p>
+            <p className="text-sm text-mint-600 mt-0.5">{t("instantNote")}</p>
           </div>
         </div>
       )}

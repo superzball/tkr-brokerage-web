@@ -25,7 +25,7 @@ export function OrderTimeline() {
                 className={cn(
                   "w-7 h-7 rounded-full inline-flex items-center justify-center shrink-0",
                   step.state === "done"
-                    ? "bg-emerald-500 text-white"
+                    ? "bg-mint-500 text-white"
                     : step.state === "current"
                       ? "bg-brand-500 text-white animate-pulse"
                       : "bg-white border-2 border-ink-100 text-ink-300",
@@ -43,7 +43,7 @@ export function OrderTimeline() {
                 <span
                   className={cn(
                     "w-0.5 flex-1 my-1",
-                    step.state === "done" ? "bg-emerald-300" : "bg-ink-100",
+                    step.state === "done" ? "bg-mint-300" : "bg-ink-100",
                   )}
                   style={{ minHeight: "18px" }}
                 />

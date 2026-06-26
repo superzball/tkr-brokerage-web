@@ -19,16 +19,16 @@ export function TrustBadge({
     return (
       <div
         className={cn(
-          "rounded-xl bg-emerald-50 border border-emerald-100 p-3.5 flex items-start gap-2.5",
+          "rounded-xl bg-mint-50 border border-mint-100 p-3.5 flex items-start gap-2.5",
           className,
         )}
       >
-        <span className="text-emerald-600 shrink-0 mt-0.5">
+        <span className="text-mint-600 shrink-0 mt-0.5">
           <Icon name="shieldCheck" size={18} />
         </span>
         <div className="text-sm">
-          <p className="font-600 text-emerald-800">{t("title")}</p>
-          <p className="text-emerald-700/80 mt-0.5">{t("noData")} · {t("noCall")}</p>
+          <p className="font-600 text-mint-600">{t("title")}</p>
+          <p className="text-mint-600/80 mt-0.5">{t("noData")} · {t("noCall")}</p>
         </div>
       </div>
     );
@@ -37,7 +37,7 @@ export function TrustBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-100 px-3 py-1 text-xs font-600",
+        "inline-flex items-center gap-1.5 rounded-full bg-mint-50 text-mint-600 border border-mint-100 px-3 py-1 text-xs font-600",
         className,
       )}
     >

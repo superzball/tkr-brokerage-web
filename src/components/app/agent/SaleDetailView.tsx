@@ -310,7 +310,7 @@ function AutoSection({ sale }: { sale: AgentSale }) {
         <Row
           label={t("sales.detail.vehicle.deductible")}
           value={v.deductible === 0
-            ? <span className="text-emerald-600">{t("sales.detail.vehicle.noDeductible")}</span>
+            ? <span className="text-mint-600">{t("sales.detail.vehicle.noDeductible")}</span>
             : <span className="tabnum">{baht(v.deductible)}</span>}
         />
       </dl>

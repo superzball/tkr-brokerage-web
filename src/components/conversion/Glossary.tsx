@@ -73,7 +73,7 @@ export function GlossarySection({ className }: { className?: string }) {
         <ul className="mt-5 grid sm:grid-cols-2 gap-x-6 gap-y-3 text-sm text-ink-700">
           {glossary.map((g) => (
             <li key={g.term} className="flex items-start gap-2">
-              <span className="text-emerald-500 shrink-0 mt-0.5"><Icon name="check" size={15} /></span>
+              <span className="text-mint-500 shrink-0 mt-0.5"><Icon name="check" size={15} /></span>
               <GlossaryTip term={g.term} />
             </li>
           ))}

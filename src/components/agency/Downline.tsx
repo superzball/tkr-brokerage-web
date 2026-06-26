@@ -47,7 +47,7 @@ export function Downline() {
                 ฿{d.sales}
               </span>
               <span className="text-sm text-ink-600 tabnum">{d.clients}</span>
-              <span className="text-sm font-600 text-emerald-600 text-right tabnum">
+              <span className="text-sm font-600 text-mint-600 text-right tabnum">
                 {d.trend}
               </span>
             </div>

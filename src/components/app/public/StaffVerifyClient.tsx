@@ -97,7 +97,7 @@ export function StaffVerifyClient({
   if (done) {
     return (
       <div className="card p-8 text-center">
-        <Icon name="checkCircle" size={36} className="text-emerald-500 mx-auto mb-3" />
+        <Icon name="checkCircle" size={36} className="text-mint-500 mx-auto mb-3" />
         <h1 className="text-lg font-700 text-ink-900">{t("doneTitle")}</h1>
         <p className="mt-1 text-sm text-ink-500">{t("doneDesc", { ticket: ticket.ticketNumber })}</p>
       </div>

@@ -37,7 +37,7 @@ export const TRACK_ITEMS: TrackItem[] = [
 /** Per-item status-badge styling (label text lives in `tracking.itemStatus`).
  *  Text-only chips — the original destructures an icon here but never renders it. */
 export const TRACK_ITEM_BADGE: Record<TrackState, { cls: string }> = {
-  done: { cls: "bg-emerald-50 text-emerald-600" },
+  done: { cls: "bg-mint-50 text-mint-600" },
   current: { cls: "bg-brand-50 text-brand-600" },
   pending: { cls: "bg-ink-50 text-ink-400" },
 };

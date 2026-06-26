@@ -40,7 +40,7 @@ export default async function TeamPage({ params }: Props) {
       <PageHeader title={t("tree.title")} description={t("tree.desc")} />
 
       {/* compliance banner */}
-      <div className="mb-5 flex items-start gap-2.5 rounded-xl border border-emerald-200 bg-emerald-50 p-3.5 text-sm text-emerald-800">
+      <div className="mb-5 flex items-start gap-2.5 rounded-xl border border-mint-200 bg-mint-50 p-3.5 text-sm text-mint-600">
         <Icon name="shieldCheck" size={18} className="shrink-0 mt-0.5" />
         {t("compliance.noFees")}
       </div>

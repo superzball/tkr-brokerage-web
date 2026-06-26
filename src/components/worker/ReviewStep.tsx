@@ -40,7 +40,7 @@ export function ReviewStep({
       <div className="card mt-4 p-5">
         <div className="flex items-center justify-between mb-4">
           <p className="font-600 text-ink-900">{t("review.listTitle")}</p>
-          <Chip className="bg-emerald-50 text-emerald-600">
+          <Chip className="bg-mint-50 text-mint-600">
             {t("review.readyChip", { n: count })}
           </Chip>
         </div>

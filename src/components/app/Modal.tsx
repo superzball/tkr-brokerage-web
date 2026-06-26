@@ -60,7 +60,7 @@ export function Modal({
         ref={panelRef}
         tabIndex={-1}
         className={cn(
-          "relative card card-lg w-full max-w-lg max-h-[85vh] overflow-auto outline-none",
+          "relative card card-lg w-full max-w-lg max-h-[85vh] overflow-auto outline-none animate-fade-up",
           className,
         )}
       >

@@ -10,7 +10,7 @@ export function ProgressOverview() {
     box: string;
     num: string;
   }> = [
-    { key: "issued", value: TRACK_COUNTS.issued, box: "bg-emerald-50", num: "text-emerald-600" },
+    { key: "issued", value: TRACK_COUNTS.issued, box: "bg-mint-50", num: "text-mint-600" },
     { key: "processing", value: TRACK_COUNTS.processing, box: "bg-sky-100", num: "text-brand-600" },
     { key: "problem", value: TRACK_COUNTS.problem, box: "bg-ink-50", num: "text-ink-400" },
   ];

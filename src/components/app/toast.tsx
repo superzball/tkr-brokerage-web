@@ -27,9 +27,15 @@ const ICONS: Record<ToastTone, IconName> = {
   info: "info",
 };
 const TONES: Record<ToastTone, string> = {
-  success: "text-emerald-600",
+  success: "text-mint-600",
   error: "text-rose-600",
   info: "text-brand-600",
+};
+// Left accent stripe per tone (single semantic colour set).
+const STRIPE: Record<ToastTone, string> = {
+  success: "bg-mint-500",
+  error: "bg-rose-500",
+  info: "bg-brand-500",
 };
 
 export function ToastProvider({ children }: { children: React.ReactNode }) {
@@ -54,8 +60,12 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
           <div
             key={t.id}
             role="status"
-            className="card p-3.5 flex items-start gap-3 animate-fade-up"
+            className="card relative overflow-hidden p-3.5 pl-4 flex items-start gap-3 animate-fade-up"
           >
+            <span
+              className={cn("absolute left-0 top-0 bottom-0 w-1", STRIPE[t.tone])}
+              aria-hidden="true"
+            />
             <span className={cn("mt-0.5", TONES[t.tone])}>
               <Icon name={ICONS[t.tone]} size={18} />
             </span>

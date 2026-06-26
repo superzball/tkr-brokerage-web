@@ -21,7 +21,7 @@ export function TrackTimeline() {
                 className={cn(
                   "w-11 h-11 rounded-full inline-flex items-center justify-center shrink-0",
                   s.state === "done"
-                    ? "bg-emerald-500 text-white shadow-glow"
+                    ? "bg-mint-500 text-white shadow-glow"
                     : s.state === "current"
                       ? "bg-brand-500 text-white ring-4 ring-brand-100"
                       : "bg-white border-2 border-ink-100 text-ink-300",
@@ -39,7 +39,7 @@ export function TrackTimeline() {
                 <span
                   className={cn(
                     "w-0.5 flex-1 my-2",
-                    s.state === "done" ? "bg-emerald-300" : "bg-ink-100",
+                    s.state === "done" ? "bg-mint-300" : "bg-ink-100",
                   )}
                   style={{ minHeight: "42px" }}
                 />
@@ -65,7 +65,7 @@ export function TrackTimeline() {
                   </Chip>
                 )}
                 {s.state === "done" && (
-                  <span className="text-emerald-500">
+                  <span className="text-mint-500">
                     <Icon name="checkCircle" size={18} />
                   </span>
                 )}

@@ -31,7 +31,7 @@ export function ChannelChoice({
   if (requested) {
     return (
       <div className={cn("card p-6 text-center", className)}>
-        <span className="mx-auto w-14 h-14 rounded-full bg-emerald-50 text-emerald-500 flex items-center justify-center mb-3">
+        <span className="mx-auto w-14 h-14 rounded-full bg-mint-50 text-mint-500 flex items-center justify-center mb-3">
           <Icon name="checkCircle" size={30} />
         </span>
         <p className="font-600 text-ink-900">{t("requested")}</p>

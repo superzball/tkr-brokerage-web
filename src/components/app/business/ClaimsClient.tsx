@@ -195,7 +195,7 @@ function ClaimTracker({ claim, onClose }: { claim: Claim; onClose: () => void })
                   on
                     ? "font-600 text-ink-900"
                     : done
-                      ? "font-500 text-emerald-600"
+                      ? "font-500 text-mint-600"
                       : "font-500 text-ink-400",
                 )}
               >

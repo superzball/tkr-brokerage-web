@@ -68,15 +68,15 @@ export function CouponInstallment({
       <div>
         <label className="field-label">{t("label")}</label>
         {applied ? (
-          <div className="mt-1 flex items-center justify-between gap-3 rounded-xl bg-emerald-50 border border-emerald-100 px-3.5 py-2.5">
-            <span className="inline-flex items-center gap-2 text-sm font-600 text-emerald-700">
+          <div className="mt-1 flex items-center justify-between gap-3 rounded-xl bg-mint-50 border border-mint-100 px-3.5 py-2.5">
+            <span className="inline-flex items-center gap-2 text-sm font-600 text-mint-600">
               <Icon name="checkCircle" size={16} />
               {t("applied", { code: applied.code })} · −{baht(applied.discount)}
             </span>
             <button
               type="button"
               onClick={() => { setApplied(null); setInput(""); }}
-              className="text-xs font-600 text-emerald-700 hover:underline"
+              className="text-xs font-600 text-mint-600 hover:underline"
             >
               {t("remove")}
             </button>
@@ -121,7 +121,7 @@ export function CouponInstallment({
                   <span className={cn("w-4 h-4 rounded-full border-2 shrink-0", on ? "border-brand-500 bg-brand-500" : "border-ink-300")} />
                   <span className="text-sm font-600 text-ink-900">{p.label}</span>
                   {p.months > 0 && p.rate === 0 && (
-                    <span className="chip bg-emerald-50 text-emerald-600 text-[0.65rem]">{ti("interestFree")}</span>
+                    <span className="chip bg-mint-50 text-mint-600 text-[0.65rem]">{ti("interestFree")}</span>
                   )}
                 </span>
                 {p.months > 0 && (
@@ -142,7 +142,7 @@ export function CouponInstallment({
           <span className="tabnum">{baht(subtotal)}</span>
         </div>
         {discount > 0 && (
-          <div className="flex justify-between text-emerald-600">
+          <div className="flex justify-between text-mint-600">
             <span>{t("discount")}</span>
             <span className="tabnum">−{baht(discount)}</span>
           </div>

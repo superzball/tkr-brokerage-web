@@ -97,11 +97,11 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
               </div>
               <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-500">
                 <span className="flex items-center gap-2">
-                  <span className="text-emerald-600"><Icon name="shieldCheck" size={16} /></span>
+                  <span className="text-mint-600"><Icon name="shieldCheck" size={16} /></span>
                   {trust[0]?.title}
                 </span>
                 <span className="flex items-center gap-2">
-                  <span className="text-emerald-600"><Icon name="lock" size={16} /></span>
+                  <span className="text-mint-600"><Icon name="lock" size={16} /></span>
                   {trust[1]?.title}
                 </span>
               </div>
@@ -122,7 +122,7 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
                 <ul className="mt-5 space-y-2.5 text-sm text-ink-700">
                   {coverage.map((c) => (
                     <li key={c} className="flex items-start gap-2.5">
-                      <span className="text-emerald-500 shrink-0 mt-0.5">
+                      <span className="text-mint-500 shrink-0 mt-0.5">
                         <Icon name="checkCircle" size={16} />
                       </span>
                       {c}
@@ -216,7 +216,7 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
                   </li>
                   <li className="flex justify-between">
                     <span>{tw("plan.rows.repatriation")}</span>
-                    <span className={cn("font-600", p.repatriation ? "text-emerald-600" : "text-ink-400")}>
+                    <span className={cn("font-600", p.repatriation ? "text-mint-600" : "text-ink-400")}>
                       {p.repatriation ? tw("plan.included") : tw("plan.notIncluded")}
                     </span>
                   </li>
@@ -269,11 +269,11 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
                       <span className="font-600 text-ink-900 tabnum">{baht(tier.sum)}</span>
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-emerald-500"><Icon name="check" size={14} /></span>
+                      <span className="text-mint-500"><Icon name="check" size={14} /></span>
                       {t("common.planFeature1")}
                     </li>
                     <li className="flex items-center gap-2">
-                      <span className="text-emerald-500"><Icon name="check" size={14} /></span>
+                      <span className="text-mint-500"><Icon name="check" size={14} /></span>
                       {t("common.planFeature2")}
                     </li>
                   </ul>

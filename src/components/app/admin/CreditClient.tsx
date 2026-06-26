@@ -102,7 +102,7 @@ export function CreditClient({
     { key: "createdAt", header: t("col.date"), mono: true, sortValue: (c) => c.createdAt },
     { key: "description", header: t("col.description") },
     { key: "debit", header: t("col.debit"), align: "right", render: (c) => (c.type === "debit" ? <span className="tabnum text-rose-600">−{baht(c.amount)}</span> : <span className="text-ink-300">—</span>) },
-    { key: "credit", header: t("col.credit"), align: "right", render: (c) => (c.type === "credit" ? <span className="tabnum text-emerald-600">+{baht(c.amount)}</span> : <span className="text-ink-300">—</span>) },
+    { key: "credit", header: t("col.credit"), align: "right", render: (c) => (c.type === "credit" ? <span className="tabnum text-mint-600">+{baht(c.amount)}</span> : <span className="text-ink-300">—</span>) },
     { key: "balance", header: t("col.balance"), align: "right", render: (c) => <span className={`tabnum font-600 ${c.balanceAfter < 0 ? "text-rose-600" : "text-ink-900"}`}>{baht(c.balanceAfter)}</span> },
   ];
 

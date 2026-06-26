@@ -13,7 +13,7 @@ export function AgencyStats() {
             <span className="w-10 h-10 rounded-xl bg-sky-100 text-brand-600 inline-flex items-center justify-center">
               <Icon name={s.icon} />
             </span>
-            <Chip className="bg-emerald-50 text-emerald-600 text-xs">
+            <Chip className="bg-mint-50 text-mint-600 text-xs">
               {s.delta}
             </Chip>
           </div>

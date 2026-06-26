@@ -76,7 +76,7 @@ export function WhyTKR() {
               </div>
               <div className="ml-4 h-5 w-px bg-sky-200" />
               <div className="flex items-center gap-4">
-                <span className="w-9 h-9 rounded-full bg-emerald-500 text-white inline-flex items-center justify-center">
+                <span className="w-9 h-9 rounded-full bg-mint-500 text-white inline-flex items-center justify-center">
                   <Icon name="check" />
                 </span>
                 <div className="flex-1">

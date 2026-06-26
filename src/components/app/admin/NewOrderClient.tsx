@@ -104,7 +104,7 @@ export function NewOrderClient({ customers }: { customers: string[] }) {
     return (
       <div className="max-w-2xl">
         <div className="card p-6 text-center">
-          <div className="mx-auto w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+          <div className="mx-auto w-14 h-14 rounded-2xl bg-mint-50 text-mint-600 flex items-center justify-center mb-4">
             <Icon name="checkCircle" size={28} />
           </div>
           <h2 className="text-lg font-700 text-ink-900">{t("successTitle")}</h2>

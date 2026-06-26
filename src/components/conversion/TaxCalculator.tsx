@@ -128,8 +128,8 @@ export function TaxCalculator() {
 
         {/* results */}
         <div className="card card-lg p-6 lg:sticky lg:top-[84px] space-y-4">
-          <div className="rounded-2xl bg-gradient-to-br from-emerald-500 to-emerald-600 text-white p-5 text-center">
-            <p className="text-sm text-emerald-50">{t("results.taxSaved")}</p>
+          <div className="rounded-2xl bg-gradient-to-br from-mint-500 to-mint-600 text-white p-5 text-center">
+            <p className="text-sm text-mint-50">{t("results.taxSaved")}</p>
             <p className="font-display font-700 text-4xl tabnum mt-1">{baht(result.taxSaved)}</p>
           </div>
           <dl className="text-sm space-y-2.5">

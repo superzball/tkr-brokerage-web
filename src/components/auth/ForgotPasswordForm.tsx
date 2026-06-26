@@ -31,7 +31,7 @@ export function ForgotPasswordForm() {
       <p className="mt-1 text-sm text-ink-500">{t("subtitle")}</p>
 
       {sent ? (
-        <div className="mt-6 rounded-xl bg-emerald-50 text-emerald-700 p-4 flex items-start gap-2.5 text-sm">
+        <div className="mt-6 rounded-xl bg-mint-50 text-mint-600 p-4 flex items-start gap-2.5 text-sm">
           <Icon name="checkCircle" size={18} className="mt-0.5 shrink-0" />
           <span>{t("success")}</span>
         </div>

@@ -63,7 +63,7 @@ export function PlanStep({ plan, mode, onPlan, onMode }: PlanStepProps) {
                 <span
                   className={cn(
                     "font-600",
-                    p.repatriation ? "text-emerald-600" : "text-ink-300",
+                    p.repatriation ? "text-mint-600" : "text-ink-300",
                   )}
                 >
                   {p.repatriation ? t("plan.included") : t("plan.notIncluded")}

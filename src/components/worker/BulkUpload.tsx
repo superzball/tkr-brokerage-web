@@ -70,7 +70,7 @@ export function BulkUpload({ onSwitchSingle }: { onSwitchSingle: () => void }) {
       <div className="mt-6 card overflow-hidden">
         <div className="p-5 flex flex-wrap items-center justify-between gap-3 border-b border-ink-100">
           <div className="flex items-center gap-3">
-            <span className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 inline-flex items-center justify-center">
+            <span className="w-10 h-10 rounded-xl bg-mint-50 text-mint-600 inline-flex items-center justify-center">
               <Icon name="file" />
             </span>
             <div>
@@ -81,7 +81,7 @@ export function BulkUpload({ onSwitchSingle }: { onSwitchSingle: () => void }) {
             </div>
           </div>
           <div className="flex gap-2">
-            <Chip className="bg-emerald-50 text-emerald-600">
+            <Chip className="bg-mint-50 text-mint-600">
               <Icon name="checkCircle" />{" "}
               {t("bulk.passedChip", { n: WORKER_BULK.valid })}
             </Chip>
@@ -152,7 +152,7 @@ export function BulkUpload({ onSwitchSingle }: { onSwitchSingle: () => void }) {
                     <td className={cn("px-3 py-3 tabnum", bad("dob"))}>{row.dob}</td>
                     <td className="px-3 py-3">
                       {row.ok ? (
-                        <Chip className="bg-emerald-50 text-emerald-600 text-xs">
+                        <Chip className="bg-mint-50 text-mint-600 text-xs">
                           <Icon name="check" /> {t("bulk.statusOk")}
                         </Chip>
                       ) : (

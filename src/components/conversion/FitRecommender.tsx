@@ -126,7 +126,7 @@ export function FitRecommender({
         </div>
       ) : recommended ? (
         <div className="mt-6 rounded-2xl border border-brand-200 bg-white p-5">
-          <p className="text-xs font-600 text-emerald-600 inline-flex items-center gap-1.5">
+          <p className="text-xs font-600 text-mint-600 inline-flex items-center gap-1.5">
             <Icon name="checkCircle" size={15} /> {t("recommendedTitle")}
           </p>
           <p className="mt-2 font-display font-700 text-2xl text-ink-900">{recommended.planName}</p>
@@ -134,7 +134,7 @@ export function FitRecommender({
           <ul className="mt-3 flex flex-wrap gap-1.5">
             {recommended.highlights.map((h) => (
               <li key={h} className="chip bg-sky-50 text-ink-600 text-[0.7rem] !py-0.5 !px-2">
-                <span className="text-emerald-500"><Icon name="check" size={12} /></span>
+                <span className="text-mint-500"><Icon name="check" size={12} /></span>
                 {h}
               </li>
             ))}
