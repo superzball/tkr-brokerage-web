@@ -129,7 +129,7 @@ export function ArticlesClient({ initial }: { initial: Article[] }) {
       ),
     },
     { key: "author", header: t("col.author") },
-    { key: "published", header: t("col.published"), render: (a) => a.publishedAt ?? "—" },
+    { key: "published", header: t("col.published"), mono: true, render: (a) => a.publishedAt ?? "—" },
   ];
 
   return (
@@ -225,7 +225,7 @@ export function ArticlesClient({ initial }: { initial: Article[] }) {
             </div>
 
             {/* per-locale translation tabs */}
-            <div>
+            <div className="pt-4 mt-1 border-t border-ink-100">
               <p className="field-label">{te("localeNote")}</p>
               <Tabs<Locale>
                 tabs={LOCALES.map((l) => ({ key: l, label: l.toUpperCase() }))}
@@ -243,7 +243,7 @@ export function ArticlesClient({ initial }: { initial: Article[] }) {
               />
               <p className="mt-1 text-xs">
                 {draft.bodies[loc].trim() ? (
-                  <span className="text-emerald-600">● {te("translated")}</span>
+                  <span className="text-mint-600">● {te("translated")}</span>
                 ) : (
                   <span className="text-ink-400">○ {te("untranslated")}</span>
                 )}

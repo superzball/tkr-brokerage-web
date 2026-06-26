@@ -39,6 +39,7 @@ export function AdminTable({
     key: c.key,
     header: c.header,
     align: c.align,
+    mono: c.kind === "mono",
     sortValue:
       c.sortable === false
         ? undefined

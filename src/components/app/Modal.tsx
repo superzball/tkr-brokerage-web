@@ -64,7 +64,7 @@ export function Modal({
           className,
         )}
       >
-        <div className="flex items-center justify-between p-5 border-b border-ink-100">
+        <div className="sticky top-0 z-10 bg-[var(--ui-card-bg)] flex items-center justify-between p-5 border-b border-ink-100">
           <h2 id={titleId} className="text-lg font-700 text-ink-900">{title}</h2>
           <button
             onClick={onClose}
@@ -76,7 +76,7 @@ export function Modal({
         </div>
         <div className="p-5">{children}</div>
         {footer && (
-          <div className="flex justify-end gap-2 p-5 border-t border-ink-100">
+          <div className="sticky bottom-0 z-10 bg-[var(--ui-card-bg)] flex justify-end gap-2 p-5 border-t border-ink-100">
             {footer}
           </div>
         )}

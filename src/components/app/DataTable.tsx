@@ -17,6 +17,9 @@ export type Column<T> = {
   /** Return a comparable value to make this column sortable. */
   sortValue?: (row: T) => string | number;
   align?: "left" | "right" | "center";
+  /** Render the cell in a tabular monospace face (IDs / policy / ticket nos).
+   *  Only takes visual effect in the premium (admin) zone. */
+  mono?: boolean;
 };
 
 export type DataTableLabels = {
@@ -59,6 +62,16 @@ export function DataTable<T>({
   const [sortKey, setSortKey] = useState<string | null>(null);
   const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
   const [page, setPage] = useState(0);
+  // Page size + density are user-tunable in the premium zone (toolbar shown via
+  // CSS only under data-theme="premium"). Defaults preserve friendly behaviour:
+  // size = the pageSize prop, density "compact" only changes premium padding.
+  const [size, setSize] = useState(pageSize);
+  const [density, setDensity] = useState<"compact" | "comfortable">("compact");
+
+  // Page-size choices for the premium toolbar — include the caller's pageSize.
+  const sizeOptions = Array.from(new Set([pageSize, 25, 50, 100, 200])).sort(
+    (a, b) => a - b,
+  );
 
   const sorted = useMemo(() => {
     const col = columns.find((c) => c.key === sortKey);
@@ -71,10 +84,10 @@ export function DataTable<T>({
     });
   }, [rows, columns, sortKey, sortDir]);
 
-  const pageCount = Math.max(1, Math.ceil(sorted.length / pageSize));
+  const pageCount = Math.max(1, Math.ceil(sorted.length / size));
   const safePage = Math.min(page, pageCount - 1);
-  const start = safePage * pageSize;
-  const pageRows = sorted.slice(start, start + pageSize);
+  const start = safePage * size;
+  const pageRows = sorted.slice(start, start + size);
 
   function toggleSort(col: Column<T>) {
     if (!col.sortValue) return;
@@ -107,9 +120,54 @@ export function DataTable<T>({
 
   return (
     <div className="card overflow-hidden">
+      {/* Premium density toolbar — hidden in the friendly zone via CSS. */}
+      <div className="qtable-toolbar hidden items-center justify-end gap-2 px-3 py-2 border-b border-ink-100">
+        <button
+          type="button"
+          aria-label="Toggle row density"
+          aria-pressed={density === "compact"}
+          onClick={() =>
+            setDensity((d) => (d === "compact" ? "comfortable" : "compact"))
+          }
+          className="inline-flex items-center justify-center w-8 h-8 rounded-md text-ink-500 hover:bg-ink-50 hover:text-ink-800"
+        >
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round">
+            {density === "compact" ? (
+              <>
+                <line x1="2" y1="4" x2="14" y2="4" />
+                <line x1="2" y1="7" x2="14" y2="7" />
+                <line x1="2" y1="10" x2="14" y2="10" />
+                <line x1="2" y1="13" x2="14" y2="13" />
+              </>
+            ) : (
+              <>
+                <line x1="2" y1="5" x2="14" y2="5" />
+                <line x1="2" y1="8" x2="14" y2="8" />
+                <line x1="2" y1="11" x2="14" y2="11" />
+              </>
+            )}
+          </svg>
+        </button>
+        <select
+          aria-label="Rows per page"
+          value={size}
+          onChange={(e) => {
+            setSize(Number(e.target.value));
+            setPage(0);
+          }}
+          className="field !w-auto !py-1.5 !px-2.5 text-xs tabnum"
+        >
+          {sizeOptions.map((n) => (
+            <option key={n} value={n}>
+              {n}
+            </option>
+          ))}
+        </select>
+      </div>
+
       {/* Desktop / tablet: full table */}
-      <div className="hidden md:block overflow-x-auto">
-        <table className="w-full text-sm">
+      <div className="qtable-scroll hidden md:block overflow-x-auto">
+        <table className={cn("qtable w-full text-sm", density === "comfortable" && "is-comfortable")}>
           <thead>
             <tr className="border-b border-ink-100 bg-sky-50/60">
               {columns.map((c) => (
@@ -140,13 +198,18 @@ export function DataTable<T>({
                 >
                   <span className="inline-flex items-center gap-1">
                     {c.header}
-                    {c.sortValue && sortKey === c.key && (
-                      <Icon
-                        name={sortDir === "asc" ? "chevD" : "chevD"}
-                        size={14}
-                        className={sortDir === "asc" ? "rotate-180" : ""}
-                      />
-                    )}
+                    {c.sortValue &&
+                      (sortKey === c.key ? (
+                        <Icon
+                          name="chevD"
+                          size={14}
+                          className={sortDir === "asc" ? "rotate-180" : ""}
+                        />
+                      ) : (
+                        // faint caret hint on sortable, unsorted columns
+                        // (premium zone only — hidden in friendly via .sort-hint)
+                        <Icon name="chevD" size={14} className="opacity-25 sort-hint" />
+                      ))}
                   </span>
                 </th>
               ))}
@@ -154,7 +217,7 @@ export function DataTable<T>({
           </thead>
           <tbody>
             {loading ? (
-              Array.from({ length: Math.min(pageSize, 6) }).map((_, r) => (
+              Array.from({ length: Math.min(size, 6) }).map((_, r) => (
                 <tr key={r} className="border-b border-ink-50 last:border-0">
                   {columns.map((c) => (
                     <td key={c.key} className={cn("px-4 py-3.5", ALIGN[c.align ?? "left"])}>
@@ -191,6 +254,7 @@ export function DataTable<T>({
                       className={cn(
                         "px-4 py-3 text-ink-800 whitespace-nowrap",
                         ALIGN[c.align ?? "left"],
+                        c.mono && "mono",
                       )}
                     >
                       {c.render ? c.render(row) : String((row as Record<string, unknown>)[c.key] ?? "")}
@@ -229,7 +293,7 @@ export function DataTable<T>({
                   <span className="text-xs font-600 text-ink-500 shrink-0">
                     {c.header}
                   </span>
-                  <span className="text-sm text-ink-800 min-w-0 text-right">
+                  <span className={cn("text-sm text-ink-800 min-w-0 text-right", c.mono && "mono")}>
                     {c.render
                       ? c.render(row)
                       : String((row as Record<string, unknown>)[c.key] ?? "")}
@@ -256,10 +320,10 @@ export function DataTable<T>({
         )}
       </div>
 
-      {!loading && !error && sorted.length > pageSize && (
+      {!loading && !error && sorted.length > size && (
         <div className="flex items-center justify-between gap-3 px-4 py-3 border-t border-ink-100">
           <span className="text-xs text-ink-500 tabnum">
-            {labels.range(start + 1, Math.min(start + pageSize, sorted.length), sorted.length)}
+            {labels.range(start + 1, Math.min(start + size, sorted.length), sorted.length)}
           </span>
           <div className="flex gap-2">
             <button

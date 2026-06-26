@@ -378,6 +378,63 @@
   }
 }
 
+/* ============================================================
+   Premium (admin) data-table density — Phase 19 Batch 5.
+   Scoped to the premium zone so the friendly portals keep their
+   original DataTable look. Unlayered so the padding / overflow /
+   visibility overrides win over Tailwind utilities.
+   ============================================================ */
+/* density toolbar + sort-caret hint — only surfaced in the back-office */
+[data-theme="premium"] .qtable-toolbar {
+  display: flex;
+}
+.sort-hint {
+  display: none;
+}
+[data-theme="premium"] .sort-hint {
+  display: inline-block;
+}
+/* inner scroll so the sticky header has a scroll container to stick within */
+[data-theme="premium"] .qtable-scroll {
+  overflow: auto;
+  max-height: calc(100vh - 15rem);
+}
+[data-theme="premium"] .qtable thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: #eef2f8;
+  color: #334155;
+  border-bottom: 1px solid #d8e1ee;
+  padding-top: 0.6rem;
+  padding-bottom: 0.6rem;
+}
+/* compact rows by default; the toggle adds .is-comfortable */
+[data-theme="premium"] .qtable td {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+[data-theme="premium"] .qtable.is-comfortable th,
+[data-theme="premium"] .qtable.is-comfortable td {
+  padding-top: 0.85rem;
+  padding-bottom: 0.85rem;
+}
+/* zebra + hover (AA: #475569 body text passes on both #f7f9fc and #eaf0f8) */
+[data-theme="premium"] .qtable tbody tr:nth-child(even) {
+  background: #f7f9fc;
+}
+[data-theme="premium"] .qtable tbody tr:hover {
+  background: #eaf0f8;
+}
+/* monospace, tabular figures for IDs / policy / ticket numbers */
+[data-theme="premium"] .mono {
+  font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas,
+    monospace;
+  font-variant-numeric: tabular-nums;
+  font-size: 0.92em;
+  letter-spacing: -0.01em;
+}
+
 @layer components {
   /* ---- Layered blue backdrop helpers ---- */
   .bg-grid {

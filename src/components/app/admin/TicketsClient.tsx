@@ -163,7 +163,7 @@ export function TicketsClient({
   }
 
   const columns: Column<PolicyTicket>[] = [
-    { key: "ticketNumber", header: t("col.ticketNo"), sortValue: (r) => r.ticketNumber, render: (r) => <span className="tabnum">{r.ticketNumber}</span> },
+    { key: "ticketNumber", header: t("col.ticketNo"), mono: true, sortValue: (r) => r.ticketNumber, render: (r) => <span className="font-600">{r.ticketNumber}</span> },
     { key: "customer", header: t("col.customer"), sortValue: (r) => custName(r.customerId), render: (r) => custName(r.customerId) },
     { key: "product", header: t("col.product"), render: (r) => tc(`product.${r.product}`) },
     { key: "duration", header: t("col.duration"), render: (r) => tc(`duration.${r.duration}`) },
