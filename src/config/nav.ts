@@ -5,6 +5,8 @@ import type {
   ProductMenuKey,
   ServiceMenuKey,
 } from "@/types";
+import type { TopNavItem } from "@/types/portal";
+import { FEATURES } from "@/config/features";
 
 /** Canonical route map (was the `L` object in nav.js, now localized routes). */
 export const ROUTES = {
@@ -37,6 +39,96 @@ export const SERVICE_MENU: MenuItem<ServiceMenuKey>[] = [
   { key: "line", href: ROUTES.line, icon: "chat" },
   { key: "tracking", href: ROUTES.tracking, icon: "truck" },
 ];
+
+/**
+ * Public top nav (Phase 19, PUBLIC_NAV_ADDITIONS). Mega menus for Products /
+ * About / Help; simple links for Articles / Contact. Right-side actions
+ * (search / quote CTA / login / agent login) live in `publicNavActions`.
+ * Additive — existing PRODUCT_MENU/SERVICE_MENU/ROUTES stay for other callers.
+ * Labels resolve from the `topnav` message namespace.
+ */
+export const publicNav: TopNavItem[] = [
+  {
+    key: "products",
+    featured: {
+      key: "workerFlagship",
+      href: "/insurance/worker",
+      icon: "users",
+      descKey: "workerFlagshipDesc",
+      badgeKey: "flagship",
+    },
+    columns: [
+      {
+        key: "colWorker",
+        links: [
+          { key: "worker", href: "/insurance/worker", icon: "users", descKey: "workerDesc" },
+          { key: "workerWallet", href: "/insurance/worker-wallet", icon: "wallet", descKey: "workerWalletDesc" },
+        ],
+      },
+      {
+        key: "colPersonal",
+        links: [
+          { key: "auto", href: "/insurance/auto", icon: "car", descKey: "autoDesc" },
+          { key: "travel", href: "/insurance/travel", icon: "plane", descKey: "travelDesc" },
+          { key: "health", href: "/insurance/health", icon: "heartPulse", descKey: "healthDesc" },
+          { key: "fire", href: "/insurance/fire", icon: "flame", descKey: "fireDesc" },
+        ],
+      },
+      {
+        key: "colDigital",
+        links: [
+          { key: "lineConcierge", href: "/digital/line", icon: "chat", descKey: "lineDesc" },
+          { key: "tracking", href: "/tracking", icon: "search", descKey: "trackingDesc" },
+          // tax-deduction line only when the vertical is enabled
+          ...(FEATURES.taxTools
+            ? [{ key: "taxPlans", href: "/insurance/tax", icon: "piggy", descKey: "taxDesc" } as const]
+            : []),
+        ],
+      },
+    ],
+  },
+  {
+    key: "about",
+    columns: [
+      {
+        key: "colAbout",
+        links: [
+          { key: "whoWeAre", href: "/about", icon: "building", descKey: "whoWeAreDesc" },
+          { key: "whyTkr", href: "/about/why", icon: "badgeCheck", descKey: "whyTkrDesc" },
+          { key: "partners", href: "/about/partners", icon: "handshake", descKey: "partnersDesc" },
+          { key: "agentJoin", href: "/about/agent", icon: "network", descKey: "agentJoinDesc" },
+        ],
+      },
+    ],
+  },
+  {
+    key: "help",
+    columns: [
+      {
+        key: "colHelp",
+        links: [
+          { key: "howToBuy", href: "/help/how-to-buy", icon: "cart", descKey: "howToBuyDesc" },
+          { key: "claimHelp", href: "/help/claims", icon: "clipboard", descKey: "claimHelpDesc" },
+          { key: "faq", href: "/help/faq", icon: "help", descKey: "faqDesc" },
+          { key: "contactHelp", href: "/contact", icon: "phone", descKey: "contactHelpDesc" },
+        ],
+      },
+    ],
+  },
+  { key: "articles", href: "/articles" },
+  { key: "contact", href: "/contact" },
+];
+
+/** Right-side public-nav actions, rendered separately by the Navbar.
+ *  Note: the spec's `/quote` + `/search` pages are pending; until they exist the
+ *  CTA routes into the flagship privacy-first quote flow (ROUTES.worker) and
+ *  search resolves on the all-products page. */
+export const publicNavActions = {
+  search: { href: ROUTES.insurance, icon: "search" },
+  quoteCta: { key: "getQuote", href: ROUTES.worker },
+  login: { key: "login", href: "/login", icon: "user" },
+  agent: { key: "agentLogin", href: "/login?role=agent" },
+} as const;
 
 /** Full ordered list for the mobile drawer. */
 export const MOBILE_NAV: NavRoute[] = [

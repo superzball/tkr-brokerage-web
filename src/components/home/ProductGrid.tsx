@@ -8,13 +8,16 @@ type SecondaryProduct = {
   key: "auto" | "travel" | "health" | "fire";
   icon: IconName;
   href: string;
+  /** per-card accent so the grid isn't monochrome blue */
+  tile: string;
+  cta: string;
 };
 
 const SECONDARY: SecondaryProduct[] = [
-  { key: "auto", icon: "car", href: "/insurance/auto" },
-  { key: "travel", icon: "plane", href: "/insurance/travel" },
-  { key: "health", icon: "heart", href: "/insurance/health" },
-  { key: "fire", icon: "flame", href: "/insurance/fire" },
+  { key: "auto", icon: "car", href: "/insurance/auto", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600" },
+  { key: "travel", icon: "plane", href: "/insurance/travel", tile: "bg-mint-100 text-mint-600", cta: "text-mint-600" },
+  { key: "health", icon: "heart", href: "/insurance/health", tile: "bg-peach-100 text-peach-600", cta: "text-peach-600" },
+  { key: "fire", icon: "flame", href: "/insurance/fire", tile: "bg-gold-100 text-gold-600", cta: "text-gold-600" },
 ];
 
 export function ProductGrid() {
@@ -24,11 +27,11 @@ export function ProductGrid() {
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-28 lg:pt-32 pb-8">
       <div className="text-center max-w-2xl mx-auto reveal">
-        <Chip className="bg-brand-50 text-brand-600 mb-3">{t("badge")}</Chip>
-        <h2 className="font-display font-700 text-3xl sm:text-4xl text-ink-900 tracking-tight">
+        <Chip className="bg-gold-100 text-gold-600 mb-4">{t("badge")}</Chip>
+        <h2 className="font-display font-700 text-4xl sm:text-5xl text-ink-900 tracking-tight leading-[1.08]">
           {t("title")}
         </h2>
-        <p className="mt-3 text-ink-600">{t("subtitle")}</p>
+        <p className="mt-4 text-lg text-ink-500">{t("subtitle")}</p>
       </div>
 
       <div className="mt-12 grid lg:grid-cols-3 gap-5">
@@ -79,7 +82,7 @@ export function ProductGrid() {
         {SECONDARY.map((product) => (
           <AppLink key={product.key} href={product.href} className="group reveal">
             <div className="card card-hover h-full p-6">
-              <span className="w-12 h-12 rounded-xl bg-sky-100 text-brand-600 inline-flex items-center justify-center">
+              <span className={`w-12 h-12 rounded-2xl ${product.tile} inline-flex items-center justify-center`}>
                 <Icon name={product.icon} />
               </span>
               <h3 className="mt-4 font-600 text-lg text-ink-900">
@@ -88,7 +91,7 @@ export function ProductGrid() {
               <p className="mt-1.5 text-sm text-ink-600 leading-relaxed">
                 {t(`${product.key}.desc`)}
               </p>
-              <div className="mt-4 inline-flex items-center gap-1.5 text-sm font-600 text-brand-600 group-hover:gap-2.5 transition-all">
+              <div className={`mt-4 inline-flex items-center gap-1.5 text-sm font-600 ${product.cta} group-hover:gap-2.5 transition-all`}>
                 {t(`${product.key}.cta`)} <Icon name="arrowRight" />
               </div>
             </div>

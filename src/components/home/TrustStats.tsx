@@ -1,4 +1,5 @@
 import { useTranslations } from "next-intl";
+import { AnimatedCounter } from "./AnimatedCounter";
 
 const STATS: Array<{
   key: "orgs" | "policies" | "founded" | "partners";
@@ -22,8 +23,13 @@ export function TrustStats() {
           {STATS.map((stat) => (
             <div key={stat.key} className="reveal">
               <p className="font-display font-700 text-4xl sm:text-5xl text-white tabnum">
-                {t(`${stat.key}.value`)}
-                {stat.plus && <span className="text-brand-400">+</span>}
+                {/* count up the headline figures; the founded year stays literal */}
+                {stat.plus ? (
+                  <AnimatedCounter value={t(`${stat.key}.value`)} />
+                ) : (
+                  t(`${stat.key}.value`)
+                )}
+                {stat.plus && <span className="text-gold-400">+</span>}
               </p>
               <p className="mt-2 text-ink-300">{t(`${stat.key}.label`)}</p>
             </div>

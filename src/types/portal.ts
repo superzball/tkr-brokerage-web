@@ -2,6 +2,8 @@
 // Central type contracts for the TKR product portals. Every mock query,
 // table, and screen references these — keep this the single source of truth.
 
+import type { IconName } from '@/components/ui/Icon';
+
 export type Role = 'business' | 'individual' | 'agent' | 'admin';
 export type Locale = 'th' | 'en' | 'my' | 'lo';
 
@@ -501,3 +503,16 @@ export interface TaxCalcInput {
   funds: number;                 // SSF/RMF/PVD etc.
 }
 export interface TaxCalcResult { taxableIncome: number; taxBefore: number; taxAfter: number; taxSaved: number; }
+
+// ---- public top-nav mega menu (Phase 19, PUBLIC_NAV_ADDITIONS) ----
+/** A mega-menu link, optionally rich (icon + one-line description + badge). */
+export interface MegaLink { key: string; href: string; icon?: IconName; descKey?: string; badgeKey?: string; }
+/** A mega-menu column; `key` is the column heading (i18n under `topnav`). */
+export interface MegaColumn { key: string; links: MegaLink[]; }
+/** A top-level public nav item: a simple link, or a mega menu when `columns` set. */
+export interface TopNavItem {
+  key: string;                 // label (i18n under `topnav`)
+  href?: string;               // simple link (no dropdown)
+  columns?: MegaColumn[];      // present → renders as a mega menu
+  featured?: MegaLink;         // optional highlighted card in the dropdown
+}

@@ -5,6 +5,7 @@
 export const FEATURES = {
   taxTools: false,        // life / tax-deduction calculator + plans — flip ON if TKR sells that vertical
   cashInstallment: false, // requires a finance partner; show option only when partner is live
+  mascot: false,          // placeholder mascot hidden until a real one ships — flip ON to restore it everywhere
 } as const;
 
 export type FeatureFlag = keyof typeof FEATURES;

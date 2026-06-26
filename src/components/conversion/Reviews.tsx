@@ -41,11 +41,11 @@ export function Reviews({
     <section className={cn("max-w-7xl mx-auto px-4 sm:px-6 py-16", className)}>
       {heading && (
         <div className="text-center max-w-2xl mx-auto reveal mb-10">
-          <Chip className="bg-brand-50 text-brand-600 mb-3">{t("title")}</Chip>
-          <h2 className="font-display font-700 text-3xl sm:text-4xl text-ink-900 tracking-tight">
+          <Chip className="bg-peach-100 text-peach-600 mb-4">{t("title")}</Chip>
+          <h2 className="font-display font-700 text-4xl sm:text-5xl text-ink-900 tracking-tight leading-[1.08]">
             {t("title")}
           </h2>
-          <p className="mt-3 text-ink-600">{t("sub")}</p>
+          <p className="mt-4 text-lg text-ink-500">{t("sub")}</p>
         </div>
       )}
 

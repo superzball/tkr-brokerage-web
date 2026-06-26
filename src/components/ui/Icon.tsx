@@ -60,6 +60,14 @@ import {
   Sun,
   LifeBuoy,
   Hospital,
+  HeartPulse,
+  PiggyBank,
+  BadgeCheck,
+  Handshake,
+  Network,
+  ShoppingCart,
+  ClipboardList,
+  HelpCircle,
   type LucideProps,
 } from "lucide-react";
 
@@ -175,6 +183,14 @@ const registry = {
   eye: Eye,
   target: Target,
   sun: Sun,
+  heartPulse: HeartPulse,
+  piggy: PiggyBank,
+  badgeCheck: BadgeCheck,
+  handshake: Handshake,
+  network: Network,
+  cart: ShoppingCart,
+  clipboard: ClipboardList,
+  help: HelpCircle,
 } satisfies Record<string, React.ComponentType<LucideProps>>;
 
 export type IconName = keyof typeof registry;
