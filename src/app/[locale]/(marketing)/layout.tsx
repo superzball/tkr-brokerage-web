@@ -6,6 +6,7 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { RevealObserver } from "@/components/RevealObserver";
 import { LineChatWidget } from "@/components/conversion/LineChatWidget";
+import { ToastProvider } from "@/components/app/toast";
 
 type Props = {
   children: React.ReactNode;
@@ -26,11 +27,13 @@ export default async function MarketingLayout({ children, params }: Props) {
     // Phase 19: friendly visual zone (public site). `contents` keeps the shell
     // structurally flat — it only carries the data-theme token scope.
     <div data-theme="friendly" className="contents">
-      <Navbar />
-      {children}
-      <Footer />
-      <RevealObserver />
-      <LineChatWidget />
+      <ToastProvider>
+        <Navbar />
+        {children}
+        <Footer />
+        <RevealObserver />
+        <LineChatWidget />
+      </ToastProvider>
     </div>
   );
 }

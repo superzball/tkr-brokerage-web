@@ -59,11 +59,26 @@
     "title": "Frequently asked questions",
     "sub": "The answers customers ask for most",
     "items": [
-      { "q": "Can I see a price without entering personal data?", "a": "Yes — you see a real premium instantly with no personal data, and we never make sales calls." },
-      { "q": "Is TKR a licensed broker?", "a": "Yes. TKR is a non-life insurance broker properly licensed by the OIC." },
-      { "q": "Can I buy foreign-worker insurance in bulk?", "a": "Yes — issue policies one at a time or in bulk for employers, with a digital card for each worker." },
-      { "q": "What payment methods are available?", "a": "Pay in full, 0% credit-card installments, or PromptPay QR. Coverage starts as soon as the first payment is made." },
-      { "q": "Can an agent help me?", "a": "Absolutely. Choose ‘let an agent help’ at quote time and our agent will contact you." }
+      {
+        "q": "Can I see a price without entering personal data?",
+        "a": "Yes — you see a real premium instantly with no personal data, and we never make sales calls."
+      },
+      {
+        "q": "Is TKR a licensed broker?",
+        "a": "Yes. TKR is a non-life insurance broker properly licensed by the OIC."
+      },
+      {
+        "q": "Can I buy foreign-worker insurance in bulk?",
+        "a": "Yes — issue policies one at a time or in bulk for employers, with a digital card for each worker."
+      },
+      {
+        "q": "What payment methods are available?",
+        "a": "Pay in full, 0% credit-card installments, or PromptPay QR. Coverage starts as soon as the first payment is made."
+      },
+      {
+        "q": "Can an agent help me?",
+        "a": "Absolutely. Choose ‘let an agent help’ at quote time and our agent will contact you."
+      }
     ]
   },
   "common": {
@@ -1388,6 +1403,18 @@
     "line": {
       "title": "TKR | Smart Assistant on LINE",
       "description": "Check policies, renew, file claims, and chat with an agent instantly via the LINE Official Account, with Rich Menu and Flex Messages"
+    },
+    "articles": {
+      "title": "Articles & Insurance Guides | TKR",
+      "description": "Guides and tips on worker, motor, health insurance and claims"
+    },
+    "help": {
+      "title": "Help Center | TKR",
+      "description": "FAQs, how to buy & pay, and how to file a claim with TKR"
+    },
+    "contact": {
+      "title": "Contact Us | TKR",
+      "description": "Reach TKR by phone, email, LINE, or request a callback"
     }
   },
   "business": {
@@ -3611,10 +3638,22 @@
       "instantTitle": "Instant coverage",
       "instantNote": "Coverage starts the moment your first installment is paid — for Class 1 motor, interim Class 3 cover applies while inspection/approval is pending.",
       "methods": {
-        "full": { "label": "Pay in full", "detail": "One-time payment" },
-        "card_installment": { "label": "Credit-card 0% installments", "detail": "Up to 10 months on participating cards" },
-        "qr_promptpay": { "label": "QR PromptPay", "detail": "Scan to pay via any bank's mobile banking" },
-        "cash_installment": { "label": "Cash installments (no card)", "detail": "First installment ฿1,000 via a finance partner" }
+        "full": {
+          "label": "Pay in full",
+          "detail": "One-time payment"
+        },
+        "card_installment": {
+          "label": "Credit-card 0% installments",
+          "detail": "Up to 10 months on participating cards"
+        },
+        "qr_promptpay": {
+          "label": "QR PromptPay",
+          "detail": "Scan to pay via any bank's mobile banking"
+        },
+        "cash_installment": {
+          "label": "Cash installments (no card)",
+          "detail": "First installment ฿1,000 via a finance partner"
+        }
       }
     }
   },
@@ -3623,11 +3662,26 @@
     "sub": "Estimate your tax before and after deductions to plan tax-deductible insurance",
     "disclaimer": "This tool is a planning estimate only and cannot be used to file actual taxes. Verify the rules with the Revenue Department for the relevant tax year.",
     "inputs": {
-      "annualIncome": { "label": "Annual income", "hint": "Total yearly income before expenses" },
-      "personalAllowance": { "label": "Personal allowance", "hint": "Personal allowance and base expenses" },
-      "socialSecurity": { "label": "Social security", "hint": "Yearly social-security contributions (max ฿9,000)" },
-      "existingInsurance": { "label": "Life/health insurance premium", "hint": "Deductible premiums (combined max ฿100,000)" },
-      "funds": { "label": "Deductible funds (SSF/RMF/PVD)", "hint": "Deductible investment amount" }
+      "annualIncome": {
+        "label": "Annual income",
+        "hint": "Total yearly income before expenses"
+      },
+      "personalAllowance": {
+        "label": "Personal allowance",
+        "hint": "Personal allowance and base expenses"
+      },
+      "socialSecurity": {
+        "label": "Social security",
+        "hint": "Yearly social-security contributions (max ฿9,000)"
+      },
+      "existingInsurance": {
+        "label": "Life/health insurance premium",
+        "hint": "Deductible premiums (combined max ฿100,000)"
+      },
+      "funds": {
+        "label": "Deductible funds (SSF/RMF/PVD)",
+        "hint": "Deductible investment amount"
+      }
     },
     "capsTitle": "Deduction caps (per Revenue rules — verify yearly)",
     "cap": "Max {amount}",
@@ -3639,7 +3693,10 @@
     },
     "suggestTitle": "Plans that reduce your tax",
     "suggestSub": "See sample savings/annuity plans eligible for deductions",
-    "plans": { "savings": "Endowment plan", "annuity": "Annuity plan" },
+    "plans": {
+      "savings": "Endowment plan",
+      "annuity": "Annuity plan"
+    },
     "footnote": "Figures are demo estimates using progressive tax brackets. Consult a tax professional before deciding."
   },
   "promotions": {
@@ -3745,6 +3802,236 @@
         "label": "Annuity insurance",
         "tagline": "Plan for retirement, receive an annuity, deduct tax"
       }
+    }
+  },
+  "articles": {
+    "title": "Articles & Guides",
+    "sub": "Easy-to-understand insurance guides and tips, from the TKR team",
+    "searchPlaceholder": "Search articles…",
+    "allCategories": "All",
+    "featured": "Featured",
+    "latest": "Latest",
+    "readMore": "Read more",
+    "minRead": "{n} min read",
+    "by": "By",
+    "relatedTitle": "Related articles",
+    "empty": "No published articles yet",
+    "noResults": "No articles match your search",
+    "availableIn": "Available in",
+    "backToList": "Back to articles",
+    "ctaTitle": "Ready to get started?",
+    "ctaDesc": "See real prices instantly — no personal details needed",
+    "cta": "Check your price"
+  },
+  "help": {
+    "hero": {
+      "badge": "Help Center",
+      "title": "How can we help?",
+      "sub": "Search for an answer, or pick a topic below",
+      "searchPlaceholder": "Search questions…"
+    },
+    "cards": {
+      "howToBuyTitle": "How to buy & pay",
+      "howToBuyDesc": "The full buy-and-pay flow, step by step",
+      "claimsTitle": "Claims & tracking",
+      "claimsDesc": "File a claim and track it yourself",
+      "faqTitle": "FAQ",
+      "faqDesc": "The answers customers ask for most"
+    },
+    "faqTitle": "Frequently asked questions",
+    "faqSub": "Search or pick a category to see answers",
+    "popularTitle": "Popular questions",
+    "searchPlaceholder": "Search questions…",
+    "noResults": "No questions match your search",
+    "categories": {
+      "all": "All",
+      "worker": "Worker insurance",
+      "buy": "Buying",
+      "claims": "Claims",
+      "payment": "Payment",
+      "refund": "Refunds",
+      "network": "Garage & hospital"
+    },
+    "faqs": [
+      {
+        "category": "worker",
+        "q": "What documents are needed to buy migrant worker insurance?",
+        "a": "A copy of each worker’s passport and work permit, plus employer details. Enter workers one by one or upload in bulk via Excel."
+      },
+      {
+        "category": "worker",
+        "q": "How long does it take to issue a worker policy?",
+        "a": "Once payment is made, the policy is issued within 24 hours and sent by email and in the portal."
+      },
+      {
+        "category": "buy",
+        "q": "Can I see prices without giving personal details?",
+        "a": "Yes. You see real prices instantly without entering personal details, and we never cold-call."
+      },
+      {
+        "category": "buy",
+        "q": "Can I buy online myself, or do I need an agent?",
+        "a": "Both — buy online yourself or have a professional agent assist you, at the same price."
+      },
+      {
+        "category": "claims",
+        "q": "How can I file a claim?",
+        "a": "File via the customer portal or TKR’s LINE, attaching photos and the relevant documents."
+      },
+      {
+        "category": "claims",
+        "q": "How do I track a claim?",
+        "a": "Follow the claim status timeline anytime in the customer portal — from submission to approval and payout."
+      },
+      {
+        "category": "payment",
+        "q": "What payment methods are available?",
+        "a": "Pay in full, 0% installments on participating credit cards, or scan to pay via PromptPay QR."
+      },
+      {
+        "category": "payment",
+        "q": "Is coverage active immediately after paying?",
+        "a": "Once payment succeeds, coverage is confirmed instantly and the policy is emailed to you."
+      },
+      {
+        "category": "refund",
+        "q": "Can I cancel a policy and get a refund?",
+        "a": "Yes, subject to each policy’s terms — premium is refunded pro-rata for the remaining period. Contact our team to proceed."
+      },
+      {
+        "category": "refund",
+        "q": "How long do refunds take?",
+        "a": "Typically 7–14 business days after documents are complete, depending on your original payment method."
+      },
+      {
+        "category": "network",
+        "q": "Which garages or service centers can I use?",
+        "a": "Use in-network garages and certified centers with no out-of-pocket payment. Check the latest list in the portal."
+      },
+      {
+        "category": "network",
+        "q": "Do I pay upfront at partner hospitals?",
+        "a": "No upfront payment at partner hospitals — just show your card and verify your identity."
+      }
+    ],
+    "howToBuy": {
+      "title": "How to buy & pay",
+      "sub": "Buy insurance online in 4 simple steps",
+      "steps": [
+        {
+          "title": "Choose a plan & check price",
+          "desc": "Pick the product you want and see the real price instantly — no personal details required."
+        },
+        {
+          "title": "Fill in details",
+          "desc": "Enter the insured’s details, one by one or in bulk via Excel for workers."
+        },
+        {
+          "title": "Review & confirm",
+          "desc": "Review coverage and price before confirming your order."
+        },
+        {
+          "title": "Pay",
+          "desc": "Choose a convenient payment method and get coverage instantly once paid."
+        }
+      ],
+      "paymentTitle": "Payment options",
+      "paymentSub": "Pick whatever is most convenient for you",
+      "payFull": "Pay in full",
+      "payFullNote": "One single payment",
+      "payCard": "Credit card, 0% installment",
+      "payCardNote": "Spread monthly, interest-free",
+      "payQr": "Scan PromptPay QR",
+      "payQrNote": "Fast and secure",
+      "instantNote": "Pay successfully, get coverage instantly",
+      "ctaTitle": "Ready to buy?",
+      "ctaDesc": "Check your price and buy right now",
+      "cta": "Check your price"
+    },
+    "claims": {
+      "title": "Claims & tracking",
+      "sub": "File a claim and track it yourself in 4 steps",
+      "steps": [
+        {
+          "title": "Report the claim",
+          "desc": "Report via the portal or LINE with photos of the damage and event details."
+        },
+        {
+          "title": "Prepare documents",
+          "desc": "Attach a copy of the policy, ID card, medical receipts, or a police report as applicable."
+        },
+        {
+          "title": "Under review",
+          "desc": "Our team reviews and assesses; we’ll let you know if more documents are needed."
+        },
+        {
+          "title": "Receive payout",
+          "desc": "On approval, the payout is transferred and the status updates in the portal."
+        }
+      ],
+      "ctaTitle": "Need to file or track a claim?",
+      "ctaDesc": "Sign in to file a claim or view your policy status",
+      "ctaFile": "File a claim",
+      "ctaTrack": "Track status"
+    },
+    "stillNeedHelp": {
+      "title": "Still need help?",
+      "desc": "Our team is here for you 24/7",
+      "contact": "Contact us",
+      "chat": "Chat on LINE"
+    }
+  },
+  "contact": {
+    "hero": {
+      "badge": "Contact us",
+      "title": "We’re here to help",
+      "sub": "Pick a convenient channel, or leave a message and we’ll get back to you"
+    },
+    "methodsTitle": "Contact channels",
+    "methods": {
+      "phone": "Phone",
+      "phoneValue": "02-123-4567",
+      "phoneNote": "Mon–Sat 8:00–20:00",
+      "email": "Email",
+      "emailValue": "hello@tkr.co.th",
+      "emailNote": "Reply within 1 business day",
+      "line": "LINE Official",
+      "lineValue": "@tkrinsure",
+      "lineNote": "Live chat 24/7",
+      "address": "Office address",
+      "addressValue": "TKR Building, Sukhumvit Rd, Bangkok 10110",
+      "hours": "Business hours",
+      "hoursValue": "Mon–Sat 8:00–20:00"
+    },
+    "mapPlaceholder": "Office map",
+    "form": {
+      "title": "Send us a message",
+      "sub": "Fill in the form and we’ll get back to you soon",
+      "name": "Full name",
+      "phone": "Phone number",
+      "email": "Email",
+      "topic": "Topic",
+      "topicOptions": [
+        "Product enquiry",
+        "Request a quote",
+        "Claims",
+        "Payment",
+        "Other"
+      ],
+      "message": "Message",
+      "channelTitle": "How should we follow up?",
+      "channelSelf": "I’ll reach out myself",
+      "channelAgent": "Have an agent call me back",
+      "channelAgentNote": "A professional agent will call you back",
+      "submit": "Send message",
+      "sending": "Sending…",
+      "success": "Message sent — we’ll get back to you soon",
+      "required": "Please fill in the required fields"
+    },
+    "faqTeaser": {
+      "title": "Find answers fast",
+      "desc": "Many questions are already answered in our Help Center",
+      "cta": "Go to Help Center"
     }
   }
 }

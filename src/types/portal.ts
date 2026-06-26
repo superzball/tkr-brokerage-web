@@ -202,6 +202,8 @@ export interface NavSection {
 
 // ============== admin entities (Phase 14) ==============
 export type ArticleStatus = 'draft' | 'scheduled' | 'published';
+/** Decorative cover tone (no real images in the mock CMS — keyed gradient). */
+export type ArticleCover = 'brand' | 'mint' | 'gold' | 'peach' | 'sky';
 export interface Article {
   id: string;
   title: string;
@@ -212,6 +214,11 @@ export interface Article {
   locales: Locale[];           // which languages are translated
   publishedAt?: string;
   seo: { metaTitle: string; metaDescription: string; ogImage?: string };
+  // ---- public reading view (optional; published entries carry these) ----
+  excerpt?: string;            // one-line lead for cards + meta fallback
+  cover?: ArticleCover;        // keyed gradient cover
+  readMinutes?: number;        // estimated read time
+  body?: string[];             // paragraphs (mock CMS authoring is Thai)
 }
 
 export type OrderStatus = 'draft' | 'awaiting_payment' | 'issued' | 'cancelled';
