@@ -173,9 +173,9 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
   {
     key: "company",
     links: [
-      { key: "applyAgent", href: ROUTES.agency },
+      { key: "applyAgent", href: "/about/agent" },
       { key: "agencyCenter", href: ROUTES.agency },
-      { key: "about", href: "#" },
+      { key: "about", href: "/about" },
       { key: "contact", href: "/contact" },
     ],
   },
