@@ -9,18 +9,19 @@ export function AgentCTA() {
 
   return (
     <section className="max-w-7xl mx-auto px-4 sm:px-6 py-20">
-      <div className="card card-lg overflow-hidden relative reveal">
+      <div className="card card-lg overflow-hidden relative reveal shadow-pop">
         <div className="grid lg:grid-cols-2">
           <div className="p-9 sm:p-12">
             <Chip className="bg-gold-100 text-gold-600 mb-4">
               <Icon name="sparkle" /> {t("badge")}
             </Chip>
             <h2
-              className="font-display font-700 text-3xl sm:text-4xl text-ink-900 tracking-tight"
+              className="font-display font-700 text-3xl sm:text-4xl lg:text-[2.75rem] text-ink-900 tracking-tight leading-[1.05]"
               style={{ textWrap: "balance" }}
             >
               {t("title")}
             </h2>
+            <span className="kw-swash mt-4" aria-hidden="true" />
             <p className="mt-4 text-ink-600 leading-relaxed">{t("desc")}</p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Button href={ROUTES.agency} variant="primary" size="lg">

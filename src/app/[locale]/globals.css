@@ -108,6 +108,12 @@
   --shadow-card-lg: 0 2px 4px rgba(11, 34, 64, 0.05),
     0 24px 48px -20px rgba(11, 34, 64, 0.28);
   --shadow-glow: 0 8px 30px -8px rgba(31, 102, 238, 0.45);
+  /* elevated colored shadows for the redesigned home (warm + brand tints) */
+  --shadow-pop: 0 4px 14px -4px rgba(11, 34, 64, 0.1),
+    0 30px 60px -22px rgba(31, 102, 238, 0.3);
+  --shadow-gold: 0 14px 40px -16px rgba(232, 156, 18, 0.5);
+  --shadow-mint: 0 14px 40px -16px rgba(10, 138, 94, 0.42);
+  --shadow-peach: 0 14px 40px -16px rgba(210, 87, 12, 0.42);
 
   /* ---- Radii ---- */
   --radius-xl: 0.875rem;
@@ -117,6 +123,9 @@
   /* ---- Animations ---- */
   --animate-fade-up: fade-up 0.6s cubic-bezier(0.22, 1, 0.36, 1) both;
   --animate-float-slow: float-slow 6s ease-in-out infinite;
+  --animate-float-slower: float-slow 9s ease-in-out infinite;
+  --animate-pop-in: pop-in 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-marquee: marquee 30s linear infinite;
 
   @keyframes fade-up {
     0% {
@@ -145,6 +154,21 @@
   @keyframes spin {
     100% {
       transform: rotate(360deg);
+    }
+  }
+  @keyframes pop-in {
+    0% {
+      opacity: 0;
+      transform: scale(0.86) translateY(8px);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1) translateY(0);
+    }
+  }
+  @keyframes marquee {
+    100% {
+      transform: translateX(-50%);
     }
   }
 }
@@ -908,5 +932,104 @@
     color: #fff;
     background: linear-gradient(135deg, #f2b736, #e89c12);
     box-shadow: 0 0 0 5px rgba(242, 183, 54, 0.2);
+  }
+
+  /* ============================================================
+     HOME ELEVATION — warm, distinctive friendly-brand treatment.
+     Additive utilities used by the redesigned home sections only.
+     ============================================================ */
+
+  /* Gold "highlighter" sweep behind a hero keyword — the warmth signature.
+     Paints a marker stripe across the lower half of the word; clones across
+     line wraps. Text stays ink for contrast. */
+  .kw-gold {
+    background-image: linear-gradient(
+      120deg,
+      rgba(246, 207, 107, 0) 0 4%,
+      rgba(246, 207, 107, 0.95) 4% 96%,
+      rgba(246, 207, 107, 0) 96%
+    );
+    background-repeat: no-repeat;
+    background-size: 100% 0.42em;
+    background-position: 0 82%;
+    padding: 0 0.05em;
+    border-radius: 0.18em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  /* Short gold swash used under section headings (decorative, no text). */
+  .kw-swash {
+    display: block;
+    height: 0.34rem;
+    width: 3.25rem;
+    border-radius: 999px;
+    background: linear-gradient(90deg, #f2b736, #e89c12);
+  }
+
+  /* Layered tinted section backdrops — alternate white → tint → white so the
+     page reads warm and rhythmic instead of flat blue. */
+  .sec-mint {
+    background:
+      radial-gradient(
+        720px 360px at 12% 0%,
+        rgba(20, 173, 118, 0.12),
+        transparent 60%
+      ),
+      radial-gradient(
+        680px 360px at 100% 100%,
+        rgba(31, 102, 238, 0.08),
+        transparent 60%
+      ),
+      linear-gradient(180deg, #ffffff 0%, #f0fbf6 55%, #ffffff 100%);
+  }
+  .sec-peach {
+    background:
+      radial-gradient(
+        720px 360px at 88% 0%,
+        rgba(251, 138, 60, 0.14),
+        transparent 60%
+      ),
+      radial-gradient(
+        620px 340px at 0% 100%,
+        rgba(246, 159, 18, 0.12),
+        transparent 60%
+      ),
+      linear-gradient(180deg, #ffffff 0%, #fff5ee 55%, #ffffff 100%);
+  }
+  .sec-gold {
+    background:
+      radial-gradient(
+        680px 340px at 50% -10%,
+        rgba(246, 159, 18, 0.16),
+        transparent 60%
+      ),
+      linear-gradient(180deg, #fffaf0 0%, #ffffff 100%);
+  }
+
+  /* Edge-fade mask for the partner marquee. */
+  .marquee-mask {
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent,
+      #000 8%,
+      #000 92%,
+      transparent
+    );
+  }
+  .marquee-track {
+    display: inline-flex;
+    width: max-content;
+    animation: var(--animate-marquee);
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
   }
 }

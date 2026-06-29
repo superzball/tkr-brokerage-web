@@ -39,19 +39,26 @@ export function Hero() {
         style={{ background: "radial-gradient(circle,rgba(255,138,60,.14),transparent 70%)" }}
       />
 
-      {/* floating decorative chips */}
+      {/* floating decorative chips — labelled accent pills for a livelier hero */}
       <div
-        className="hidden md:flex absolute top-28 left-[46%] z-10 chip bg-white text-gold-600 shadow-card border border-gold-100 animate-float-slow"
+        className="hidden md:flex absolute top-24 left-[44%] z-10 chip bg-white text-gold-600 shadow-gold border border-gold-100 gap-1.5 animate-float-slow"
         aria-hidden="true"
       >
-        <Icon name="sparkle" size={15} />
+        <Icon name="sparkle" size={15} /> 0%
       </div>
       <div
-        className="hidden lg:flex absolute bottom-40 left-[8%] z-10 chip bg-white text-mint-600 shadow-card border border-mint-100 animate-float-slow"
+        className="hidden lg:flex absolute bottom-44 left-[7%] z-10 chip bg-white text-mint-600 shadow-mint border border-mint-100 gap-1.5 animate-float-slower"
         style={{ animationDelay: ".8s" }}
         aria-hidden="true"
       >
-        <Icon name="shieldCheck" size={15} />
+        <Icon name="shieldCheck" size={15} /> OIC
+      </div>
+      <div
+        className="hidden lg:flex absolute top-[58%] right-[6%] z-10 chip bg-white text-peach-600 shadow-peach border border-peach-100 gap-1.5 animate-float-slow"
+        style={{ animationDelay: "1.4s" }}
+        aria-hidden="true"
+      >
+        <Icon name="heart" size={15} /> 4.9★
       </div>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-20 lg:pt-24 lg:pb-28 grid lg:grid-cols-12 gap-12 items-center">
@@ -155,7 +162,7 @@ export function Hero() {
             /* Digital policy card stack — the proven hero visual, shown while the
                placeholder mascot is hidden (FEATURES.mascot = false). */
             <div className="relative mx-auto max-w-md">
-              <div className="card card-hover card-lg p-6 relative z-10 -rotate-1">
+              <div className="card card-hover card-lg p-6 relative z-10 -rotate-1 shadow-pop ring-1 ring-gold-100">
                 <div className="flex items-center justify-between">
                   <div className="flex items-center gap-3">
                     <span className="w-11 h-11 rounded-xl bg-brand-500 text-white inline-flex items-center justify-center">

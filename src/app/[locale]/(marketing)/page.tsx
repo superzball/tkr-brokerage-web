@@ -31,23 +31,25 @@ export default async function HomePage({ params }: Props) {
       <Hero />
       {/* white */}
       <ProductGrid />
-      {/* soft MINT band */}
-      <div className="bg-gradient-to-b from-mint-50/80 to-white">
+      {/* MINT band — layered tint, not flat */}
+      <div className="sec-mint">
         <WhyTKR />
       </div>
-      {/* dark band — animated stats */}
+      {/* dark band — featured stat + partner marquee */}
       <TrustStats />
-      {/* white */}
-      <Reviews reviews={getReviews()} limit={3} />
-      {/* soft GOLD/PEACH band */}
-      <div className="bg-gradient-to-b from-gold-50/90 to-white">
+      {/* PEACH band — social proof */}
+      <div className="sec-peach">
+        <Reviews reviews={getReviews()} limit={3} />
+      </div>
+      {/* GOLD band — FAQ */}
+      <div className="sec-gold">
         <Faq />
       </div>
       {/* dark band — OIC license + partners (no fabricated awards) */}
       <TrustCredentials />
-      {/* standout promo strip + agent CTA on white */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 pt-16 pb-4">
-        <QuickRenew />
+      {/* offset gold highlight band — straddles the dark section above */}
+      <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 -mt-12 lg:-mt-16 pb-4">
+        <QuickRenew className="shadow-pop" />
       </section>
       <AgentCTA />
     </main>
