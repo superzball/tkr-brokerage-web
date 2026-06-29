@@ -28,7 +28,7 @@ export function WhyTKR() {
         <div className="lg:col-span-7 reveal">
           <Chip className="bg-brand-50 text-brand-700 mb-4">{t("badge")}</Chip>
           <h2
-            className="font-display font-700 text-4xl sm:text-5xl lg:text-[3.4rem] text-ink-900 tracking-tight leading-[1.04]"
+            className="font-display font-700 text-4xl sm:text-5xl lg:text-5xl text-ink-900 tracking-tight leading-[1.04]"
             style={{ textWrap: "balance" }}
           >
             {t("title")}

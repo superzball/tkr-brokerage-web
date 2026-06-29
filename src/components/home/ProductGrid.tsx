@@ -34,7 +34,7 @@ export function ProductGrid() {
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 reveal">
         <div className="max-w-xl">
           <Chip className="bg-brand-50 text-brand-700 mb-4">{t("badge")}</Chip>
-          <h2 className="font-display font-700 text-4xl sm:text-5xl lg:text-[3.4rem] text-ink-900 tracking-tight leading-[1.05]">
+          <h2 className="font-display font-700 text-4xl sm:text-5xl lg:text-5xl text-ink-900 tracking-tight leading-[1.05]">
             {t("title")}
           </h2>
           <span className="kw-swash mt-5" aria-hidden="true" />
