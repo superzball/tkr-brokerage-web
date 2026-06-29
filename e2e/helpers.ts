@@ -75,6 +75,6 @@ export async function fillOtp(
   const boxes = scope.locator('input[inputmode="numeric"]');
   await expect(boxes).toHaveCount(6);
   for (let i = 0; i < 6; i++) {
-    await boxes.nth(i).fill(code[i]);
+    await boxes.nth(i).fill(code[i] ?? "");
   }
 }
