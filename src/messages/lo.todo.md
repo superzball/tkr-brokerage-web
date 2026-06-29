@@ -1,46 +1,54 @@
-# Lao (lo) — pending translations
+# Lao (lo) — translation status
 
-`lo.json` currently holds **Thai placeholder text** for every namespace EXCEPT
-the `wallet.app` strings, which now hold the **real Lao** seeded from the
-original `wallet.jsx` `T.lo` dict. Note `wallet.hero.*` is still a Thai
-placeholder (the hero was Thai-only in the source), and three `wallet.app`
-strings (`emergencySub`, `offlineInfo`, `natValue`) are intentionally Thai
-because the original left them untranslated even in the Lao view.
+All Thai placeholder strings have been replaced with **Lao** translations
+(Phase 15 bulk pass). Source of truth was `th.json`. The file is valid JSON and
+its key set / structure is **identical to `th.json`** (3412 leaf keys, verified).
 
-Never invent Lao — replace placeholders with reviewed translations only.
+> ⚠️ **These are AI/machine translations.** Every namespace below is translated
+> but **unreviewed**. See "Needs native-speaker review" — insurance, claims,
+> legal, consent (PDPA), and payment/commission copy MUST be reviewed by a native
+> Lao speaker (ideally with insurance domain knowledge) before production.
 
-## Status by namespace
-Re-audited Phase 13 (final), after Phases 14–16 grew the catalog: of **2211 leaf
-keys**, **17 are real Lao** (all under `wallet.app`); the remaining **2154 are
-Thai placeholders**. Largest backlogs: `admin` ~716, `business` ~237, `agent`
-~229, `auth` ~105, `worker` ~105, `home` ~99, `nav` ~90, `team` ~73, `agency`
-~72, `customer` ~59, `individual` ~47, `app` ~45, `line` ~45, `learn` ~42,
-`tracking` ~41, `public` ~39, `auto` ~38, `footer` ~21, `checkout` ~18,
-`metadata` ~16. Full namespace list:
-- [ ] common
-- [ ] nav — incl. portal sidebar keys (dashboard…support) added as Thai placeholders in Phase 7; + Phase 14 admin nav keys (overview…config) added as Thai placeholders
-- [ ] app — portal shell + Phase 13 additions (notFound, close, dismiss, toggleRow, selectPage)
-- [ ] auth — Phase 8 auth/onboarding copy added as Thai placeholders
-- [ ] footer
-- [ ] home
-- [ ] worker
-- [ ] auto
-- [ ] customer
-- [ ] agency
-- [ ] tracking
-- [x] wallet — `wallet.app` = real Lao (seeded from `T.lo`); `wallet.hero` still placeholder
-- [ ] line
-- [ ] metadata
-- [ ] business — Phase 9 portal copy (shared: common/statuses/table/claims/billing/documents/wallet/settings)
-- [ ] individual — Phase 10 portal copy
-- [ ] agent — Phase 11 portal copy (clients/leads/commissions/sales/quote)
-- [ ] learn — Phase 12 acquisition landings
-- [ ] checkout — Phase 12 quote→signup handoff
-- [ ] team — Phase 11.5 agent-team / override copy
-- [ ] crm — Phase 15 CRM ops core copy (nav + admin.ops/finance tickets/credit/debtors), Thai placeholders
-- [ ] phase16 — Issuance/amendments/public token copy (admin.issuePolicy/issued/amendments, public.ticketCheck/staffVerify, business.issued), Thai placeholders
-- [ ] phase17 — Conversion & Trust copy (conversion, promotions, reviewsPage, seo, admin.coupons/reviews/partners, nav.coupons/reviews/partners/promotions/allProducts/quickRenew), Thai placeholders
-- [ ] phase20 — Customer Loyalty & Rewards copy (`loyalty` namespace incl. loyalty.admin.*, + nav.rewards/loyalty/loyaltyRules/loyaltyRewards/loyaltyRedeem), Thai placeholders
-- [ ] about — About marketing pages copy (`about` namespace: main/why/partners/agent, + metadata.about/aboutWhy/aboutPartners/aboutAgent), Thai placeholders
-- [ ] help — Help Center / Articles / Contact public pages copy (`help` incl. `help.faqs[]`, `articles`, `contact` namespaces, + metadata.help/articles/contact), Thai placeholders
-- [ ] phase21-legal — Legal & PDPA copy (`legal` incl. privacy/terms/cookies/consent/dataRequest sections[], `consent` capture+cookie banner, `admin.legal`, `nav.legal` (admin sidebar item), + metadata.legal* + footer.legal.cookies), Thai placeholders
+## Intentionally still Thai (matches source design — do NOT translate blindly)
+- `wallet.app.emergencySub`, `wallet.app.offlineInfo`, `wallet.app.natValue`
+  ("พม่า / Myanmar") — left Thai in the original source even in the Lao view.
+- `worker.bulk.fileName`, `worker.review.company` — Thai sample/demo data (a Thai
+  employer's file/company name).
+- Brand/Latin terms kept as-is: TKR, LINE, OTP, PDPA, QR, KYC, insurer names,
+  tier names (Silver/Gold/Platinum/Diamond), `฿` amounts, sample plate `1กข 1234`,
+  sample person names, order IDs. BE year values (2567–2569) kept unchanged.
+
+## Status by namespace — all translated (AI), pending native review
+- [x] common, topnav, homeFaq, nav, app, auth, footer, home, worker, auto,
+      customer, agency, tracking, line, metadata
+- [x] wallet — `wallet.app` real Lao (seeded); `wallet.hero` now translated
+- [x] business, individual, agent, learn, checkout, team, guest
+- [x] public, conversion, tax, promotions, reviewsPage, seo, articles, help, contact
+- [x] loyalty, about, consent, legal
+- [x] admin (all sub-namespaces: dashboard…legal, issuance/amendments/coupons/reviews/partners)
+
+## Needs native-speaker review (flagged by translators)
+**MANDATORY (legal/regulatory):**
+- `legal` (privacy/terms/cookies/dataRequest) + `consent` (PDPA capture, cookie
+  banner) + `admin.legal` — highest risk. Confirm PDPA terms, legal-basis wording,
+  DSAR/data-subject terms, limitation-of-liability. TODO markers preserved in
+  `legal.reviewTodo`, `legal.privacy.sections`, `legal.terms.sections`.
+
+**High (insurance / claims / payment / commission accuracy):**
+- worker, auto, customer, business, individual, checkout, agent, team, learn,
+  tracking, agency, loyalty, public, tax, conversion, about, help, contact, line, auth
+- admin: orders/payments/credit/debtors/policyTickets/claims/payouts/commissions/
+  approvals/issuePolicy/amendments
+
+**Cross-cutting consistency (needs a glossary pass):**
+- "กรมธรรม์" (policy) rendered inconsistently across namespaces (ກົມທະນ໌ / ກົມທັນ /
+  ໃບກົມທຳ / ປະກັນໄພ variants) — pick one standard term. Lao insurance vocabulary is
+  less standardized, so this matters most for Lao.
+- "เคลม" (claim) — mixes ເຄລม (loanword) / ຄ່າສິນໄໝ / descriptive forms.
+- "override" (commission override) kept as the English term in several places.
+- "คปภ." standardized to "OIC" during QA.
+- Transliterated Thai sample person names are phonetic approximations.
+- BE years (2567–2569) kept literally; confirm presentation convention.
+- Lao translations had stray Thai-script leakage during the AI pass; this was
+  detected and cleaned (verified zero residual Thai script except `฿` + sample
+  plate), but the cleaned wording especially merits a native pass.
