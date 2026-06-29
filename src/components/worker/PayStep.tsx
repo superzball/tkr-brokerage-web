@@ -19,7 +19,9 @@ export function PayStep({
   onGuestVerified,
 }: {
   total: number;
-  /** Logged-in users skip the phone-verify step. */
+  /** A REAL full account skips the phone-verify step. Callers must pass `false`
+   *  for a silent guest session (status "guest") so it still verifies/resumes
+   *  its phone before payment — never base this on "any session exists". */
   authed: boolean;
   onPaid: () => void;
   /** Reports the verified guest phone (undefined when an existing account was
@@ -48,7 +50,9 @@ export function PayStep({
     );
   }
 
-  // Step 2 — guests verify their phone (captures contact, no forced signup), then pay.
+  // Step 2 — guests verify their phone (captures contact, no forced signup),
+  // then pay. `authed` is true only for a full account; a guest session is
+  // passed as not-authed so it lands here and verifies/resumes its phone.
   const showPayment = authed || verifiedPhone !== null;
 
   return (

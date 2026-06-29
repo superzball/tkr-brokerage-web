@@ -177,7 +177,7 @@ export function GuestVerify({
             {to("subtitle", { phone: `+66 ${cleanPhone}` })}
           </p>
 
-          <div className="mt-4 flex justify-between gap-2" onPaste={onPaste}>
+          <div className="mt-4 flex justify-between gap-2 max-w-md" onPaste={onPaste}>
             {digits.map((d, i) => (
               <input
                 key={i}

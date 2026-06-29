@@ -20,6 +20,7 @@ import type { PendingQuote } from "@/lib/quote/pending";
 import { CouponInstallment } from "@/components/conversion/CouponInstallment";
 import { ChannelChoice } from "@/components/conversion/ChannelChoice";
 import { PaymentMethods } from "@/components/conversion/PaymentMethods";
+import { GuestVerify } from "@/components/worker/GuestVerify";
 import { recordEarn } from "@/lib/loyalty/local";
 import type { InsuranceType } from "@/types/portal";
 
@@ -33,6 +34,12 @@ export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
   const [pending, start] = useTransition();
   // Channel choice (ซื้อเอง / ตัวแทน) gates the self-serve payment panel — Phase 17/18.
   const [selfServe, setSelfServe] = useState(false);
+  // Guest checkout: a silent guest session must verify/resume its phone before
+  // payment too (never skip identity just because a session cookie exists). A
+  // full account is already identified and goes straight to payment.
+  const isFullAccount = user.status !== "guest";
+  const [verifiedPhone, setVerifiedPhone] = useState<string | null>(null);
+  const showPayment = isFullAccount || verifiedPhone !== null;
 
   // The full worker rows ride in localStorage — rehydrate after the sign-in hop.
   const [detail, setDetail] = useState<PendingDetail | null>(null);
@@ -97,6 +104,13 @@ export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
         <div className="mt-5 pt-5 border-t border-ink-100">
           <ChannelChoice onSelf={() => setSelfServe(true)} />
         </div>
+      ) : !showPayment ? (
+        // Guest session: verify (or resume) the phone before payment. Re-verifying
+        // an existing phone resumes that guest via findOrCreateGuestByPhone — no
+        // duplicate account, no forced re-registration.
+        <div className="mt-5 pt-5 border-t border-ink-100">
+          <GuestVerify onVerified={(phone) => setVerifiedPhone(phone)} />
+        </div>
       ) : (
         <>
           {/* coupon + installment selector */}
@@ -132,7 +146,7 @@ export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
         </div>
       )}
 
-      {selfServe && (
+      {selfServe && showPayment && (
         <Button
           variant="primary"
           size="lg"
