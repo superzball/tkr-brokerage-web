@@ -42,7 +42,7 @@ export function TrustCredentials() {
             <p className="mt-1 text-sm text-ink-300">{trustStats.oicLicense}</p>
           </div>
         </div>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6 text-center">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
           <div>
             <p className="font-display font-700 text-4xl text-white tabnum">
               {trustStats.insurers}
