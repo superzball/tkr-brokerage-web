@@ -45,8 +45,13 @@ export default async function HomePage({ params }: Props) {
       <div className="sec-gold">
         <Faq />
       </div>
-      {/* dark band — OIC license + partners (no fabricated awards) */}
-      <TrustCredentials />
+      {/* dark band — OIC license + partner wall (no fabricated awards).
+          `home-credentials` hides the two stat cells that duplicate the headline
+          numbers above (customers 12,800 + insurers count) — home only; other
+          routes render the full set. */}
+      <div className="home-credentials">
+        <TrustCredentials />
+      </div>
       {/* offset gold highlight band — straddles the dark section above */}
       <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 -mt-12 lg:-mt-16 pb-4">
         <QuickRenew className="shadow-pop" />

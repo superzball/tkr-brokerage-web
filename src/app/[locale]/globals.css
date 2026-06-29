@@ -472,6 +472,27 @@
   letter-spacing: -0.01em;
 }
 
+/* ============================================================
+   HOME de-dup — TrustStats (above) already shows the headline numbers
+   (customers 12,800 / policies / founded), so on the HOME composition only we
+   hide the two TrustCredentials stat cells that repeat them — the insurers
+   count (2nd) and customers-served (3rd) — leaving the OIC license + claims
+   rate proof points + the partner logo wall. Scoped to `.home-credentials`, so
+   /about/why and the product SubLanding still render the full TrustCredentials.
+   Unlayered so it wins over the `lg:grid-cols-4` utility.
+   ============================================================ */
+.home-credentials .grid.text-center > div:nth-child(2),
+.home-credentials .grid.text-center > div:nth-child(3) {
+  display: none;
+}
+@media (min-width: 640px) {
+  .home-credentials .grid.text-center {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 44rem;
+    margin-inline: auto;
+  }
+}
+
 @layer components {
   /* ---- Layered blue backdrop helpers ---- */
   .bg-grid {
