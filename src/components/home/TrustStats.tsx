@@ -36,7 +36,7 @@ export function TrustStats() {
           {/* oversized featured gold figure */}
           <div className="lg:col-span-5">
             <p className="font-display font-700 text-7xl sm:text-8xl tabnum leading-none">
-              <span className="text-gold-gradient">
+              <span className="text-gradient">
                 <AnimatedCounter value={t(`${featured.key}.value`)} />+
               </span>
             </p>

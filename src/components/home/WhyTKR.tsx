@@ -4,16 +4,18 @@ import { Chip } from "@/components/ui/Chip";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ROUTES } from "@/config/nav";
 
+// Trust palette: clean white cards with a hairline + brand-blue icon tiles.
+// Gold appears once (the "compare/savings" tile) as a sparing precision accent.
 const FEATURES: Array<{
   key: "expertise" | "compare" | "allInOne" | "support";
   icon: IconName;
   tile: string;
   surface: string;
 }> = [
-  { key: "expertise", icon: "shieldCheck", tile: "bg-brand-500 text-white", surface: "bg-brand-50/70 border-brand-100" },
-  { key: "compare", icon: "coins", tile: "bg-gold-400 text-ink-900", surface: "bg-gold-50 border-gold-100" },
-  { key: "allInOne", icon: "refresh", tile: "bg-mint-500 text-white", surface: "bg-mint-50 border-mint-100" },
-  { key: "support", icon: "headset", tile: "bg-peach-400 text-white", surface: "bg-peach-50 border-peach-100" },
+  { key: "expertise", icon: "shieldCheck", tile: "bg-brand-500 text-white", surface: "bg-white border-ink-100" },
+  { key: "compare", icon: "coins", tile: "bg-brand-500 text-white", surface: "bg-white border-ink-100" },
+  { key: "allInOne", icon: "refresh", tile: "bg-brand-500 text-white", surface: "bg-white border-ink-100" },
+  { key: "support", icon: "headset", tile: "bg-brand-500 text-white", surface: "bg-white border-ink-100" },
 ];
 
 export function WhyTKR() {
@@ -24,7 +26,7 @@ export function WhyTKR() {
       <div className="grid lg:grid-cols-12 gap-12 items-center">
         {/* editorial copy — wider column */}
         <div className="lg:col-span-7 reveal">
-          <Chip className="bg-mint-100 text-mint-600 mb-4">{t("badge")}</Chip>
+          <Chip className="bg-brand-50 text-brand-700 mb-4">{t("badge")}</Chip>
           <h2
             className="font-display font-700 text-4xl sm:text-5xl lg:text-[3.4rem] text-ink-900 tracking-tight leading-[1.04]"
             style={{ textWrap: "balance" }}
@@ -38,7 +40,7 @@ export function WhyTKR() {
             {FEATURES.map((feature) => (
               <div
                 key={feature.key}
-                className={`rounded-2xl border ${feature.surface} p-5 transition-transform duration-200 hover:-translate-y-1`}
+                className={`rounded-2xl border ${feature.surface} shadow-card p-5 transition-transform duration-200 hover:-translate-y-1`}
               >
                 <span className={`w-11 h-11 rounded-xl ${feature.tile} inline-flex items-center justify-center shadow-card`}>
                   <Icon name={feature.icon} />
@@ -56,7 +58,7 @@ export function WhyTKR() {
 
         {/* offset "live" steps panel — overlaps + elevated */}
         <div className="lg:col-span-5 reveal lg:pl-4">
-          <div className="card card-lg p-0 overflow-hidden shadow-pop lg:rotate-1">
+          <div className="card card-lg p-0 overflow-hidden shadow-pop">
             <div className="relative bg-gradient-to-br from-brand-600 to-ink-900 px-7 py-6 text-white">
               <div className="absolute inset-0 bg-grid opacity-20" />
               <div className="relative flex items-center gap-2 text-white/80 text-sm font-500">
@@ -76,7 +78,7 @@ export function WhyTKR() {
                 </div>
                 <div className="ml-5 h-5 w-px bg-gradient-to-b from-brand-300 to-gold-300" />
                 <div className="flex items-center gap-4">
-                  <span className="w-10 h-10 rounded-full bg-gold-400 text-ink-900 font-700 inline-flex items-center justify-center text-sm shadow-card shrink-0">
+                  <span className="w-10 h-10 rounded-full bg-brand-500 text-white font-700 inline-flex items-center justify-center text-sm shadow-card shrink-0">
                     2
                   </span>
                   <div className="flex-1">

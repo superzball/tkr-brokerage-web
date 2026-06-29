@@ -27,7 +27,7 @@ export default async function ClaimsHelpPage({ params }: Props) {
     <main>
       <section className="bg-hero border-b border-ink-100/70">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
-          <Chip className="bg-white text-mint-600 shadow-card border border-mint-100 mb-4">
+          <Chip className="bg-white text-brand-700 shadow-card border border-brand-100 mb-4">
             <Icon name="clipboard" size={15} /> {t("claims.title")}
           </Chip>
           <h1 className="font-display font-700 text-3xl sm:text-4xl text-ink-900 tracking-tight">

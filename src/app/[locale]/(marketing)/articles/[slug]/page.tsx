@@ -108,7 +108,7 @@ export default async function ArticleDetailPage({ params }: Props) {
 
       {/* CTA */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
-        <div className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-r from-brand-600 to-brand-500 text-white p-8 text-center">
+        <div className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-brand-600 to-ink-900 text-white p-8 text-center">
           <div className="absolute inset-0 bg-grid opacity-15" />
           <div className="relative">
             <h2 className="font-display font-700 text-2xl">{t("ctaTitle")}</h2>

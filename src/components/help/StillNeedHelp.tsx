@@ -8,7 +8,7 @@ import { ROUTES } from "@/config/nav";
 export async function StillNeedHelp() {
   const t = await getTranslations("help");
   return (
-    <div className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-r from-brand-600 to-brand-500 text-white p-7 sm:p-9 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+    <div className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-brand-600 to-ink-900 text-white p-7 sm:p-9 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
       <div className="absolute inset-0 bg-grid opacity-15" />
       <div className="relative">
         <h3 className="font-display font-700 text-2xl">{t("stillNeedHelp.title")}</h3>

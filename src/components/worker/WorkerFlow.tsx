@@ -156,7 +156,7 @@ export function WorkerFlow({
                       on
                         ? "font-600 text-ink-900"
                         : done
-                          ? "font-500 text-mint-600"
+                          ? "font-500 text-brand-600"
                           : "font-500 text-ink-400",
                     )}
                   >
@@ -167,7 +167,7 @@ export function WorkerFlow({
                   <li
                     className={cn(
                       "h-0.5 w-6 sm:w-14 rounded-full shrink-0 transition-colors",
-                      i < state.step ? "bg-mint-400" : "bg-ink-100",
+                      i < state.step ? "bg-brand-500" : "bg-ink-100",
                     )}
                   />
                 )}

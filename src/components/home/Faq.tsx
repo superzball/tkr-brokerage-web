@@ -20,7 +20,7 @@ export function Faq() {
       <div className="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
         {/* left: sticky heading panel */}
         <div className="lg:col-span-5 lg:sticky lg:top-28 reveal">
-          <Chip className="bg-gold-100 text-gold-600 mb-4">
+          <Chip className="bg-brand-50 text-brand-700 mb-4">
             <Icon name="help" size={15} /> {t("title")}
           </Chip>
           <h2 className="font-display font-700 text-4xl sm:text-5xl text-ink-900 tracking-tight leading-[1.05]">
@@ -29,7 +29,7 @@ export function Faq() {
           <span className="kw-swash mt-5" aria-hidden="true" />
           <p className="mt-5 text-lg text-ink-500 max-w-sm">{t("sub")}</p>
           <div
-            className="mt-8 hidden lg:flex w-20 h-20 rounded-3xl bg-gradient-to-br from-gold-100 to-peach-100 text-gold-600 items-center justify-center shadow-gold"
+            className="mt-8 hidden lg:flex w-20 h-20 rounded-3xl bg-brand-50 text-brand-600 items-center justify-center shadow-card"
             aria-hidden="true"
           >
             <Icon name="help" size={34} />
@@ -58,7 +58,7 @@ export function Faq() {
                   <span
                     className={cn(
                       "shrink-0 w-7 h-7 rounded-full inline-flex items-center justify-center transition-all duration-300",
-                      isOpen ? "bg-gold-400 text-ink-900 rotate-45" : "bg-sky-100 text-brand-600",
+                      isOpen ? "bg-brand-600 text-white rotate-45" : "bg-sky-100 text-brand-600",
                     )}
                   >
                     <Icon name="plus" size={16} strokeWidth={2.4} />

@@ -1,17 +1,10 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { ProgressiveProfile } from "@/components/guest/ProgressiveProfile";
 import { ROUTES } from "@/config/nav";
-
-// Lazy: confetti JS ships only when the success step renders.
-const Confetti = dynamic(
-  () => import("@/components/ui/Confetti").then((m) => m.Confetti),
-  { ssr: false },
-);
 
 export function DoneStep({
   count,
@@ -25,7 +18,6 @@ export function DoneStep({
 
   return (
     <div className="animate-fade-up text-center py-6">
-      <Confetti />
       <span className="w-20 h-20 rounded-full bg-mint-50 text-mint-500 inline-flex items-center justify-center mx-auto">
         <Icon name="checkCircle" size={44} />
       </span>

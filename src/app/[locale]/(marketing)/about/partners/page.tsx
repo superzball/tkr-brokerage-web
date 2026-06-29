@@ -85,7 +85,7 @@ export default async function PartnersPage({ params }: Props) {
       </section>
 
       {/* what the partnership means for customers */}
-      <section className="bg-gradient-to-b from-mint-50/80 to-white">
+      <section className="bg-gradient-to-b from-sky-50/60 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 lg:py-20">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="font-display font-700 text-2xl sm:text-3xl text-ink-900 tracking-tight">{t("meaning.title")}</h2>
@@ -119,7 +119,7 @@ export default async function PartnersPage({ params }: Props) {
 
       {/* "interested in partnering" CTA → contact */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
-        <div className="card card-lg bg-gradient-to-r from-brand-600 to-brand-500 text-white p-9 sm:p-12 text-center">
+        <div className="card card-lg bg-gradient-to-br from-brand-600 to-ink-900 text-white p-9 sm:p-12 text-center">
           <h2 className="font-display font-700 text-2xl sm:text-3xl tracking-tight" style={{ textWrap: "balance" }}>
             {t("cta.title")}
           </h2>

@@ -80,7 +80,7 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* by the numbers (trustStats — placeholder values, clearly noted) */}
-      <section className="bg-ink-950 text-white relative overflow-hidden">
+      <section className="bg-gradient-to-br from-brand-900 via-ink-900 to-ink-950 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-grid opacity-10" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16">
           <div className="text-center max-w-2xl mx-auto mb-10">
@@ -140,7 +140,7 @@ export default async function AboutPage({ params }: Props) {
       </section>
 
       {/* products at a glance + partner teaser */}
-      <section className="bg-gradient-to-b from-mint-50/80 to-white">
+      <section className="bg-gradient-to-b from-sky-50/60 to-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-14 lg:py-20">
           <div className="text-center max-w-2xl mx-auto mb-10">
             <h2 className="font-display font-700 text-2xl sm:text-3xl text-ink-900 tracking-tight">{t("products.title")}</h2>
@@ -175,7 +175,7 @@ export default async function AboutPage({ params }: Props) {
 
       {/* CTAs */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 py-16">
-        <div className="card card-lg bg-gradient-to-r from-brand-600 to-brand-500 text-white p-9 sm:p-12 text-center">
+        <div className="card card-lg bg-gradient-to-br from-brand-600 to-ink-900 text-white p-9 sm:p-12 text-center">
           <h2 className="font-display font-700 text-2xl sm:text-3xl tracking-tight" style={{ textWrap: "balance" }}>
             {t("cta.title")}
           </h2>

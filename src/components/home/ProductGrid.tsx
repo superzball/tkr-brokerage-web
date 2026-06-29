@@ -14,11 +14,14 @@ type SecondaryProduct = {
   bar: string;
 };
 
+// Trust palette: one calm brand-blue treatment across all four — the bento
+// structure (tall dark feature + white cards) provides the interest, not colour
+// noise. Icons differ by shape, not by hue.
 const SECONDARY: SecondaryProduct[] = [
   { key: "auto", icon: "car", href: "/insurance/auto", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
-  { key: "travel", icon: "plane", href: "/insurance/travel", tile: "bg-mint-100 text-mint-600", cta: "text-mint-600", bar: "from-mint-400 to-mint-600" },
-  { key: "health", icon: "heart", href: "/insurance/health", tile: "bg-peach-100 text-peach-600", cta: "text-peach-600", bar: "from-peach-400 to-peach-600" },
-  { key: "fire", icon: "flame", href: "/insurance/fire", tile: "bg-gold-100 text-gold-600", cta: "text-gold-600", bar: "from-gold-400 to-gold-500" },
+  { key: "travel", icon: "plane", href: "/insurance/travel", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
+  { key: "health", icon: "heart", href: "/insurance/health", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
+  { key: "fire", icon: "flame", href: "/insurance/fire", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
 ];
 
 export function ProductGrid() {
@@ -30,7 +33,7 @@ export function ProductGrid() {
       {/* asymmetric header: left-aligned heading, right-aligned aside */}
       <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-6 reveal">
         <div className="max-w-xl">
-          <Chip className="bg-gold-100 text-gold-600 mb-4">{t("badge")}</Chip>
+          <Chip className="bg-brand-50 text-brand-700 mb-4">{t("badge")}</Chip>
           <h2 className="font-display font-700 text-4xl sm:text-5xl lg:text-[3.4rem] text-ink-900 tracking-tight leading-[1.05]">
             {t("title")}
           </h2>
@@ -55,7 +58,7 @@ export function ProductGrid() {
               className="absolute -top-20 -left-10 w-56 h-56 rounded-full blur-2xl"
               style={{
                 background:
-                  "radial-gradient(circle,rgba(20,173,118,.22),transparent 70%)",
+                  "radial-gradient(circle,rgba(31,102,238,.28),transparent 70%)",
               }}
             />
             <div className="relative">
@@ -98,7 +101,7 @@ export function ProductGrid() {
                 className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${product.bar}`}
                 aria-hidden="true"
               />
-              <span className={`w-12 h-12 rounded-2xl ${product.tile} inline-flex items-center justify-center transition-transform duration-200 group-hover:scale-110 group-hover:-rotate-6`}>
+              <span className={`w-12 h-12 rounded-2xl ${product.tile} inline-flex items-center justify-center transition-transform duration-200 group-hover:scale-105`}>
                 <Icon name={product.icon} />
               </span>
               <h3 className="mt-4 font-600 text-lg text-ink-900">

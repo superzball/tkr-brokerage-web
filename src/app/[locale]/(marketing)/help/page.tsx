@@ -15,10 +15,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: t("title"), description: t("description") };
 }
 
+// Trust palette: unified brand-blue topic tiles (no rainbow).
 const CARDS: { href: string; icon: IconName; titleKey: string; descKey: string; tone: string }[] = [
   { href: "/help/how-to-buy", icon: "cart", titleKey: "cards.howToBuyTitle", descKey: "cards.howToBuyDesc", tone: "bg-sky-100 text-brand-600" },
-  { href: "/help/claims", icon: "clipboard", titleKey: "cards.claimsTitle", descKey: "cards.claimsDesc", tone: "bg-mint-50 text-mint-600" },
-  { href: "/help/faq", icon: "help", titleKey: "cards.faqTitle", descKey: "cards.faqDesc", tone: "bg-gold-50 text-gold-600" },
+  { href: "/help/claims", icon: "clipboard", titleKey: "cards.claimsTitle", descKey: "cards.claimsDesc", tone: "bg-sky-100 text-brand-600" },
+  { href: "/help/faq", icon: "help", titleKey: "cards.faqTitle", descKey: "cards.faqDesc", tone: "bg-sky-100 text-brand-600" },
 ];
 
 export default async function HelpPage({ params }: Props) {

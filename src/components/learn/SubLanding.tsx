@@ -89,7 +89,7 @@ export function SubLanding({ slug }: { slug: string }) {
             </div>
 
             <div className="lg:col-span-5">
-              <div className="card card-lg p-6 -rotate-1 hover:rotate-0 transition-transform duration-500">
+              <div className="card card-lg p-6 shadow-pop">
                 <div className="flex items-center gap-3">
                   <span className="w-12 h-12 rounded-xl bg-brand-500 text-white inline-flex items-center justify-center">
                     <Icon name={cfg.icon} />

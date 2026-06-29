@@ -14,10 +14,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: t("title"), description: t("description") };
 }
 
+// Trust palette: unified brand-blue contact-method tiles (no rainbow).
 const METHODS: { icon: IconName; key: string; valueKey: string; noteKey?: string; href?: string; tone: string }[] = [
   { icon: "phone", key: "phone", valueKey: "phoneValue", noteKey: "phoneNote", href: "tel:021234567", tone: "bg-sky-100 text-brand-600" },
-  { icon: "chat", key: "line", valueKey: "lineValue", noteKey: "lineNote", href: "https://line.me", tone: "bg-mint-50 text-mint-600" },
-  { icon: "phone", key: "email", valueKey: "emailValue", noteKey: "emailNote", href: "mailto:hello@tkr.co.th", tone: "bg-gold-50 text-gold-600" },
+  { icon: "chat", key: "line", valueKey: "lineValue", noteKey: "lineNote", href: "https://line.me", tone: "bg-sky-100 text-brand-600" },
+  { icon: "phone", key: "email", valueKey: "emailValue", noteKey: "emailNote", href: "mailto:hello@tkr.co.th", tone: "bg-sky-100 text-brand-600" },
 ];
 
 export default async function ContactPage({ params }: Props) {

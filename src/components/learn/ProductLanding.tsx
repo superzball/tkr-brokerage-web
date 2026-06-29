@@ -97,11 +97,11 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
               </div>
               <div className="mt-7 flex flex-wrap items-center gap-x-6 gap-y-2 text-sm text-ink-500">
                 <span className="flex items-center gap-2">
-                  <span className="text-mint-600"><Icon name="shieldCheck" size={16} /></span>
+                  <span className="text-brand-600"><Icon name="shieldCheck" size={16} /></span>
                   {trust[0]?.title}
                 </span>
                 <span className="flex items-center gap-2">
-                  <span className="text-mint-600"><Icon name="lock" size={16} /></span>
+                  <span className="text-brand-600"><Icon name="lock" size={16} /></span>
                   {trust[1]?.title}
                 </span>
               </div>
@@ -109,7 +109,7 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
 
             {/* coverage teaser card */}
             <div className="lg:col-span-5">
-              <div className="card card-lg p-6 -rotate-1 hover:rotate-0 transition-transform duration-500">
+              <div className="card card-lg p-6 shadow-pop">
                 <div className="flex items-center gap-3">
                   <span className="w-12 h-12 rounded-xl bg-brand-500 text-white inline-flex items-center justify-center">
                     <Icon name={cfg.icon} />
@@ -310,7 +310,7 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
       <Reviews reviews={getReviews()} limit={3} />
 
       {/* ── Trust / credentials ── */}
-      <section className="bg-ink-950 text-white relative overflow-hidden">
+      <section className="bg-gradient-to-br from-brand-900 via-ink-900 to-ink-950 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-grid opacity-10" />
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-14">
           <h2 className="font-display font-700 text-2xl sm:text-3xl tracking-tight text-center mb-10">

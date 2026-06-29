@@ -31,18 +31,14 @@ export default async function HomePage({ params }: Props) {
       <Hero />
       {/* white */}
       <ProductGrid />
-      {/* MINT band — layered tint, not flat */}
-      <div className="sec-mint">
-        <WhyTKR />
-      </div>
-      {/* contained stats panel — featured gold figure + stat cards + marquee */}
+      {/* white — structure (asymmetric copy + live steps panel) carries it, no tint */}
+      <WhyTKR />
+      {/* contained soft-blue stats panel — featured gold figure + stat cards */}
       <TrustStats />
-      {/* PEACH band — social proof */}
-      <div className="sec-peach">
-        <Reviews reviews={getReviews()} limit={3} />
-      </div>
-      {/* GOLD band — FAQ */}
-      <div className="sec-gold">
+      {/* white — social proof */}
+      <Reviews reviews={getReviews()} limit={3} />
+      {/* one restrained soft-blue band breaks the white rhythm before the dark anchor */}
+      <div className="sec-soft">
         <Faq />
       </div>
       {/* dark band — OIC license + partner wall (no fabricated awards).

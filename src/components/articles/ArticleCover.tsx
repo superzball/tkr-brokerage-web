@@ -4,12 +4,14 @@ import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
 import type { ArticleCover as Tone } from "@/types/portal";
 
+// Trust palette: editorial variety stays within the brand→navy blue family,
+// with gold reserved as the single sparing warm accent. No mint/peach fills.
 const GRAD: Record<Tone, string> = {
-  brand: "from-brand-500 to-brand-700",
-  mint: "from-mint-400 to-mint-600",
+  brand: "from-brand-600 to-ink-900",
+  mint: "from-sky-400 to-brand-600",
   gold: "from-gold-300 to-gold-500",
-  peach: "from-peach-300 to-peach-500",
-  sky: "from-sky-300 to-brand-400",
+  peach: "from-brand-400 to-brand-700",
+  sky: "from-sky-300 to-brand-500",
 };
 
 export function ArticleCover({

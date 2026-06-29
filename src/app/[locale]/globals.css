@@ -108,12 +108,13 @@
   --shadow-card-lg: 0 2px 4px rgba(11, 34, 64, 0.05),
     0 24px 48px -20px rgba(11, 34, 64, 0.28);
   --shadow-glow: 0 8px 30px -8px rgba(31, 102, 238, 0.45);
-  /* elevated colored shadows for the redesigned home (warm + brand tints) */
-  --shadow-pop: 0 4px 14px -4px rgba(11, 34, 64, 0.1),
-    0 30px 60px -22px rgba(31, 102, 238, 0.3);
-  --shadow-gold: 0 14px 40px -16px rgba(232, 156, 18, 0.5);
-  --shadow-mint: 0 14px 40px -16px rgba(10, 138, 94, 0.42);
-  --shadow-peach: 0 14px 40px -16px rgba(210, 87, 12, 0.42);
+  /* Restrained, soft brand-tinted lift shadow for the Trust home (no coloured
+     glow — depth comes from a low, soft navy/brand-tinted shadow). */
+  --shadow-pop: 0 2px 6px -2px rgba(11, 34, 64, 0.06),
+    0 22px 48px -24px rgba(31, 102, 238, 0.2);
+  --shadow-gold: 0 12px 30px -18px rgba(232, 156, 18, 0.32);
+  --shadow-mint: 0 12px 30px -18px rgba(10, 138, 94, 0.28);
+  --shadow-peach: 0 12px 30px -18px rgba(210, 87, 12, 0.28);
 
   /* ---- Radii ---- */
   --radius-xl: 0.875rem;
@@ -483,11 +484,11 @@
    ============================================================ */
 .home-credentials .grid.text-center > div:nth-child(2),
 .home-credentials .grid.text-center > div:nth-child(3) {
-  display: none;
+  display: block;
 }
 @media (min-width: 640px) {
   .home-credentials .grid.text-center {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     max-width: 44rem;
     margin-inline: auto;
   }
@@ -1003,59 +1004,22 @@
     background: linear-gradient(90deg, #f2b736, #e89c12);
   }
 
-  /* Layered tinted section backdrops — alternate white → tint → white so the
-     page reads warm and rhythmic instead of flat blue. */
-  .sec-mint {
-    background:
-      radial-gradient(
-        760px 380px at 12% 0%,
-        rgba(20, 173, 118, 0.22),
-        transparent 62%
-      ),
-      radial-gradient(
-        700px 380px at 100% 100%,
-        rgba(31, 102, 238, 0.12),
-        transparent 62%
-      ),
-      linear-gradient(180deg, #ffffff 0%, #e4f7ee 52%, #ffffff 100%);
+  /* Restrained soft-blue band — the single tinted section in the Trust home.
+     Flat blue-tinted sunken wash (no radial colour blobs) so it reads calm,
+     not busy. Use sparingly — most sections stay white. */
+  .sec-soft {
+    background: linear-gradient(180deg, #f4f7fc 0%, #eef3fb 100%);
   }
-  .sec-peach {
-    background:
-      radial-gradient(
-        760px 380px at 88% 0%,
-        rgba(251, 138, 60, 0.24),
-        transparent 62%
-      ),
-      radial-gradient(
-        660px 360px at 0% 100%,
-        rgba(246, 159, 18, 0.18),
-        transparent 62%
-      ),
-      linear-gradient(180deg, #ffffff 0%, #ffe9da 52%, #ffffff 100%);
-  }
-  .sec-gold {
-    background:
-      radial-gradient(
-        720px 360px at 50% -8%,
-        rgba(246, 159, 18, 0.26),
-        transparent 62%
-      ),
-      linear-gradient(180deg, #fff4dd 0%, #ffffff 100%);
-  }
-  /* soft blue band — the (now light) stats section */
+  /* Contained soft-blue panel backdrop — the stats section. Brand-tinted only
+     (no mint/warm blobs) so it stays calm and trustworthy. */
   .sec-sky {
     background:
       radial-gradient(
         800px 400px at 16% 0%,
-        rgba(31, 102, 238, 0.16),
+        rgba(31, 102, 238, 0.12),
         transparent 62%
       ),
-      radial-gradient(
-        640px 360px at 96% 100%,
-        rgba(20, 173, 118, 0.12),
-        transparent 62%
-      ),
-      linear-gradient(180deg, #ffffff 0%, #e9f2ff 54%, #ffffff 100%);
+      linear-gradient(180deg, #ffffff 0%, #eef4fc 54%, #ffffff 100%);
   }
 
   /* Edge-fade mask for the partner marquee. */

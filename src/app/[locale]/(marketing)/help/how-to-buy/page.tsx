@@ -16,10 +16,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: t("title"), description: t("description") };
 }
 
+// Trust palette: one calm brand-blue treatment across the payment tiles.
 const PAYMENTS: { icon: IconName; titleKey: string; noteKey: string; tone: string }[] = [
   { icon: "wallet", titleKey: "payFull", noteKey: "payFullNote", tone: "bg-sky-100 text-brand-600" },
-  { icon: "creditcard", titleKey: "payCard", noteKey: "payCardNote", tone: "bg-mint-50 text-mint-600" },
-  { icon: "qr", titleKey: "payQr", noteKey: "payQrNote", tone: "bg-gold-50 text-gold-600" },
+  { icon: "creditcard", titleKey: "payCard", noteKey: "payCardNote", tone: "bg-sky-100 text-brand-600" },
+  { icon: "qr", titleKey: "payQr", noteKey: "payQrNote", tone: "bg-sky-100 text-brand-600" },
 ];
 
 export default async function HowToBuyPage({ params }: Props) {
@@ -73,7 +74,7 @@ export default async function HowToBuyPage({ params }: Props) {
 
       {/* CTA into the quote flow */}
       <section className="max-w-4xl mx-auto px-4 sm:px-6 py-12">
-        <div className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-r from-brand-600 to-brand-500 text-white p-8 text-center">
+        <div className="relative overflow-hidden rounded-[1.75rem] bg-gradient-to-br from-brand-600 to-ink-900 text-white p-8 text-center">
           <div className="absolute inset-0 bg-grid opacity-15" />
           <div className="relative">
             <h2 className="font-display font-700 text-2xl">{t("howToBuy.ctaTitle")}</h2>

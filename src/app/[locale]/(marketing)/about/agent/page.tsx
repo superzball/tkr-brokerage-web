@@ -80,7 +80,7 @@ export default async function AgentRecruitPage({ params }: Props) {
         <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {benefits.map((b, i) => (
             <div key={i} className="card card-hover p-6 reveal">
-              <span className="w-12 h-12 rounded-2xl bg-gold-50 text-gold-600 flex items-center justify-center">
+              <span className="w-12 h-12 rounded-2xl bg-sky-100 text-brand-600 flex items-center justify-center">
                 <Icon name={b.icon} size={24} />
               </span>
               <h3 className="mt-4 font-700 text-ink-900">{b.title}</h3>
@@ -91,7 +91,7 @@ export default async function AgentRecruitPage({ params }: Props) {
       </section>
 
       {/* how it works */}
-      <section className="bg-gradient-to-b from-mint-50/80 to-white">
+      <section className="bg-gradient-to-b from-sky-50/60 to-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 py-14 lg:py-20">
           <div className="text-center mb-10">
             <h2 className="font-display font-700 text-2xl sm:text-3xl text-ink-900 tracking-tight">{t("how.title")}</h2>
@@ -153,7 +153,7 @@ export default async function AgentRecruitPage({ params }: Props) {
       </section>
 
       {/* compliance commitments (non-negotiable) */}
-      <section className="bg-ink-950 text-white relative overflow-hidden">
+      <section className="bg-gradient-to-br from-brand-900 via-ink-900 to-ink-950 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-grid opacity-10" />
         <div className="relative max-w-4xl mx-auto px-4 sm:px-6 py-16">
           <h2 className="font-display font-700 text-2xl sm:text-3xl tracking-tight text-center mb-8">{t("compliance.title")}</h2>
@@ -184,7 +184,7 @@ export default async function AgentRecruitPage({ params }: Props) {
 
       {/* CTA */}
       <section className="max-w-5xl mx-auto px-4 sm:px-6 pb-16">
-        <div className="card card-lg bg-gradient-to-r from-brand-600 to-brand-500 text-white p-9 sm:p-12 text-center">
+        <div className="card card-lg bg-gradient-to-br from-brand-600 to-ink-900 text-white p-9 sm:p-12 text-center">
           <h2 className="font-display font-700 text-2xl sm:text-3xl tracking-tight" style={{ textWrap: "balance" }}>
             {t("cta.title")}
           </h2>
