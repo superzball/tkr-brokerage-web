@@ -7,6 +7,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import type { InsurerPartner } from "@/types/portal";
+import { insurerShortName } from "@/lib/mock/seed";
 import { EmptyState } from "@/components/app/EmptyState";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
@@ -23,7 +24,7 @@ export function PartnersClient({ initial }: { initial: InsurerPartner[] }) {
     e.preventDefault();
     const trimmed = name.trim();
     if (!trimmed) return;
-    setPartners((prev) => [...prev, { id: `ip_${Date.now()}`, name: trimmed }]);
+    setPartners((prev) => [...prev, { id: `ip_${Date.now()}`, name: trimmed, group: 3 }]);
     setName("");
     toast(t("created"), "success");
   }
@@ -56,7 +57,7 @@ export function PartnersClient({ initial }: { initial: InsurerPartner[] }) {
           {partners.map((p) => (
             <div key={p.id} className="card p-4 flex items-center gap-3">
               <span className="w-11 h-11 rounded-xl bg-gradient-to-br from-sky-100 to-sky-200 text-brand-700 inline-flex items-center justify-center font-display font-700 shrink-0">
-                {p.name.charAt(0)}
+                {insurerShortName(p.name).charAt(0)}
               </span>
               <span className="font-600 text-ink-900 truncate flex-1">{p.name}</span>
               <button

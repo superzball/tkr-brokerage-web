@@ -9,7 +9,7 @@
 import type { IconName } from "@/components/ui/Icon";
 import type { InsuranceType } from "@/types/portal";
 import type { LearnProductKey } from "./learn";
-import { insurerPartners } from "@/lib/mock/seed";
+import { getInsurerPartners, insurerShortName } from "@/lib/mock/seed";
 
 export type SeoCategory = "auto" | "travel" | "home" | "health" | "tax";
 
@@ -82,9 +82,11 @@ export function comparePlansFor(
   const covSpread = [1, 1.15, 0.85, 1.3, 1.05, 0.9];
   const ratings = [4.7, 4.8, 4.5, 4.6, 4.3, 4.4];
   const reviews = [2140, 1860, 3210, 1540, 980, 1120];
-  const plans = insurerPartners.map((p, i) => ({
+  // Use the featured insurers (6) for a focused, readable comparison set — the
+  // spread arrays above are sized for that. Short display names keep cells tidy.
+  const plans = getInsurerPartners({ featuredOnly: true }).map((p, i) => ({
     id: `${product}-${p.id}`,
-    insurer: p.name,
+    insurer: insurerShortName(p.name),
     price: Math.round((base * (1 + (spread[i] ?? 0))) / 100) * 100,
     sum: Math.round((coverageBase * (covSpread[i] ?? 1)) / 10000) * 10000,
     deduct: i % 3 === 0 ? null : (i % 3) * 1000,

@@ -803,11 +803,61 @@ export const reviews: Review[] = [
   { id: 'rv3', authorLabel: 'ตัวแทน TKR', channel: 'survey', product: 'worker', text: 'พอร์ทัลตัวแทนดูยอดทีมและคอมมิชชั่นได้ในที่เดียว', reaction: 'celebrate', date: '2026-04-20' },
 ];
 
+// Real licensed-insurer partner list (32). Names are the proper Thai legal names
+// — keep as-is (don't translate). Logos render as initial/text tiles until real,
+// rights-cleared logo files exist (`logo?` stays empty). `group` lets the UI show
+// them sensibly; `featured` marks the few surfaced first (home/shared logo wall).
 export const insurerPartners: InsurerPartner[] = [
-  { id: 'ip_thip', name: 'ทิพยประกันภัย' }, { id: 'ip_viriya', name: 'วิริยะประกันภัย' },
-  { id: 'ip_bki', name: 'กรุงเทพประกันภัย' }, { id: 'ip_mti', name: 'เมืองไทยประกันภัย' },
-  { id: 'ip_msig', name: 'MSIG' }, { id: 'ip_axa', name: 'AXA' },
+  { id: 'thip',        name: 'บริษัท ทิพยประกันภัย จำกัด (มหาชน)', group: 1, featured: true },
+  { id: 'viriyah',     name: 'บริษัท วิริยะประกันภัย จำกัด (มหาชน)', group: 1, featured: true },
+  { id: 'indara',      name: 'บริษัท อินทรประกันภัย จำกัด (มหาชน)', group: 1 },
+  { id: 'thaipaiboon', name: 'บริษัท ไทยไพบูลย์ประกันภัย จำกัด (มหาชน)', group: 1 },
+  { id: 'muangthai',   name: 'บริษัท เมืองไทยประกันภัย จำกัด (มหาชน)', group: 1, featured: true },
+  { id: 'bki',         name: 'บริษัท กรุงเทพประกันภัย จำกัด (มหาชน)', group: 1, featured: true },
+  { id: 'bui',         name: 'บริษัท บางกอกสหประกันภัย จำกัด (มหาชน)', group: 1 },
+  { id: 'emart',       name: 'บริษัท เอมาร์ท ประกันภัย จำกัด (มหาชน)', group: 1 },
+  { id: 'lmg',         name: 'บริษัท แอลเอ็มจี ประกันภัย จำกัด (มหาชน)', group: 1 },
+  { id: 'thaivivat',   name: 'บริษัท ประกันภัยไทยวิวัฒน์ จำกัด (มหาชน)', group: 1 },
+  { id: 'kwi',         name: 'บริษัท เคดับบลิวไอ ประกันภัย จำกัด (มหาชน)', group: 1 },
+
+  { id: 'msi',         name: 'บริษัท มิตซุย สุมิโตโม อินชัวรันซ์ จำกัด', group: 2 },
+  { id: 'tune',        name: 'บริษัท ทูนประกันภัย จำกัด (มหาชน)', group: 2 },
+  { id: 'thanachart',  name: 'บริษัท ธนชาตประกันภัย จำกัด (มหาชน)', group: 2 },
+  { id: 'thaipat',     name: 'บริษัท ไทยพัฒนาประกันภัย จำกัด (มหาชน)', group: 2 },
+  { id: 'ergo',        name: 'บริษัท เออร์โกประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 2 },
+  { id: 'wannai',      name: 'บริษัท วรรณัยประกันภัย จำกัด (มหาชน)', group: 2 },
+  { id: 'bci',         name: 'บริษัท กรุงเทพพาณิชย์ประกันภัย จำกัด (มหาชน)', group: 2 },
+  { id: 'tokiomarine', name: 'บริษัท คุ้มภัยโตเกียวมารีนประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 2 },
+  { id: 'aig',         name: 'บริษัท เอไอจี ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 2 },
+  { id: 'msig',        name: 'บริษัท เอ็มเอสไอจี ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 2, featured: true },
+  { id: 'deves',       name: 'บริษัท เทเวศประกันภัย จำกัด (มหาชน)', group: 2 },
+
+  { id: 'rvp',         name: 'บริษัท กลางคุ้มครองผู้ประสบภัยจากรถ จำกัด', group: 3 },
+  { id: 'buakij',      name: 'บริษัท บวกิจประกันภัย จำกัด (มหาชน)', group: 3 },
+  { id: 'fwd',         name: 'บริษัท เอฟดับบลิวดี ประกันภัย จำกัด (มหาชน)', group: 3 },
+  { id: 'tsi',         name: 'บริษัท ไทยเศรษฐกิจ ประกันภัย จำกัด (มหาชน)', group: 3 },
+  { id: 'pacificcross',name: 'บริษัท แปซิฟิค ครอส ประกันสุขภาพ จำกัด (มหาชน)', group: 3 },
+  { id: 'sahasamakkee',name: 'บริษัท ซับบีสามัคคีประกันภัย จำกัด (มหาชน)', group: 3 },
+  { id: 'ioi',         name: 'บริษัท ไอโอไอ กรุงเทพ ประกันภัย จำกัด (มหาชน)', group: 3 },
+  { id: 'allianz',     name: 'บริษัท อลิอันซ์ อยุธยา ประกันภัย จำกัด (มหาชน)', group: 3, featured: true },
+  { id: 'sompo',       name: 'บริษัท ซมโปะ ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 3 },
+  { id: 'mittare',     name: 'บริษัท มิตรแท้ประกันภัย จำกัด (มหาชน)', group: 3 },
 ];
+
+/** Total partner count — the single source for any "partner count" figure. */
+export const insurerPartnerCount = insurerPartners.length; // 32
+
+/** Brand display name for logo tiles/walls — strips the legal prefix/suffix off
+ *  the full company name (e.g. "บริษัท ทิพยประกันภัย จำกัด (มหาชน)" → "ทิพยประกันภัย").
+ *  Display-only; the stored `name` keeps the full legal name. */
+export const insurerShortName = (name: string) =>
+  name
+    .replace(/^บริษัท\s+/, '')
+    .replace(/\s*\(ประเทศไทย\)\s*/, ' ')
+    .replace(/\s*จำกัด\s*\(มหาชน\)\s*$/, '')
+    .replace(/\s*\(มหาชน\)\s*$/, '')
+    .replace(/\s*จำกัด\s*$/, '')
+    .trim();
 
 export const glossary: GlossaryTerm[] = [
   { term: 'ทุนประกัน', plain: 'จำนวนเงินสูงสุดที่บริษัทจะจ่ายเมื่อเกิดเหตุ' },
@@ -825,14 +875,15 @@ export const installmentPlans: InstallmentPlan[] = [
 // honest trust stats (use only verifiable numbers in production)
 export const trustStats = {
   oicLicense: 'ใบอนุญาตนายหน้าประกันวินาศภัย เลขที่ —',  // fill with real license
-  insurers: insurerPartners.length,
+  insurers: insurerPartnerCount,
   customersServed: 12800,
   claimsPaidPct: 98,
 };
 
 export const getCoupons = () => coupons;
 export const getReviews = () => reviews;
-export const getInsurerPartners = () => insurerPartners;
+export const getInsurerPartners = (opts?: { featuredOnly?: boolean }) =>
+  opts?.featuredOnly ? insurerPartners.filter((p) => p.featured) : insurerPartners;
 export const getGlossary = () => glossary;
 export const getInstallmentPlans = () => installmentPlans;
 

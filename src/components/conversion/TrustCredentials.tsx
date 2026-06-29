@@ -5,7 +5,7 @@
 
 import { useTranslations, useFormatter } from "next-intl";
 import { Icon } from "@/components/ui/Icon";
-import { insurerPartners, trustStats } from "@/lib/mock/seed";
+import { getInsurerPartners, insurerShortName, trustStats } from "@/lib/mock/seed";
 
 export function TrustCredentials() {
   const t = useTranslations("conversion.trust");
@@ -58,9 +58,11 @@ export function TrustCredentials() {
         <div className="mt-14 pt-10 border-t border-ink-800">
           <p className="text-center text-sm text-ink-400 mb-7">{t("partnersTitle")}</p>
           <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-5">
-            {insurerPartners.map((p) => (
+            {/* featured insurers only — short brand names; the full grouped list
+                of all partners lives on /about/partners */}
+            {getInsurerPartners({ featuredOnly: true }).map((p) => (
               <span key={p.id} className="font-display font-700 text-xl text-ink-200/80">
-                {p.name}
+                {insurerShortName(p.name)}
               </span>
             ))}
           </div>
