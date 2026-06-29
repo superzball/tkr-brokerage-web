@@ -164,6 +164,16 @@ export function MobileDrawer({ open, onClose, pathname }: MobileDrawerProps) {
           <div className="flex items-center justify-center">
             <LocaleSwitcher className="px-1" />
           </div>
+          <Button
+            href={publicNavActions.renew.href}
+            variant="ghost"
+            size="md"
+            onClick={onClose}
+            className="w-full"
+          >
+            <Icon name="refresh" size={18} />
+            {t(publicNavActions.renew.key)}
+          </Button>
           <div className="grid grid-cols-2 gap-2.5">
             <Button
               href={publicNavActions.login.href}

@@ -77,7 +77,7 @@ export const publicNav: TopNavItem[] = [
       {
         key: "colDigital",
         links: [
-          { key: "lineConcierge", href: "/digital/line", icon: "chat", descKey: "lineDesc" },
+          { key: "lineConcierge", href: ROUTES.line, icon: "chat", descKey: "lineDesc" },
           { key: "tracking", href: "/tracking", icon: "search", descKey: "trackingDesc" },
           // tax-deduction line only when the vertical is enabled
           ...(FEATURES.taxTools
@@ -97,6 +97,7 @@ export const publicNav: TopNavItem[] = [
           { key: "whyTkr", href: "/about/why", icon: "badgeCheck", descKey: "whyTkrDesc" },
           { key: "partners", href: "/about/partners", icon: "handshake", descKey: "partnersDesc" },
           { key: "agentJoin", href: "/about/agent", icon: "network", descKey: "agentJoinDesc" },
+          { key: "reviews", href: ROUTES.reviews, icon: "star", descKey: "reviewsDesc" }, // social proof (Phase 17)
         ],
       },
     ],
@@ -115,6 +116,7 @@ export const publicNav: TopNavItem[] = [
       },
     ],
   },
+  { key: "promotions", href: ROUTES.promotions }, // deals/coupons (Phase 17) — conversion driver
   { key: "articles", href: "/articles" },
   { key: "contact", href: "/contact" },
 ];
@@ -122,10 +124,13 @@ export const publicNav: TopNavItem[] = [
 /** Right-side public-nav actions, rendered separately by the Navbar.
  *  Note: the spec's `/quote` + `/search` pages are pending; until they exist the
  *  CTA routes into the flagship privacy-first quote flow (ROUTES.worker) and
- *  search resolves on the all-products page. */
+ *  search resolves on the all-products page. `renew` has no standalone /renew
+ *  page; it routes into the authenticated quick-renew flow (the (app) guard
+ *  sends anonymous visitors through /login first). */
 export const publicNavActions = {
   search: { href: ROUTES.insurance, icon: "search" },
   quoteCta: { key: "getQuote", href: ROUTES.worker },
+  renew: { key: "renew", href: "/app/buy?intent=renew", icon: "refresh" }, // member quick-renew (Phase 17)
   login: { key: "login", href: "/login", icon: "user" },
   agent: { key: "agentLogin", href: "/login?role=agent" },
 } as const;
