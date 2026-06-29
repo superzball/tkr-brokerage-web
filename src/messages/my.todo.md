@@ -41,3 +41,4 @@ are Thai placeholders**. Largest backlogs: `admin` ~716, `business` ~237, `agent
 - [ ] phase16 — Issuance/amendments/public token copy (admin.issuePolicy/issued/amendments, public.ticketCheck/staffVerify, business.issued), Thai placeholders
 - [ ] phase17 — Conversion & Trust copy (conversion, promotions, reviewsPage, seo, admin.coupons/reviews/partners, nav.coupons/reviews/partners/promotions/allProducts/quickRenew), Thai placeholders
 - [ ] phase20 — Customer Loyalty & Rewards copy (`loyalty` namespace incl. loyalty.admin.*, + nav.rewards/loyalty/loyaltyRules/loyaltyRewards/loyaltyRedeem), Thai placeholders
+- [ ] about — About marketing pages copy (`about` namespace: main/why/partners/agent, + metadata.about/aboutWhy/aboutPartners/aboutAgent), Thai placeholders

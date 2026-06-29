@@ -1420,6 +1420,22 @@
     "contact": {
       "title": "Contact Us | TKR",
       "description": "Reach TKR by phone, email, LINE, or request a callback"
+    },
+    "about": {
+      "title": "About TKR | Licensed Insurance Broker",
+      "description": "TKR is a licensed insurance brokerage — foreign-worker insurance for employers plus personal auto, travel, health and fire cover."
+    },
+    "aboutWhy": {
+      "title": "Why TKR | Compare & Buy with Confidence",
+      "description": "Foreign-worker insurance specialists, many insurers compared in one place, buy yourself or through an agent, with digital tools and transparent pricing."
+    },
+    "aboutPartners": {
+      "title": "Insurer Partners | TKR",
+      "description": "The insurance companies TKR works with so you can compare options and choose what fits."
+    },
+    "aboutAgent": {
+      "title": "Become a TKR Agent | Licensed Agency Model",
+      "description": "Build an income with TKR as a licensed insurance agent — commission, tiers, tools and support. Licensed agency model, no join fee."
     }
   },
   "business": {
@@ -4265,6 +4281,351 @@
         "desc": "Sum of unspent customer balances",
         "members": "Loyalty members",
         "note": "Points are a financial liability — set an expiry policy and T&C before going live."
+      }
+    }
+  },
+  "about": {
+    "main": {
+      "hero": {
+        "badge": "About us",
+        "title": "Insurance that understands working people",
+        "sub": "TKR is a licensed insurance brokerage. Our flagship is foreign-worker insurance for employers, alongside personal lines — car, travel, health and fire."
+      },
+      "whatWeDo": {
+        "title": "What we do",
+        "sub": "As a broker, we compare and arrange cover across many insurance companies — so you get the right plan, not just one company's product.",
+        "broker": {
+          "title": "The broker model",
+          "desc": "We work for you, not a single insurer. Compare options across our partner companies and buy in one place."
+        },
+        "mission": {
+          "title": "Our mission",
+          "desc": "Make the insurance that working people and employers need easy to access — fast, clear and fair."
+        },
+        "vision": {
+          "title": "Our vision",
+          "desc": "A digital insurance experience where buying, managing and claiming are simple for everyone."
+        }
+      },
+      "story": {
+        "title": "Our story",
+        "sub": "Milestones are managed in our content system and shown here as they are confirmed.",
+        "note": "Timeline entries are placeholders managed via the admin content tool — real milestones will appear here once confirmed.",
+        "milestones": [
+          {
+            "year": "—",
+            "title": "Founded",
+            "desc": "Company founding details to be confirmed."
+          },
+          {
+            "year": "—",
+            "title": "Foreign-worker insurance",
+            "desc": "Flagship line for employers — details to be confirmed."
+          },
+          {
+            "year": "—",
+            "title": "Digital tools",
+            "desc": "Worker Wallet and policy tracking — details to be confirmed."
+          }
+        ]
+      },
+      "numbers": {
+        "title": "By the numbers",
+        "sub": "We only publish figures we can verify.",
+        "note": "Figures shown are current placeholders from our data and will reflect verified values.",
+        "insurers": "Partner insurers",
+        "customers": "Customers served",
+        "claims": "Claims-paid rate",
+        "license": "Licensed broker"
+      },
+      "products": {
+        "title": "Our products at a glance",
+        "sub": "From employer worker cover to personal lines — explore and compare.",
+        "items": [
+          {
+            "key": "worker",
+            "title": "Foreign-worker insurance",
+            "desc": "End-to-end cover for employers with bulk policy issuance.",
+            "href": "/insurance/worker"
+          },
+          {
+            "key": "auto",
+            "title": "Car insurance",
+            "desc": "Class 1 / 2+ / 3 and EV — compare and buy.",
+            "href": "/insurance/auto"
+          },
+          {
+            "key": "travel",
+            "title": "Travel insurance",
+            "desc": "Domestic and international trips.",
+            "href": "/insurance/travel"
+          },
+          {
+            "key": "health",
+            "title": "Health insurance",
+            "desc": "Health, critical illness and cancer cover.",
+            "href": "/insurance/health"
+          },
+          {
+            "key": "fire",
+            "title": "Fire insurance",
+            "desc": "Home and business protection.",
+            "href": "/insurance/fire"
+          }
+        ],
+        "partnerTeaser": {
+          "title": "Backed by leading insurers",
+          "desc": "We compare cover across our partner insurance companies so you have real choice.",
+          "cta": "See our partners"
+        }
+      },
+      "cta": {
+        "title": "Ready when you are",
+        "sub": "Check a price, join as an agent, or talk to our team.",
+        "quote": "Check price",
+        "agent": "Become an agent",
+        "contact": "Contact us"
+      }
+    },
+    "why": {
+      "hero": {
+        "badge": "Why TKR",
+        "title": "Why choose TKR",
+        "sub": "Specialists in foreign-worker insurance, many insurers compared in one place, and digital tools that make cover simple."
+      },
+      "cards": [
+        {
+          "icon": "users",
+          "title": "Foreign-worker insurance experts",
+          "desc": "Deep experience helping employers cover their workers correctly and on time."
+        },
+        {
+          "icon": "search",
+          "title": "Compare many insurers in one place",
+          "desc": "See options across our partner companies and choose what fits — no single-company bias."
+        },
+        {
+          "icon": "shieldCheck",
+          "title": "Buy yourself or through an agent",
+          "desc": "Self-serve online or get guided help from a licensed agent — your choice."
+        },
+        {
+          "icon": "chat",
+          "title": "24-hour service on LINE",
+          "desc": "Ask questions and get help through LINE, any time."
+        },
+        {
+          "icon": "wallet",
+          "title": "Fully digital",
+          "desc": "Worker Wallet and policy tracking keep everything in one place."
+        },
+        {
+          "icon": "check",
+          "title": "Transparent pricing",
+          "desc": "Clear premiums and conditions before you buy — no surprises."
+        }
+      ],
+      "broker": {
+        "title": "Why buying through a broker beats buying direct",
+        "sub": "A broker works for you, not one insurance company.",
+        "points": [
+          "Compare several insurers side by side instead of one company's quote.",
+          "Independent guidance on the cover that actually fits your needs.",
+          "One place to buy, manage and get help — across products.",
+          "Support at claim time, so you're not on your own."
+        ]
+      },
+      "trust": {
+        "title": "Trust & credibility",
+        "sub": "Licensed, partnered, and built around your data privacy."
+      },
+      "pdpa": {
+        "title": "Your data & PDPA",
+        "desc": "We handle personal data in line with Thailand's PDPA, collecting only what's needed to arrange and service your cover."
+      },
+      "reviews": {
+        "title": "What customers say"
+      },
+      "cta": {
+        "title": "See why employers and individuals choose TKR",
+        "quote": "Check price",
+        "contact": "Talk to us"
+      }
+    },
+    "partners": {
+      "hero": {
+        "badge": "Insurer partners",
+        "title": "The insurers we work with",
+        "sub": "As a broker we partner with leading insurance companies so you can compare options and choose what fits."
+      },
+      "wall": {
+        "title": "Our partner insurers",
+        "note": "Shown as name placeholders — official partner logos will appear once usage rights are confirmed.",
+        "empty": "Partner list is being updated — please check back soon."
+      },
+      "meaning": {
+        "title": "What this means for you",
+        "points": [
+          {
+            "title": "More choice",
+            "desc": "Compare cover and price across multiple insurers in one place."
+          },
+          {
+            "title": "The right fit",
+            "desc": "Pick the plan that suits your needs, not just one company's product."
+          },
+          {
+            "title": "Confidence",
+            "desc": "Buy from established, licensed insurance companies."
+          }
+        ]
+      },
+      "underwriter": {
+        "title": "Worker-line underwriting",
+        "desc": "For foreign-worker insurance we arrange cover with established insurers. Specific underwriter relationships are shown only once confirmed."
+      },
+      "cta": {
+        "title": "Are you an insurer interested in partnering?",
+        "desc": "We're always open to working with more insurance companies to give customers better choice.",
+        "button": "Talk to us about partnering"
+      }
+    },
+    "agent": {
+      "hero": {
+        "badge": "Join as an agent",
+        "title": "Build an income with TKR",
+        "sub": "Become a licensed TKR insurance agent — earn commission on real sales, grow with tiers, and get the tools and support to succeed.",
+        "apply": "Become an agent",
+        "existing": "Existing agent? Recruit your team"
+      },
+      "note": "TKR runs a licensed insurance agency model — not a recruit-to-earn scheme. There is no join fee, and you earn from real, licensed insurance sales only.",
+      "benefits": {
+        "title": "Why become a TKR agent",
+        "sub": "Everything you need to sell and grow — built around real, licensed sales.",
+        "items": [
+          {
+            "icon": "coins",
+            "title": "Commission on real sales",
+            "desc": "Earn commission on the policies you actually sell."
+          },
+          {
+            "icon": "trophy",
+            "title": "Tier system",
+            "desc": "Progress through tiers as your licensed sales grow."
+          },
+          {
+            "icon": "users",
+            "title": "Team income (override)",
+            "desc": "Earn override on your team's real, licensed sales — never on recruitment."
+          },
+          {
+            "icon": "clipboard",
+            "title": "Sales tools",
+            "desc": "Quote generation, lead management and marketing materials."
+          },
+          {
+            "icon": "headset",
+            "title": "Training & support",
+            "desc": "Onboarding, product training and ongoing support."
+          }
+        ]
+      },
+      "how": {
+        "title": "How it works",
+        "steps": [
+          {
+            "title": "Apply",
+            "desc": "Sign up as an agent in a few minutes."
+          },
+          {
+            "title": "OIC license check",
+            "desc": "We verify your OIC agent license before you can earn."
+          },
+          {
+            "title": "Train & set up",
+            "desc": "Complete onboarding and product training."
+          },
+          {
+            "title": "Start selling",
+            "desc": "Sell, serve customers and earn on real sales."
+          }
+        ]
+      },
+      "requirements": {
+        "title": "What you need",
+        "desc": "You must hold a valid OIC insurance agent license to sell and earn — or be on a clear path to obtaining one.",
+        "license": "Don't have a license yet? We'll point you to the OIC licensing exam path.",
+        "gate": "License verification is required before any earning begins."
+      },
+      "earnings": {
+        "title": "Earnings illustration",
+        "disclaimer": "Example only — not a guarantee of income.",
+        "desc": "Actual earnings depend entirely on your own licensed sales. The figures below are illustrative.",
+        "rows": [
+          {
+            "tier": "Silver",
+            "note": "Entry tier",
+            "rate": "Base commission"
+          },
+          {
+            "tier": "Gold",
+            "note": "Growing sales",
+            "rate": "Higher commission"
+          },
+          {
+            "tier": "Platinum",
+            "note": "Established",
+            "rate": "Higher commission + override"
+          },
+          {
+            "tier": "Diamond",
+            "note": "Top tier",
+            "rate": "Top commission + override"
+          }
+        ],
+        "footnote": "Commission and override apply to real, licensed insurance sales only."
+      },
+      "compliance": {
+        "title": "Our commitments (please read)",
+        "items": [
+          "No join fee, membership fee or recruitment fee — ever.",
+          "Override income comes from real, licensed insurance sales only.",
+          "OIC license verification is required before you earn.",
+          "We never promise or guarantee income.",
+          "This is a licensed insurance agency model, not a recruit-to-earn MLM."
+        ],
+        "legalNote": "Agent-recruitment terms are subject to legal review before production. This page is information only, not legal or financial advice."
+      },
+      "faq": {
+        "title": "Agent FAQ",
+        "items": [
+          {
+            "q": "Is there a join fee?",
+            "a": "No. There is no join fee, membership fee or recruitment fee at any point."
+          },
+          {
+            "q": "How do I earn?",
+            "a": "You earn commission on the insurance policies you sell, once your OIC license is verified."
+          },
+          {
+            "q": "What is override income?",
+            "a": "If you build a team, you can earn an override on your team's real, licensed sales — never on recruiting people."
+          },
+          {
+            "q": "Do I need a license?",
+            "a": "Yes. You need a valid OIC insurance agent license to sell and earn. If you don't have one yet, we'll point you to the exam path."
+          },
+          {
+            "q": "Is income guaranteed?",
+            "a": "No. Earnings depend entirely on your own licensed sales. We never guarantee income."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Ready to start?",
+        "sub": "Apply now, or if you're already an agent, start recruiting your team.",
+        "apply": "Become an agent",
+        "existing": "Recruit your team"
       }
     }
   }
