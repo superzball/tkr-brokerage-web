@@ -35,7 +35,7 @@ export default async function HomePage({ params }: Props) {
       <div className="sec-mint">
         <WhyTKR />
       </div>
-      {/* dark band — featured stat + partner marquee */}
+      {/* contained stats panel — featured gold figure + stat cards + marquee */}
       <TrustStats />
       {/* PEACH band — social proof */}
       <div className="sec-peach">

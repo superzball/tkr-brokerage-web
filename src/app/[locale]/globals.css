@@ -481,6 +481,14 @@
     );
     background-size: 22px 22px;
   }
+  /* denser, more present dot texture for the hero backdrop */
+  .bg-grid-strong {
+    background-image: radial-gradient(
+      rgba(31, 102, 238, 0.13) 1.3px,
+      transparent 1.3px
+    );
+    background-size: 20px 20px;
+  }
   .bg-hero {
     background:
       radial-gradient(
@@ -497,6 +505,13 @@
   }
   .text-gradient {
     background: linear-gradient(120deg, #0b2240 0%, #1f66ee 60%, #0f52c7 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  .text-gold-gradient {
+    background: linear-gradient(120deg, #f2b736 0%, #e89c12 55%, #c47a06 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -972,39 +987,54 @@
   .sec-mint {
     background:
       radial-gradient(
-        720px 360px at 12% 0%,
-        rgba(20, 173, 118, 0.12),
-        transparent 60%
+        760px 380px at 12% 0%,
+        rgba(20, 173, 118, 0.22),
+        transparent 62%
       ),
       radial-gradient(
-        680px 360px at 100% 100%,
-        rgba(31, 102, 238, 0.08),
-        transparent 60%
+        700px 380px at 100% 100%,
+        rgba(31, 102, 238, 0.12),
+        transparent 62%
       ),
-      linear-gradient(180deg, #ffffff 0%, #f0fbf6 55%, #ffffff 100%);
+      linear-gradient(180deg, #ffffff 0%, #e4f7ee 52%, #ffffff 100%);
   }
   .sec-peach {
     background:
       radial-gradient(
-        720px 360px at 88% 0%,
-        rgba(251, 138, 60, 0.14),
-        transparent 60%
+        760px 380px at 88% 0%,
+        rgba(251, 138, 60, 0.24),
+        transparent 62%
       ),
       radial-gradient(
-        620px 340px at 0% 100%,
-        rgba(246, 159, 18, 0.12),
-        transparent 60%
+        660px 360px at 0% 100%,
+        rgba(246, 159, 18, 0.18),
+        transparent 62%
       ),
-      linear-gradient(180deg, #ffffff 0%, #fff5ee 55%, #ffffff 100%);
+      linear-gradient(180deg, #ffffff 0%, #ffe9da 52%, #ffffff 100%);
   }
   .sec-gold {
     background:
       radial-gradient(
-        680px 340px at 50% -10%,
-        rgba(246, 159, 18, 0.16),
-        transparent 60%
+        720px 360px at 50% -8%,
+        rgba(246, 159, 18, 0.26),
+        transparent 62%
       ),
-      linear-gradient(180deg, #fffaf0 0%, #ffffff 100%);
+      linear-gradient(180deg, #fff4dd 0%, #ffffff 100%);
+  }
+  /* soft blue band — the (now light) stats section */
+  .sec-sky {
+    background:
+      radial-gradient(
+        800px 400px at 16% 0%,
+        rgba(31, 102, 238, 0.16),
+        transparent 62%
+      ),
+      radial-gradient(
+        640px 360px at 96% 100%,
+        rgba(20, 173, 118, 0.12),
+        transparent 62%
+      ),
+      linear-gradient(180deg, #ffffff 0%, #e9f2ff 54%, #ffffff 100%);
   }
 
   /* Edge-fade mask for the partner marquee. */

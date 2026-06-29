@@ -93,7 +93,7 @@ export function ProductGrid() {
         {/* secondary products — top accent bar + lifting card */}
         {SECONDARY.map((product) => (
           <AppLink key={product.key} href={product.href} className="group reveal">
-            <div className="card card-hover h-full p-6 relative overflow-hidden">
+            <div className="card card-hover h-full p-6 relative overflow-hidden shadow-pop">
               <span
                 className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${product.bar}`}
                 aria-hidden="true"

@@ -12,8 +12,14 @@ export function TrustCredentials() {
   const format = useFormatter();
 
   return (
-    <section className="bg-ink-950 text-white relative overflow-hidden">
+    <section className="relative overflow-hidden text-white bg-gradient-to-br from-brand-900 via-ink-900 to-ink-950">
       <div className="absolute inset-0 bg-grid opacity-10" />
+      {/* soft warm glow so the dark anchor band reads friendly, not corporate */}
+      <div
+        className="absolute -top-24 right-[14%] w-[420px] h-[420px] rounded-full blur-3xl"
+        style={{ background: "radial-gradient(circle,rgba(242,183,54,.14),transparent 70%)" }}
+        aria-hidden="true"
+      />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 py-16">
         <h2 className="font-display font-700 text-3xl sm:text-4xl tracking-tight text-center mb-10">
           {t("title")}

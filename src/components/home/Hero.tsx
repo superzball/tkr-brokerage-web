@@ -18,25 +18,31 @@ export function Hero() {
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(180deg,#f4f9ff 0%,#eef5ff 45%,#fef6ee 100%)",
+            "linear-gradient(180deg,#edf4ff 0%,#e8f1ff 45%,#fff0e3 100%)",
         }}
       />
-      <div className="absolute inset-0 bg-grid opacity-50" />
+      <div className="absolute inset-0 bg-grid-strong opacity-70" />
+      {/* LEFT visual weight: brand + mint cluster behind the headline */}
+      <div
+        className="absolute -top-12 -left-20 w-[640px] h-[640px] rounded-full blur-3xl animate-float-slow"
+        style={{ background: "radial-gradient(circle,rgba(31,102,238,.30),transparent 66%)" }}
+      />
+      <div
+        className="absolute top-40 -left-28 w-[500px] h-[500px] rounded-full blur-3xl animate-float-slower"
+        style={{ background: "radial-gradient(circle,rgba(20,173,118,.26),transparent 68%)" }}
+      />
+      {/* right + warm balance */}
       <div
         className="absolute -top-28 -right-20 w-[560px] h-[560px] rounded-full blur-3xl animate-float-slow"
-        style={{ background: "radial-gradient(circle,rgba(31,102,238,.22),transparent 70%)" }}
+        style={{ background: "radial-gradient(circle,rgba(31,102,238,.20),transparent 70%)" }}
       />
       <div
-        className="absolute top-32 -left-24 w-[440px] h-[440px] rounded-full blur-3xl"
-        style={{ background: "radial-gradient(circle,rgba(20,173,118,.18),transparent 70%)" }}
+        className="absolute -bottom-16 right-1/4 w-[440px] h-[440px] rounded-full blur-3xl animate-float-slow"
+        style={{ background: "radial-gradient(circle,rgba(246,159,18,.24),transparent 70%)" }}
       />
       <div
-        className="absolute -bottom-16 right-1/4 w-[420px] h-[420px] rounded-full blur-3xl animate-float-slow"
-        style={{ background: "radial-gradient(circle,rgba(246,159,18,.20),transparent 70%)" }}
-      />
-      <div
-        className="absolute top-1/2 left-1/3 w-[300px] h-[300px] rounded-full blur-3xl"
-        style={{ background: "radial-gradient(circle,rgba(255,138,60,.14),transparent 70%)" }}
+        className="absolute top-1/2 left-1/3 w-[340px] h-[340px] rounded-full blur-3xl"
+        style={{ background: "radial-gradient(circle,rgba(255,138,60,.16),transparent 70%)" }}
       />
 
       {/* floating decorative chips — labelled accent pills for a livelier hero */}
