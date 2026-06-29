@@ -207,7 +207,12 @@
     "partners": "Insurer Partners",
     "promotions": "Promotions",
     "allProducts": "All Insurance",
-    "quickRenew": "Renew (existing customer)"
+    "quickRenew": "Renew (existing customer)",
+    "rewards": "Rewards",
+    "loyalty": "Loyalty & Rewards",
+    "loyaltyRules": "Earn rules",
+    "loyaltyRewards": "Rewards catalog",
+    "loyaltyRedeem": "Redemptions"
   },
   "app": {
     "menu": "Menu",
@@ -4052,6 +4057,215 @@
       "saved": "Profile saved",
       "savedNote": "Your profile details have been saved",
       "dismiss": "Dismiss"
+    }
+  },
+  "loyalty": {
+    "hub": {
+      "title": "Rewards & Points",
+      "desc": "Earn points from everything you do — redeem for vouchers, gifts and perks."
+    },
+    "balance": {
+      "title": "Points balance",
+      "points": "{n} pts",
+      "lifetime": "{n} lifetime points",
+      "valueNote": "Spend them on rewards below"
+    },
+    "tier": {
+      "label": "Member tier",
+      "current": "Current tier",
+      "name": {
+        "bronze": "Bronze",
+        "silver": "Silver",
+        "gold": "Gold",
+        "platinum": "Platinum"
+      },
+      "multiplier": "{mult}x points",
+      "progressTo": "{n} pts to {tier}",
+      "maxed": "You're at the top tier",
+      "perksTitle": "Your tier perks"
+    },
+    "perk": {
+      "perkBaseEarn": "Earn points on every activity",
+      "perkBirthdayGift": "Birthday gift",
+      "perkBonusEarn10": "+10% bonus points",
+      "perkPrioritySupport": "Priority support",
+      "perkExclusiveVouchers": "Members-only vouchers",
+      "perkBonusEarn25": "+25% bonus points",
+      "perkDedicatedLine": "Dedicated hotline",
+      "perkPremiumGifts": "Premium gifts",
+      "perkBonusEarn50": "+50% bonus points"
+    },
+    "earn": {
+      "title": "Ways to earn",
+      "desc": "Do these to rack up more points",
+      "perThb": "Every ฿100 spent = 1 point",
+      "plus": "+{n} pts",
+      "perChannel": "+{n} pts/channel",
+      "annualBadge": "Yearly",
+      "onceBadge": "One-time",
+      "earnPurchase": "Buy insurance",
+      "earnProfile": "Complete your profile",
+      "earnSocial": "Link a social account",
+      "earnRenewal": "Renew a policy",
+      "earnNoClaim": "A claim-free year",
+      "earnReferral": "Refer a friend",
+      "earnReview": "Review our service",
+      "earnSurvey": "Take a survey",
+      "earnBirthday": "Your birthday",
+      "earnMission": "Monthly missions",
+      "cta": {
+        "profile": "Complete profile",
+        "social": "Link account",
+        "buy": "Buy insurance",
+        "refer": "Refer a friend",
+        "review": "Write a review",
+        "survey": "Take survey",
+        "done": "Done"
+      },
+      "earned": "Earned {n} points!",
+      "earnedProfile": "Nice! You earned 100 points for completing your profile"
+    },
+    "catalog": {
+      "title": "Redeem rewards",
+      "desc": "Spend your points on rewards and perks",
+      "cost": "{n} pts",
+      "redeem": "Redeem",
+      "redeemed": "Redeemed",
+      "insufficient": "Not enough points",
+      "tierLocked": "{tier} tier and above",
+      "worth": "Worth ฿{n}",
+      "empty": "No rewards yet"
+    },
+    "rw": {
+      "rwCoffee": "Coffee e-voucher ฿100",
+      "rwGift": "TKR premium gift",
+      "rwEndorse": "Policy endorsement fee discount",
+      "rwVoucher": "e-voucher ฿250",
+      "rwPremium": "Premium discount ฿200",
+      "rwDonate": "Donate points to charity"
+    },
+    "rwType": {
+      "voucher": "Voucher",
+      "gift": "Gift",
+      "service": "Service",
+      "premium_discount": "Premium discount",
+      "donation": "Donation"
+    },
+    "redeemModal": {
+      "title": "Confirm redemption",
+      "confirmText": "Redeem “{name}” for {cost} points?",
+      "balanceAfter": "Balance after redeeming: {n}",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "issuedTitle": "Redeemed!",
+      "issuedCode": "Your coupon code",
+      "issuedNote": "Use this code per the reward terms, or find it in your redemption history.",
+      "donateNote": "Thank you! Your points have been donated.",
+      "close": "Done",
+      "toast": "Redeemed “{name}”"
+    },
+    "ledger": {
+      "title": "Points history",
+      "desc": "All points earned and spent",
+      "empty": "No activity yet",
+      "type": {
+        "earn": "Earned",
+        "redeem": "Redeemed",
+        "expire": "Expired",
+        "adjust": "Adjusted"
+      },
+      "viewAll": "View all",
+      "showLess": "Show less"
+    },
+    "referral": {
+      "title": "Refer a friend, get 300 points",
+      "desc": "Your friend gets 150 points when they sign up with your link.",
+      "yourLink": "Your referral link",
+      "copy": "Copy link",
+      "copied": "Link copied",
+      "code": "Referral code: {code}"
+    },
+    "missions": {
+      "title": "Monthly missions",
+      "desc": "Complete missions to earn bonus points",
+      "progress": "{done}/{total} done",
+      "reward": "+{n} pts",
+      "claim": "Claim",
+      "claimed": "Claimed",
+      "m1": "Open the app on 3 days this month",
+      "m2": "Update your policy details",
+      "m3": "Read 1 insurance article"
+    },
+    "guestNudge": {
+      "title": "Confirm your profile, get 100 points",
+      "desc": "You're on a temporary account — complete your profile to instantly earn 100 points and keep your points history tied to your account.",
+      "cta": "Complete profile for points"
+    },
+    "checkoutEarn": "+{n} points earned on this purchase",
+    "disclaimer": "Points and rewards are a sales-promotion benefit and have no effect on underwriting or claims · Terms apply.",
+    "admin": {
+      "rules": {
+        "title": "Earn rules",
+        "desc": "Set the points customers earn from each activity (demo)",
+        "source": "Activity",
+        "points": "Points",
+        "unit": "Unit",
+        "perThb": "per ฿100",
+        "perChannel": "per channel",
+        "perAction": "per action",
+        "fixed": "fixed",
+        "once": "once/customer",
+        "annual": "yearly",
+        "save": "Save",
+        "saved": "Earn rules saved"
+      },
+      "rewards": {
+        "title": "Manage rewards",
+        "desc": "Add/edit rewards, toggle visibility, and set the legal-review flag",
+        "add": "Add reward",
+        "created": "Reward added",
+        "count": "{n} rewards",
+        "cost": "Point cost",
+        "value": "Value",
+        "type": "Type",
+        "minTier": "Min tier",
+        "noTier": "All tiers",
+        "active": "Visible",
+        "inactive": "Hidden",
+        "toggle": "Toggle",
+        "activated": "Reward shown",
+        "deactivated": "Reward hidden",
+        "delete": "Delete",
+        "deleted": "Reward deleted",
+        "legalReview": "Requires legal review",
+        "legalGated": "Hidden from customers — pending OIC/legal sign-off",
+        "legalHint": "Premium-discount rewards touch OIC rebating rules and only become redeemable after sign-off (gated by FEATURES_LOYALTY.pointsToPremiumDiscount)."
+      },
+      "redeem": {
+        "title": "Redemption history",
+        "desc": "Customer redemptions and their status",
+        "customer": "Customer",
+        "reward": "Reward",
+        "points": "Points",
+        "code": "Code",
+        "status": "Status",
+        "date": "Date",
+        "empty": "No redemptions yet",
+        "markUsed": "Mark as used",
+        "marked": "Status updated"
+      },
+      "status": {
+        "issued": "Issued",
+        "used": "Used",
+        "expired": "Expired"
+      },
+      "liability": {
+        "title": "Points liability",
+        "label": "Outstanding points (liability)",
+        "desc": "Sum of unspent customer balances",
+        "members": "Loyalty members",
+        "note": "Points are a financial liability — set an expiry policy and T&C before going live."
+      }
     }
   }
 }

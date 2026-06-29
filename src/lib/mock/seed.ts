@@ -15,7 +15,9 @@ import type {
   PolicyTicket, CrmPayment, CreditTransaction, AmendmentTicket, IssuedPolicy,
   Coupon, Review, InsurerPartner, GlossaryTerm, InstallmentPlan,
   PlanCard, FitQuestion, CheckoutOption, TaxDeductionCap,
+  LoyaltyAccount, PointsEntry, Reward, Redemption,
 } from '@/types/portal';
+import { memberTierOf, FEATURES_LOYALTY } from '@/config/loyalty';
 
 // ============================ USERS (demo accounts) ============================
 export const users: User[] = [
@@ -832,3 +834,73 @@ export const getPlanCards = (product?: InsuranceType) =>
 export const getFitQuestions = () => fitQuestions;
 export const getCheckoutOptions = () => checkoutOptions;
 export const getTaxDeductionCaps = () => taxDeductionCaps;
+
+// ============================ CUSTOMER LOYALTY & REWARDS (Phase 20) ============================
+// Points/rewards for consumer customers (individual + guest). Ledger is append-
+// only with a running balanceAfter; the account balance/lifetime are DERIVED from
+// the ledger so they can never drift. `description` is Thai (mock authoring).
+
+// u_indiv ledger — oldest → newest. balanceAfter is the running balance.
+export const pointsLedger: PointsEntry[] = [
+  { id: 'pt1',  customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 900,  balanceAfter: 900,  description: 'ได้แต้มจากการซื้อประกันสุขภาพครอบครัว (เบี้ย ฿90,000)', date: '2026-01-01', ref: 'TKR-H-2026-008700' },
+  { id: 'pt2',  customerId: 'u_indiv', type: 'earn', source: 'profile_complete', points: 100,  balanceAfter: 1000, description: 'กรอกข้อมูลโปรไฟล์ครบถ้วน', date: '2026-01-02' },
+  { id: 'pt3',  customerId: 'u_indiv', type: 'earn', source: 'social_link',      points: 50,   balanceAfter: 1050, description: 'เชื่อมบัญชี LINE', date: '2026-01-03' },
+  { id: 'pt4',  customerId: 'u_indiv', type: 'earn', source: 'no_claim',         points: 300,  balanceAfter: 1350, description: 'ครบปีไม่มีการเคลม', date: '2026-01-15' },
+  { id: 'pt5',  customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 142,  balanceAfter: 1492, description: 'ได้แต้มจากการซื้อประกันรถยนต์ชั้น 1 (เบี้ย ฿14,200)', date: '2026-02-20', ref: 'TKR-A-2026-022104' },
+  { id: 'pt6',  customerId: 'u_indiv', type: 'earn', source: 'social_link',      points: 50,   balanceAfter: 1542, description: 'เชื่อมบัญชี Facebook', date: '2026-02-22' },
+  { id: 'pt7',  customerId: 'u_indiv', type: 'earn', source: 'referral',         points: 300,  balanceAfter: 1842, description: 'แนะนำเพื่อนสมัครสำเร็จ', date: '2026-03-10', ref: 'REF-7781' },
+  { id: 'pt8',  customerId: 'u_indiv', type: 'earn', source: 'renewal',          points: 200,  balanceAfter: 2042, description: 'ต่ออายุกรมธรรม์', date: '2026-03-20' },
+  { id: 'pt9',  customerId: 'u_indiv', type: 'earn', source: 'birthday',         points: 100,  balanceAfter: 2142, description: 'โบนัสวันเกิด', date: '2026-04-01' },
+  { id: 'pt10', customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 220,  balanceAfter: 2362, description: 'ได้แต้มจากการซื้อประกันสุขภาพ (เบี้ย ฿22,000)', date: '2026-04-10', ref: 'TKR-H-2026-008877' },
+  { id: 'pt11', customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 188,  balanceAfter: 2550, description: 'ได้แต้มจากการซื้อประกันรถยนต์ (เบี้ย ฿18,800)', date: '2026-04-18', ref: 'TKR-A-2026-022590' },
+  { id: 'pt12', customerId: 'u_indiv', type: 'earn', source: 'review',           points: 50,   balanceAfter: 2600, description: 'รีวิวหลังใช้บริการ', date: '2026-05-01' },
+  { id: 'pt13', customerId: 'u_indiv', type: 'earn', source: 'survey',           points: 30,   balanceAfter: 2630, description: 'ทำแบบสอบถามความพึงพอใจ', date: '2026-05-08' },
+  { id: 'pt14', customerId: 'u_indiv', type: 'earn', source: 'mission',          points: 20,   balanceAfter: 2650, description: 'ทำภารกิจประจำเดือนสำเร็จ', date: '2026-05-15' },
+  { id: 'pt15', customerId: 'u_indiv', type: 'redeem',                           points: -1200, balanceAfter: 1450, description: 'แลก e-voucher ร้านกาแฟ ฿100', date: '2026-05-20', ref: 'RWD-rw_coffee' },
+];
+
+function buildLoyaltyAccount(customerId: string, ledger: PointsEntry[]): LoyaltyAccount {
+  const rows = ledger.filter(e => e.customerId === customerId);
+  const lifetimePoints = rows.filter(e => e.points > 0).reduce((s, e) => s + e.points, 0);
+  const balance = rows.reduce((s, e) => s + e.points, 0);
+  return { customerId, balance, lifetimePoints, tier: memberTierOf(lifetimePoints) };
+}
+
+export const loyaltyAccounts: LoyaltyAccount[] = [
+  buildLoyaltyAccount('u_indiv', pointsLedger),
+];
+
+export const rewards: Reward[] = [
+  { id: 'rw_coffee',  name: 'rwCoffee',  type: 'voucher',          cost: 1200, value: 100, active: true },
+  { id: 'rw_gift',    name: 'rwGift',    type: 'gift',             cost: 1500,             active: true },
+  { id: 'rw_endorse', name: 'rwEndorse', type: 'service',          cost: 800,              active: true, minTier: 'silver' },
+  { id: 'rw_voucher', name: 'rwVoucher', type: 'voucher',          cost: 2500, value: 250, active: true, minTier: 'gold' },
+  { id: 'rw_premium', name: 'rwPremium', type: 'premium_discount', cost: 2000, value: 200, active: true, requiresLegalReview: true },
+  { id: 'rw_donate',  name: 'rwDonate',  type: 'donation',         cost: 500,              active: true },
+];
+
+export const redemptions: Redemption[] = [
+  { id: 'rd1', customerId: 'u_indiv', rewardId: 'rw_coffee', pointsSpent: 1200, code: 'TKR-CAFE-8842', status: 'used', date: '2026-05-20' },
+];
+
+export const getLoyalty = (customerId: string) =>
+  loyaltyAccounts.find(a => a.customerId === customerId);
+export const getPointsLedger = (customerId: string) =>
+  pointsLedger.filter(e => e.customerId === customerId);
+/** Active rewards; premium-discount entries are hidden unless the feature flag is on. */
+export const getRewards = () =>
+  rewards.filter(r => r.active && (FEATURES_LOYALTY.pointsToPremiumDiscount || r.type !== 'premium_discount'));
+/** Admin view — every reward incl. inactive + legal-gated premium_discount. */
+export const getAllRewards = () => rewards;
+export const getRedemptions = (customerId?: string) =>
+  customerId ? redemptions.filter(r => r.customerId === customerId) : redemptions;
+export const getReward = (id: string) => rewards.find(r => r.id === id);
+export { redeemGuard } from '@/config/loyalty';
+
+/** Platform-wide loyalty figures for the admin dashboard / liability tracking. */
+export function loyaltyStats() {
+  const members = loyaltyAccounts.length;
+  const liability = loyaltyAccounts.reduce((s, a) => s + a.balance, 0); // outstanding spendable points
+  const redeemed = redemptions.reduce((s, r) => s + r.pointsSpent, 0);
+  return { members, liability, redeemed, outstanding: liability };
+}

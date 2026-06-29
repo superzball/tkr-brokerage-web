@@ -8,6 +8,7 @@ import { StatusBadge } from "@/components/app/StatusBadge";
 import { BarChart, type Bar } from "@/components/app/admin/BarChart";
 import {
   adminStats,
+  loyaltyStats,
   getAuditLog,
   getOrders,
   getDownline,
@@ -26,6 +27,7 @@ export default async function AdminDashboard({ params }: Props) {
   const t = await getTranslations("admin.dashboard");
   const tr = await getTranslations("admin.reports");
   const ty = await getTranslations("business.type");
+  const tlia = await getTranslations("loyalty.admin.liability");
   const format = await getFormatter();
   const baht = (n: number) =>
     format.number(n, {
@@ -62,6 +64,8 @@ export default async function AdminDashboard({ params }: Props) {
     { icon: "doc", label: t("draftArticles"), value: stats.draftArticles, tone: "ink" },
   ];
 
+  const loyalty = loyaltyStats();
+
   const queues: { href: string; icon: IconName; label: string; count: number }[] = [
     { href: "/admin/claims", icon: "file", label: t("qClaims"), count: stats.pendingClaims },
     { href: "/admin/approvals", icon: "shieldCheck", label: t("qApprovals"), count: pendingApprovals },
@@ -84,6 +88,28 @@ export default async function AdminDashboard({ params }: Props) {
         <h2 className="font-700 text-ink-900 mb-4">{tr("gwpByProduct")}</h2>
         <BarChart bars={gwpBars} />
       </section>
+
+      {/* points liability — outstanding loyalty points (financial liability) */}
+      <Link href="/admin/loyalty/redemptions" className="block mt-6 card p-5 hover:border-gold-200 transition-colors">
+        <div className="flex flex-wrap items-center gap-4">
+          <span className="w-11 h-11 rounded-xl bg-gold-50 text-gold-600 flex items-center justify-center shrink-0">
+            <Icon name="gift" size={22} />
+          </span>
+          <div className="min-w-0">
+            <p className="text-sm text-ink-500">{tlia("label")}</p>
+            <p className="text-2xl font-700 text-ink-900 tabnum font-display">
+              {loyalty.liability.toLocaleString()}
+              <span className="ml-2 text-sm font-600 text-ink-400">pts</span>
+            </p>
+          </div>
+          <div className="ml-auto text-right text-sm">
+            <p className="font-700 text-ink-900 tabnum">{loyalty.members}</p>
+            <p className="text-xs text-ink-500">{tlia("members")}</p>
+          </div>
+          <Icon name="chevR" size={16} className="text-ink-300 shrink-0" />
+        </div>
+        <p className="mt-3 text-xs text-ink-400 leading-relaxed">{tlia("note")}</p>
+      </Link>
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         {/* needs-action queues */}

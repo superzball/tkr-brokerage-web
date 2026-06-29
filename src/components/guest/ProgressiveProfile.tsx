@@ -11,9 +11,11 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { useToast } from "@/components/app/toast";
 import { completeGuestProfile } from "@/lib/auth/actions";
+import { recordEarn } from "@/lib/loyalty/local";
 
 export function ProgressiveProfile({ className }: { className?: string }) {
   const t = useTranslations("guest.profile");
+  const tl = useTranslations("loyalty");
   const { toast } = useToast();
   const [dismissed, setDismissed] = useState(false);
   const [done, setDone] = useState(false);
@@ -39,9 +41,17 @@ export function ProgressiveProfile({ className }: { className?: string }) {
     if (saving) return;
     setSaving(true);
     await completeGuestProfile({ name, email, address });
+    // Loyalty earn hook (mock): completing the profile grants the one-time
+    // profile-complete points and ties the guest→active conversion to rewards.
+    const earned = recordEarn({
+      source: "profile_complete",
+      points: 100,
+      description: tl("earn.earnProfile"),
+      tag: "profile_complete",
+    });
     setSaving(false);
     setDone(true);
-    toast(t("saved"), "success");
+    toast(earned ? tl("earn.earnedProfile") : t("saved"), "success");
   }
 
   return (

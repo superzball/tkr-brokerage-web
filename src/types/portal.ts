@@ -529,3 +529,65 @@ export interface TopNavItem {
   columns?: MegaColumn[];      // present → renders as a mega menu
   featured?: MegaLink;         // optional highlighted card in the dropdown
 }
+
+// ============== customer loyalty & rewards (Phase 20, LOYALTY_ADDITIONS) ==============
+// Points/rewards for CONSUMER customers (individual + guest). Member tiers are a
+// SEPARATE concept from agent tiers (Tier: Silver/Gold/…) — different type,
+// different users; always label "ระดับสมาชิก" vs "ระดับตัวแทน". Mock-only.
+export type MemberTier = 'bronze' | 'silver' | 'gold' | 'platinum';
+export type PointsEntryType = 'earn' | 'redeem' | 'expire' | 'adjust';
+export type EarnSource =
+  'purchase' | 'profile_complete' | 'social_link' | 'renewal' | 'no_claim'
+  | 'referral' | 'review' | 'survey' | 'birthday' | 'mission';
+export type RewardType = 'voucher' | 'gift' | 'service' | 'premium_discount' | 'donation';
+
+export interface LoyaltyAccount {
+  customerId: string;
+  balance: number;          // spendable points
+  lifetimePoints: number;   // for tier calc (never decreases on redeem)
+  tier: MemberTier;
+}
+export interface PointsEntry {
+  id: string;
+  customerId: string;
+  type: PointsEntryType;
+  source?: EarnSource;      // for 'earn'
+  points: number;           // + earn / − redeem
+  balanceAfter: number;     // append-only ledger
+  description: string;
+  date: string;
+  ref?: string;             // policy/order/reward ref
+}
+export interface EarnRule {
+  source: EarnSource;
+  label: string;            // i18n key under `loyalty.earn`
+  points: number;           // fixed, or per-unit (see unit)
+  unit?: 'per_100_thb' | 'per_action' | 'per_channel';
+  oncePerCustomer?: boolean;
+  annual?: boolean;
+}
+export interface Reward {
+  id: string;
+  name: string;             // i18n key under `loyalty.rw`
+  type: RewardType;
+  cost: number;             // points
+  value?: number;           // THB value where relevant
+  minTier?: MemberTier;     // tier-gated rewards
+  active: boolean;
+  requiresLegalReview?: boolean;  // true for premium_discount (OIC/legal sign-off)
+}
+export interface Redemption {
+  id: string;
+  customerId: string;
+  rewardId: string;
+  pointsSpent: number;
+  code?: string;            // voucher/coupon code issued
+  status: 'issued' | 'used' | 'expired';
+  date: string;
+}
+export interface MemberTierInfo {
+  tier: MemberTier;
+  threshold: number;        // lifetime points to reach
+  earnMultiplier: number;   // e.g. 1.0 / 1.1 / 1.25 / 1.5
+  perksKeys: string[];      // i18n keys under `loyalty.perk`; service/gift perks only
+}

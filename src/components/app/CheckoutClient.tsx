@@ -20,13 +20,16 @@ import type { PendingQuote } from "@/lib/quote/pending";
 import { CouponInstallment } from "@/components/conversion/CouponInstallment";
 import { ChannelChoice } from "@/components/conversion/ChannelChoice";
 import { PaymentMethods } from "@/components/conversion/PaymentMethods";
+import { recordEarn } from "@/lib/loyalty/local";
 import type { InsuranceType } from "@/types/portal";
 
 export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
   const t = useTranslations("checkout.page");
   const tw = useTranslations("worker");
+  const tl = useTranslations("loyalty");
   const user = useSession();
   const [done, setDone] = useState(false);
+  const [earnedPts, setEarnedPts] = useState(0);
   const [pending, start] = useTransition();
   // Channel choice (ซื้อเอง / ตัวแทน) gates the self-serve payment panel — Phase 17/18.
   const [selfServe, setSelfServe] = useState(false);
@@ -60,6 +63,11 @@ export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
         </span>
         <h2 className="text-xl font-700 text-ink-900">{t("confirmedTitle")}</h2>
         <p className="mt-1.5 text-sm text-ink-500 max-w-sm">{t("confirmedDesc")}</p>
+        {earnedPts > 0 && (
+          <p className="mt-3 inline-flex items-center gap-1.5 chip bg-gold-50 text-gold-600 text-sm font-600">
+            <Icon name="gift" size={15} /> {tl("checkoutEarn", { n: earnedPts })}
+          </p>
+        )}
         <Button href="/app/policies" variant="primary" size="md" className="mt-5">
           {t("viewPolicies")} <Icon name="arrowRight" />
         </Button>
@@ -133,6 +141,17 @@ export function CheckoutClient({ quote }: { quote: PendingQuote | null }) {
           onClick={() => start(async () => {
             await clearPendingQuote();
             clearPendingDetail();
+            // Loyalty earn hook (mock): 1 point per ฿100 of premium on purchase.
+            const pts = Math.floor((quote.total ?? 0) / 100);
+            if (pts > 0) {
+              recordEarn({
+                source: "purchase",
+                points: pts,
+                description: tl("earn.earnPurchase"),
+                ref: quote.planLabel,
+              });
+              setEarnedPts(pts);
+            }
             setDone(true);
           })}
         >

@@ -46,6 +46,7 @@ export const portalNav: Record<Role, NavSection[]> = {
       items: [
         { key: 'dashboard', href: '/app/dashboard', icon: 'LayoutDashboard' },
         { key: 'policies',  href: '/app/policies',  icon: 'ShieldCheck' },
+        { key: 'rewards',   href: '/app/rewards',   icon: 'Gift' },
         { key: 'buy',       href: '/app/buy',       icon: 'ShoppingCart' },
         { key: 'claims',    href: '/app/claims',    icon: 'ClipboardList' },
       ],
@@ -111,6 +112,14 @@ export const portalNav: Record<Role, NavSection[]> = {
         { key: 'coupons',  href: '/admin/content/coupons',  icon: 'TicketPercent', perm: 'content' },
         { key: 'reviews',  href: '/admin/content/reviews',  icon: 'Star',          perm: 'content' },
         { key: 'partners', href: '/admin/content/partners', icon: 'Handshake',     perm: 'content' },
+      ],
+    },
+    {
+      key: 'loyalty',
+      items: [
+        { key: 'loyaltyRules',   href: '/admin/loyalty/rules',       icon: 'Sparkles', perm: 'content' },
+        { key: 'loyaltyRewards', href: '/admin/loyalty/rewards',     icon: 'Gift',     perm: 'content' },
+        { key: 'loyaltyRedeem',  href: '/admin/loyalty/redemptions', icon: 'Ticket',   perm: 'ops' },
       ],
     },
     {

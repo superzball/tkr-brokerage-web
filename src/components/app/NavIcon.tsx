@@ -45,6 +45,8 @@ import {
   TicketPercent,
   Star,
   Handshake,
+  Gift,
+  Sparkles,
   type LucideProps,
 } from "lucide-react";
 
@@ -89,6 +91,8 @@ const registry: Record<string, React.ComponentType<LucideProps>> = {
   TicketPercent,
   Star,
   Handshake,
+  Gift,
+  Sparkles,
 };
 
 export function NavIcon({
