@@ -39,7 +39,7 @@ export function ProductGrid() {
           </h2>
           <span className="kw-swash mt-5" aria-hidden="true" />
         </div>
-        <p className="lg:text-right text-lg text-ink-500 lg:max-w-xs lg:pb-2">{t("subtitle")}</p>
+        <p className="lg:text-right text-md text-ink-500 lg:max-w-xs lg:pb-2">{t("subtitle")}</p>
       </div>
 
       <div className="mt-12 grid lg:grid-cols-3 gap-5">
