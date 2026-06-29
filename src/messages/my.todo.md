@@ -43,4 +43,4 @@ are Thai placeholders**. Largest backlogs: `admin` ~716, `business` ~237, `agent
 - [ ] phase20 — Customer Loyalty & Rewards copy (`loyalty` namespace incl. loyalty.admin.*, + nav.rewards/loyalty/loyaltyRules/loyaltyRewards/loyaltyRedeem), Thai placeholders
 - [ ] about — About marketing pages copy (`about` namespace: main/why/partners/agent, + metadata.about/aboutWhy/aboutPartners/aboutAgent), Thai placeholders
 - [ ] help — Help Center / Articles / Contact public pages copy (`help` incl. `help.faqs[]`, `articles`, `contact` namespaces, + metadata.help/articles/contact), Thai placeholders
-- [ ] phase21-legal — Legal & PDPA copy (`legal` incl. privacy/terms/cookies/consent/dataRequest sections[], `consent` capture+cookie banner, `admin.legal`, + metadata.legal* + footer.legal.cookies), Thai placeholders
+- [ ] phase21-legal — Legal & PDPA copy (`legal` incl. privacy/terms/cookies/consent/dataRequest sections[], `consent` capture+cookie banner, `admin.legal`, `nav.legal` (admin sidebar item), + metadata.legal* + footer.legal.cookies), Thai placeholders
