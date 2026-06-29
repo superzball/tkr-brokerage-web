@@ -19,6 +19,43 @@ pnpm lint
 > If `pnpm dev` 404s every route, a previous `pnpm build` left a production
 > `.next/`. Fix: `rm -rf .next` then `pnpm dev`.
 
+## E2E tests — Phase 13 critical-flow regression guard
+
+Playwright specs in [e2e/](e2e/) lock the seven Phase-13 critical flows so they
+can't silently break (esp. the guest-checkout **phone+OTP-before-payment** step):
+
+```bash
+pnpm test:e2e        # run all 7 flows (headless, Chromium)
+pnpm test:e2e:ui     # interactive UI mode
+pnpm exec playwright test e2e/01-guest-checkout.spec.ts   # one flow
+```
+
+- **Server.** [playwright.config.ts](playwright.config.ts) starts `pnpm dev` on
+  port 3000 and **reuses an already-running dev server** locally (Next 16's dev
+  server is single-instance per dir — a second one won't start). CI spawns its
+  own. Override the port with `E2E_PORT`.
+- **Serial by design.** Some flows mutate shared mock state (the server's
+  in-memory guest store; localStorage CRM ledger), so `workers: 1`.
+- **Auth shortcut.** Non-login flows plant the `tkr_session` cookie (a bare
+  `User.id`) via `loginAs()` in [e2e/helpers.ts](e2e/helpers.ts) instead of
+  driving the login UI.
+- **Selectors** are Thai user-facing copy + ARIA roles (no `data-testid` exists);
+  a deliberate copy change to `messages/th.json` may require updating a spec.
+- **Cookie banner.** The fixed-bottom consent banner intercepts clicks near the
+  page bottom, so interactive specs call `dismissCookieBanner()` (plants a choice
+  cookie) — the exception is `07-consent`, which exercises the banner itself.
+- **Guest gate.** `01-guest-checkout` includes two regression cases that fail if
+  a lingering guest session cookie short-circuits the phone-verify step (the
+  WorkerFlow and `/app/checkout` paths) — a guest is not a full account and must
+  verify/resume before payment.
+- **Node 22+** required (Next 16). In CI, select it before `pnpm test:e2e`.
+
+The 7 specs map 1:1 to the Phase-13 list: `01` guest checkout, `02` login
+(phone-OTP + email → portal per role), `03` buy (logged-in customer + agent
+on-behalf), `04` file-a-claim → status tracker, `05` agent signup license-gate +
+override visible, `06` admin ticket → credit debit → payment → issue, `07`
+cookie + PDPA consent capture.
+
 ## Architecture
 
 ```
@@ -186,6 +223,17 @@ the `instantCoverage` note). `ProductPlans` mounts in `ProductLanding`'s
 (worker/auto). The checkout (`CheckoutClient`) keeps the `ChannelChoice` gate,
 then reveals coupon/installment + `PaymentMethods`. All plan data is **generic
 placeholder** — real numbers come from the admin catalog.
+
+**…add or fix an e2e critical-flow test (Phase 13).** Specs live in
+[e2e/](e2e/), one numbered file per flow, with shared auth/OTP helpers in
+[e2e/helpers.ts](e2e/helpers.ts). Authenticate by planting the `tkr_session`
+cookie with `loginAs(context, USERS.<role>, baseURL)` (the cookie value is a bare
+`User.id` — see [src/lib/auth/session.ts](src/lib/auth/session.ts)); only the
+login spec drives `/login`. Select elements by their Thai copy + ARIA role, so a
+deliberate `messages/th.json` change is what (correctly) trips a test. Keep new
+specs serial-safe — they share the mock store — and use a non-demo phone for
+guest checkout so the OTP creates a fresh guest rather than resuming a demo
+account. Run with `pnpm test:e2e`.
 
 **…gate a vertical behind a feature flag.** Build-time flags live in
 [src/config/features.ts](src/config/features.ts) (`FEATURES`). `cashInstallment`

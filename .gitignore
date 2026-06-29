@@ -28,6 +28,12 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
+
 /TKR Platform
 /TKR Platform.zip
 .vscode/
