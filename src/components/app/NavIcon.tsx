@@ -47,6 +47,7 @@ import {
   Handshake,
   Gift,
   Sparkles,
+  Scale,
   type LucideProps,
 } from "lucide-react";
 
@@ -93,6 +94,7 @@ const registry: Record<string, React.ComponentType<LucideProps>> = {
   Handshake,
   Gift,
   Sparkles,
+  Scale,
 };
 
 export function NavIcon({

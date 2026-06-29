@@ -16,6 +16,7 @@ import type {
   Coupon, Review, InsurerPartner, GlossaryTerm, InstallmentPlan,
   PlanCard, FitQuestion, CheckoutOption, TaxDeductionCap,
   LoyaltyAccount, PointsEntry, Reward, Redemption,
+  ConsentRecord, LegalPolicy, LegalPolicyKind, DataSubjectRequest,
 } from '@/types/portal';
 import { memberTierOf, FEATURES_LOYALTY } from '@/config/loyalty';
 
@@ -513,6 +514,8 @@ export const auditLog: AuditEntry[] = [
   { id: 'au1', actor: 'คุณกานต์ ผู้ดูแลระบบ', action: 'สร้างออเดอร์แทนลูกค้า', target: 'ORD-2026-1188', time: '2026-06-20T14:22:00+07:00' },
   { id: 'au2', actor: 'คุณปาริชาต ฝ่ายปฏิบัติการ', action: 'อนุมัติเคลม', target: 'CLM-2026-09887', time: '2026-06-21T10:05:00+07:00' },
   { id: 'au3', actor: 'คุณธีรเดช คอนเทนต์', action: 'เผยแพร่บทความ', target: 'foreign-worker-insurance-2026', time: '2026-06-01T09:00:00+07:00' },
+  { id: 'au4', actor: 'คุณกานต์ ผู้ดูแลระบบ', action: 'เผยแพร่นโยบายความเป็นส่วนตัว', target: 'privacy v2026.1', time: '2026-01-01T00:00:00+07:00' },
+  { id: 'au5', actor: 'คุณปาริชาต ฝ่ายปฏิบัติการ', action: 'ดำเนินการคำขอข้อมูลส่วนบุคคล', target: 'DSR-2026-0005', time: '2026-06-02T13:15:00+07:00' },
 ];
 
 // helpers
@@ -559,6 +562,11 @@ export const cmsPages: CmsPage[] = [
   { id: 'cp7', path: '/about/why',        title: 'ทำไมต้อง TKR',          hero: 'ทำไมต้องเลือก TKR',                        body: 'เชี่ยวชาญประกันแรงงานต่างด้าว เทียบหลายบริษัทในที่เดียว และเครื่องมือดิจิทัลที่ทำให้เรื่องประกันง่ายขึ้น', faqCount: 0, updatedAt: '2026-06-29' },
   { id: 'cp8', path: '/about/partners',   title: 'บริษัทประกันพันธมิตร',   hero: 'บริษัทประกันที่เราทำงานด้วย',               body: 'ในฐานะนายหน้า เราเป็นพันธมิตรกับบริษัทประกันชั้นนำ เพื่อให้คุณเปรียบเทียบทางเลือกและเลือกที่ใช่', faqCount: 0, updatedAt: '2026-06-29' },
   { id: 'cp9', path: '/about/agent',      title: 'ร่วมเป็นตัวแทน',         hero: 'สร้างรายได้กับ TKR',                       body: 'เป็นตัวแทนประกัน TKR ที่ได้รับใบอนุญาต รับคอมมิชชั่นจากยอดขายจริง โมเดลตัวแทนที่ถูกต้อง ไม่มีค่าสมัคร', faqCount: 5, updatedAt: '2026-06-29' },
+  // Legal pages (Phase 21) — body is CMS-editable placeholder; real wording is
+  // drafted/approved by counsel (see the "legal review" TODO on each page).
+  { id: 'cp10', path: '/legal/privacy', title: 'นโยบายความเป็นส่วนตัว (PDPA)', hero: 'นโยบายความเป็นส่วนตัว', body: 'นโยบายนี้อธิบายว่าเราเก็บ ใช้ และเปิดเผยข้อมูลส่วนบุคคลของคุณ (รวมถึงข้อมูลแรงงาน) อย่างไร ภายใต้ พ.ร.บ. คุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562', faqCount: 0, updatedAt: '2026-06-29' },
+  { id: 'cp11', path: '/legal/terms',   title: 'ข้อกำหนดการใช้งาน',         hero: 'ข้อกำหนดการใช้งาน',     body: 'ข้อกำหนดการใช้บริการแพลตฟอร์ม TKR บทบาทของเราในฐานะนายหน้าประกันภัยที่ได้รับใบอนุญาต และข้อจำกัดความรับผิด', faqCount: 0, updatedAt: '2026-06-29' },
+  { id: 'cp12', path: '/legal/cookies', title: 'นโยบายคุกกี้',              hero: 'นโยบายคุกกี้',          body: 'เราใช้คุกกี้เพื่อให้เว็บไซต์ทำงานได้ วิเคราะห์การใช้งาน และทำการตลาด คุณจัดการความยินยอมได้ตลอดเวลา', faqCount: 0, updatedAt: '2026-06-29' },
 ];
 
 export const faqs: Faq[] = [
@@ -599,6 +607,56 @@ export const getFaqs = (pageId?: string) =>
   pageId ? faqs.filter(f => f.pageId === pageId) : faqs;
 export const getMedia = () => mediaAssets;
 export const getRedirects = () => redirects;
+
+// ============================ LEGAL & PDPA (Phase 21) ============================
+// Versioned policies (privacy/terms/cookies) with effective dates. The CURRENT
+// version is the latest published one per kind — captured into every ConsentRecord
+// so consent is always tied to the wording the subject actually agreed to.
+export const legalPolicies: LegalPolicy[] = [
+  { id: 'lp_priv_2026_1', kind: 'privacy', version: '2026.1', effectiveDate: '2026-01-01', status: 'published', summary: 'ฉบับเริ่มต้นปี 2026 — โครงสร้างตาม PDPA (รอตรวจทานโดยที่ปรึกษากฎหมาย)' },
+  { id: 'lp_priv_2025_1', kind: 'privacy', version: '2025.1', effectiveDate: '2025-03-01', status: 'published', summary: 'ฉบับปี 2025 (แทนที่แล้ว)' },
+  { id: 'lp_terms_2026_1', kind: 'terms',   version: '2026.1', effectiveDate: '2026-01-01', status: 'published', summary: 'ข้อกำหนดการใช้งานฉบับปี 2026' },
+  { id: 'lp_cook_2026_1',  kind: 'cookies', version: '2026.1', effectiveDate: '2026-01-01', status: 'published', summary: 'นโยบายคุกกี้ฉบับปี 2026 — 3 หมวด: จำเป็น/วิเคราะห์/การตลาด' },
+];
+
+/** Latest published version string for a policy kind (the one in force). */
+export const currentPolicyVersion = (kind: LegalPolicyKind): string =>
+  legalPolicies
+    .filter((p) => p.kind === kind && p.status === 'published')
+    .sort((a, b) => (a.effectiveDate < b.effectiveDate ? 1 : -1))[0]?.version ?? '—';
+
+export const getLegalPolicies = () => legalPolicies;
+
+// Append-only consent audit (mock). A real backend keeps one row per grant/
+// withdraw; the consent center + admin view read the latest per (subject, type).
+export const consentRecords: ConsentRecord[] = [
+  { id: 'cs1', subjectId: 'u_indiv',     type: 'pdpa_service', granted: true,  policyVersion: '2026.1', source: 'signup',         timestamp: '2026-02-14T09:12:00+07:00' },
+  { id: 'cs2', subjectId: 'u_indiv',     type: 'marketing',    granted: true,  policyVersion: '2026.1', source: 'signup',         timestamp: '2026-02-14T09:12:00+07:00' },
+  { id: 'cs3', subjectId: 'u_business',  type: 'pdpa_service', granted: true,  policyVersion: '2026.1', source: 'signup',         timestamp: '2026-01-20T14:30:00+07:00' },
+  { id: 'cs4', subjectId: 'u_business',  type: 'marketing',    granted: false, policyVersion: '2026.1', source: 'consent_center', timestamp: '2026-05-02T11:05:00+07:00' },
+  { id: 'cs5', subjectId: '0812345678',  type: 'pdpa_service', granted: true,  policyVersion: '2026.1', source: 'guest_checkout',  timestamp: '2026-06-18T16:40:00+07:00' },
+];
+
+/** All consent records (newest first), optionally for one subject. */
+export const getConsents = (subjectId?: string) =>
+  [...consentRecords]
+    .filter((c) => !subjectId || c.subjectId === subjectId)
+    .sort((a, b) => (a.timestamp < b.timestamp ? 1 : -1));
+
+/** Latest record per consent type for a subject (the current effective state). */
+export const getConsentState = (subjectId: string): Record<string, ConsentRecord> => {
+  const out: Record<string, ConsentRecord> = {};
+  for (const c of getConsents(subjectId)) if (!out[c.type]) out[c.type] = c;
+  return out;
+};
+
+export const dataSubjectRequests: DataSubjectRequest[] = [
+  { id: 'dsr1', ref: 'DSR-2026-0007', subject: 'คุณนภัสสร วงศ์ดี', contact: '0898765432',      kind: 'access', status: 'in_progress', createdAt: '2026-06-20', note: 'ขอสำเนาข้อมูลส่วนบุคคลทั้งหมด' },
+  { id: 'dsr2', ref: 'DSR-2026-0006', subject: 'คุณวีรพล สุขสันต์', contact: 'weeraphol@example.com', kind: 'delete', status: 'new',         createdAt: '2026-06-24' },
+  { id: 'dsr3', ref: 'DSR-2026-0005', subject: 'บริษัท ไทยเจริญ ก่อสร้าง จำกัด', contact: '021234567', kind: 'export', status: 'resolved',    createdAt: '2026-05-30' },
+];
+
+export const getDataRequests = () => dataSubjectRequests;
 export const getCommissionRules = () => commissionRules;
 
 // ============================ CRM OPS CORE (Phase 15) ============================

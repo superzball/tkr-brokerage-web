@@ -11,8 +11,11 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
+import { ConsentFields } from "@/components/legal/ConsentFields";
 import { startGuestSession } from "@/lib/auth/actions";
 import { cn } from "@/lib/cn";
+import { recordConsents } from "@/lib/legal/consent";
+import { currentPolicyVersion } from "@/lib/mock/seed";
 
 const RESEND_SECONDS = 30;
 
@@ -35,6 +38,10 @@ export function GuestVerify({
   const [otpErr, setOtpErr] = useState(false);
   const [seconds, setSeconds] = useState(RESEND_SECONDS);
   const [verifying, setVerifying] = useState(false);
+  // PDPA consent (required before sending the OTP) + optional marketing opt-in.
+  const [pdpa, setPdpa] = useState(false);
+  const [marketing, setMarketing] = useState(false);
+  const [consentErr, setConsentErr] = useState(false);
   const refs = useRef<Array<HTMLInputElement | null>>([]);
 
   useEffect(() => {
@@ -49,6 +56,10 @@ export function GuestVerify({
   function sendOtp() {
     if (!/^0\d{8,9}$/.test(cleanPhone)) {
       setPhoneErr(true);
+      return;
+    }
+    if (!pdpa) {
+      setConsentErr(true);
       return;
     }
     setPhoneErr(false);
@@ -89,8 +100,14 @@ export function GuestVerify({
     // OTP success silently starts a session (guest or resumed account).
     const res = await startGuestSession(cleanPhone, code);
     setVerifying(false);
-    if (res.ok) onVerified(cleanPhone, res.guest);
-    else setOtpErr(true);
+    if (res.ok) {
+      // Capture the PDPA + marketing consents against the phone identity.
+      recordConsents([
+        { subjectId: cleanPhone, type: "pdpa_service", granted: true, policyVersion: currentPolicyVersion("privacy"), source: "guest_checkout" },
+        { subjectId: cleanPhone, type: "marketing", granted: marketing, policyVersion: currentPolicyVersion("privacy"), source: "guest_checkout" },
+      ]);
+      onVerified(cleanPhone, res.guest);
+    } else setOtpErr(true);
   }
 
   function resend() {
@@ -124,6 +141,19 @@ export function GuestVerify({
               onKeyDown={(e) => e.key === "Enter" && sendOtp()}
             />
             {phoneErr && <p className="mt-1 text-xs text-rose-600">{tc("phoneError")}</p>}
+          </div>
+
+          <div className="mt-4">
+            <ConsentFields
+              pdpa={pdpa}
+              marketing={marketing}
+              onPdpa={(v) => {
+                setPdpa(v);
+                if (v) setConsentErr(false);
+              }}
+              onMarketing={setMarketing}
+              error={consentErr}
+            />
           </div>
 
           <Button variant="primary" size="md" className="mt-4" onClick={sendOtp}>

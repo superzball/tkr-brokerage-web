@@ -165,6 +165,7 @@ export const portalNav: Record<Role, NavSection[]> = {
         { key: 'commRules',   href: '/admin/catalog/commissions', icon: 'Percent',  perm: 'superadmin' },
         { key: 'staff',       href: '/admin/staff',               icon: 'UserCog',  perm: 'superadmin' },
         { key: 'sysSettings', href: '/admin/settings',            icon: 'Settings', perm: 'superadmin' },
+        { key: 'legal',       href: '/admin/legal',               icon: 'Scale',    perm: 'superadmin' },
         { key: 'audit',       href: '/admin/audit',               icon: 'ScrollText', perm: 'superadmin' },
       ],
     },

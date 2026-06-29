@@ -2,6 +2,7 @@ import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { AppLink } from "@/components/ui/AppLink";
 import { Icon } from "@/components/ui/Icon";
+import { ManageCookiesLink } from "@/components/legal/ManageCookiesLink";
 import { site } from "@/config/site";
 import { FOOTER_COLUMNS, FOOTER_SOCIAL } from "@/config/nav";
 
@@ -61,16 +62,17 @@ export function Footer() {
 
         <div className="mt-12 pt-6 border-t border-ink-800 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-ink-400">
           <span>{t("copyright")}</span>
-          <span className="flex gap-5">
-            <a href="#" className="hover:text-white">
+          <span className="flex flex-wrap gap-x-5 gap-y-2">
+            <AppLink href="/legal/privacy" className="hover:text-white">
               {t("legal.privacy")}
-            </a>
-            <a href="#" className="hover:text-white">
+            </AppLink>
+            <AppLink href="/legal/terms" className="hover:text-white">
               {t("legal.terms")}
-            </a>
-            <a href="#" className="hover:text-white">
-              {t("legal.pdpa")}
-            </a>
+            </AppLink>
+            <AppLink href="/legal/cookies" className="hover:text-white">
+              {t("legal.cookies")}
+            </AppLink>
+            <ManageCookiesLink className="hover:text-white" />
           </span>
         </div>
       </div>

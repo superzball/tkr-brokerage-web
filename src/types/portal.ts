@@ -591,3 +591,53 @@ export interface MemberTierInfo {
   earnMultiplier: number;   // e.g. 1.0 / 1.1 / 1.25 / 1.5
   perksKeys: string[];      // i18n keys under `loyalty.perk`; service/gift perks only
 }
+
+// ---- legal & PDPA (Phase 21) ----
+// Consent is append-only and auditable: every grant/withdraw writes a new record
+// (never mutate an old one) so the history is provable. Mock store; a real
+// backend would POST to a consent table keyed by subjectId + type + version.
+export type ConsentType =
+  | 'pdpa_service'       // core data processing to deliver the service (required to transact)
+  | 'marketing'          // marketing comms (LINE/email) — optional, separate from service
+  | 'data_sharing'       // share with insurers/underwriters beyond what's needed to fulfil
+  | 'cookies_analytics'  // analytics cookies/scripts
+  | 'cookies_marketing'; // marketing/ad cookies/scripts
+
+export type ConsentSource =
+  | 'signup'
+  | 'guest_checkout'
+  | 'cookie_banner'
+  | 'consent_center';
+
+export interface ConsentRecord {
+  id: string;
+  subjectId: string;       // userId or phone/email — whoever the data subject is
+  type: ConsentType;
+  granted: boolean;
+  policyVersion: string;   // version of the policy in force when captured
+  source: ConsentSource;
+  timestamp: string;       // ISO
+}
+
+export type LegalPolicyKind = 'privacy' | 'terms' | 'cookies';
+export interface LegalPolicy {
+  id: string;
+  kind: LegalPolicyKind;
+  version: string;         // e.g. "2026.1"
+  effectiveDate: string;   // ISO date the version takes effect
+  status: 'published' | 'draft';
+  summary: string;         // editor note / change summary (Thai, CMS-editable)
+}
+
+export type DataRequestKind = 'access' | 'delete' | 'export' | 'correct';
+export type DataRequestStatus = 'new' | 'in_progress' | 'resolved' | 'rejected';
+export interface DataSubjectRequest {
+  id: string;
+  ref: string;             // DSR-2026-xxxx
+  subject: string;         // name or contact
+  contact: string;         // phone/email to respond to
+  kind: DataRequestKind;
+  status: DataRequestStatus;
+  note?: string;
+  createdAt: string;
+}

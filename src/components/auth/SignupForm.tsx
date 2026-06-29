@@ -15,8 +15,11 @@ import { Icon } from "@/components/ui/Icon";
 import { RoleCards } from "./RoleCards";
 import { PhoneField } from "./PhoneField";
 import { SocialButtons } from "./SocialButtons";
+import { ConsentFields } from "@/components/legal/ConsentFields";
 import { requestOtp } from "@/lib/auth/actions";
 import { isCompleteThaiPhone } from "@/lib/phone";
+import { recordConsents } from "@/lib/legal/consent";
+import { currentPolicyVersion } from "@/lib/mock/seed";
 import type { Role } from "@/types/portal";
 
 export function SignupForm({ initialRole }: { initialRole?: Role }) {
@@ -36,16 +39,36 @@ export function SignupForm({ initialRole }: { initialRole?: Role }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  // PDPA consent (required) + marketing opt-in (separate, optional).
+  const [pdpa, setPdpa] = useState(false);
+  const [marketing, setMarketing] = useState(false);
+  const [consentErr, setConsentErr] = useState(false);
+
   function pickRole(r: Role) {
     setRole(r);
     setStep(1);
   }
 
+  /** Record the service + marketing consents against the identity being created. */
+  function captureConsent() {
+    const subjectId = method === "phone" ? phone.replace(/[\s-]/g, "") : email.trim();
+    if (!subjectId) return;
+    recordConsents([
+      { subjectId, type: "pdpa_service", granted: true, policyVersion: currentPolicyVersion("privacy"), source: "signup" },
+      { subjectId, type: "marketing", granted: marketing, policyVersion: currentPolicyVersion("privacy"), source: "signup" },
+    ]);
+  }
+
   function submit(e: React.FormEvent) {
     e.preventDefault();
     if (!role) return;
+    if (!pdpa) {
+      setConsentErr(true);
+      return;
+    }
     if (method === "phone") {
       if (!isCompleteThaiPhone(phone)) return;
+      captureConsent();
       startTransition(async () => {
         await requestOtp(phone);
         router.push(
@@ -54,6 +77,7 @@ export function SignupForm({ initialRole }: { initialRole?: Role }) {
       });
     } else {
       // Email signup needs no OTP in the mock — go straight to onboarding.
+      captureConsent();
       startTransition(() => router.push(`/onboarding/${role}`));
     }
   }
@@ -138,6 +162,16 @@ export function SignupForm({ initialRole }: { initialRole?: Role }) {
                 />
               </>
             )}
+            <ConsentFields
+              pdpa={pdpa}
+              marketing={marketing}
+              onPdpa={(v) => {
+                setPdpa(v);
+                if (v) setConsentErr(false);
+              }}
+              onMarketing={setMarketing}
+              error={consentErr}
+            />
             <Button
               type="submit"
               variant="primary"

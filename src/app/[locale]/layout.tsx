@@ -4,6 +4,9 @@ import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { fontVariables } from "@/lib/fonts";
+import { currentPolicyVersion } from "@/lib/mock/seed";
+import { CookieConsent } from "@/components/legal/CookieConsent";
+import { ConsentScripts } from "@/components/legal/ConsentScripts";
 import "./globals.css";
 
 type Props = {
@@ -35,7 +38,12 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <html lang={locale} className={fontVariables}>
       <body className="min-h-screen antialiased">
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          {children}
+          {/* Site-wide PDPA cookie consent + gated analytics/marketing scripts. */}
+          <CookieConsent cookieVersion={currentPolicyVersion("cookies")} />
+          <ConsentScripts />
+        </NextIntlClientProvider>
       </body>
     </html>
   );
