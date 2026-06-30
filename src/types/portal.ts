@@ -447,6 +447,24 @@ export interface Coupon {
   active: boolean;
 }
 
+// Home promo/campaign banner — CMS-driven carousel below the hero. Copy is
+// CMS content (Thai); only slides with active=true AND today within
+// [startDate, endDate] render. Background is an image when `image` is set,
+// otherwise the `gradient` CSS fallback (no image assets shipped in the mock).
+export interface HomeBanner {
+  id: string;
+  title: string;                 // headline (CMS content)
+  subtitle?: string;             // optional supporting line
+  image?: string;                // background image URL (optional)
+  gradient: string;              // CSS background fallback when no image
+  ctaLabel: string;              // button label
+  ctaHref: string;               // target: promo/product/landing route
+  startDate: string;             // ISO yyyy-mm-dd — inclusive
+  endDate: string;               // ISO yyyy-mm-dd — inclusive
+  active: boolean;
+  sortOrder: number;             // ascending display order
+}
+
 export interface Review {
   id: string;
   authorLabel: string;           // masked, e.g. "ลูกค้า TKR" — PLACEHOLDER

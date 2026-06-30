@@ -48,6 +48,7 @@ import {
   Gift,
   Sparkles,
   Scale,
+  GalleryHorizontalEnd,
   type LucideProps,
 } from "lucide-react";
 
@@ -95,6 +96,7 @@ const registry: Record<string, React.ComponentType<LucideProps>> = {
   Gift,
   Sparkles,
   Scale,
+  GalleryHorizontalEnd,
 };
 
 export function NavIcon({

@@ -3,10 +3,12 @@ import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
 import { Icon } from "@/components/ui/Icon";
 import { Mascot } from "@/components/brand/Mascot";
+import { HomeBanners } from "@/components/home/HomeBanners";
 import { AnimatedCounter } from "./AnimatedCounter";
 import { FEATURES } from "@/config/features";
 import { ROUTES } from "@/config/nav";
 import { QuoteBar } from "./QuoteBar";
+import { getActiveHomeBanners } from "@/lib/mock/seed";
 
 export function Hero() {
   const t = useTranslations("home");
@@ -225,11 +227,12 @@ export function Hero() {
           )}
         </div>
       </div>
-
+      
       {/* floating quote-entry card (shadow-lift), overlapping the next section */}
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 -mb-12 lg:-mb-16">
+      {/* <div className="relative max-w-6xl mx-auto px-4 sm:px-6 -mb-12 lg:-mb-16">
         <QuoteBar />
-      </div>
+      </div> */}
+      <HomeBanners banners={getActiveHomeBanners()} />
     </section>
   );
 }

@@ -13,7 +13,7 @@ import type {
   CmsPage, Faq, MediaAsset, Redirect, CommissionRule,
   CrmProduct, Duration, PricingTier, CustomerCreditProfile,
   PolicyTicket, CrmPayment, CreditTransaction, AmendmentTicket, IssuedPolicy,
-  Coupon, Review, InsurerPartner, GlossaryTerm, InstallmentPlan,
+  Coupon, HomeBanner, Review, InsurerPartner, GlossaryTerm, InstallmentPlan,
   PlanCard, FitQuestion, CheckoutOption, TaxDeductionCap,
   LoyaltyAccount, PointsEntry, Reward, Redemption,
   ConsentRecord, LegalPolicy, LegalPolicyKind, DataSubjectRequest,
@@ -796,6 +796,49 @@ export const coupons: Coupon[] = [
   { id: 'cpn3', code: 'TRAVEL150',    description: 'ลด ฿150 ประกันเดินทาง', discountType: 'fixed', value: 150, products: ['travel'], expiry: '2026-08-31', active: false },
 ];
 
+// PLACEHOLDER home banners — SAMPLE campaign copy only, NOT real promo terms.
+// CMS-driven (admin → /admin/content/banners). Each slide deep-links into an
+// existing flow (worker product, promotions hub, auto compare). Backgrounds are
+// Trust-palette CSS gradients until rights-cleared campaign images exist.
+export const homeBanners: HomeBanner[] = [
+  {
+    id: 'hb1',
+    title: 'ดูแลทีมแรงงานต่างด้าวครบในที่เดียว',
+    subtitle: 'ออกกรมธรรม์เป็นชุด ต่ออายุ และจัดการเอกสารได้เองทั้งหมด (ตัวอย่างเนื้อหา)',
+    gradient: 'linear-gradient(120deg,#0b2240 0%,#143a6b 48%,#1f66ee 100%)',
+    ctaLabel: 'ดูประกันแรงงานต่างด้าว',
+    ctaHref: '/worker-insurance',
+    startDate: '2026-01-01',
+    endDate: '2026-12-31',
+    active: true,
+    sortOrder: 1,
+  },
+  {
+    id: 'hb2',
+    title: 'รวมโปรโมชั่นและคูปองส่วนลด',
+    subtitle: 'โค้ดส่วนลดตัวอย่างสำหรับลูกค้าใหม่ — ดูเงื่อนไขทั้งหมดในหน้าโปรโมชั่น (ตัวอย่างเนื้อหา)',
+    gradient: 'linear-gradient(120deg,#143a6b 0%,#1f66ee 60%,#3b82f6 100%)',
+    ctaLabel: 'ดูโปรโมชั่นทั้งหมด',
+    ctaHref: '/promotions',
+    startDate: '2026-01-01',
+    endDate: '2026-12-31',
+    active: true,
+    sortOrder: 2,
+  },
+  {
+    id: 'hb3',
+    title: 'เทียบเบี้ยประกันรถยนต์ออนไลน์',
+    subtitle: 'เห็นเบี้ยจากหลายบริษัททันที เลือกแผนที่ใช่ในไม่กี่นาที (ตัวอย่างเนื้อหา)',
+    gradient: 'linear-gradient(120deg,#0b2240 0%,#1f3a5f 50%,#c9962f 140%)',
+    ctaLabel: 'เทียบเบี้ยประกันรถยนต์',
+    ctaHref: '/auto',
+    startDate: '2026-01-01',
+    endDate: '2026-12-31',
+    active: true,
+    sortOrder: 3,
+  },
+];
+
 // PLACEHOLDER reviews — replace with real, consented TKR customer feedback.
 export const reviews: Review[] = [
   { id: 'rv1', authorLabel: 'ลูกค้า TKR (สำรวจหลังบริการ)', channel: 'survey', product: 'worker', text: 'ออกกรมธรรม์แรงงานเป็นชุดได้เร็ว ไม่ต้องเดินเอกสารเอง', reaction: 'heart', date: '2026-05-30' },
@@ -881,6 +924,21 @@ export const trustStats = {
 };
 
 export const getCoupons = () => coupons;
+
+/** All banners for the admin CMS, in display order (ignores active/date). */
+export const getHomeBanners = () =>
+  [...homeBanners].sort((a, b) => a.sortOrder - b.sortOrder);
+
+/** Banners to render on the home carousel: active AND today within
+ *  [startDate, endDate], ascending by sortOrder. ISO dates compare
+ *  lexicographically. Returns [] when nothing is live (home renders nothing). */
+export const getActiveHomeBanners = () => {
+  const today = new Date().toISOString().slice(0, 10);
+  return homeBanners
+    .filter((b) => b.active && b.startDate <= today && today <= b.endDate)
+    .sort((a, b) => a.sortOrder - b.sortOrder);
+};
+
 export const getReviews = () => reviews;
 export const getInsurerPartners = (opts?: { featuredOnly?: boolean }) =>
   opts?.featuredOnly ? insurerPartners.filter((p) => p.featured) : insurerPartners;

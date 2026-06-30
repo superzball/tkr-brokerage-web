@@ -207,6 +207,7 @@
     "accounts": "Accounts",
     "finance": "Finance",
     "config": "Configuration",
+    "banners": "Home banners",
     "coupons": "Coupons & Promotions",
     "reviews": "Reviews",
     "partners": "Insurer Partners",
@@ -451,6 +452,15 @@
     }
   },
   "home": {
+    "banners": {
+      "region": "Promotions and campaigns",
+      "prev": "Previous slide",
+      "next": "Next slide",
+      "goToSlide": "Go to slide {n}",
+      "slideOf": "Slide {current} of {total}",
+      "pause": "Pause autoplay",
+      "play": "Play autoplay"
+    },
     "hero": {
       "badge": "Trusted by more than 12,800 organizations across Thailand",
       "title": "Comprehensive insurance<br></br>you can <grad>trust</grad> for every risk",
@@ -3452,6 +3462,26 @@
         "thipFiles": "Attachments",
         "thipFilesBtn": "Attach files"
       }
+    },
+    "banners": {
+      "title": "Home banners",
+      "desc": "Manage the promo/campaign banners shown below the hero on the home page",
+      "placeholderBanner": "Sample data for demo — replace with real banners before production",
+      "empty": "No banners yet",
+      "add": "Add banner",
+      "count": "{n} banners",
+      "live": "Live",
+      "scheduled": "Scheduled",
+      "inactive": "Inactive",
+      "window": "Display window",
+      "toggle": "Toggle",
+      "delete": "Delete",
+      "created": "Banner added",
+      "deleted": "Banner deleted",
+      "activated": "Banner activated",
+      "deactivated": "Banner deactivated",
+      "sampleTitle": "Sample banner {n}",
+      "sampleCta": "View promotions"
     },
     "coupons": {
       "title": "Coupons & Promotions",

@@ -50,3 +50,13 @@ keys, verified).
 - "คปภ." standardized to "OIC" during QA.
 - Transliterated Thai sample person names are phonetic approximations.
 - BE years (2567–2569) kept literally; confirm presentation convention.
+
+## TODO — Home banner carousel (HOME_BANNER_ADDITIONS) — NOT yet translated
+Added 2026-06-30. These keys currently hold **English placeholder** values and
+need native translation/review:
+- `nav.banners`
+- `home.banners.*` (region, prev, next, goToSlide, slideOf, pause, play)
+- `admin.banners.*` (title, desc, placeholderBanner, empty, add, count, live,
+  scheduled, inactive, window, toggle, delete, created, deleted, activated,
+  deactivated, sampleTitle, sampleCta)
+Note: `homeBanners` slide copy itself is CMS content (seed.ts), not message keys.

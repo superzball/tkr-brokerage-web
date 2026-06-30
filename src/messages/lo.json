@@ -207,6 +207,7 @@
     "accounts": "ບັນຊີຜູ້ໃຊ້",
     "finance": "ການເງິນ",
     "config": "ຕັ້ງຄ່າ",
+    "banners": "Home banners",
     "coupons": "ຄູປອງ & ໂປຣໂມຊັ່ນ",
     "reviews": "ຣີວິວລູກຄ້າ",
     "partners": "ບໍລິສັດປະກັນໄພຄູ່ຮ່ວມງານ",
@@ -451,6 +452,15 @@
     }
   },
   "home": {
+    "banners": {
+      "region": "Promotions and campaigns",
+      "prev": "Previous slide",
+      "next": "Next slide",
+      "goToSlide": "Go to slide {n}",
+      "slideOf": "Slide {current} of {total}",
+      "pause": "Pause autoplay",
+      "play": "Play autoplay"
+    },
     "hero": {
       "badge": "ໄດ້ຮັບຄວາມໄວ້ວາງໃຈຈາກກວ່າ 12,800 ອົງກອນທົ່ວໄທ",
       "title": "ປະກັນໄພຄົບວົງຈອນ<br></br>ທີ່<grad>ເຊື່ອໃຈໄດ້</grad> ທຸກຄວາມສ່ຽງ",
@@ -3452,6 +3462,26 @@
         "thipFiles": "ໄຟລ໌ແນບ",
         "thipFilesBtn": "ແນບໄຟລ໌"
       }
+    },
+    "banners": {
+      "title": "Home banners",
+      "desc": "Manage the promo/campaign banners shown below the hero on the home page",
+      "placeholderBanner": "Sample data for demo — replace with real banners before production",
+      "empty": "No banners yet",
+      "add": "Add banner",
+      "count": "{n} banners",
+      "live": "Live",
+      "scheduled": "Scheduled",
+      "inactive": "Inactive",
+      "window": "Display window",
+      "toggle": "Toggle",
+      "delete": "Delete",
+      "created": "Banner added",
+      "deleted": "Banner deleted",
+      "activated": "Banner activated",
+      "deactivated": "Banner deactivated",
+      "sampleTitle": "Sample banner {n}",
+      "sampleCta": "View promotions"
     },
     "coupons": {
       "title": "ຄູປອງ & ໂປຣໂມຊັ່ນ",

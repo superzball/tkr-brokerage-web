@@ -52,3 +52,13 @@ its key set / structure is **identical to `th.json`** (3412 leaf keys, verified)
 - Lao translations had stray Thai-script leakage during the AI pass; this was
   detected and cleaned (verified zero residual Thai script except `฿` + sample
   plate), but the cleaned wording especially merits a native pass.
+
+## TODO — Home banner carousel (HOME_BANNER_ADDITIONS) — NOT yet translated
+Added 2026-06-30. These keys currently hold **English placeholder** values and
+need native translation/review:
+- `nav.banners`
+- `home.banners.*` (region, prev, next, goToSlide, slideOf, pause, play)
+- `admin.banners.*` (title, desc, placeholderBanner, empty, add, count, live,
+  scheduled, inactive, window, toggle, delete, created, deleted, activated,
+  deactivated, sampleTitle, sampleCta)
+Note: `homeBanners` slide copy itself is CMS content (seed.ts), not message keys.
