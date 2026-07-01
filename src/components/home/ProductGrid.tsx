@@ -12,16 +12,21 @@ type SecondaryProduct = {
   tile: string;
   cta: string;
   bar: string;
+  linkTarget?: string;
 };
 
 // Trust palette: one calm brand-blue treatment across all four — the bento
 // structure (tall dark feature + white cards) provides the interest, not colour
 // noise. Icons differ by shape, not by hue.
 const SECONDARY: SecondaryProduct[] = [
-  { key: "auto", icon: "car", href: "/insurance/auto", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
-  { key: "travel", icon: "plane", href: "/insurance/travel", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
-  { key: "health", icon: "heart", href: "/insurance/health", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
-  { key: "fire", icon: "flame", href: "/insurance/fire", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
+  // { key: "auto", icon: "car", href: "/insurance/auto", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
+  // { key: "travel", icon: "plane", href: "/insurance/travel", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
+  // { key: "health", icon: "heart", href: "/insurance/health", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
+  // { key: "fire", icon: "flame", href: "/insurance/fire", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
+  { key: "auto", icon: "car", href: "https://m.me/384154094776068?text=%5B%E0%B8%97%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%9A%5D%20%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88%E0%B8%8B%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%A3%E0%B8%96%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600", linkTarget: "_blank" },
+  { key: "travel", icon: "plane", href: "https://m.me/384154094776068?ref=%5B%E0%B8%97%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%9A%5D%20%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88%E0%B8%8B%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%A3%E0%B8%96%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600", linkTarget: "_blank" },
+  { key: "health", icon: "heart", href: "https://m.me/384154094776068?ref=%5B%E0%B8%97%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%9A%5D%20%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88%E0%B8%8B%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%A3%E0%B8%96%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600", linkTarget: "_blank" },
+  { key: "fire", icon: "flame", href: "https://m.me/384154094776068?ref=%5B%E0%B8%97%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%9A%5D%20%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88%E0%B8%8B%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%A3%E0%B8%96%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600", linkTarget: "_blank" },
 ];
 
 export function ProductGrid() {
@@ -95,7 +100,7 @@ export function ProductGrid() {
 
         {/* secondary products — top accent bar + lifting card */}
         {SECONDARY.map((product) => (
-          <AppLink key={product.key} href={product.href} className="group reveal">
+          <AppLink key={product.key} href={product.href} className="group reveal" target={product.linkTarget}>
             <div className="card card-hover h-full p-6 relative overflow-hidden shadow-pop">
               <span
                 className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${product.bar}`}

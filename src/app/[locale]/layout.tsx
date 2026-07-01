@@ -37,7 +37,11 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} className={fontVariables}>
-      <body className="min-h-screen antialiased">
+      {/* Browser extensions (Grammarly, ColorZilla, Dark Reader, password
+          managers…) inject attributes onto <body> before hydration, which React
+          flags as an attribute mismatch. suppressHydrationWarning silences that
+          one level only — real mismatches inside the app still surface. */}
+      <body className="min-h-screen antialiased" suppressHydrationWarning>
         <NextIntlClientProvider>
           {children}
           {/* Site-wide PDPA cookie consent + gated analytics/marketing scripts. */}

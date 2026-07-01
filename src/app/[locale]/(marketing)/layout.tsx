@@ -3,8 +3,8 @@ import { hasLocale } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing, type Locale } from "@/i18n/routing";
 import { Navbar } from "@/components/layout/Navbar";
+import { NavRouteGuard } from "@/components/layout/NavRouteGuard";
 import { Footer } from "@/components/layout/Footer";
-import { RevealObserver } from "@/components/RevealObserver";
 import { LineChatWidget } from "@/components/conversion/LineChatWidget";
 import { ToastProvider } from "@/components/app/toast";
 
@@ -29,9 +29,8 @@ export default async function MarketingLayout({ children, params }: Props) {
     <div data-theme="friendly" className="contents">
       <ToastProvider>
         <Navbar />
-        {children}
+        <NavRouteGuard>{children}</NavRouteGuard>
         <Footer />
-        <RevealObserver />
         <LineChatWidget />
       </ToastProvider>
     </div>

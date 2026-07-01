@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { LocaleSwitcher } from "@/components/ui/LocaleSwitcher";
 import { Logo } from "./Logo";
-import { publicNav, publicNavActions } from "@/config/nav";
+import { publicNavActions } from "@/config/nav";
 import type { TopNavItem } from "@/types/portal";
 import { cn } from "@/lib/cn";
 
@@ -16,6 +16,8 @@ export type MobileDrawerProps = {
   open: boolean;
   onClose: () => void;
   pathname: string;
+  /** Already visibility-filtered public nav (see useVisiblePublicNav). */
+  items: TopNavItem[];
 };
 
 /**
@@ -23,7 +25,7 @@ export type MobileDrawerProps = {
  * accordion (columns flatten into stacked groups); simple items are direct
  * links. Footer carries locale, login, agent login + the quote CTA.
  */
-export function MobileDrawer({ open, onClose, pathname }: MobileDrawerProps) {
+export function MobileDrawer({ open, onClose, pathname, items }: MobileDrawerProps) {
   // Nav labels use dynamic keys from config → plain string lookup.
   const t = useTranslations("topnav") as unknown as (key: string) => string;
   const [openKey, setOpenKey] = useState<string | null>("products");
@@ -63,7 +65,7 @@ export function MobileDrawer({ open, onClose, pathname }: MobileDrawerProps) {
         </div>
 
         <div className="flex-1 overflow-y-auto px-3 py-4">
-          {publicNav.map((item: TopNavItem) => {
+          {items.map((item: TopNavItem) => {
             if (!item.columns) {
               return (
                 <Link

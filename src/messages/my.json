@@ -57,7 +57,10 @@
     "search": "ရှာဖွေရန်",
     "searchPlaceholder": "အာမခံ ရှာဖွေပါ ဥပမာ ကား၊ ခရီးသွား၊ ကျန်းမာရေး",
     "menu": "မီနူး",
-    "close": "ပိတ်ရန်"
+    "close": "ပိတ်ရန်",
+    "unavailableTitle": "This page isn't available right now",
+    "unavailableBody": "This menu item has been turned off. Please check back later or head back to the homepage.",
+    "backHome": "Back to home"
   },
   "homeFaq": {
     "title": "မေးလေ့ရှိသော မေးခွန်းများ",
@@ -218,7 +221,8 @@
     "loyalty": "သစ္စာစောင့်သိမှု & ဆုလာဘ်များ",
     "loyaltyRules": "အမှတ်ရရှိရေး စည်းမျဉ်းများ",
     "loyaltyRewards": "ဆုလာဘ်များ",
-    "loyaltyRedeem": "ဆုလာဘ် လဲလှယ်ခြင်း"
+    "loyaltyRedeem": "ဆုလာဘ် လဲလှယ်ခြင်း",
+    "navigation": "Navigation"
   },
   "app": {
     "menu": "မီနူး",
@@ -422,7 +426,7 @@
     }
   },
   "footer": {
-    "tagline": "ပြည့်စုံသော အာမခံ ပွဲစားဝန်ဆောင်မှု၊ ရွှေ့ပြောင်းအလုပ်သမား အာမခံတွင် ဦးဆောင်သူ၊ အထွေထွေထိခိုက်မှု အာမခံ ပွဲစားလိုင်စင် ဝ00000/2545 ဖြင့်",
+    "tagline": "ပြည့်စုံသော အာမခံ ပွဲစားဝန်ဆောင်မှု၊ ရွှေ့ပြောင်းအလုပ်သမား အာမခံတွင် ဦးဆောင်သူ၊ အထွေထွေထိခိုက်မှု အာမခံ ပွဲစားလိုင်စင် ว00019/2565 (TKR Brokerage Co., Ltd.)",
     "col": {
       "products": "ထုတ်ကုန်များ",
       "services": "ဝန်ဆောင်မှုများ",
@@ -602,7 +606,7 @@
       "features": {
         "expertise": {
           "title": "အထူးကျွမ်းကျင်",
-          "desc": "နှစ် 20 ကျော် ရွှေ့ပြောင်းအလုပ်သမား အာမခံ ဦးဆောင်သူ၊ စည်းမျဉ်းတိုင်းကို နားလည်"
+          "desc": "ကျွမ်းကျင်သောအဖွဲ့မှ ပံ့ပိုးပေးသော ရွှေ့ပြောင်းအလုပ်သမားအာမခံတွင် ကျွမ်းကျင်ရမည်။"
         },
         "compare": {
           "title": "ကုမ္ပဏီများစွာ ပရီမီယံ နှိုင်းယှဉ်",
@@ -644,7 +648,7 @@
         "label": "ထုတ်ပေးပြီးသော အာမခံစာချုပ်များ"
       },
       "founded": {
-        "value": "ခရစ်နှစ် 2545",
+        "value": "ခရစ်နှစ် 2565",
         "label": "တည်ထောင်သည့်နှစ်"
       },
       "partners": {
@@ -3600,6 +3604,27 @@
       "publishedToast": "ထုတ်ဝေမှုကို စစ်ဆေးမှု မှတ်တမ်းတွင် သိမ်းဆည်းပြီးပါပြီ",
       "draftTag": "(မူကြမ်းအသစ်)",
       "empty": "ဒေတာ မရှိပါ"
+    },
+    "navigation": {
+      "title": "Navigation",
+      "desc": "Turn public menu items on or off — with optional scheduling — without a deploy",
+      "hint": "Changes apply to the navbar, mega-menu, and mobile drawer. Emptied menu groups are hidden automatically.",
+      "shown": "Menu item shown",
+      "hidden": "Menu item hidden",
+      "stOpen": "Shown",
+      "stHidden": "Hidden",
+      "stScheduled": "Scheduled",
+      "kindFeatured": "Featured",
+      "schedule": "Schedule & options",
+      "startDate": "Show from",
+      "endDate": "Show until",
+      "closedBehavior": "When hidden",
+      "behaviorHide": "Remove from menu only",
+      "behaviorBlock": "Also block the page",
+      "auditShown": "Enabled public nav item",
+      "auditHidden": "Disabled public nav item",
+      "auditScheduled": "Scheduled public nav item",
+      "auditBehavior": "Changed nav item closed-behavior"
     }
   },
   "public": {

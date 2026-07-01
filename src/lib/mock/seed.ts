@@ -17,6 +17,7 @@ import type {
   PlanCard, FitQuestion, CheckoutOption, TaxDeductionCap,
   LoyaltyAccount, PointsEntry, Reward, Redemption,
   ConsentRecord, LegalPolicy, LegalPolicyKind, DataSubjectRequest,
+  NavSetting,
 } from '@/types/portal';
 import { memberTierOf, FEATURES_LOYALTY } from '@/config/loyalty';
 
@@ -917,7 +918,7 @@ export const installmentPlans: InstallmentPlan[] = [
 
 // honest trust stats (use only verifiable numbers in production)
 export const trustStats = {
-  oicLicense: 'ใบอนุญาตนายหน้าประกันวินาศภัย เลขที่ —',  // fill with real license
+  oicLicense: 'ใบอนุญาตนายหน้าประกันวินาศภัย เลขที่ ว00019/2565 (บริษัท ทีเคอาร์โบรกเกอร์เรจ จำกัด)',  // fill with real license
   insurers: insurerPartnerCount,
   customersServed: 12800,
   claimsPaidPct: 98,
@@ -938,6 +939,24 @@ export const getActiveHomeBanners = () => {
     .filter((b) => b.active && b.startDate <= today && today <= b.endDate)
     .sort((a, b) => a.sortOrder - b.sortOrder);
 };
+
+// PUBLIC NAV visibility (NAV_VISIBILITY) — data-driven on/off (+ optional
+// scheduling) for the marketing top-nav, so menu items can be turned off without
+// a deploy. Keyed by the nav entry's `key` (see config/nav.ts `publicNav`). Any
+// entry NOT listed here defaults to open, so existing items are unchanged. Admin
+// edits under /admin/content/navigation persist as localStorage overrides that
+// the public Navbar merges on top of these defaults (see lib/nav-visibility.ts).
+export const navSettings: NavSetting[] = [
+  { key: 'products',   isOpen: true },
+  { key: 'about',      isOpen: true },
+  { key: 'help',       isOpen: true },
+  { key: 'promotions', isOpen: true },
+  { key: 'articles',   isOpen: true },
+  { key: 'contact',    isOpen: true },
+];
+
+/** Seed nav-visibility settings, keyed by entry key (admin merges overrides). */
+export const getNavSettings = () => navSettings;
 
 export const getReviews = () => reviews;
 export const getInsurerPartners = (opts?: { featuredOnly?: boolean }) =>

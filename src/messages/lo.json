@@ -57,7 +57,10 @@
     "search": "ຄົ້ນຫາ",
     "searchPlaceholder": "ຄົ້ນຫາປະກັນໄພ ເຊັ່ນ ລົດຍົນ ການເດີນທາງ ສຸຂະພາບ",
     "menu": "ເມນູ",
-    "close": "ປິດ"
+    "close": "ປິດ",
+    "unavailableTitle": "This page isn't available right now",
+    "unavailableBody": "This menu item has been turned off. Please check back later or head back to the homepage.",
+    "backHome": "Back to home"
   },
   "homeFaq": {
     "title": "ຄຳຖາມທີ່ພົບເລື້ອຍ",
@@ -218,7 +221,8 @@
     "loyalty": "ລອຍໍລະຕີ້ & ລາງວັນ",
     "loyaltyRules": "ກົດການຮັບຄະແນນ",
     "loyaltyRewards": "ຂອງລາງວັນ",
-    "loyaltyRedeem": "ການແລກລາງວັນ"
+    "loyaltyRedeem": "ການແລກລາງວັນ",
+    "navigation": "Navigation"
   },
   "app": {
     "menu": "ເມນູ",
@@ -422,7 +426,7 @@
     }
   },
   "footer": {
-    "tagline": "ນາຍໜ້າປະກັນໄພຄົບວົງຈອນ ຜູ້ນຳດ້ານປະກັນໄພແຮງງານຕ່າງດ້າວ ດ້ວຍໃບອະນຸຍາດນາຍໜ້າປະກັນວິນາດໄພ ວ00000/2545",
+    "tagline": "ນາຍໜ້າປະກັນໄພຄົບວົງຈອນ ຜູ້ນຳດ້ານປະກັນໄພແຮງງານຕ່າງດ້າວ ດ້ວຍໃບອະນຸຍາດນາຍໜ້າປະກັນວິນາດໄພ ว00019/2565 (TKR Brokerage Co., Ltd.)",
     "col": {
       "products": "ຜະລິດຕະພັນ",
       "services": "ບໍລິການ",
@@ -602,7 +606,7 @@
       "features": {
         "expertise": {
           "title": "ຊ່ຽວຊານສະເພາະທາງ",
-          "desc": "ຜູ້ນຳປະກັນໄພແຮງງານຕ່າງດ້າວກວ່າ 20 ປີ ເຂົ້າໃຈທຸກຂໍ້ກຳນົດ"
+          "desc": "ຄວາມຊໍານານໃນການປະກັນໄພແຮງງານເຄື່ອນຍ້າຍ, ສະຫນອງໂດຍທີມງານມືອາຊີບ."
         },
         "compare": {
           "title": "ປຽບທຽບຄ່າປະກັນຫຼາຍບໍລິສັດ",
@@ -644,7 +648,7 @@
         "label": "ກົມທະນ໌ທີ່ອອກແລ້ວ"
       },
       "founded": {
-        "value": "ພ.ສ.2545",
+        "value": "ພ.ສ.2565",
         "label": "ປີທີ່ກໍ່ຕັ້ງ"
       },
       "partners": {
@@ -3600,6 +3604,27 @@
       "publishedToast": "ບັນທຶກການເຜີຍແຜ່ລົງປະຫວັດການກວດສອບແລ້ວ",
       "draftTag": "(ສະບັບຮ່າງໃໝ່)",
       "empty": "ບໍ່ມີຂໍ້ມູນ"
+    },
+    "navigation": {
+      "title": "Navigation",
+      "desc": "Turn public menu items on or off — with optional scheduling — without a deploy",
+      "hint": "Changes apply to the navbar, mega-menu, and mobile drawer. Emptied menu groups are hidden automatically.",
+      "shown": "Menu item shown",
+      "hidden": "Menu item hidden",
+      "stOpen": "Shown",
+      "stHidden": "Hidden",
+      "stScheduled": "Scheduled",
+      "kindFeatured": "Featured",
+      "schedule": "Schedule & options",
+      "startDate": "Show from",
+      "endDate": "Show until",
+      "closedBehavior": "When hidden",
+      "behaviorHide": "Remove from menu only",
+      "behaviorBlock": "Also block the page",
+      "auditShown": "Enabled public nav item",
+      "auditHidden": "Disabled public nav item",
+      "auditScheduled": "Scheduled public nav item",
+      "auditBehavior": "Changed nav item closed-behavior"
     }
   },
   "public": {

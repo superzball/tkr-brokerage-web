@@ -57,7 +57,10 @@
     "search": "Search",
     "searchPlaceholder": "Search insurance — car, travel, health…",
     "menu": "Menu",
-    "close": "Close"
+    "close": "Close",
+    "unavailableTitle": "This page isn't available right now",
+    "unavailableBody": "This menu item has been turned off. Please check back later or head back to the homepage.",
+    "backHome": "Back to home"
   },
   "homeFaq": {
     "title": "Frequently asked questions",
@@ -218,7 +221,8 @@
     "loyalty": "Loyalty & Rewards",
     "loyaltyRules": "Earn rules",
     "loyaltyRewards": "Rewards catalog",
-    "loyaltyRedeem": "Redemptions"
+    "loyaltyRedeem": "Redemptions",
+    "navigation": "Navigation"
   },
   "app": {
     "menu": "Menu",
@@ -422,7 +426,7 @@
     }
   },
   "footer": {
-    "tagline": "A full-service insurance broker and leader in foreign-worker insurance, licensed as a non-life insurance broker No. ว00000/2545",
+    "tagline": "A full-service insurance broker and leader in foreign-worker insurance, licensed as a non-life insurance broker No. ว00019/2565 (TKR Brokerage Co., Ltd.)",
     "col": {
       "products": "Products",
       "services": "Services",
@@ -602,7 +606,7 @@
       "features": {
         "expertise": {
           "title": "Deep specialization",
-          "desc": "Over 20 years leading foreign-worker insurance — we understand every requirement"
+          "desc": "Expertise in migrant worker insurance, provided by a professional team."
         },
         "compare": {
           "title": "Compare many insurers",
@@ -3600,6 +3604,27 @@
       "publishedToast": "Publish recorded in the audit log",
       "draftTag": "(new draft)",
       "empty": "No data"
+    },
+    "navigation": {
+      "title": "Navigation",
+      "desc": "Turn public menu items on or off — with optional scheduling — without a deploy",
+      "hint": "Changes apply to the navbar, mega-menu, and mobile drawer. Emptied menu groups are hidden automatically.",
+      "shown": "Menu item shown",
+      "hidden": "Menu item hidden",
+      "stOpen": "Shown",
+      "stHidden": "Hidden",
+      "stScheduled": "Scheduled",
+      "kindFeatured": "Featured",
+      "schedule": "Schedule & options",
+      "startDate": "Show from",
+      "endDate": "Show until",
+      "closedBehavior": "When hidden",
+      "behaviorHide": "Remove from menu only",
+      "behaviorBlock": "Also block the page",
+      "auditShown": "Enabled public nav item",
+      "auditHidden": "Disabled public nav item",
+      "auditScheduled": "Scheduled public nav item",
+      "auditBehavior": "Changed nav item closed-behavior"
     }
   },
   "public": {

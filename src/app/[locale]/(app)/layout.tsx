@@ -11,7 +11,6 @@ import { ToastProvider } from "@/components/app/toast";
 import { AppShell } from "@/components/app/AppShell";
 import { PendingQuoteBanner } from "@/components/app/PendingQuoteBanner";
 import { GuestProfileBanner } from "@/components/app/GuestProfileBanner";
-import { RevealObserver } from "@/components/RevealObserver";
 
 type Props = {
   children: React.ReactNode;
@@ -40,7 +39,6 @@ export default async function AppLayout({ children, params }: Props) {
   return (
     <SessionProvider user={user}>
       <ToastProvider>
-        <RevealObserver />
         {hasPendingQuote && <PendingQuoteBanner />}
         {user.status === "guest" && <GuestProfileBanner />}
         <AppShell role={user.role}>{children}</AppShell>

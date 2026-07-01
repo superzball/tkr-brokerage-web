@@ -548,6 +548,28 @@ export interface TopNavItem {
   featured?: MegaLink;         // optional highlighted card in the dropdown
 }
 
+// ---- public nav visibility (NAV_VISIBILITY) ----
+// Turn individual public nav entries on/off — and optionally schedule them —
+// WITHOUT a deploy. Applies to a top-level `TopNavItem`, its `featured` card, or
+// any `MegaLink`, keyed by that entry's `key`. Mirrors HomeBanner scheduling.
+export type NavClosedBehavior =
+  | 'hide'        // (default) hidden from every rendered menu surface only
+  | 'blockRoute'; // also gate the target page (friendly "unavailable", not a 404)
+
+/** Visibility + optional scheduling flags for one public nav entry. */
+export interface NavVisibility {
+  isOpen: boolean;             // false = hidden from the rendered menu
+  startDate?: string;          // ISO yyyy-mm-dd — inclusive; only visible on/after
+  endDate?: string;            // ISO yyyy-mm-dd — inclusive; only visible on/before
+  closedBehavior?: NavClosedBehavior; // default 'hide'
+}
+
+/** A stored nav-visibility record, keyed by the nav entry's `key`. Data-driven
+ *  (seed defaults + admin overrides) so items toggle without a code change. */
+export interface NavSetting extends NavVisibility {
+  key: string;                 // matches a TopNavItem/MegaLink `key`
+}
+
 // ============== customer loyalty & rewards (Phase 20, LOYALTY_ADDITIONS) ==============
 // Points/rewards for CONSUMER customers (individual + guest). Member tiers are a
 // SEPARATE concept from agent tiers (Tier: Silver/Gold/…) — different type,
