@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { useToast } from "@/components/app/toast";
 
-const PRODUCTS: InsuranceType[] = ["worker", "auto", "travel", "health", "fire"];
+const PRODUCTS: InsuranceType[] = ["worker", "auto", "travel", "pa", "fire"];
 const TIERS: Tier[] = ["Silver", "Gold", "Platinum", "Diamond"];
 
 export function CommissionRulesClient({ initial }: { initial: CommissionRule[] }) {

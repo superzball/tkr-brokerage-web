@@ -59,7 +59,7 @@ function QuoteField({ field }: { field: QuoteFieldConfig }) {
   if (field.type === "select") {
     // Only select fields carry `.options`; the cast narrows to those valid keys.
     type OptionsKey =
-      `fields.${"workerNat" | "autoYear" | "healthBudget" | "fireProp"}.options`;
+      `fields.${"workerNat" | "autoYear" | "paBudget" | "fireProp"}.options`;
     const options = t.raw(
       `fields.${field.key}.options` as OptionsKey,
     ) as string[];

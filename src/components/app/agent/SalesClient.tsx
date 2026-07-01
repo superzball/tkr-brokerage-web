@@ -13,7 +13,7 @@ import { readLocalSales, readCancelledSaleIds } from "@/lib/mock/local-sales";
 import type { AgentSale, InsuranceType, SaleStatus } from "@/types/portal";
 
 const STATUSES: SaleStatus[] = ["issued", "pending", "cancelled"];
-const PRODUCTS: InsuranceType[] = ["worker", "auto", "travel", "health", "fire"];
+const PRODUCTS: InsuranceType[] = ["worker", "auto", "travel", "pa", "fire"];
 const STATUS_TONE: Record<SaleStatus, BadgeTone> = {
   issued: "success",
   pending: "warning",

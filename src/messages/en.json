@@ -23,8 +23,8 @@
     "autoDesc": "Class 1/2+/3 and EV",
     "travel": "Travel Insurance",
     "travelDesc": "Domestic & international",
-    "health": "Health Insurance",
-    "healthDesc": "Health, critical illness, cancer",
+    "pa": "Personal Accident (PA)",
+    "paDesc": "Accident, death, disability",
     "fire": "Fire Insurance",
     "fireDesc": "Home & business",
     "lineConcierge": "LINE Concierge",
@@ -55,7 +55,7 @@
     "login": "Log in",
     "agentLogin": "Agent Login",
     "search": "Search",
-    "searchPlaceholder": "Search insurance — car, travel, health…",
+    "searchPlaceholder": "Search insurance — car, travel, accident…",
     "menu": "Menu",
     "close": "Close",
     "unavailableTitle": "This page isn't available right now",
@@ -124,7 +124,7 @@
     "featured": "Top",
     "getQuote": "Check price / Get a quote",
     "search": "Search",
-    "searchPlaceholder": "Search insurance — car, travel, health…",
+    "searchPlaceholder": "Search insurance — car, travel, accident…",
     "megaFlagship": "Our flagship",
     "megaPersonal": "Personal lines",
     "product": {
@@ -140,9 +140,9 @@
         "title": "Travel Insurance",
         "desc": "Coverage at home and abroad"
       },
-      "health": {
-        "title": "Health Insurance",
-        "desc": "Covers your medical costs"
+      "pa": {
+        "title": "Personal Accident (PA)",
+        "desc": "Accident cover, medical costs & sum insured"
       },
       "fire": {
         "title": "Fire Insurance",
@@ -336,7 +336,7 @@
       "business": "Business / Company",
       "businessDesc": "Buy and manage foreign-worker insurance at scale.",
       "individual": "Individual",
-      "individualDesc": "Auto, travel, health and fire insurance.",
+      "individualDesc": "Auto, travel, personal accident and fire insurance.",
       "agent": "Agent / Sub-broker",
       "agentDesc": "Sell on behalf, track commissions and tier."
     },
@@ -436,7 +436,7 @@
       "worker": "Foreign Worker Insurance",
       "auto": "Car Insurance",
       "travel": "Travel Insurance",
-      "health": "Health Insurance",
+      "pa": "Personal Accident (PA)",
       "fire": "Fire Insurance",
       "customer": "Customer Center",
       "wallet": "Policy Wallet",
@@ -468,7 +468,7 @@
     "hero": {
       "badge": "Trusted by more than 12,800 organizations across Thailand",
       "title": "Comprehensive insurance<br></br>you can <grad>trust</grad> for every risk",
-      "subtitle": "The leader in <strong>foreign worker insurance</strong>, plus car, travel, health and fire coverage — buy, renew and manage every policy in one place",
+      "subtitle": "The leader in <strong>foreign worker insurance</strong>, plus car, travel, personal accident and fire coverage — buy, renew and manage every policy in one place",
       "ctaPrimary": "Get foreign worker insurance",
       "ctaSecondary": "Compare car insurance",
       "trustLicense": "Legally licensed insurance broker",
@@ -491,14 +491,14 @@
         "worker": "Foreign Worker",
         "auto": "Car",
         "travel": "Travel",
-        "health": "Health",
+        "pa": "Accident",
         "fire": "Fire"
       },
       "cta": {
         "worker": "Insure workers",
         "auto": "Compare car premiums",
         "travel": "View travel plans",
-        "health": "View health plans",
+        "pa": "View accident plans",
         "fire": "View fire plans"
       },
       "fields": {
@@ -536,11 +536,11 @@
           "label": "Number of days",
           "placeholder": "e.g. 7 days"
         },
-        "healthAge": {
+        "paAge": {
           "label": "Insured's age",
           "placeholder": "e.g. 35"
         },
-        "healthBudget": {
+        "paBudget": {
           "label": "Annual premium budget",
           "options": [
             "Under 15,000",
@@ -588,9 +588,9 @@
         "desc": "Coverage for trips in Thailand and abroad, issued instantly before you travel.",
         "cta": "View plans"
       },
-      "health": {
-        "title": "Health Insurance",
-        "desc": "Lump-sum medical coverage — choose protection that fits your budget.",
+      "pa": {
+        "title": "Personal Accident (PA)",
+        "desc": "Covers accidental death, disability and medical costs — choose a sum insured that fits your budget.",
         "cta": "View plans"
       },
       "fire": {
@@ -983,10 +983,10 @@
         "extra": "Toyota Yaris · 1กข 1234",
         "expiry": "28 Jun 2026"
       },
-      "health": {
-        "type": "Lump-sum Health Insurance",
+      "pa": {
+        "type": "Personal Accident (PA)",
         "co": "Muang Thai Insurance",
-        "extra": "Health Plus plan",
+        "extra": "PA Plus plan",
         "expiry": "01 Sep 2026"
       },
       "travel": {
@@ -1040,7 +1040,7 @@
         "d": "24 days left · renew for continuous coverage"
       },
       "n2": {
-        "t": "Health policy issued",
+        "t": "Personal accident (PA) policy issued",
         "d": "Documents are ready to download"
       },
       "n3": {
@@ -1399,7 +1399,7 @@
   "metadata": {
     "home": {
       "title": "TKR | Full-service insurance broker · Foreign worker insurance leader",
-      "description": "The leader in foreign worker insurance, plus car, travel, health and fire coverage — buy, renew and manage every policy in one place."
+      "description": "The leader in foreign worker insurance, plus car, travel, personal accident and fire coverage — buy, renew and manage every policy in one place."
     },
     "worker": {
       "title": "TKR | Get Foreign Worker Insurance",
@@ -1431,7 +1431,7 @@
     },
     "articles": {
       "title": "Articles & Insurance Guides | TKR",
-      "description": "Guides and tips on worker, motor, health insurance and claims"
+      "description": "Guides and tips on worker, motor, personal accident insurance and claims"
     },
     "help": {
       "title": "Help Center | TKR",
@@ -1443,7 +1443,7 @@
     },
     "about": {
       "title": "About TKR | Licensed Insurance Broker",
-      "description": "TKR is a licensed insurance brokerage — foreign-worker insurance for employers plus personal auto, travel, health and fire cover."
+      "description": "TKR is a licensed insurance brokerage — foreign-worker insurance for employers plus personal auto, travel, personal accident and fire cover."
     },
     "aboutWhy": {
       "title": "Why TKR | Compare & Buy with Confidence",
@@ -1508,7 +1508,7 @@
       "worker": "Worker",
       "auto": "Car",
       "travel": "Travel",
-      "health": "Health",
+      "pa": "Accident",
       "fire": "Fire"
     },
     "policyStatus": {
@@ -1809,7 +1809,7 @@
       "tabs": {
         "auto": "Car",
         "travel": "Travel",
-        "health": "Health",
+        "pa": "Accident",
         "fire": "Fire"
       },
       "quote": {
@@ -2109,8 +2109,8 @@
           "travellers": "Travellers",
           "sum": "Sum insured"
         },
-        "health": {
-          "title": "Health plan",
+        "pa": {
+          "title": "Personal accident (PA) plan",
           "insured": "Insured",
           "age": "Age",
           "plan": "Plan",
@@ -2336,20 +2336,20 @@
         }
       ]
     },
-    "health": {
+    "pa": {
       "hero": {
-        "title": "Health insurance that has your back",
-        "subtitle": "Inpatient and outpatient cover for you and your family.",
+        "title": "Personal accident (PA) cover that has your back",
+        "subtitle": "Accidental death, disability and medical cover for you and your family.",
         "badge": "Plans for every budget"
       },
       "why": [
         {
-          "title": "Real medical cover",
-          "desc": "Hospital stays, surgery and outpatient visits covered."
+          "title": "Real accident cover",
+          "desc": "Accidental death, dismemberment, disability and medical costs covered."
         },
         {
           "title": "Wide hospital network",
-          "desc": "Cashless treatment at partner hospitals nationwide."
+          "desc": "Cashless accident treatment at partner hospitals nationwide."
         },
         {
           "title": "Renew with ease",
@@ -2357,14 +2357,14 @@
         }
       ],
       "coverage": [
-        "Inpatient room, board and surgery",
-        "Outpatient consultations",
-        "Annual health check (Premium)"
+        "Accidental death, dismemberment and disability",
+        "Medical expenses per accident",
+        "Daily income benefit while recovering (Premium)"
       ],
       "faq": [
         {
-          "q": "Is there a waiting period?",
-          "a": "Standard waiting periods apply for certain conditions — details at checkout."
+          "q": "Are motorcycle accidents covered?",
+          "a": "The Premium plan covers motorcycle accidents — details at checkout."
         },
         {
           "q": "Can I add my family?",
@@ -2372,7 +2372,7 @@
         },
         {
           "q": "Cashless or reimbursement?",
-          "a": "Cashless at network hospitals; reimbursement elsewhere."
+          "a": "Cashless accident treatment at network hospitals; reimbursement elsewhere."
         }
       ]
     },
@@ -3053,7 +3053,7 @@
       "worker": "Foreign worker",
       "auto": "Motor",
       "travel": "Travel",
-      "health": "Health",
+      "pa": "Accident",
       "fire": "Fire"
     },
     "articlesEditor": {
@@ -4436,7 +4436,7 @@
       "hero": {
         "badge": "About us",
         "title": "Insurance that understands working people",
-        "sub": "TKR is a licensed insurance brokerage. Our flagship is foreign-worker insurance for employers, alongside personal lines — car, travel, health and fire."
+        "sub": "TKR is a licensed insurance brokerage. Our flagship is foreign-worker insurance for employers, alongside personal lines — car, travel, personal accident and fire."
       },
       "whatWeDo": {
         "title": "What we do",
@@ -4508,10 +4508,10 @@
             "href": "/insurance/travel"
           },
           {
-            "key": "health",
-            "title": "Health insurance",
-            "desc": "Health, critical illness and cancer cover.",
-            "href": "/insurance/health"
+            "key": "pa",
+            "title": "Personal Accident (PA)",
+            "desc": "Accidental death, disability and medical cover.",
+            "href": "/insurance/pa"
           },
           {
             "key": "fire",

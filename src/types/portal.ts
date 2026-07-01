@@ -10,7 +10,7 @@ export type Locale = 'th' | 'en' | 'my' | 'lo';
 // ---- RBAC for back-office (Phase 14) ----
 export type StaffRole = 'superadmin' | 'ops' | 'content' | 'sales';
 
-export type InsuranceType = 'worker' | 'auto' | 'travel' | 'health' | 'fire';
+export type InsuranceType = 'worker' | 'auto' | 'travel' | 'pa' | 'fire';
 export type PolicyStatus = 'active' | 'expiring' | 'expired' | 'pending';
 export type ClaimStatus = 'submitted' | 'reviewing' | 'approved' | 'paid' | 'rejected';
 export type InvoiceStatus = 'paid' | 'unpaid' | 'overdue';

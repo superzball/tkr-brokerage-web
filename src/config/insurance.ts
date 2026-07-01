@@ -41,11 +41,11 @@ export const QUOTE_TABS: QuoteTabConfig[] = [
     ],
   },
   {
-    id: "health",
-    href: "/insurance/health",
+    id: "pa",
+    href: "/insurance/pa",
     fields: [
-      { key: "healthAge", type: "number" },
-      { key: "healthBudget", type: "select", optionCount: 3 },
+      { key: "paAge", type: "number" },
+      { key: "paBudget", type: "select", optionCount: 3 },
     ],
   },
   {

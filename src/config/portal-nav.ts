@@ -40,7 +40,7 @@ export const portalNav: Record<Role, NavSection[]> = {
     help,
   ],
 
-  // ---- Individual (personal lines: auto/travel/health/fire) ----
+  // ---- Individual (personal lines: auto/travel/pa/fire) ----
   individual: [
     {
       items: [

@@ -9,7 +9,7 @@ const seedOf = (id: string) => [...id].reduce((a, c) => a + c.charCodeAt(0), 0);
 const pick = <T,>(arr: T[], n: number): T => arr[((n % arr.length) + arr.length) % arr.length]!;
 
 export function salePolicyNo(sale: AgentSale): string {
-  const prefix = { worker: "W", auto: "A", travel: "T", health: "H", fire: "F" }[sale.product];
+  const prefix = { worker: "W", auto: "A", travel: "T", pa: "PA", fire: "F" }[sale.product];
   const year = sale.date.slice(0, 4);
   const n = 100000 + (seedOf(sale.id) * 7919) % 900000;
   return `TKR-${prefix}-${year}-${n}`;
@@ -82,8 +82,8 @@ export function saleTravel(sale: AgentSale) {
   };
 }
 
-// ── health ──
-export function saleHealth(sale: AgentSale) {
+// ── pa (personal accident) ──
+export function salePA(sale: AgentSale) {
   const s = seedOf(sale.id);
   return {
     insured: sale.clientName,

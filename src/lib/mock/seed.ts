@@ -41,7 +41,7 @@ export const policies: Policy[] = [
   { id: 'p3', policyNo: 'TKR-F-2026-001203', type: 'fire',   status: 'active',   insurer: 'กรุงเทพประกันภัย',  holderId: 'u_biz', premium: 18500,  coverage: 8000000, startDate: '2026-03-01', endDate: '2027-02-28' },
   // individual — personal lines
   { id: 'p4', policyNo: 'TKR-A-2026-022104', type: 'auto',   status: 'active',   insurer: 'วิริยะประกันภัย',   holderId: 'u_indiv', premium: 14200, coverage: 1000000, startDate: '2026-02-20', endDate: '2027-02-19' },
-  { id: 'p5', policyNo: 'TKR-H-2026-008877', type: 'health', status: 'active',   insurer: 'เมืองไทยประกันภัย', holderId: 'u_indiv', premium: 22000, coverage: 1500000, startDate: '2026-01-01', endDate: '2026-12-31' },
+  { id: 'p5', policyNo: 'TKR-PA-2026-008877', type: 'pa', status: 'active',   insurer: 'เมืองไทยประกันภัย', holderId: 'u_indiv', premium: 22000, coverage: 1500000, startDate: '2026-01-01', endDate: '2026-12-31' },
   { id: 'p6', policyNo: 'TKR-T-2026-031590', type: 'travel', status: 'expired',  insurer: 'MSIG',             holderId: 'u_indiv', premium: 1850,  coverage: 2000000, startDate: '2026-04-02', endDate: '2026-04-16' },
 ];
 
@@ -108,7 +108,7 @@ const baseLeads: Lead[] = [
   { id: 'l2', name: 'หจก. รุ่งโรจน์ ก่อสร้าง',   contact: '089-552-1100', interest: 'worker', stage: 'contacted', value: 145000, createdDate: '2026-06-14', assignedTo: 'd1' },
   { id: 'l3', name: 'คุณอาทิตย์ แสงทอง',         contact: '081-334-7788', interest: 'auto',   stage: 'quoted',    value: 16500, createdDate: '2026-06-10', assignedTo: 'd2' },
   { id: 'l4', name: 'บริษัท นครชัย พลาสติก',     contact: '092-110-9988', interest: 'fire',   stage: 'quoted',    value: 31000, createdDate: '2026-06-05' },
-  { id: 'l5', name: 'คุณมณีรัตน์ ทองคำ',         contact: '083-447-2299', interest: 'health', stage: 'won',       value: 24000, createdDate: '2026-05-28' },
+  { id: 'l5', name: 'คุณมณีรัตน์ ทองคำ',         contact: '083-447-2299', interest: 'pa', stage: 'won',       value: 24000, createdDate: '2026-05-28' },
   { id: 'l6', name: 'ร้าน สมหวัง การช่าง',       contact: '087-665-1122', interest: 'worker', stage: 'lost',      value: 42000, createdDate: '2026-05-20' },
 ];
 
@@ -119,7 +119,7 @@ const LEAD_NAME_POOL = [
   'คุณประเสริฐ ทรัพย์มาก', 'คุณสุภาพร ดีงาม', 'บริษัท เจริญยนต์', 'หจก. มงคลก่อสร้าง',
   'คุณวีระศักดิ์ ใจกล้า', 'ร้าน รวมมิตรวัสดุ', 'บริษัท บางกอกโลจิสติกส์', 'คุณอรทัย พูนสุข',
 ];
-const LEAD_INTERESTS: InsuranceType[] = ['worker', 'auto', 'travel', 'health', 'fire'];
+const LEAD_INTERESTS: InsuranceType[] = ['worker', 'auto', 'travel', 'pa', 'fire'];
 const LEAD_STAGES_GEN: LeadStage[] = ['new', 'contacted', 'quoted', 'won', 'lost'];
 const LEAD_ASSIGNEES: (string | undefined)[] = ['d1', 'd2', 'd5', 'd7', undefined, undefined, undefined, undefined];
 
@@ -316,7 +316,7 @@ const baseSales: AgentSale[] = [
   { id: 's2', date: '2026-06-15', clientName: 'บริษัท สยามโลจิสติกส์ จำกัด',     product: 'worker', premium: 56000,  commission: 6720,  status: 'issued' },
   { id: 's3', date: '2026-06-10', clientName: 'คุณวีรพล สุขสันต์',               product: 'auto',   premium: 14200,  commission: 1420,  status: 'issued' },
   { id: 's4', date: '2026-06-04', clientName: 'ร้าน ก.รุ่งเรืองวัสดุ',           product: 'fire',   premium: 24000,  commission: 2400,  status: 'pending' },
-  { id: 's5', date: '2026-05-28', clientName: 'คุณพิมพ์ชนก ใจงาม',               product: 'health', premium: 22000,  commission: 2200,  status: 'issued' },
+  { id: 's5', date: '2026-05-28', clientName: 'คุณพิมพ์ชนก ใจงาม',               product: 'pa', premium: 22000,  commission: 2200,  status: 'issued' },
   { id: 's6', date: '2026-05-12', clientName: 'บริษัท สยามโลจิสติกส์ จำกัด',     product: 'travel', premium: 8500,   commission: 850,   status: 'cancelled' },
 ];
 
@@ -429,16 +429,16 @@ export const articles: Article[] = [
     ],
   },
   {
-    id: 'a5', title: 'เลือกแผนประกันสุขภาพอย่างไรให้เหมาะกับคุณ', slug: 'choosing-health-insurance',
-    status: 'published', category: 'ประกันสุขภาพ', author: 'ทีม TKR', locales: ['th', 'en'], publishedAt: '2026-05-02',
+    id: 'a5', title: 'เลือกแผนประกันอุบัติเหตุ (PA) อย่างไรให้เหมาะกับคุณ', slug: 'choosing-pa-insurance',
+    status: 'published', category: 'ประกันอุบัติเหตุ', author: 'ทีม TKR', locales: ['th', 'en'], publishedAt: '2026-05-02',
     cover: 'peach', readMinutes: 6,
-    excerpt: 'เหมาจ่าย แยกค่าใช้จ่าย หรือ OPD — เข้าใจความต่างก่อนเลือกแผนที่ใช่',
-    seo: { metaTitle: 'เลือกประกันสุขภาพ | TKR', metaDescription: 'แนวทางเลือกแผนประกันสุขภาพให้เหมาะกับไลฟ์สไตล์และงบประมาณ' },
+    excerpt: 'ทุนประกัน ค่ารักษาจากอุบัติเหตุ หรือชดเชยรายได้ — เข้าใจความต่างก่อนเลือกแผนที่ใช่',
+    seo: { metaTitle: 'เลือกประกันอุบัติเหตุ (PA) | TKR', metaDescription: 'แนวทางเลือกแผนประกันอุบัติเหตุ (PA) ให้เหมาะกับไลฟ์สไตล์และงบประมาณ' },
     body: [
-      'แผนประกันสุขภาพแบบเหมาจ่ายให้วงเงินรวมต่อปีที่ยืดหยุ่น เหมาะกับผู้ที่ต้องการความอุ่นใจสูงและไม่อยากกังวลรายละเอียดค่าใช้จ่ายแต่ละหมวด',
-      'แผนแบบแยกค่าใช้จ่ายจะกำหนดวงเงินต่อหมวด เช่น ค่าห้อง ค่าผ่าตัด ค่าแพทย์ ทำให้เบี้ยถูกลงแต่ต้องดูเพดานแต่ละหมวดให้ดี',
-      'หากใช้บริการผู้ป่วยนอกบ่อย ควรพิจารณาความคุ้มครอง OPD เพิ่มเติม และตรวจสอบเครือข่ายโรงพยาบาลที่สะดวกต่อการเข้ารับบริการ',
-      'เปรียบเทียบเบี้ย วงเงิน และเงื่อนไขโรคที่ไม่คุ้มครองก่อนตัดสินใจ เพื่อให้ได้แผนที่สมดุลทั้งความคุ้มครองและงบประมาณ',
+      'ประกันอุบัติเหตุ (PA) คุ้มครองการเสียชีวิต สูญเสียอวัยวะ และทุพพลภาพจากอุบัติเหตุ พร้อมทุนประกันก้อนใหญ่ในเบี้ยที่จับต้องได้ เหมาะกับทุกคนที่ต้องการความอุ่นใจในชีวิตประจำวัน',
+      'ควรพิจารณาวงเงินค่ารักษาพยาบาลต่อครั้งจากอุบัติเหตุ (อบ.) ให้เพียงพอกับค่ารักษาจริง และดูว่าครอบคลุมทั้งผู้ป่วยในและผู้ป่วยนอกจากอุบัติเหตุหรือไม่',
+      'หากเป็นเสาหลักของครอบครัวหรือทำงานที่มีความเสี่ยง ควรเลือกแผนที่มีเงินชดเชยรายได้ระหว่างพักรักษาตัว (ค่าชดเชยรายวัน) เพื่อลดผลกระทบด้านรายได้',
+      'เปรียบเทียบทุนประกัน วงเงินค่ารักษา ข้อยกเว้น และความคุ้มครองเสริม เช่น อุบัติเหตุจากรถจักรยานยนต์ ก่อนตัดสินใจ เพื่อให้ได้แผนที่สมดุลทั้งความคุ้มครองและงบประมาณ',
     ],
   },
   {
@@ -462,7 +462,7 @@ export const articles: Article[] = [
     seo: { metaTitle: 'ผ่อนเบี้ยประกัน 0% | TKR', metaDescription: 'ทางเลือกการชำระเบี้ยประกันและการผ่อน 0%' },
     body: [
       'TKR รองรับการชำระเบี้ยหลายช่องทาง ทั้งจ่ายเต็มจำนวน ผ่อน 0% ผ่านบัตรเครดิตที่ร่วมรายการ และสแกนจ่ายผ่าน QR พร้อมเพย์',
-      'การผ่อน 0% ช่วยกระจายภาระค่าเบี้ยเป็นรายเดือนโดยไม่มีดอกเบี้ย เหมาะกับเบี้ยก้อนใหญ่ เช่น ประกันสุขภาพหรือประกันรถชั้น 1',
+      'การผ่อน 0% ช่วยกระจายภาระค่าเบี้ยเป็นรายเดือนโดยไม่มีดอกเบี้ย เหมาะกับเบี้ยก้อนใหญ่ เช่น ประกันอุบัติเหตุ (PA) หรือประกันรถชั้น 1',
       'ไม่ว่าจะเลือกวิธีใด เมื่อชำระสำเร็จระบบจะยืนยันความคุ้มครองทันที และส่งกรมธรรม์ให้ทางอีเมลและในพอร์ทัล',
     ],
   },
@@ -474,7 +474,7 @@ export const articles: Article[] = [
     seo: { metaTitle: 'เครือข่ายอู่และโรงพยาบาล | TKR', metaDescription: 'รายละเอียดเครือข่ายอู่ซ่อมและโรงพยาบาลคู่สัญญา' },
     body: [
       'การใช้อู่ในเครือหรือศูนย์ซ่อมมาตรฐานช่วยให้ซ่อมรถได้สะดวกและไม่ต้องสำรองจ่าย เพราะบริษัทประกันจ่ายตรงให้กับอู่',
-      'สำหรับประกันสุขภาพ การเข้ารับบริการในโรงพยาบาลคู่สัญญาสามารถใช้สิทธิ์แบบไม่ต้องสำรองจ่าย เพียงแสดงบัตรและยืนยันตัวตน',
+      'สำหรับประกันอุบัติเหตุ (PA) การเข้ารับบริการในโรงพยาบาลคู่สัญญาสามารถใช้สิทธิ์แบบไม่ต้องสำรองจ่าย เพียงแสดงบัตรและยืนยันตัวตน',
       'ตรวจสอบรายชื่อเครือข่ายล่าสุดได้ในพอร์ทัลลูกค้า หรือสอบถามทีมงานผ่าน LINE ได้ตลอด 24 ชั่วโมง',
     ],
   },
@@ -487,7 +487,7 @@ export const orders: Order[] = [
   { id: 'o1', orderNo: 'ORD-2026-1188', customerName: 'บริษัท บูรพา ขนส่ง จำกัด', customerType: 'business', product: 'worker', premium: 88000, status: 'awaiting_payment', channel: 'phone', createdBy: 'u_admin', createdDate: '2026-06-20' },
   { id: 'o2', orderNo: 'ORD-2026-1175', customerName: 'คุณอาทิตย์ แสงทอง', customerType: 'individual', product: 'auto', premium: 16500, status: 'issued', channel: 'line', createdBy: 'u_admin', createdDate: '2026-06-15' },
   { id: 'o3', orderNo: 'ORD-2026-1162', customerName: 'ร้าน ก.รุ่งเรืองวัสดุ', customerType: 'business', product: 'fire', premium: 24000, status: 'issued', channel: 'walk_in', createdBy: 'u_admin', createdDate: '2026-06-09' },
-  { id: 'o4', orderNo: 'ORD-2026-1150', customerName: 'คุณมณีรัตน์ ทองคำ', customerType: 'individual', product: 'health', premium: 24000, status: 'draft', channel: 'phone', createdBy: 'u_admin', createdDate: '2026-06-05' },
+  { id: 'o4', orderNo: 'ORD-2026-1150', customerName: 'คุณมณีรัตน์ ทองคำ', customerType: 'individual', product: 'pa', premium: 24000, status: 'draft', channel: 'phone', createdBy: 'u_admin', createdDate: '2026-06-05' },
 ];
 
 export const staffUsers: StaffUser[] = [
@@ -507,7 +507,7 @@ export const productPlans: ProductPlan[] = [
   { id: 'pp1', product: 'worker', planName: 'แรงงาน Essential', insurer: 'ทิพยประกันภัย',   coverage: 500000,  basePremium: 500,  active: true },
   { id: 'pp2', product: 'worker', planName: 'แรงงาน Plus',      insurer: 'วิริยะประกันภัย',  coverage: 1000000, basePremium: 850,  active: true },
   { id: 'pp3', product: 'auto',   planName: 'รถยนต์ชั้น 1',      insurer: 'วิริยะประกันภัย',  coverage: 1000000, basePremium: 14200, active: true },
-  { id: 'pp4', product: 'health', planName: 'สุขภาพเหมาจ่าย',    insurer: 'เมืองไทยประกันภัย', coverage: 1500000, basePremium: 22000, active: true },
+  { id: 'pp4', product: 'pa', planName: 'PA อุบัติเหตุส่วนบุคคล',    insurer: 'เมืองไทยประกันภัย', coverage: 1500000, basePremium: 22000, active: true },
   { id: 'pp5', product: 'fire',   planName: 'อัคคีภัยธุรกิจ',    insurer: 'กรุงเทพประกันภัย',  coverage: 8000000, basePremium: 18500, active: false },
 ];
 
@@ -599,7 +599,7 @@ export const commissionRules: CommissionRule[] = [
   { id: 'cr3', product: 'worker', tier: 'Platinum', rate: 12, active: true },
   { id: 'cr4', product: 'auto',   tier: 'Gold',     rate: 12, active: true },
   { id: 'cr5', product: 'auto',   tier: 'Platinum', rate: 14, active: true },
-  { id: 'cr6', product: 'health', tier: 'Gold',     rate: 15, active: true },
+  { id: 'cr6', product: 'pa', tier: 'Gold',     rate: 15, active: true },
   { id: 'cr7', product: 'fire',   tier: 'Diamond',  rate: 16, active: false },
 ];
 
@@ -1032,7 +1032,7 @@ export const getTaxDeductionCaps = () => taxDeductionCaps;
 
 // u_indiv ledger — oldest → newest. balanceAfter is the running balance.
 export const pointsLedger: PointsEntry[] = [
-  { id: 'pt1',  customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 900,  balanceAfter: 900,  description: 'ได้แต้มจากการซื้อประกันสุขภาพครอบครัว (เบี้ย ฿90,000)', date: '2026-01-01', ref: 'TKR-H-2026-008700' },
+  { id: 'pt1',  customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 900,  balanceAfter: 900,  description: 'ได้แต้มจากการซื้อประกันอุบัติเหตุ (PA) ครอบครัว (เบี้ย ฿90,000)', date: '2026-01-01', ref: 'TKR-PA-2026-008700' },
   { id: 'pt2',  customerId: 'u_indiv', type: 'earn', source: 'profile_complete', points: 100,  balanceAfter: 1000, description: 'กรอกข้อมูลโปรไฟล์ครบถ้วน', date: '2026-01-02' },
   { id: 'pt3',  customerId: 'u_indiv', type: 'earn', source: 'social_link',      points: 50,   balanceAfter: 1050, description: 'เชื่อมบัญชี LINE', date: '2026-01-03' },
   { id: 'pt4',  customerId: 'u_indiv', type: 'earn', source: 'no_claim',         points: 300,  balanceAfter: 1350, description: 'ครบปีไม่มีการเคลม', date: '2026-01-15' },
@@ -1041,7 +1041,7 @@ export const pointsLedger: PointsEntry[] = [
   { id: 'pt7',  customerId: 'u_indiv', type: 'earn', source: 'referral',         points: 300,  balanceAfter: 1842, description: 'แนะนำเพื่อนสมัครสำเร็จ', date: '2026-03-10', ref: 'REF-7781' },
   { id: 'pt8',  customerId: 'u_indiv', type: 'earn', source: 'renewal',          points: 200,  balanceAfter: 2042, description: 'ต่ออายุกรมธรรม์', date: '2026-03-20' },
   { id: 'pt9',  customerId: 'u_indiv', type: 'earn', source: 'birthday',         points: 100,  balanceAfter: 2142, description: 'โบนัสวันเกิด', date: '2026-04-01' },
-  { id: 'pt10', customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 220,  balanceAfter: 2362, description: 'ได้แต้มจากการซื้อประกันสุขภาพ (เบี้ย ฿22,000)', date: '2026-04-10', ref: 'TKR-H-2026-008877' },
+  { id: 'pt10', customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 220,  balanceAfter: 2362, description: 'ได้แต้มจากการซื้อประกันอุบัติเหตุ (PA) (เบี้ย ฿22,000)', date: '2026-04-10', ref: 'TKR-PA-2026-008877' },
   { id: 'pt11', customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 188,  balanceAfter: 2550, description: 'ได้แต้มจากการซื้อประกันรถยนต์ (เบี้ย ฿18,800)', date: '2026-04-18', ref: 'TKR-A-2026-022590' },
   { id: 'pt12', customerId: 'u_indiv', type: 'earn', source: 'review',           points: 50,   balanceAfter: 2600, description: 'รีวิวหลังใช้บริการ', date: '2026-05-01' },
   { id: 'pt13', customerId: 'u_indiv', type: 'earn', source: 'survey',           points: 30,   balanceAfter: 2630, description: 'ทำแบบสอบถามความพึงพอใจ', date: '2026-05-08' },

@@ -29,7 +29,7 @@ export const PRODUCT_MENU: MenuItem<ProductMenuKey>[] = [
   { key: "worker", href: "/insurance/worker", icon: "star", featured: true },
   { key: "auto", href: "/insurance/auto", icon: "car" },
   { key: "travel", href: "/insurance/travel", icon: "plane" },
-  { key: "health", href: "/insurance/health", icon: "heart" },
+  { key: "pa", href: "/insurance/pa", icon: "shield" },
   { key: "fire", href: "/insurance/fire", icon: "flame" },
 ];
 
@@ -70,7 +70,7 @@ export const publicNav: TopNavItem[] = [
         links: [
           { key: "auto", href: "/insurance/auto", icon: "car", descKey: "autoDesc" },
           { key: "travel", href: "/insurance/travel", icon: "plane", descKey: "travelDesc" },
-          { key: "health", href: "/insurance/health", icon: "heartPulse", descKey: "healthDesc" },
+          { key: "pa", href: "/insurance/pa", icon: "shield", descKey: "paDesc" },
           { key: "fire", href: "/insurance/fire", icon: "flame", descKey: "fireDesc" },
         ],
       },
@@ -162,7 +162,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
       { key: "worker", href: "/insurance/worker" },
       { key: "auto", href: "/insurance/auto" },
       { key: "travel", href: "/insurance/travel" },
-      { key: "health", href: "/insurance/health" },
+      { key: "pa", href: "/insurance/pa" },
       { key: "fire", href: "/insurance/fire" },
     ],
   },

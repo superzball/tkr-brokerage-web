@@ -29,7 +29,7 @@ const PRODUCT_ICON: Record<string, IconName> = {
   worker: "users",
   auto: "car",
   travel: "plane",
-  health: "heart",
+  pa: "shield",
   fire: "flame",
 };
 

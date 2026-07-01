@@ -7,7 +7,7 @@ export interface NavRoute {
 }
 
 /** Keys of the Products / Digital Services dropdowns (drive `nav.product.*` / `nav.service.*`). */
-export type ProductMenuKey = "worker" | "auto" | "travel" | "health" | "fire";
+export type ProductMenuKey = "worker" | "auto" | "travel" | "pa" | "fire";
 export type ServiceMenuKey = "wallet" | "line" | "tracking";
 
 /** An item inside a hover dropdown (Products / Digital Services). */
@@ -25,7 +25,7 @@ export type FooterLinkKey =
   | "worker"
   | "auto"
   | "travel"
-  | "health"
+  | "pa"
   | "fire"
   | "customer"
   | "wallet"
@@ -43,7 +43,7 @@ export interface FooterColumn {
 }
 
 /** The five insurance lines offered by the home quote bar. */
-export type InsuranceTabId = "worker" | "auto" | "travel" | "health" | "fire";
+export type InsuranceTabId = "worker" | "auto" | "travel" | "pa" | "fire";
 
 export type QuoteFieldType = "text" | "number" | "select";
 
@@ -55,8 +55,8 @@ export type QuoteFieldKey =
   | "autoYear"
   | "travelDest"
   | "travelDays"
-  | "healthAge"
-  | "healthBudget"
+  | "paAge"
+  | "paBudget"
   | "fireProp"
   | "fireSum";
 
@@ -166,7 +166,7 @@ export interface AutoPlan {
 
 export type PolicyStatus = "active" | "expiring" | "expired";
 
-export type CustomerPolicyId = "worker" | "auto" | "health" | "travel" | "fire";
+export type CustomerPolicyId = "worker" | "auto" | "pa" | "travel" | "fire";
 
 /** A held policy (sample data). Text lives in `customer.policies.<id>`. */
 export interface CustomerPolicy {

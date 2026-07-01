@@ -42,11 +42,11 @@ export const SEO_LANDINGS: SeoLanding[] = [
   { slug: "home-house",  category: "home", parent: "fire", icon: "building", compare: true,  fromPrice: 2500 },
   { slug: "home-condo",  category: "home", parent: "fire", icon: "building", compare: true,  fromPrice: 1800 },
   // ── health ──
-  { slug: "health-ci",     category: "health", parent: "health", icon: "heart",    compare: true, fromPrice: 7800 },
-  { slug: "health-cancer", category: "health", parent: "health", icon: "hospital", compare: true, fromPrice: 4200 },
+  { slug: "health-ci",     category: "health", parent: "pa", icon: "heart",    compare: true, fromPrice: 7800 },
+  { slug: "health-cancer", category: "health", parent: "pa", icon: "hospital", compare: true, fromPrice: 4200 },
   // ── tax-deduction ──
-  { slug: "tax-savings", category: "tax", parent: "health", icon: "coins", compare: false, fromPrice: 24000 },
-  { slug: "tax-annuity", category: "tax", parent: "health", icon: "coins", compare: false, fromPrice: 30000 },
+  { slug: "tax-savings", category: "tax", parent: "pa", icon: "coins", compare: false, fromPrice: 24000 },
+  { slug: "tax-annuity", category: "tax", parent: "pa", icon: "coins", compare: false, fromPrice: 30000 },
 ];
 
 export const SEO_LANDING_SLUGS = SEO_LANDINGS.map((s) => s.slug);
