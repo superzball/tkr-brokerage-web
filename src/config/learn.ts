@@ -55,7 +55,7 @@ export const LEARN_PRODUCTS: Record<LearnProductKey, LearnProduct> = {
   },
   pa: {
     key: "pa",
-    icon: "shield",
+    icon: "shieldPlus",
     role: "individual",
     quoteHref: null,
     plansKind: "generic",

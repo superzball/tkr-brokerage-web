@@ -29,7 +29,7 @@ export const PRODUCT_MENU: MenuItem<ProductMenuKey>[] = [
   { key: "worker", href: "/insurance/worker", icon: "star", featured: true },
   { key: "auto", href: "/insurance/auto", icon: "car" },
   { key: "travel", href: "/insurance/travel", icon: "plane" },
-  { key: "pa", href: "/insurance/pa", icon: "shield" },
+  { key: "pa", href: "/insurance/pa", icon: "shieldPlus" },
   { key: "fire", href: "/insurance/fire", icon: "flame" },
 ];
 
@@ -70,7 +70,7 @@ export const publicNav: TopNavItem[] = [
         links: [
           { key: "auto", href: "/insurance/auto", icon: "car", descKey: "autoDesc" },
           { key: "travel", href: "/insurance/travel", icon: "plane", descKey: "travelDesc" },
-          { key: "pa", href: "/insurance/pa", icon: "shield", descKey: "paDesc" },
+          { key: "pa", href: "/insurance/pa", icon: "shieldPlus", descKey: "paDesc" },
           { key: "fire", href: "/insurance/fire", icon: "flame", descKey: "fireDesc" },
         ],
       },

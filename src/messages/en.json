@@ -3902,7 +3902,6 @@
       "auto": "Motor insurance",
       "travel": "Travel insurance",
       "home": "Home & condo insurance",
-      "health": "Health insurance",
       "tax": "Tax-deductible insurance"
     },
     "sub": {
@@ -3953,14 +3952,6 @@
       "home-condo": {
         "label": "Condo insurance",
         "tagline": "Covers the unit and its contents"
-      },
-      "health-ci": {
-        "label": "Critical illness",
-        "tagline": "Lump sum on diagnosis of a covered critical illness"
-      },
-      "health-cancer": {
-        "label": "Cancer insurance",
-        "tagline": "Low starting premium, lump sum on a cancer diagnosis"
       },
       "tax-savings": {
         "label": "Savings insurance",
