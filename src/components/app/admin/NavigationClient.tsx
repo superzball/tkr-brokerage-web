@@ -51,16 +51,28 @@ function Toggle({ on, onToggle, label }: { on: boolean; onToggle: () => void; la
 
 export function NavigationClient({
   entries,
+  actions = [],
+  footer = [],
   seed,
 }: {
   entries: NavEntryMeta[];
+  actions?: NavEntryMeta[];
+  footer?: NavEntryMeta[];
   seed: NavSetting[];
 }) {
   const t = useTranslations("admin.navigation");
   const tn = useTranslations("topnav") as unknown as T;
+  const tf = useTranslations("footer") as unknown as T;
   const { toast } = useToast();
   const user = useSession();
   const today = todayISO();
+
+  // Resolve a row label from its declared namespace (topnav by default; footer
+  // links/columns carry labelNs='footer').
+  const labelOf = (entry: NavEntryMeta): string => {
+    const key = entry.labelKey ?? entry.key;
+    return entry.labelNs === "footer" ? tf(key) : tn(key);
+  };
 
   // Resolved settings, keyed by entry key: seed defaults + any stored overrides.
   const [settings, setSettings] = useState<Record<string, NavSetting>>(() =>
@@ -68,15 +80,21 @@ export function NavigationClient({
   );
   const [expanded, setExpanded] = useState<Set<string>>(new Set());
 
-  // Group flattened entries under their owning top-level item, in nav order.
-  const groups = useMemo(() => {
+  // Group a flat entry list under its header rows (top items / footer columns),
+  // in order. Rows before the first header (none, in practice) are ignored.
+  const group = (list: NavEntryMeta[], isHeader: (e: NavEntryMeta) => boolean) => {
     const out: { top: NavEntryMeta; children: NavEntryMeta[] }[] = [];
-    for (const e of entries) {
-      if (e.kind === "top") out.push({ top: e, children: [] });
+    for (const e of list) {
+      if (isHeader(e)) out.push({ top: e, children: [] });
       else out[out.length - 1]?.children.push(e);
     }
     return out;
-  }, [entries]);
+  };
+  const groups = useMemo(() => group(entries, (e) => e.kind === "top"), [entries]);
+  const footerGroups = useMemo(
+    () => group(footer, (e) => e.kind === "footerCol"),
+    [footer],
+  );
 
   function settingFor(key: string): NavSetting {
     return settings[key] ?? { key, isOpen: true };
@@ -135,14 +153,18 @@ export function NavigationClient({
   function Row({ entry }: { entry: NavEntryMeta }) {
     const s = settingFor(entry.key);
     const st = statusOf(entry.key);
-    const isChild = entry.kind !== "top";
+    const isChild =
+      entry.kind === "link" ||
+      entry.kind === "featured" ||
+      entry.kind === "footerLink";
+    const label = labelOf(entry);
     const open = expanded.has(entry.key);
     return (
       <div className={cn("py-2", isChild && "pl-4 border-l-2 border-ink-50 ml-1")}>
         <div className="flex items-center gap-3">
           <div className="min-w-0 flex-1">
             <div className="flex items-center gap-2">
-              <span className="text-sm font-600 text-ink-900 truncate">{tn(entry.key)}</span>
+              <span className="text-sm font-600 text-ink-900 truncate">{label}</span>
               {entry.kind === "featured" && (
                 <span className="text-[0.62rem] font-700 uppercase tracking-wide text-brand-600">
                   {t("kindFeatured")}
@@ -161,7 +183,7 @@ export function NavigationClient({
           >
             <Icon name="calendar" size={16} />
           </button>
-          <Toggle on={s.isOpen} onToggle={() => toggleOpen(entry)} label={tn(entry.key)} />
+          <Toggle on={s.isOpen} onToggle={() => toggleOpen(entry)} label={label} />
         </div>
 
         {open && (
@@ -205,14 +227,47 @@ export function NavigationClient({
             <Row entry={top} />
             {children.length > 0 && (
               <div className="mt-1 divide-y divide-ink-50">
-                {children.map((c) => (
-                  <Row key={c.key} entry={c} />
+                {children.map((c, i) => (
+                  <Row key={`${c.key}-${i}`} entry={c} />
                 ))}
               </div>
             )}
           </section>
         ))}
       </div>
+
+      {actions.length > 0 && (
+        <div className="mt-8 space-y-4">
+          <h2 className="text-sm font-700 uppercase tracking-wide text-ink-500">
+            {t("sectionActions")}
+          </h2>
+          <section className="card p-5 divide-y divide-ink-50">
+            {actions.map((a, i) => (
+              <Row key={`${a.key}-${i}`} entry={a} />
+            ))}
+          </section>
+        </div>
+      )}
+
+      {footerGroups.length > 0 && (
+        <div className="mt-8 space-y-4">
+          <h2 className="text-sm font-700 uppercase tracking-wide text-ink-500">
+            {t("sectionFooter")}
+          </h2>
+          {footerGroups.map(({ top, children }) => (
+            <section key={top.key} className="card p-5">
+              <Row entry={top} />
+              {children.length > 0 && (
+                <div className="mt-1 divide-y divide-ink-50">
+                  {children.map((c, i) => (
+                    <Row key={`${c.key}-${i}`} entry={c} />
+                  ))}
+                </div>
+              )}
+            </section>
+          ))}
+        </div>
+      )}
     </>
   );
 }

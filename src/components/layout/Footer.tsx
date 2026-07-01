@@ -1,14 +1,20 @@
+"use client";
+
 import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { AppLink } from "@/components/ui/AppLink";
 import { Icon } from "@/components/ui/Icon";
 import { ManageCookiesLink } from "@/components/legal/ManageCookiesLink";
 import { site } from "@/config/site";
-import { FOOTER_COLUMNS, FOOTER_SOCIAL } from "@/config/nav";
+import { FOOTER_SOCIAL } from "@/config/nav";
+import { useVisibleFooterColumns } from "@/hooks/useNavVisibility";
 
 export function Footer() {
   const t = useTranslations("footer");
   const tc = useTranslations("common");
+  // Data-driven visibility: hidden footer links + emptied columns filtered out,
+  // sharing the same flags as the navbar (NAV_VISIBILITY).
+  const columns = useVisibleFooterColumns();
 
   return (
     <footer className="bg-ink-950 text-ink-200 mt-24">
@@ -39,7 +45,7 @@ export function Footer() {
             </div>
           </div>
 
-          {FOOTER_COLUMNS.map((col) => (
+          {columns.map((col) => (
             <div key={col.key} className="md:col-span-2">
               <h4 className="text-white font-600 text-sm mb-4">
                 {t(`col.${col.key}`)}

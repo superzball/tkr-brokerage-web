@@ -9,6 +9,8 @@ import { Icon } from "@/components/ui/Icon";
 import { LocaleSwitcher } from "@/components/ui/LocaleSwitcher";
 import { Logo } from "./Logo";
 import { publicNavActions } from "@/config/nav";
+import { useNavEntryVisible } from "@/hooks/useNavVisibility";
+import { actionSettingKey } from "@/lib/nav-visibility";
 import type { TopNavItem } from "@/types/portal";
 import { cn } from "@/lib/cn";
 
@@ -29,6 +31,8 @@ export function MobileDrawer({ open, onClose, pathname, items }: MobileDrawerPro
   // Nav labels use dynamic keys from config → plain string lookup.
   const t = useTranslations("topnav") as unknown as (key: string) => string;
   const [openKey, setOpenKey] = useState<string | null>("products");
+  // Right-side actions can be turned off/scheduled from admin (NAV_VISIBILITY).
+  const actionVisible = useNavEntryVisible();
 
   const linkActive = (href: string) =>
     href !== "/" && (pathname === href || pathname.startsWith(`${href}/`));
@@ -166,17 +170,27 @@ export function MobileDrawer({ open, onClose, pathname, items }: MobileDrawerPro
           <div className="flex items-center justify-center">
             <LocaleSwitcher className="px-1" />
           </div>
-          <Button
-            href={publicNavActions.renew.href}
-            variant="ghost"
-            size="md"
-            onClick={onClose}
-            className="w-full"
+          {actionVisible(actionSettingKey("renew")) && (
+            <Button
+              href={publicNavActions.renew.href}
+              variant="ghost"
+              size="md"
+              onClick={onClose}
+              className="w-full"
+            >
+              <Icon name="refresh" size={18} />
+              {t(publicNavActions.renew.key)}
+            </Button>
+          )}
+          <div
+            className={cn(
+              "grid gap-2.5",
+              actionVisible(actionSettingKey("quoteCta"))
+                ? "grid-cols-2"
+                : "grid-cols-1",
+            )}
           >
-            <Icon name="refresh" size={18} />
-            {t(publicNavActions.renew.key)}
-          </Button>
-          <div className="grid grid-cols-2 gap-2.5">
+            {/* login is core — always available (never hide sign-in) */}
             <Button
               href={publicNavActions.login.href}
               variant="ghost"
@@ -185,14 +199,16 @@ export function MobileDrawer({ open, onClose, pathname, items }: MobileDrawerPro
             >
               {t(publicNavActions.login.key)}
             </Button>
-            <Button
-              href={publicNavActions.quoteCta.href}
-              variant="primary"
-              size="md"
-              onClick={onClose}
-            >
-              {t(publicNavActions.quoteCta.key)}
-            </Button>
+            {actionVisible(actionSettingKey("quoteCta")) && (
+              <Button
+                href={publicNavActions.quoteCta.href}
+                variant="primary"
+                size="md"
+                onClick={onClose}
+              >
+                {t(publicNavActions.quoteCta.key)}
+              </Button>
+            )}
           </div>
         </div>
       </div>

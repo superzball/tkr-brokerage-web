@@ -947,12 +947,27 @@ export const getActiveHomeBanners = () => {
 // edits under /admin/content/navigation persist as localStorage overrides that
 // the public Navbar merges on top of these defaults (see lib/nav-visibility.ts).
 export const navSettings: NavSetting[] = [
+  // top-level items
   { key: 'products',   isOpen: true },
   { key: 'about',      isOpen: true },
   { key: 'help',       isOpen: true },
   { key: 'promotions', isOpen: true },
   { key: 'articles',   isOpen: true },
   { key: 'contact',    isOpen: true },
+  // right-side actions (search + login are core, always on — not listed here)
+  { key: 'action:renew',    isOpen: true },
+  { key: 'action:agent',    isOpen: true },
+  { key: 'action:quoteCta', isOpen: true },
+  // footer columns (footer links reuse the nav link keys above → shared flag;
+  // footer-only links get their own default here)
+  { key: 'footerCol:products', isOpen: true },
+  { key: 'footerCol:services', isOpen: true },
+  { key: 'footerCol:company',  isOpen: true },
+  { key: 'customer',     isOpen: true },
+  { key: 'wallet',       isOpen: true },
+  { key: 'line',         isOpen: true },
+  { key: 'applyAgent',   isOpen: true },
+  { key: 'agencyCenter', isOpen: true },
 ];
 
 /** Seed nav-visibility settings, keyed by entry key (admin merges overrides). */

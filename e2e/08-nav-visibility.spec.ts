@@ -55,10 +55,44 @@ test("toggling a single mega-menu link off drops just that link from the menu", 
   await expect(travelInHeader.first()).toBeAttached();
 
   await page.goto(p("/admin/content/navigation"));
-  await page.getByRole("switch", { name: "ประกันเดินทาง" }).click();
+  // "travel" appears in both the nav Products mega and the footer (they share one
+  // flag → stay in sync); the nav row renders first, so target it.
+  await page.getByRole("switch", { name: "ประกันเดินทาง" }).first().click();
 
   await page.goto(p("/"));
   await expect(travelInHeader).toHaveCount(0);
   // The parent Products menu is still present (its other links remain).
   await expect(page.locator('header a[href="/th/insurance/auto"]').first()).toBeAttached();
+});
+
+test("toggling a footer-only link off removes it from the footer", async ({
+  page,
+}) => {
+  // "ศูนย์ลูกค้า" (customer) lives only in the footer services column.
+  const customerInFooter = page.locator('footer a[href="/th/customer"]');
+
+  await page.goto(p("/"));
+  await expect(customerInFooter.first()).toBeAttached();
+
+  await page.goto(p("/admin/content/navigation"));
+  await page.getByRole("switch", { name: "ศูนย์ลูกค้า" }).click();
+
+  await page.goto(p("/"));
+  await expect(customerInFooter).toHaveCount(0);
+});
+
+test("toggling the renew action off removes it from the nav surfaces", async ({
+  page,
+}) => {
+  // "ต่ออายุประกัน" (renew) renders as a right-side action in the mobile drawer.
+  const renewInHeader = page.locator('header a[href*="/app/buy"]');
+
+  await page.goto(p("/"));
+  await expect(renewInHeader.first()).toBeAttached();
+
+  await page.goto(p("/admin/content/navigation"));
+  await page.getByRole("switch", { name: "ต่ออายุประกัน" }).click();
+
+  await page.goto(p("/"));
+  await expect(renewInHeader).toHaveCount(0);
 });

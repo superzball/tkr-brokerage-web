@@ -135,6 +135,15 @@ export const publicNavActions = {
   agent: { key: "agentLogin", href: "/login?role=agent" },
 } as const;
 
+/**
+ * Right-side actions that admin may turn on/off + schedule (NAV_VISIBILITY),
+ * keyed under `action:<name>` in the nav-visibility settings. `search` and
+ * `login` are intentionally EXCLUDED — they are core (never expose an easy way
+ * to remove sign-in), so they always render regardless of settings.
+ */
+export const TOGGLEABLE_ACTIONS = ["renew", "agent", "quoteCta"] as const;
+export type ToggleableAction = (typeof TOGGLEABLE_ACTIONS)[number];
+
 /** Full ordered list for the mobile drawer. */
 export const MOBILE_NAV: NavRoute[] = [
   { key: "home", href: ROUTES.home },

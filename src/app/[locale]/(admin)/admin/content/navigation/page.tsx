@@ -6,7 +6,11 @@ import { AdminForbidden } from "@/components/app/admin/AdminForbidden";
 import { PageHeader } from "@/components/app/PageHeader";
 import { NavigationClient } from "@/components/app/admin/NavigationClient";
 import { getNavSettings } from "@/lib/mock/seed";
-import { flattenPublicNav } from "@/lib/nav-visibility";
+import {
+  flattenActions,
+  flattenFooter,
+  flattenPublicNav,
+} from "@/lib/nav-visibility";
 
 type Props = { params: Promise<{ locale: Locale }> };
 
@@ -22,7 +26,12 @@ export default async function NavigationSettingsPage({ params }: Props) {
   return (
     <>
       <PageHeader title={t("title")} description={t("desc")} />
-      <NavigationClient entries={flattenPublicNav()} seed={getNavSettings()} />
+      <NavigationClient
+        entries={flattenPublicNav()}
+        actions={flattenActions()}
+        footer={flattenFooter()}
+        seed={getNavSettings()}
+      />
     </>
   );
 }

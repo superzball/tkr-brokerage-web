@@ -4,7 +4,14 @@
 // screen layer persistence on top of these. Keyed by each nav entry's `key`,
 // which is unique across the `publicNav` tree (top items, featured card, links).
 
-import { publicNav } from '@/config/nav';
+import {
+  FOOTER_COLUMNS,
+  publicNav,
+  publicNavActions,
+  TOGGLEABLE_ACTIONS,
+  type ToggleableAction,
+} from '@/config/nav';
+import type { FooterColumn } from '@/types';
 import type {
   MegaColumn,
   NavClosedBehavior,
@@ -14,6 +21,13 @@ import type {
 
 /** Resolved settings keyed by nav entry `key`. */
 export type NavSettingsMap = Record<string, NavSetting>;
+
+// Settings-key builders. Nav entries (top items, featured, mega links) are keyed
+// by their raw `key`, so a footer link that reuses a nav key (worker, auto, …)
+// shares the SAME flag and the two surfaces can never disagree. Actions and
+// footer *columns* get a namespace so they never collide with a nav/link key.
+export const actionSettingKey = (name: string) => `action:${name}`;
+export const footerColSettingKey = (key: string) => `footerCol:${key}`;
 
 /** Today as ISO yyyy-mm-dd — ISO dates compare lexicographically. */
 export function todayISO(): string {
@@ -90,30 +104,65 @@ export function filterPublicNav(
   return out;
 }
 
+/**
+ * Filter footer columns for rendering, sharing the SAME settings map (and helper)
+ * as the navbar so a link hidden in one surface is hidden in the other. Drops
+ * hidden links; a column whose links all vanish — or whose own `footerCol:` flag
+ * is off — is removed so no empty heading is left dangling. Never mutates input.
+ */
+export function filterFooter(
+  columns: FooterColumn[],
+  map: NavSettingsMap,
+  today: string,
+): FooterColumn[] {
+  const vis = (key: string) => isEntryVisible(map[key], today);
+  return columns
+    .map((c) => ({ ...c, links: c.links.filter((l) => vis(l.key)) }))
+    .filter((c) => vis(footerColSettingKey(c.key)) && c.links.length > 0);
+}
+
+/** Is a right-side action (renew / agent / quoteCta) visible right now? */
+export function isActionVisible(
+  name: string,
+  map: NavSettingsMap,
+  today: string,
+): boolean {
+  return isEntryVisible(map[actionSettingKey(name)], today);
+}
+
 // ---- admin flattening ------------------------------------------------------
 
-export type NavEntryKind = 'top' | 'featured' | 'link';
+export type NavEntryKind =
+  | 'top'
+  | 'featured'
+  | 'link'
+  | 'action'
+  | 'footerCol'
+  | 'footerLink';
 
 /** One editable nav entry surfaced to the admin Navigation panel. */
 export interface NavEntryMeta {
-  key: string;            // i18n key under `topnav` AND the settings key
+  key: string;            // the settings key (unique per surface entry)
   kind: NavEntryKind;
-  parentKey?: string;     // owning top-level item (for featured/link)
-  columnKey?: string;     // owning mega column heading (for links)
+  parentKey?: string;     // owning top-level item / footer column (for children)
+  columnKey?: string;     // owning mega/footer column heading (for links)
   href?: string;          // present → route can be gated (closedBehavior)
+  labelNs?: 'topnav' | 'footer'; // i18n namespace for the label (default topnav)
+  labelKey?: string;      // i18n key within labelNs (defaults to `key`)
 }
 
 /** Flatten `publicNav` into an ordered, grouped list for the admin editor. */
 export function flattenPublicNav(items: TopNavItem[] = publicNav): NavEntryMeta[] {
   const out: NavEntryMeta[] = [];
   for (const item of items) {
-    out.push({ key: item.key, kind: 'top', href: item.href });
+    out.push({ key: item.key, kind: 'top', href: item.href, labelKey: item.key });
     if (item.featured) {
       out.push({
         key: item.featured.key,
         kind: 'featured',
         parentKey: item.key,
         href: item.featured.href,
+        labelKey: item.featured.key,
       });
     }
     for (const col of item.columns ?? []) {
@@ -124,8 +173,52 @@ export function flattenPublicNav(items: TopNavItem[] = publicNav): NavEntryMeta[
           parentKey: item.key,
           columnKey: col.key,
           href: link.href,
+          labelKey: link.key,
         });
       }
+    }
+  }
+  return out;
+}
+
+/** Toggleable right-side actions, flattened for the admin editor. */
+const ACTION_LABEL_KEY: Record<ToggleableAction, string> = {
+  renew: 'renew',
+  agent: 'agentLogin',
+  quoteCta: 'getQuote',
+};
+export function flattenActions(): NavEntryMeta[] {
+  return TOGGLEABLE_ACTIONS.map((name) => ({
+    key: actionSettingKey(name),
+    kind: 'action' as const,
+    href: publicNavActions[name].href,
+    labelNs: 'topnav' as const,
+    labelKey: ACTION_LABEL_KEY[name],
+  }));
+}
+
+/** Flatten footer columns + links into a grouped list for the admin editor. */
+export function flattenFooter(
+  columns: FooterColumn[] = FOOTER_COLUMNS,
+): NavEntryMeta[] {
+  const out: NavEntryMeta[] = [];
+  for (const col of columns) {
+    out.push({
+      key: footerColSettingKey(col.key),
+      kind: 'footerCol',
+      labelNs: 'footer',
+      labelKey: `col.${col.key}`,
+    });
+    for (const link of col.links) {
+      out.push({
+        key: link.key,
+        kind: 'footerLink',
+        parentKey: footerColSettingKey(col.key),
+        columnKey: col.key,
+        href: link.href,
+        labelNs: 'footer',
+        labelKey: `link.${link.key}`,
+      });
     }
   }
   return out;
@@ -151,7 +244,12 @@ export function blockedRoutes(
   items: TopNavItem[] = publicNav,
 ): BlockedRoute[] {
   const out: BlockedRoute[] = [];
-  for (const entry of flattenPublicNav(items)) {
+  const all = [
+    ...flattenPublicNav(items),
+    ...flattenActions(),
+    ...flattenFooter(),
+  ];
+  for (const entry of all) {
     if (!entry.href) continue;
     const setting = map[entry.key];
     if (!setting || setting.closedBehavior !== 'blockRoute') continue;

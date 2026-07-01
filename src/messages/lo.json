@@ -3608,7 +3608,7 @@
     "navigation": {
       "title": "Navigation",
       "desc": "Turn public menu items on or off — with optional scheduling — without a deploy",
-      "hint": "Changes apply to the navbar, mega-menu, and mobile drawer. Emptied menu groups are hidden automatically.",
+      "hint": "Changes apply to the navbar, mega-menu, mobile drawer, and footer. Emptied menu groups and footer columns are hidden automatically.",
       "shown": "Menu item shown",
       "hidden": "Menu item hidden",
       "stOpen": "Shown",
@@ -3624,7 +3624,9 @@
       "auditShown": "Enabled public nav item",
       "auditHidden": "Disabled public nav item",
       "auditScheduled": "Scheduled public nav item",
-      "auditBehavior": "Changed nav item closed-behavior"
+      "auditBehavior": "Changed nav item closed-behavior",
+      "sectionActions": "Actions (navbar right side)",
+      "sectionFooter": "Footer"
     }
   },
   "public": {
