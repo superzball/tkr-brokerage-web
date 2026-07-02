@@ -1,30 +1,61 @@
 // src/components/home/HomeBanners.tsx
-// Home promo/campaign carousel (CMS-driven, below the hero). Trust styling:
-// clean, soft shadow, ~0.875rem radius, smooth horizontal slide — no playful
-// motion. Swipe on mobile; arrows + dots on desktop. Auto-advances with
-// pause-on-hover/focus and a manual play/pause toggle; respects reduced-motion
-// (no autoplay, instant transitions). Renders nothing when given no banners.
+// Home promo/campaign carousel (CMS-driven, below the hero). The TKR campaign
+// artwork carries its own headline/subtext/CTA, so each slide is IMAGE-ONLY:
+// the whole image is one link (accessible name = imageAlt/title) with no text
+// overlay. `imageMobile` (1:1) serves narrow screens via <picture>; the wide
+// 1600x500 serves sm+. Trust styling: soft shadow, ~0.875rem radius, smooth
+// horizontal slide — no playful motion. Swipe on mobile; arrows + dots on
+// desktop. Auto-advances with pause-on-hover/focus and a manual play/pause
+// toggle; respects reduced-motion (no autoplay, instant transitions). Renders
+// nothing when no slide is live (no gap). Server passes the seed actives;
+// after mount we re-read admin localStorage edits (lib/mock/local-banners).
 
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import type { HomeBanner } from "@/types/portal";
-import { Button } from "@/components/ui/Button";
+import { activeHomeBanners, LOCAL_BANNERS_KEY } from "@/lib/mock/local-banners";
+import { AppLink } from "@/components/ui/AppLink";
 import { Icon } from "@/components/ui/Icon";
 
 const ADVANCE_MS = 6000;
 const SWIPE_THRESHOLD = 40; // px
 
+// Admin banner edits live in localStorage; subscribing via useSyncExternalStore
+// keeps the server HTML on the seed actives (server snapshot = null) and swaps
+// in the edited list right after hydration — plus live cross-tab updates.
+const subscribeToStorage = (onChange: () => void) => {
+  window.addEventListener("storage", onChange);
+  return () => window.removeEventListener("storage", onChange);
+};
+
 export function HomeBanners({ banners }: { banners: HomeBanner[] }) {
   const t = useTranslations("home.banners");
-  const [index, setIndex] = useState(0);
+  const [rawIndex, setIndex] = useState(0);
   const [paused, setPaused] = useState(false);
   const [reduced, setReduced] = useState(false);
   const touchX = useRef<number | null>(null);
 
-  const count = banners.length;
+  const localRaw = useSyncExternalStore(
+    subscribeToStorage,
+    () => window.localStorage.getItem(LOCAL_BANNERS_KEY),
+    () => null,
+  );
+  const slides = useMemo(() => {
+    if (!localRaw) return banners;
+    try {
+      const today = new Date().toISOString().slice(0, 10);
+      return activeHomeBanners(JSON.parse(localRaw) as HomeBanner[], today);
+    } catch {
+      return banners;
+    }
+  }, [localRaw, banners]);
+
+  const count = slides.length;
   const multi = count > 1;
+  // clamp instead of resetting so a shrinking admin list can't strand the index
+  const index = Math.min(rawIndex, Math.max(0, count - 1));
 
   // Respect the OS "reduce motion" setting: no autoplay, no slide animation.
   useEffect(() => {
@@ -63,7 +94,6 @@ export function HomeBanners({ banners }: { banners: HomeBanner[] }) {
   }
 
   return (
-    // pt clears the hero's overlapping QuoteBar (mirrors ProductGrid's top gap).
     <section
       aria-roledescription="carousel"
       aria-label={t("region")}
@@ -86,7 +116,7 @@ export function HomeBanners({ banners }: { banners: HomeBanner[] }) {
             transition: reduced ? "none" : "transform .6s cubic-bezier(.22,1,.36,1)",
           }}
         >
-          {banners.map((b, i) => (
+          {slides.map((b, i) => (
             <div
               key={b.id}
               role="group"
@@ -94,46 +124,29 @@ export function HomeBanners({ banners }: { banners: HomeBanner[] }) {
               aria-label={t("slideOf", { current: i + 1, total: count })}
               aria-hidden={i !== index}
               className="relative shrink-0 basis-full"
-              style={{ background: b.image ? undefined : b.gradient }}
             >
-              {b.image && (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={b.image}
-                  alt=""
-                  aria-hidden="true"
-                  className="absolute inset-0 h-full w-full object-cover"
-                />
-              )}
-              {/* legibility scrim for image/gradient backgrounds */}
-              <div
-                className="absolute inset-0"
-                style={{
-                  background:
-                    "linear-gradient(90deg,rgba(8,20,40,.62) 0%,rgba(8,20,40,.28) 55%,transparent 100%)",
-                }}
-                aria-hidden="true"
-              />
-              <div className="relative flex min-h-[14rem] sm:min-h-[16rem] lg:min-h-[18rem] flex-col justify-center gap-3 px-6 py-8 sm:px-10 lg:px-14 max-w-2xl">
-                <h2 className="font-display font-700 text-2xl sm:text-3xl lg:text-[2.1rem] leading-tight text-white tracking-tight">
-                  {b.title}
-                </h2>
-                {b.subtitle && (
-                  <p className="text-sm sm:text-base text-white/85 leading-relaxed max-w-xl">
-                    {b.subtitle}
-                  </p>
-                )}
-                <div className="mt-2">
-                  <Button
-                    href={b.ctaHref}
-                    variant="gold"
-                    size="md"
-                    tabIndex={i === index ? undefined : -1}
-                  >
-                    {b.ctaLabel} <Icon name="arrowRight" size={16} />
-                  </Button>
-                </div>
-              </div>
+              {/* the whole image is the link — text/CTA are baked into the
+                  artwork, so nothing is overlaid; the img alt names the link.
+                  Slide area: 1:1 on mobile (matches imageMobile), 16:5 on sm+
+                  (matches the 1600x500 wide art) — object-cover, no distortion. */}
+              <AppLink
+                href={b.href}
+                className="block aspect-square sm:aspect-[16/5]"
+                tabIndex={i === index ? undefined : -1}
+              >
+                <picture>
+                  {b.imageMobile && (
+                    <source media="(min-width: 640px)" srcSet={b.image} />
+                  )}
+                  <img
+                    src={b.imageMobile ?? b.image}
+                    alt={b.imageAlt ?? b.title}
+                    loading={i === 0 ? "eager" : "lazy"}
+                    draggable={false}
+                    className="h-full w-full object-cover"
+                  />
+                </picture>
+              </AppLink>
             </div>
           ))}
         </div>
@@ -163,7 +176,7 @@ export function HomeBanners({ banners }: { banners: HomeBanner[] }) {
         {/* dots + play/pause */}
         {multi && (
           <div className="absolute inset-x-0 bottom-3 flex items-center justify-center gap-2">
-            {banners.map((b, i) => (
+            {slides.map((b, i) => (
               <button
                 key={b.id}
                 type="button"

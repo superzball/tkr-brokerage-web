@@ -447,18 +447,20 @@ export interface Coupon {
   active: boolean;
 }
 
-// Home promo/campaign banner — CMS-driven carousel below the hero. Copy is
-// CMS content (Thai); only slides with active=true AND today within
-// [startDate, endDate] render. Background is an image when `image` is set,
-// otherwise the `gradient` CSS fallback (no image assets shipped in the mock).
+// Home promo/campaign banner — CMS-driven carousel below the hero. The TKR
+// campaign artwork has headline/subtext/CTA BAKED INTO the image, so slides
+// render image-only (whole image clickable) — `title`/`imageAlt` are used only
+// for the link's accessible name / img alt, never overlaid. Only slides with
+// active=true AND today within [startDate, endDate] render.
 export interface HomeBanner {
   id: string;
-  title: string;                 // headline (CMS content)
-  subtitle?: string;             // optional supporting line
-  image?: string;                // background image URL (optional)
-  gradient: string;              // CSS background fallback when no image
-  ctaLabel: string;              // button label
-  ctaHref: string;               // target: promo/product/landing route
+  title: string;                 // slide's accessible name / img-alt fallback
+  subtitle?: string;             // leave empty when text is baked into the image
+  image: string;                 // wide 1600x500 web image (/banners/*.jpg)
+  imageMobile?: string;          // optional square/medium for small screens
+  imageAlt?: string;             // alt text (falls back to title)
+  ctaLabel?: string;             // leave empty when the CTA is baked into the image
+  href: string;                  // target link ('#' until set via admin)
   startDate: string;             // ISO yyyy-mm-dd — inclusive
   endDate: string;               // ISO yyyy-mm-dd — inclusive
   active: boolean;

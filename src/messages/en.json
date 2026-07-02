@@ -453,7 +453,7 @@
       "trustEncryption": "Bank-grade data encryption",
       "card": {
         "policyType": "Foreign Worker Insurance Policy",
-        "company": "Thai Charoen Construction Co., Ltd.",
+        "company": "Thaifoods Group PCL",
         "active": "Active",
         "workers": "Workers",
         "perCapita": "Sum per person",
@@ -3490,7 +3490,7 @@
     "banners": {
       "title": "Home banners",
       "desc": "Manage the promo/campaign banners shown below the hero on the home page",
-      "placeholderBanner": "Sample data for demo — replace with real banners before production",
+      "placeholderBanner": "Edits are saved in this browser (demo mode) and show on the home page immediately — slide links are still '#'; set real targets before production",
       "empty": "No banners yet",
       "add": "Add banner",
       "count": "{n} banners",
@@ -3499,13 +3499,21 @@
       "inactive": "Inactive",
       "window": "Display window",
       "toggle": "Toggle",
+      "edit": "Edit",
       "delete": "Delete",
       "created": "Banner added",
       "deleted": "Banner deleted",
       "activated": "Banner activated",
       "deactivated": "Banner deactivated",
       "sampleTitle": "Sample banner {n}",
-      "sampleCta": "View promotions"
+      "fTitle": "Title (used as the image alt text)",
+      "fImageAlt": "Alt text (blank = use the title)",
+      "fImage": "Desktop image (1600×500)",
+      "fImageMobile": "Mobile image (square)",
+      "fHref": "Target link",
+      "fStart": "Start date",
+      "fEnd": "End date",
+      "fSort": "Sort order"
     },
     "coupons": {
       "title": "Coupons & Promotions",

@@ -57,9 +57,14 @@ need native translation/review:
 - `nav.banners`
 - `home.banners.*` (region, prev, next, goToSlide, slideOf, pause, play)
 - `admin.banners.*` (title, desc, placeholderBanner, empty, add, count, live,
-  scheduled, inactive, window, toggle, delete, created, deleted, activated,
-  deactivated, sampleTitle, sampleCta)
-Note: `homeBanners` slide copy itself is CMS content (seed.ts), not message keys.
+  scheduled, inactive, window, toggle, edit, delete, created, deleted, activated,
+  deactivated, sampleTitle, fTitle, fImageAlt, fImage, fImageMobile, fHref,
+  fStart, fEnd, fSort)
+  (2026-07-02: real image banners landed — `sampleCta` removed, `edit` + `f*`
+  form-field labels added, `placeholderBanner` copy rewritten.)
+Note: `homeBanners` slide copy itself is baked into the campaign images; the
+`title` fields in seed.ts are only accessible names (alt text), CMS content —
+not message keys.
 
 ## TODO — Worker single-package + FAQ (WORKER_FAQ_ADDITIONS) — NOT yet translated
 Added 2026-07-02. These keys currently hold **Thai placeholder** values and need

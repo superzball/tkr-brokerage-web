@@ -20,6 +20,7 @@ import type {
   NavSetting,
 } from '@/types/portal';
 import { memberTierOf, FEATURES_LOYALTY } from '@/config/loyalty';
+import { activeHomeBanners } from '@/lib/mock/local-banners';
 
 // ============================ USERS (demo accounts) ============================
 export const users: User[] = [
@@ -799,47 +800,26 @@ export const coupons: Coupon[] = [
   { id: 'cpn3', code: 'TRAVEL150',    description: 'ลด ฿150 ประกันเดินทาง', discountType: 'fixed', value: 150, products: ['travel'], expiry: '2026-08-31', active: false },
 ];
 
-// PLACEHOLDER home banners — SAMPLE campaign copy only, NOT real promo terms.
-// CMS-driven (admin → /admin/content/banners). Each slide deep-links into an
-// existing flow (worker product, promotions hub, auto compare). Backgrounds are
-// Trust-palette CSS gradients until rights-cleared campaign images exist.
+// Real TKR campaign banners (/public/banners). Headline/subtext/CTA are BAKED
+// INTO each image, so `title` is only the slide's accessible name — the
+// carousel renders image-only slides. CMS-driven (admin → /admin/content/
+// banners; edits persist as localStorage overrides — see lib/mock/local-
+// banners.ts). Links are '#' until real targets are set via the admin panel.
 export const homeBanners: HomeBanner[] = [
-  {
-    id: 'hb1',
-    title: 'ดูแลทีมแรงงานต่างด้าวครบในที่เดียว',
-    subtitle: 'ออกกรมธรรม์เป็นชุด ต่ออายุ และจัดการเอกสารได้เองทั้งหมด (ตัวอย่างเนื้อหา)',
-    gradient: 'linear-gradient(120deg,#0b2240 0%,#143a6b 48%,#1f66ee 100%)',
-    ctaLabel: 'ดูประกันแรงงานต่างด้าว',
-    ctaHref: '/worker-insurance',
-    startDate: '2026-01-01',
-    endDate: '2026-12-31',
-    active: true,
-    sortOrder: 1,
-  },
-  {
-    id: 'hb2',
-    title: 'รวมโปรโมชั่นและคูปองส่วนลด',
-    subtitle: 'โค้ดส่วนลดตัวอย่างสำหรับลูกค้าใหม่ — ดูเงื่อนไขทั้งหมดในหน้าโปรโมชั่น (ตัวอย่างเนื้อหา)',
-    gradient: 'linear-gradient(120deg,#143a6b 0%,#1f66ee 60%,#3b82f6 100%)',
-    ctaLabel: 'ดูโปรโมชั่นทั้งหมด',
-    ctaHref: '/promotions',
-    startDate: '2026-01-01',
-    endDate: '2026-12-31',
-    active: true,
-    sortOrder: 2,
-  },
-  {
-    id: 'hb3',
-    title: 'เทียบเบี้ยประกันรถยนต์ออนไลน์',
-    subtitle: 'เห็นเบี้ยจากหลายบริษัททันที เลือกแผนที่ใช่ในไม่กี่นาที (ตัวอย่างเนื้อหา)',
-    gradient: 'linear-gradient(120deg,#0b2240 0%,#1f3a5f 50%,#c9962f 140%)',
-    ctaLabel: 'เทียบเบี้ยประกันรถยนต์',
-    ctaHref: '/auto',
-    startDate: '2026-01-01',
-    endDate: '2026-12-31',
-    active: true,
-    sortOrder: 3,
-  },
+  { id: 'b1', title: 'ผู้นำประกันแรงงาน อันดับ 1', image: '/banners/wide-01.jpg',
+    imageMobile: '/banners/square-01.jpg', href: '#', active: true, sortOrder: 1,
+    startDate: '2026-01-01', endDate: '2026-12-31' },
+  { id: 'b2', title: 'ผู้นำประกันแรงงาน มาทำงานเมืองไทย อุ่นใจเป็นที่สุด', image: '/banners/wide-02.jpg',
+    imageMobile: '/banners/square-02.jpg', href: '#', active: true, sortOrder: 2,
+    startDate: '2026-01-01', endDate: '2026-12-31' },
+  { id: 'b3', title: 'ประกันที่ตอบโจทย์ทุก Life Style', image: '/banners/wide-03.jpg',
+    imageMobile: '/banners/square-03.jpg', href: '#', active: true, sortOrder: 3,
+    startDate: '2026-01-01', endDate: '2026-12-31' },
+  // square-web (1:1) over medium-900x600 so all mobile slides share one aspect
+  // (no crop of baked-in text); the 900x600 file still ships for admin use.
+  { id: 'b4', title: 'มากกว่าแรงงาน คือคนสำคัญที่เราต้องดูแล — เบี้ยเริ่มต้น 1,190 บาท',
+    image: '/banners/wide-web.jpg', imageMobile: '/banners/square-web.jpg',
+    href: '#', active: true, sortOrder: 4, startDate: '2026-01-01', endDate: '2026-12-31' },
 ];
 
 // PLACEHOLDER reviews — replace with real, consented TKR customer feedback.
@@ -934,14 +914,11 @@ export const getHomeBanners = () =>
   [...homeBanners].sort((a, b) => a.sortOrder - b.sortOrder);
 
 /** Banners to render on the home carousel: active AND today within
- *  [startDate, endDate], ascending by sortOrder. ISO dates compare
- *  lexicographically. Returns [] when nothing is live (home renders nothing). */
-export const getActiveHomeBanners = () => {
-  const today = new Date().toISOString().slice(0, 10);
-  return homeBanners
-    .filter((b) => b.active && b.startDate <= today && today <= b.endDate)
-    .sort((a, b) => a.sortOrder - b.sortOrder);
-};
+ *  [startDate, endDate], ascending by sortOrder. Returns [] when nothing is
+ *  live (home renders nothing). Seed defaults only — the client carousel
+ *  re-applies this filter over admin localStorage edits after mount. */
+export const getActiveHomeBanners = () =>
+  activeHomeBanners(homeBanners, new Date().toISOString().slice(0, 10));
 
 // PUBLIC NAV visibility (NAV_VISIBILITY) — data-driven on/off (+ optional
 // scheduling) for the marketing top-nav, so menu items can be turned off without
