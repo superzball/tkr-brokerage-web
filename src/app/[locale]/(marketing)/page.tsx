@@ -56,7 +56,7 @@ export default async function HomePage({ params }: Props) {
       <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 -mt-12 lg:-mt-16 pb-4">
         <QuickRenew className="shadow-pop" />
       </section>
-      <AgentCTA />
+      {/* <AgentCTA /> */}
     </main>
   );
 }

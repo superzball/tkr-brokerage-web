@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
+import { ROUTES } from "@/config/nav";
 
 const RENEW_HREF = "/app/buy?intent=renew";
 
@@ -34,7 +35,10 @@ export function QuickRenew({ className }: { className?: string }) {
           <p className="mt-1 text-[0.95rem] text-ink-600">{t("sub")}</p>
         </div>
       </div>
-      <Button href={RENEW_HREF} variant="primary" size="lg" className="relative shrink-0">
+      {/* <Button href={RENEW_HREF} variant="primary" size="lg" className="relative shrink-0">
+        {t("cta")} <Icon name="arrowRight" />
+      </Button> */}
+      <Button href={ROUTES.worker24} variant="primary" size="lg" className="relative shrink-0" target="_blank">
         {t("cta")} <Icon name="arrowRight" />
       </Button>
     </div>
