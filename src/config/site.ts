@@ -9,10 +9,6 @@ export const site = {
     /** mono-white mark — footer on dark */
     monoWhite: "/logo-tkr-mono-white.png",
   },
-  /** Social / contact links — placeholders in the source ("#"). */
-  social: {
-    facebook: "#",
-    line: "#",
-    phone: "#",
-  },
+  // Social / contact links live in @/config/contact (contactInfo) — real
+  // channels, single source for /contact, footer and the LINE CTA.
 } as const;

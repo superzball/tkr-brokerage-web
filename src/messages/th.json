@@ -4193,20 +4193,17 @@
     "methodsTitle": "ช่องทางติดต่อ",
     "methods": {
       "phone": "โทรศัพท์",
-      "phoneValue": "02-123-4567",
       "phoneNote": "จันทร์–เสาร์ 8:00–20:00",
       "email": "อีเมล",
-      "emailValue": "hello@tkr.co.th",
       "emailNote": "ตอบกลับภายใน 1 วันทำการ",
       "line": "LINE Official",
-      "lineValue": "@tkrinsure",
       "lineNote": "แชทสดตลอด 24 ชม.",
+      "facebook": "Facebook",
+      "tiktok": "TikTok",
       "address": "ที่อยู่สำนักงาน",
-      "addressValue": "อาคาร TKR ถนนสุขุมวิท กรุงเทพฯ 10110",
       "hours": "เวลาทำการ",
       "hoursValue": "จันทร์–เสาร์ 8:00–20:00 น."
     },
-    "mapPlaceholder": "แผนที่สำนักงาน",
     "form": {
       "title": "ส่งข้อความถึงเรา",
       "sub": "กรอกแบบฟอร์มแล้วเราจะติดต่อกลับโดยเร็ว",
@@ -4235,7 +4232,8 @@
       "title": "หาคำตอบเร็วๆ",
       "desc": "หลายคำถามมีคำตอบอยู่แล้วในศูนย์ช่วยเหลือ",
       "cta": "ไปที่ศูนย์ช่วยเหลือ"
-    }
+    },
+    "mapLink": "ดูแผนที่"
   },
   "guest": {
     "banner": {

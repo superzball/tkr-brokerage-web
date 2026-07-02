@@ -7,6 +7,7 @@ import type {
 } from "@/types";
 import type { TopNavItem } from "@/types/portal";
 import { FEATURES } from "@/config/features";
+import { contactInfo } from "@/config/contact";
 
 /** Canonical route map (was the `L` object in nav.js, now localized routes). */
 export const ROUTES = {
@@ -197,5 +198,9 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
   },
 ];
 
-/** Social glyphs shown in the footer. */
-export const FOOTER_SOCIAL = ["facebook", "line", "phone"] as const;
+/** Social links shown in the footer — hrefs come from contactInfo (single source). */
+export const FOOTER_SOCIAL = [
+  { icon: "facebook", label: "Facebook", href: contactInfo.facebook },
+  { icon: "tiktok", label: "TikTok", href: contactInfo.tiktok },
+  { icon: "line", label: "LINE", href: contactInfo.lineHref },
+] as const;

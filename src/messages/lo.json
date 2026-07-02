@@ -4193,20 +4193,17 @@
     "methodsTitle": "ຊ່ອງທາງຕິດຕໍ່",
     "methods": {
       "phone": "ໂທລະສັບ",
-      "phoneValue": "02-123-4567",
       "phoneNote": "ຈັນ–ເສົາ 8:00–20:00",
       "email": "ອີເມວ",
-      "emailValue": "hello@tkr.co.th",
       "emailNote": "ຕອບກັບພາຍໃນ 1 ວັນລັດຖະການ",
       "line": "LINE Official",
-      "lineValue": "@tkrinsure",
       "lineNote": "ແຊັດສົດຕະຫຼອດ 24 ຊມ.",
+      "facebook": "Facebook",
+      "tiktok": "TikTok",
       "address": "ທີ່ຢູ່ສຳນັກງານ",
-      "addressValue": "ອາຄານ TKR ຖະໜົນ Sukhumvit ບາງກອກ 10110",
       "hours": "ເວລາທຳການ",
       "hoursValue": "ຈັນ–ເສົາ 8:00–20:00 ນ."
     },
-    "mapPlaceholder": "ແຜນທີ່ສຳນັກງານ",
     "form": {
       "title": "ສົ່ງຂໍ້ຄວາມເຖິງພວກເຮົາ",
       "sub": "ຕື່ມແບບຟອມແລ້ວພວກເຮົາຈະຕິດຕໍ່ກັບໂດຍໄວ",
@@ -4235,7 +4232,8 @@
       "title": "ຫາຄຳຕອບໄວໆ",
       "desc": "ຫຼາຍຄຳຖາມມີຄຳຕອບຢູ່ແລ້ວໃນສູນຊ່ວຍເຫຼືອ",
       "cta": "ໄປທີ່ສູນຊ່ວຍເຫຼືອ"
-    }
+    },
+    "mapLink": "ເບິ່ງແຜນທີ່"
   },
   "guest": {
     "banner": {

@@ -6,6 +6,7 @@ import { AppLink } from "@/components/ui/AppLink";
 import { Icon } from "@/components/ui/Icon";
 import { ManageCookiesLink } from "@/components/legal/ManageCookiesLink";
 import { site } from "@/config/site";
+import { contactInfo } from "@/config/contact";
 import { FOOTER_SOCIAL } from "@/config/nav";
 import { useVisibleFooterColumns } from "@/hooks/useNavVisibility";
 
@@ -33,14 +34,41 @@ export function Footer() {
             <p className="text-sm text-ink-300 leading-relaxed max-w-xs">
               {t("tagline")}
             </p>
+            {/* contact channels — values from contactInfo (single source) */}
+            <ul className="mt-5 space-y-2.5 text-sm">
+              <li>
+                <a href={contactInfo.phoneHref} className="inline-flex items-center gap-2.5 text-ink-300 hover:text-white transition-colors">
+                  <Icon name="phone" size={15} /> {contactInfo.phone}
+                </a>
+              </li>
+              <li>
+                <a href={contactInfo.lineHref} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2.5 text-ink-300 hover:text-white transition-colors">
+                  <Icon name="line" size={15} /> {contactInfo.line}
+                </a>
+              </li>
+              <li>
+                <a href={contactInfo.emailHref} className="inline-flex items-center gap-2.5 text-ink-300 hover:text-white transition-colors">
+                  <Icon name="mail" size={15} /> {contactInfo.email}
+                </a>
+              </li>
+              <li>
+                <a href={contactInfo.googleMap} target="_blank" rel="noopener noreferrer" className="inline-flex items-start gap-2.5 text-ink-300 hover:text-white transition-colors">
+                  <Icon name="pin" size={15} className="mt-0.5 shrink-0" /> {contactInfo.addressShort}
+                </a>
+              </li>
+            </ul>
             <div className="flex gap-3 mt-5">
               {FOOTER_SOCIAL.map((s) => (
-                <span
-                  key={s}
-                  className="w-9 h-9 rounded-lg bg-ink-800 hover:bg-brand-600 transition-colors inline-flex items-center justify-center cursor-pointer text-ink-200 hover:text-white"
+                <a
+                  key={s.icon}
+                  href={s.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={s.label}
+                  className="w-9 h-9 rounded-lg bg-ink-800 hover:bg-brand-600 transition-colors inline-flex items-center justify-center text-ink-200 hover:text-white"
                 >
-                  <Icon name={s} />
-                </span>
+                  <Icon name={s.icon} />
+                </a>
               ))}
             </div>
           </div>
