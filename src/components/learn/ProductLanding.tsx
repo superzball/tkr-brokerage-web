@@ -4,6 +4,7 @@
 // (next-intl hooks are isomorphic). Copy: `learn` namespace; structure: LEARN_PRODUCTS.
 
 import { useTranslations, useFormatter } from "next-intl";
+import Image from "next/image";
 import { AppLink } from "@/components/ui/AppLink";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
@@ -18,6 +19,7 @@ import { Reviews } from "@/components/conversion/Reviews";
 import { ProductPlans } from "@/components/conversion/ProductPlans";
 import { getReviews, getPlanCards } from "@/lib/mock/seed";
 import type { InsuranceType } from "@/types/portal";
+import { insurerPartners } from "@/lib/mock/seed";
 
 type Pair = { title: string; desc: string };
 type Qa = { q: string; a: string };
@@ -45,6 +47,7 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
   const signupHref = `/signup?role=${cfg.role}`;
   const primaryHref = cfg.quoteHref ?? signupHref;
   const primaryLabel = cfg.quoteHref ? t("common.startQuote") : t("common.getStarted");
+  const thipInsurance = insurerPartners.find((p) => p.id === "thip");
 
   return (
     <main>
@@ -112,7 +115,14 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
               <div className="card card-lg p-6 shadow-pop">
                 <div className="flex items-center gap-3">
                   <span className="w-12 h-12 rounded-xl bg-brand-500 text-white inline-flex items-center justify-center">
-                    <Icon name={cfg.icon} />
+                    <Image 
+                      src={thipInsurance?.logo || ""}
+                      alt={thipInsurance?.name || ""}
+                      width={48}
+                      height={48}
+                      className="h-12 w-12 max-w-full object-fit rounded-[14px]"
+                      loading="lazy"
+                    />
                   </span>
                   <div>
                     <p className="text-xs text-ink-400 font-500">{t("common.coverageTitle")}</p>
