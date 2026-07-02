@@ -453,7 +453,7 @@
       "trustEncryption": "Bank-grade data encryption",
       "card": {
         "policyType": "Foreign Worker Insurance Policy",
-        "company": "Thaifoods Group PCL",
+        "company": "Government and Public organizations",
         "active": "Active",
         "workers": "Workers",
         "perCapita": "Sum per person",
@@ -673,7 +673,7 @@
       "badge24h": "Policy issued immediately"
     },
     "steps": {
-      "package": "Coverage",
+      "term": "Coverage term",
       "fill": "Enter details",
       "review": "Review",
       "pay": "Pay"
@@ -683,7 +683,8 @@
       "plan": "Coverage plan",
       "insurer": "Underwritten by",
       "insurerValue": "Dhipaya Insurance",
-      "perYear": "Premium / person / year",
+      "term": "Coverage term",
+      "perPerson": "Premium per person",
       "count": "Number of workers",
       "countValue": "{n, plural, one {# person} other {# people}}",
       "total": "Net total premium",
@@ -694,13 +695,21 @@
       "secure": "Secure encrypted payment"
     },
     "package": {
-      "heading": "Coverage plan",
-      "sub": "One single package covering both illness and accident — price per person per year",
+      "heading": "Choose your coverage term",
+      "sub": "One single package covering both illness and accident — same coverage for every term, 4 lengths to choose from",
       "shortName": "Single package (illness + accident)",
       "badgeSingle": "Single package",
       "underwrittenBy": "Underwritten by Dhipaya Insurance",
       "insurerFull": "Dhipaya Insurance Public Company Limited",
-      "perUnit": "/person/year",
+      "perPerson": "/person",
+      "from": "From",
+      "coverageNote": "Same coverage for every term",
+      "terms": {
+        "m3": "3 months",
+        "m6": "6 months",
+        "m12": "1 year",
+        "m15": "1 year 3 months"
+      },
       "rows": {
         "ipd": "Inpatient (IPD)",
         "ipdValue": "Up to {amount}",
@@ -735,7 +744,7 @@
         },
         "coverage": {
           "q": "How many coverage options are there — and does it cover both health and accidents?",
-          "a": "There is one single package covering both illness and accident: inpatient (IPD) up to ฿150,000; outpatient (OPD) ฿1,000 per visit (max 15 visits per policy year)."
+          "a": "There is one single coverage package (identical for every term) covering both illness and accident: inpatient (IPD) up to ฿150,000; outpatient (OPD) ฿1,000 per visit (max 15 visits per policy year). Choose from 4 term lengths: 3 months ฿750, 6 months ฿990, 1 year ฿1,790, 1 year 3 months ฿2,475."
         },
         "noAdvance": {
           "q": "If a worker has an accident, do they need to pay the hospital upfront?",
@@ -828,11 +837,11 @@
       "company": "Thai Charoen Construction Co., Ltd.",
       "taxId": "Tax ID 0105545012345",
       "planLabel": "Coverage plan",
-      "coveragePeriod": "1-year coverage, starting 15 Jun 2026",
+      "coveragePeriod": "{term} coverage, starting 15 Jun 2026",
       "listTitle": "Workers to be issued policies",
       "readyChip": "{n, number} ready to issue",
       "countLabel": "Number of workers",
-      "perLabel": "Premium per person",
+      "perLabel": "Premium per person ({term})",
       "totalLabel": "Net total premium",
       "confirmText": "I confirm the information is correct and accept the ",
       "confirmLink": "policy terms"
@@ -2178,12 +2187,13 @@
       "ctaTitle": "Ready to get covered?",
       "ctaSub": "Start your quote now — it only takes a few minutes.",
       "startQuote": "Start quote",
+      "startQuoteMou": "ประกันแรงงานต่างด้าว (MOU)",
+      "startQuote24": "ประกันแรงงานต่างด้าว (มติ 11 พ.ย/ธ.ค 68)",
       "getStarted": "Get started",
       "contact": "Talk to us",
       "seePlans": "See plans",
       "signupCta": "Create an account",
       "perYear": "/ year",
-      "perWorker": "/ worker / year",
       "choose": "Choose plan",
       "recommended": "Recommended",
       "compareCta": "Compare insurers",
@@ -3348,6 +3358,13 @@
       "flagLine": "LINE Concierge",
       "flagTeam": "Agent team (override)",
       "flagMaintenance": "Maintenance mode",
+      "workerFlow": "Worker purchase flow",
+      "workerFlowHint": "Applies immediately to the worker-insurance purchase flow (stored on this device in the demo).",
+      "workerShowStepper": "Show progress stepper",
+      "workerShowInputMethod": "Show input-method chooser (single / bulk)",
+      "workerDefaultInputMethod": "Default input method (used while the chooser is hidden)",
+      "workerInputSingle": "Single entry (one by one)",
+      "workerInputBulk": "Bulk upload (Excel)",
       "notifications": "Notification templates",
       "tplOtp": "OTP message",
       "tplPolicy": "Policy issued",

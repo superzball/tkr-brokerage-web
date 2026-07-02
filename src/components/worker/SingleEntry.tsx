@@ -24,7 +24,8 @@ export type SingleEntryProps = {
   onAdd: () => void;
   onDel: (id: number) => void;
   onEdit: (id: number, patch: Partial<SingleWorker>) => void;
-  onSwitchBulk: () => void;
+  /** Omitted when the admin hides the input-method choice (WORKER_FLOW_UI). */
+  onSwitchBulk?: () => void;
 };
 
 export function SingleEntry({
@@ -45,12 +46,14 @@ export function SingleEntry({
           </h2>
           <p className="text-ink-600 mt-1.5">{t("single.sub")}</p>
         </div>
-        <button
-          onClick={onSwitchBulk}
-          className="btn btn-ghost btn-sm"
-        >
-          <Icon name="users" /> {t("single.switchToBulk")}
-        </button>
+        {onSwitchBulk && (
+          <button
+            onClick={onSwitchBulk}
+            className="btn btn-ghost btn-sm"
+          >
+            <Icon name="users" /> {t("single.switchToBulk")}
+          </button>
+        )}
       </div>
 
       <div className="mt-6 space-y-4">

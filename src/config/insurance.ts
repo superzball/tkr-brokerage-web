@@ -64,18 +64,25 @@ export const QUOTE_TABS: QuoteTabConfig[] = [
    formatted with next-intl. All display text lives in messages.
    ============================================================ */
 
-/** Worker insurance is underwritten by ทิพยประกันภัย ONLY, as a SINGLE package
- *  covering both illness (IPD/OPD) and accident. There is deliberately no
- *  choose-insurer / choose-plan step in the worker flow — personal lines
- *  (auto/travel/pa/fire) keep the multi-insurer registry.
- *  Coverage numbers are contractual — verify against the ทิพย policy wording
- *  before go-live. Display text lives in the `worker.package` messages. */
+/** Worker insurance is underwritten by ทิพยประกันภัย ONLY, as ONE coverage
+ *  package covering both illness (IPD/OPD) and accident, sold in 4 term
+ *  lengths. There is deliberately no choose-insurer / choose-coverage step in
+ *  the worker flow — the only choice is the coverage term — while personal
+ *  lines (auto/travel/pa/fire) keep the multi-insurer registry.
+ *  Coverage numbers & prices are contractual — verify against the ทิพย policy
+ *  wording before go-live. Display text lives in the `worker.package` messages
+ *  (term labels in `worker.package.terms.<id>`). */
 export const workerInsurancePlan = {
   /** insurerPartners id (seed) — บริษัท ทิพยประกันภัย จำกัด (มหาชน) */
   insurerId: "thip",
   singlePackage: true,
-  /** ฿ premium per worker per year */
-  per: 500,
+  /** ฿ premium per worker — same coverage, different term length & price */
+  terms: [
+    { id: "m3", months: 3, price: 750 },
+    { id: "m6", months: 6, price: 990 },
+    { id: "m12", months: 12, price: 1_790 },
+    { id: "m15", months: 15, price: 2_475 },
+  ],
   /** ฿ inpatient (IPD) max per policy year */
   ipdMax: 150_000,
   /** ฿ outpatient (OPD) per visit */
@@ -89,6 +96,14 @@ export const workerInsurancePlan = {
   /** link out — the list changes; never render it ourselves */
   hospitalNetworkUrl: "https://www.dhipaya.co.th/th/hospital",
 } as const;
+
+export type WorkerTerm = (typeof workerInsurancePlan.terms)[number];
+export type WorkerTermId = WorkerTerm["id"];
+
+/** Cheapest term price — the "เริ่มต้น" figure on landing/marketing surfaces. */
+export const workerMinPrice = Math.min(
+  ...workerInsurancePlan.terms.map((t) => t.price),
+);
 
 /** FAQ for worker insurance (customer-supplied). Ordered; q/a text lives in
  *  `worker.faq.items.<id>` messages. `inFlow` marks the compact subset shown

@@ -12,6 +12,8 @@ import { FEATURES } from "@/config/features";
 export const ROUTES = {
   home: "/",
   worker: "/worker-insurance",
+  workerMou: "https://member.tkrbroker.com",
+  worker24: "https://24tkr.com",
   auto: "/auto",
   customer: "/customer",
   agency: "/agency",

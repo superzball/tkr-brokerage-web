@@ -72,8 +72,19 @@ not message keys.
 Added 2026-07-02. These keys currently hold **Thai placeholder** values and need
 native translation + review (insurance/claims wording — reviewer should have
 insurance domain knowledge; coverage numbers are contractual):
-- `worker.steps.package` (renamed from `worker.steps.plan`)
+- `worker.steps.term` (renamed from `worker.steps.package` 2026-07-02 — the flow
+  now starts with a "เลือกระยะเวลาคุ้มครอง" term-selection step)
 - `worker.summary.insurer`, `worker.summary.insurerValue`
+- `worker.summary.term`, `worker.summary.perPerson` (NEW 2026-07-02; replaced
+  `worker.summary.perYear` — its old Lao translation was dropped because the
+  premium is now per chosen term, not per year)
+- `worker.package.{perPerson,from,coverageNote,terms.m3,terms.m6,terms.m12,
+  terms.m15}` (NEW 2026-07-02 — 4 coverage-term options 750/990/1,790/2,475 บาท;
+  replaced `worker.package.perUnit`), plus `heading`/`sub` rewritten for the
+  term-selection step
+- `worker.faq.items.coverage.a` — rewritten 2026-07-02 (now lists the 4 terms)
+- `worker.review.{coveragePeriod,perLabel}` — now take a `{term}` param (the
+  translated Lao strings were kept, only the hardcoded "1 ປີ" replaced)
 - `worker.package.*` (renamed from `worker.plan.*`; the mode* keys kept their
   existing translations — everything else is new: heading, sub, shortName,
   badgeSingle, underwrittenBy, insurerFull, rows.*, noAdvance, minorNote,
@@ -105,3 +116,10 @@ native translation + review (marketing/compliance wording):
 Note: the review quotes/tags/`complianceNote` themselves live in seed.ts
 (`reviews[]`) as genuine Thai customer words — CMS content, NOT message keys;
 do not translate or paraphrase them.
+
+## TODO — Worker-flow UI toggles (WORKER_FLOW_UI) — AI-translated, needs review
+Added 2026-07-02. New admin-only keys under `admin.settings`: `workerFlow`,
+`workerFlowHint`, `workerShowStepper`, `workerShowInputMethod`,
+`workerDefaultInputMethod`, `workerInputSingle`, `workerInputBulk`.
+These hold **AI Lao** translations (low risk — admin UI labels, no
+customer/legal copy) but still need native review. "Stepper"/"Excel" kept Latin.

@@ -5,10 +5,16 @@ import { Chip } from "@/components/ui/Chip";
 import { Icon } from "@/components/ui/Icon";
 import { AppLink } from "@/components/ui/AppLink";
 import { useBaht } from "@/lib/format";
-import { workerInsurancePlan } from "@/config/insurance";
+import { workerInsurancePlan, type WorkerTerm } from "@/config/insurance";
 import { WorkerFaq } from "./WorkerFaq";
 
-export function ReviewStep({ count }: { count: number }) {
+export function ReviewStep({
+  count,
+  term,
+}: {
+  count: number;
+  term: WorkerTerm;
+}) {
   const t = useTranslations("worker");
   const baht = useBaht();
   const pkg = workerInsurancePlan;
@@ -32,7 +38,9 @@ export function ReviewStep({ count }: { count: number }) {
           <p className="text-sm text-brand-700 font-600 mt-1">
             {t("package.underwrittenBy")}
           </p>
-          <p className="text-sm text-ink-500 mt-2">{t("review.coveragePeriod")}</p>
+          <p className="text-sm text-ink-500 mt-2">
+            {t("review.coveragePeriod", { term: t(`package.terms.${term.id}`) })}
+          </p>
         </div>
       </div>
 
@@ -50,12 +58,14 @@ export function ReviewStep({ count }: { count: number }) {
           </div>
           <div className="rounded-xl bg-sky-100 py-4">
             <p className="font-700 text-2xl text-brand-700 tabnum">
-              {baht(pkg.per)}
+              {baht(term.price)}
             </p>
-            <p className="text-xs text-ink-500">{t("review.perLabel")}</p>
+            <p className="text-xs text-ink-500">
+              {t("review.perLabel", { term: t(`package.terms.${term.id}`) })}
+            </p>
           </div>
           <div className="rounded-xl bg-brand-500 py-4 text-white">
-            <p className="font-700 text-2xl tabnum">{baht(pkg.per * count)}</p>
+            <p className="font-700 text-2xl tabnum">{baht(term.price * count)}</p>
             <p className="text-xs text-white/80">{t("review.totalLabel")}</p>
           </div>
         </div>

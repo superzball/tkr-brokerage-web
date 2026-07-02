@@ -19,7 +19,9 @@ import type {
   ConsentRecord, LegalPolicy, LegalPolicyKind, DataSubjectRequest,
   NavSetting,
 } from '@/types/portal';
+import type { WorkerFlowUI } from '@/types';
 import { memberTierOf, FEATURES_LOYALTY } from '@/config/loyalty';
+import { workerInsurancePlan } from '@/config/insurance';
 import { activeHomeBanners } from '@/lib/mock/local-banners';
 
 // ============================ USERS (demo accounts) ============================
@@ -37,8 +39,9 @@ export const users: User[] = [
 // ============================ POLICIES ============================
 export const policies: Policy[] = [
   // business — mostly worker insurance + one fire
-  { id: 'p1', policyNo: 'TKR-W-2026-004821', type: 'worker', status: 'active',   insurer: 'ทิพยประกันภัย',    holderId: 'u_biz', premium: 124000, coverage: 500000,  workersCount: 248, startDate: '2026-01-15', endDate: '2027-01-14' },
-  { id: 'p2', policyNo: 'TKR-W-2026-004955', type: 'worker', status: 'expiring', insurer: 'ทิพยประกันภัย',    holderId: 'u_biz', premium: 36000,  coverage: 500000,  workersCount: 72,  startDate: '2025-07-10', endDate: '2026-07-09' },
+  // worker premiums = workersCount × term price (1-year term ฿1,790/คน)
+  { id: 'p1', policyNo: 'TKR-W-2026-004821', type: 'worker', status: 'active',   insurer: 'ทิพยประกันภัย',    holderId: 'u_biz', premium: 443920, coverage: 500000,  workersCount: 248, startDate: '2026-01-15', endDate: '2027-01-14' },
+  { id: 'p2', policyNo: 'TKR-W-2026-004955', type: 'worker', status: 'expiring', insurer: 'ทิพยประกันภัย',    holderId: 'u_biz', premium: 128880, coverage: 500000,  workersCount: 72,  startDate: '2025-07-10', endDate: '2026-07-09' },
   { id: 'p3', policyNo: 'TKR-F-2026-001203', type: 'fire',   status: 'active',   insurer: 'กรุงเทพประกันภัย',  holderId: 'u_biz', premium: 18500,  coverage: 8000000, startDate: '2026-03-01', endDate: '2027-02-28' },
   // individual — personal lines
   { id: 'p4', policyNo: 'TKR-A-2026-022104', type: 'auto',   status: 'active',   insurer: 'วิริยะประกันภัย',   holderId: 'u_indiv', premium: 14200, coverage: 1000000, startDate: '2026-02-20', endDate: '2027-02-19' },
@@ -313,8 +316,9 @@ export function queryLeads(all: Lead[], query: LeadQuery = {}): { rows: Lead[]; 
 
 // ============================ AGENT SALES (production history) ============================
 const baseSales: AgentSale[] = [
-  { id: 's1', date: '2026-06-19', clientName: 'บริษัท ไทยเจริญ ก่อสร้าง จำกัด', product: 'worker', premium: 124000, commission: 14880, status: 'issued' },
-  { id: 's2', date: '2026-06-15', clientName: 'บริษัท สยามโลจิสติกส์ จำกัด',     product: 'worker', premium: 56000,  commission: 6720,  status: 'issued' },
+  // worker premiums = workers × term price: s1 = 248 × ฿1,790 (1 ปี), s2 = 56 × ฿990 (6 เดือน)
+  { id: 's1', date: '2026-06-19', clientName: 'บริษัท ไทยเจริญ ก่อสร้าง จำกัด', product: 'worker', premium: 443920, commission: 53270, status: 'issued' },
+  { id: 's2', date: '2026-06-15', clientName: 'บริษัท สยามโลจิสติกส์ จำกัด',     product: 'worker', premium: 55440,  commission: 6653,  status: 'issued' },
   { id: 's3', date: '2026-06-10', clientName: 'คุณวีรพล สุขสันต์',               product: 'auto',   premium: 14200,  commission: 1420,  status: 'issued' },
   { id: 's4', date: '2026-06-04', clientName: 'ร้าน ก.รุ่งเรืองวัสดุ',           product: 'fire',   premium: 24000,  commission: 2400,  status: 'pending' },
   { id: 's5', date: '2026-05-28', clientName: 'คุณพิมพ์ชนก ใจงาม',               product: 'pa', premium: 22000,  commission: 2200,  status: 'issued' },
@@ -326,12 +330,17 @@ const SALE_CLIENTS = [
   'คุณวีรพล สุขสันต์', 'คุณพิมพ์ชนก ใจงาม', 'หจก. รุ่งโรจน์ ก่อสร้าง',
 ];
 const SALE_STATUSES: SaleStatus[] = ['issued', 'issued', 'issued', 'pending', 'cancelled'];
+const WORKER_TERM_PRICES = workerInsurancePlan.terms.map(t => t.price);
 
 function genSales(n: number): AgentSale[] {
   const out: AgentSale[] = [];
   for (let i = 0; i < n; i++) {
     const product = LEAD_INTERESTS[i % LEAD_INTERESTS.length]!;
-    const premium = 8000 + ((i * 97) % 140) * 1000;
+    // worker premiums are always workers × one of the 4 ทิพย term prices
+    const premium =
+      product === 'worker'
+        ? WORKER_TERM_PRICES[i % WORKER_TERM_PRICES.length]! * (20 + ((i * 7) % 80))
+        : 8000 + ((i * 97) % 140) * 1000;
     // Spread across 2025–2026 so ~1-year renewals fall due across the calendar.
     const year = 2025 + (i % 2);
     const month = 1 + ((i * 5) % 12);
@@ -485,7 +494,8 @@ export const articles: Article[] = [
 ];
 
 export const orders: Order[] = [
-  { id: 'o1', orderNo: 'ORD-2026-1188', customerName: 'บริษัท บูรพา ขนส่ง จำกัด', customerType: 'business', product: 'worker', premium: 88000, status: 'awaiting_payment', channel: 'phone', createdBy: 'u_admin', createdDate: '2026-06-20' },
+  // worker order premium = workers × term price (50 × ฿1,790 · 1-year term)
+  { id: 'o1', orderNo: 'ORD-2026-1188', customerName: 'บริษัท บูรพา ขนส่ง จำกัด', customerType: 'business', product: 'worker', premium: 89500, status: 'awaiting_payment', channel: 'phone', createdBy: 'u_admin', createdDate: '2026-06-20' },
   { id: 'o2', orderNo: 'ORD-2026-1175', customerName: 'คุณอาทิตย์ แสงทอง', customerType: 'individual', product: 'auto', premium: 16500, status: 'issued', channel: 'line', createdBy: 'u_admin', createdDate: '2026-06-15' },
   { id: 'o3', orderNo: 'ORD-2026-1162', customerName: 'ร้าน ก.รุ่งเรืองวัสดุ', customerType: 'business', product: 'fire', premium: 24000, status: 'issued', channel: 'walk_in', createdBy: 'u_admin', createdDate: '2026-06-09' },
   { id: 'o4', orderNo: 'ORD-2026-1150', customerName: 'คุณมณีรัตน์ ทองคำ', customerType: 'individual', product: 'pa', premium: 24000, status: 'draft', channel: 'phone', createdBy: 'u_admin', createdDate: '2026-06-05' },
@@ -505,9 +515,11 @@ export const tickets: SupportTicket[] = [
 ];
 
 export const productPlans: ProductPlan[] = [
-  // Worker insurance = single ทิพยประกันภัย package (illness IPD/OPD + accident).
-  // Exactly ONE active worker plan — keep the old Plus row only as inactive history.
-  { id: 'pp1', product: 'worker', planName: 'แพ็กเกจแรงงานต่างด้าว (เจ็บป่วย + อุบัติเหตุ)', insurer: 'ทิพยประกันภัย', coverage: 150000, basePremium: 500, active: true },
+  // Worker insurance = single ทิพยประกันภัย coverage package (illness IPD/OPD +
+  // accident) sold in 4 terms: 3ด ฿750 / 6ด ฿990 / 1ปี ฿1,790 / 1ปี3ด ฿2,475.
+  // Exactly ONE active worker plan (basePremium = cheapest term) — keep the old
+  // Plus row only as inactive history.
+  { id: 'pp1', product: 'worker', planName: 'แพ็กเกจแรงงานต่างด้าว (เจ็บป่วย + อุบัติเหตุ · 4 ระยะเวลา)', insurer: 'ทิพยประกันภัย', coverage: 150000, basePremium: 750, active: true },
   { id: 'pp2', product: 'worker', planName: 'แรงงาน Plus (ยกเลิก)', insurer: 'วิริยะประกันภัย',  coverage: 1000000, basePremium: 850,  active: false },
   { id: 'pp3', product: 'auto',   planName: 'รถยนต์ชั้น 1',      insurer: 'วิริยะประกันภัย',  coverage: 1000000, basePremium: 14200, active: true },
   { id: 'pp4', product: 'pa', planName: 'PA อุบัติเหตุส่วนบุคคล',    insurer: 'เมืองไทยประกันภัย', coverage: 1500000, basePremium: 22000, active: true },
@@ -946,11 +958,15 @@ export const getActiveHomeBanners = () =>
 export const navSettings: NavSetting[] = [
   // top-level items
   { key: 'products',   isOpen: true },
+  { key: 'workerWallet', isOpen: false },
   { key: 'about',      isOpen: true },
   { key: 'help',       isOpen: true },
-  { key: 'promotions', isOpen: true },
+  { key: 'promotions', isOpen: false },
   { key: 'articles',   isOpen: true },
   { key: 'contact',    isOpen: true },
+  { key: 'colDigital',    isOpen: false },
+  { key: 'lineConcierge',    isOpen: false },
+  { key: 'tracking',    isOpen: false },
   // right-side actions (search + login are core, always on — not listed here)
   { key: 'action:renew',    isOpen: true },
   { key: 'action:agent',    isOpen: true },
@@ -969,6 +985,20 @@ export const navSettings: NavSetting[] = [
 
 /** Seed nav-visibility settings, keyed by entry key (admin merges overrides). */
 export const getNavSettings = () => navSettings;
+
+// WORKER FLOW UI (WORKER_FLOW_UI) — admin-editable on/off switches for sections
+// of the worker purchase flow. Defaults are all-on (nothing changes today);
+// admin edits persist as localStorage overrides merged on top of these (see
+// lib/mock/local-worker-flow.ts + hooks/useWorkerFlowUI.ts). Visual only —
+// hiding the input-method chooser proceeds with `defaultInputMethod`.
+export const workerFlowUI: WorkerFlowUI = {
+  showStepper: false,
+  showInputMethod: false,
+  defaultInputMethod: 'single',
+};
+
+/** Seed worker-flow UI toggles (admin merges localStorage overrides). */
+export const getWorkerFlowUI = () => workerFlowUI;
 
 /** Reviews for display — `featuredOnly` = the home testimonials strip (r1–r3). */
 export const getReviews = (opts?: { featuredOnly?: boolean }) =>
@@ -993,7 +1023,7 @@ export const applyCoupon = (code: string, product: InsuranceType, subtotal: numb
 // checkout payment options reuse these across personal lines and worker.
 export const planCards: PlanCard[] = [
   // Worker = ONE ทิพย package (no multi-insurer choice; personal lines keep theirs).
-  { id: 'plan_w_ess',  product: 'worker', insurer: 'ทิพยประกันภัย',  planName: 'แพ็กเกจแรงงานต่างด้าว (เจ็บป่วย + อุบัติเหตุ)', highlights: ['IPD สูงสุด 150,000 บาท', 'OPD 1,000 บาท/ครั้ง (สูงสุด 15 ครั้ง/ปี)', 'ไม่ต้องสำรองจ่าย รพ.เครือข่าย'], startingPremium: 500, period: 'ต่อคน/ปี', badge: 'แพ็กเกจเดียว', couponCode: 'TKRWORKER300', favoritable: true },
+  { id: 'plan_w_ess',  product: 'worker', insurer: 'ทิพยประกันภัย',  planName: 'แพ็กเกจแรงงานต่างด้าว (เจ็บป่วย + อุบัติเหตุ)', highlights: ['IPD สูงสุด 150,000 บาท', 'OPD 1,000 บาท/ครั้ง (สูงสุด 15 ครั้ง/ปี)', 'เลือกระยะเวลาได้ 4 แบบ (3 เดือน – 1 ปี 3 เดือน)', 'ไม่ต้องสำรองจ่าย รพ.เครือข่าย'], startingPremium: 750, period: 'ต่อคน/3 เดือน', badge: 'แพ็กเกจเดียว', couponCode: 'TKRWORKER300', favoritable: true },
   { id: 'plan_a_c1',   product: 'auto',   insurer: 'วิริยะประกันภัย', planName: 'รถยนต์ชั้น 1', highlights: ['ซ่อมห้าง/ศูนย์', 'คุ้มครองชน-ไฟไหม้-สูญหาย'], startingPremium: 14200, period: 'ต่อปี', badge: 'แนะนำ', favoritable: true },
   { id: 'plan_a_c2p',  product: 'auto',   insurer: 'MSIG',          planName: 'รถยนต์ชั้น 2+', highlights: ['คุ้มครองคู่กรณี + รถหาย/ไฟไหม้', 'เบี้ยคุ้มค่า'], startingPremium: 7900, period: 'ต่อปี', favoritable: true },
 ];

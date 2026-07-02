@@ -97,6 +97,18 @@ export interface WorkerFaqItem {
 
 export type WorkerMode = "single" | "bulk";
 
+/** Admin-editable UI toggles for the worker purchase flow (WORKER_FLOW_UI).
+ *  Purely visual — hiding a section never changes the step logic. */
+export interface WorkerFlowUI {
+  /** false → hide the progress stepper bar (flow still advances normally). */
+  showStepper: boolean;
+  /** false → hide the "วิธีกรอกข้อมูลแรงงาน" chooser (and the in-step switch
+   *  links); the flow proceeds with `defaultInputMethod`. */
+  showInputMethod: boolean;
+  /** Mode used when the chooser is hidden. */
+  defaultInputMethod: WorkerMode;
+}
+
 /** Nationality codes; display names live in `worker.nat.*`. */
 export type NationalityCode = "mm" | "la" | "vn";
 
