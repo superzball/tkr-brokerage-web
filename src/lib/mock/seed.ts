@@ -847,49 +847,50 @@ export const reviews: Review[] = [
   { id: 'rv3', authorLabel: 'ตัวแทน TKR', channel: 'survey', product: 'worker', text: 'พอร์ทัลตัวแทนดูยอดทีมและคอมมิชชั่นได้ในที่เดียว', reaction: 'celebrate', date: '2026-04-20' },
 ];
 
-// Real licensed-insurer partner list (32). Names are the proper Thai legal names
-// — keep as-is (don't translate). Logos render as initial/text tiles until real,
-// rights-cleared logo files exist (`logo?` stays empty). `group` lets the UI show
-// them sensibly; `featured` marks the few surfaced first (home/shared logo wall).
+// Real licensed-insurer partner list (31). Names are the proper Thai legal names
+// — keep as-is (don't translate). Every partner has a real, rights-cleared logo
+// in /public/partner-logos/<id>.png plus a `shortName` (brand shown under/next to
+// the logo). `group` lets the UI show them sensibly; `featured` marks the few
+// surfaced first (home/shared logo wall). De-duped from the original 32-name list:
+// emart→jaymart, msi→msig, bci→kpi merged; wannai removed (no such company).
 export const insurerPartners: InsurerPartner[] = [
-  { id: 'thip',        name: 'บริษัท ทิพยประกันภัย จำกัด (มหาชน)', group: 1, featured: true },
-  { id: 'viriyah',     name: 'บริษัท วิริยะประกันภัย จำกัด (มหาชน)', group: 1, featured: true },
-  { id: 'indara',      name: 'บริษัท อินทรประกันภัย จำกัด (มหาชน)', group: 1 },
-  { id: 'thaipaiboon', name: 'บริษัท ไทยไพบูลย์ประกันภัย จำกัด (มหาชน)', group: 1 },
-  { id: 'muangthai',   name: 'บริษัท เมืองไทยประกันภัย จำกัด (มหาชน)', group: 1, featured: true },
-  { id: 'bki',         name: 'บริษัท กรุงเทพประกันภัย จำกัด (มหาชน)', group: 1, featured: true },
-  { id: 'bui',         name: 'บริษัท บางกอกสหประกันภัย จำกัด (มหาชน)', group: 1 },
-  { id: 'emart',       name: 'บริษัท เอมาร์ท ประกันภัย จำกัด (มหาชน)', group: 1 },
-  { id: 'lmg',         name: 'บริษัท แอลเอ็มจี ประกันภัย จำกัด (มหาชน)', group: 1 },
-  { id: 'thaivivat',   name: 'บริษัท ประกันภัยไทยวิวัฒน์ จำกัด (มหาชน)', group: 1 },
-  { id: 'kwi',         name: 'บริษัท เคดับบลิวไอ ประกันภัย จำกัด (มหาชน)', group: 1 },
+  { id: 'thip',        name: 'บริษัท ทิพยประกันภัย จำกัด (มหาชน)', shortName: 'ทิพยประกันภัย', group: 1, featured: true, logo: '/partner-logos/thip.png' },
+  { id: 'viriyah',     name: 'บริษัท วิริยะประกันภัย จำกัด (มหาชน)', shortName: 'วิริยะประกันภัย', group: 1, featured: true, logo: '/partner-logos/viriyah.png' },
+  { id: 'indara',      name: 'บริษัท อินทรประกันภัย จำกัด (มหาชน)', shortName: 'อินทรประกันภัย', group: 1, logo: '/partner-logos/indara.png' },
+  { id: 'thaipaiboon', name: 'บริษัท ไทยไพบูลย์ประกันภัย จำกัด (มหาชน)', shortName: 'ไทยไพบูลย์ประกันภัย', group: 1, logo: '/partner-logos/thaipaiboon.png' },
+  { id: 'muangthai',   name: 'บริษัท เมืองไทยประกันภัย จำกัด (มหาชน)', shortName: 'เมืองไทยประกันภัย', group: 1, featured: true, logo: '/partner-logos/muangthai.png' },
+  { id: 'bki',         name: 'บริษัท กรุงเทพประกันภัย จำกัด (มหาชน)', shortName: 'กรุงเทพประกันภัย', group: 1, featured: true, logo: '/partner-logos/bki.png' },
+  { id: 'bui',         name: 'บริษัท บางกอกสหประกันภัย จำกัด (มหาชน)', shortName: 'บางกอกสหประกันภัย', group: 1, logo: '/partner-logos/bui.png' },
+  { id: 'lmg',         name: 'บริษัท แอลเอ็มจี ประกันภัย จำกัด (มหาชน)', shortName: 'LMG ประกันภัย', group: 1, logo: '/partner-logos/lmg.png' },
+  { id: 'thaivivat',   name: 'บริษัท ประกันภัยไทยวิวัฒน์ จำกัด (มหาชน)', shortName: 'ไทยวิวัฒน์ประกันภัย', group: 1, logo: '/partner-logos/thaivivat.png' },
+  { id: 'kwi',         name: 'บริษัท เคดับบลิวไอ ประกันภัย จำกัด (มหาชน)', shortName: 'KWI ประกันภัย', group: 1, logo: '/partner-logos/kwi.png' },
 
-  { id: 'msi',         name: 'บริษัท มิตซุย สุมิโตโม อินชัวรันซ์ จำกัด', group: 2 },
-  { id: 'tune',        name: 'บริษัท ทูนประกันภัย จำกัด (มหาชน)', group: 2 },
-  { id: 'thanachart',  name: 'บริษัท ธนชาตประกันภัย จำกัด (มหาชน)', group: 2 },
-  { id: 'thaipat',     name: 'บริษัท ไทยพัฒนาประกันภัย จำกัด (มหาชน)', group: 2 },
-  { id: 'ergo',        name: 'บริษัท เออร์โกประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 2 },
-  { id: 'wannai',      name: 'บริษัท วรรณัยประกันภัย จำกัด (มหาชน)', group: 2 },
-  { id: 'bci',         name: 'บริษัท กรุงเทพพาณิชย์ประกันภัย จำกัด (มหาชน)', group: 2 },
-  { id: 'tokiomarine', name: 'บริษัท คุ้มภัยโตเกียวมารีนประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 2 },
-  { id: 'aig',         name: 'บริษัท เอไอจี ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 2 },
-  { id: 'msig',        name: 'บริษัท เอ็มเอสไอจี ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 2, featured: true },
-  { id: 'deves',       name: 'บริษัท เทเวศประกันภัย จำกัด (มหาชน)', group: 2 },
+  { id: 'tune',        name: 'บริษัท ทูนประกันภัย จำกัด (มหาชน)', shortName: 'ทูนประกันภัย', group: 2, logo: '/partner-logos/tune.png' },
+  { id: 'thanachart',  name: 'บริษัท ธนชาตประกันภัย จำกัด (มหาชน)', shortName: 'ธนชาตประกันภัย', group: 2, logo: '/partner-logos/thanachart.png' },
+  { id: 'thaipat',     name: 'บริษัท ไทยพัฒนาประกันภัย จำกัด (มหาชน)', shortName: 'ไทยพัฒนาประกันภัย', group: 2, logo: '/partner-logos/thaipat.png' },
+  { id: 'ergo',        name: 'บริษัท เออร์โกประกันภัย (ประเทศไทย) จำกัด (มหาชน)', shortName: 'เออร์โกประกันภัย', group: 2, logo: '/partner-logos/ergo.png' },
+  { id: 'tokiomarine', name: 'บริษัท คุ้มภัยโตเกียวมารีนประกันภัย (ประเทศไทย) จำกัด (มหาชน)', shortName: 'โตเกียวมารีนประกันภัย', group: 2, logo: '/partner-logos/tokiomarine.png' },
+  { id: 'aig',         name: 'บริษัท เอไอจี ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', shortName: 'AIG ประกันภัย', group: 2, logo: '/partner-logos/aig.png' },
+  { id: 'msig',        name: 'บริษัท เอ็มเอสไอจี ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', shortName: 'MSIG ประกันภัย', group: 2, featured: true, logo: '/partner-logos/msig.png' },
+  { id: 'deves',       name: 'บริษัท เทเวศประกันภัย จำกัด (มหาชน)', shortName: 'เทเวศประกันภัย', group: 2, logo: '/partner-logos/deves.png' },
 
-  { id: 'rvp',         name: 'บริษัท กลางคุ้มครองผู้ประสบภัยจากรถ จำกัด', group: 3 },
-  { id: 'buakij',      name: 'บริษัท บวกิจประกันภัย จำกัด (มหาชน)', group: 3 },
-  { id: 'fwd',         name: 'บริษัท เอฟดับบลิวดี ประกันภัย จำกัด (มหาชน)', group: 3 },
-  { id: 'tsi',         name: 'บริษัท ไทยเศรษฐกิจ ประกันภัย จำกัด (มหาชน)', group: 3 },
-  { id: 'pacificcross',name: 'บริษัท แปซิฟิค ครอส ประกันสุขภาพ จำกัด (มหาชน)', group: 3 },
-  { id: 'sahasamakkee',name: 'บริษัท ซับบีสามัคคีประกันภัย จำกัด (มหาชน)', group: 3 },
-  { id: 'ioi',         name: 'บริษัท ไอโอไอ กรุงเทพ ประกันภัย จำกัด (มหาชน)', group: 3 },
-  { id: 'allianz',     name: 'บริษัท อลิอันซ์ อยุธยา ประกันภัย จำกัด (มหาชน)', group: 3, featured: true },
-  { id: 'sompo',       name: 'บริษัท ซมโปะ ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 3 },
-  { id: 'mittare',     name: 'บริษัท มิตรแท้ประกันภัย จำกัด (มหาชน)', group: 3 },
+  { id: 'rvp',         name: 'บริษัท กลางคุ้มครองผู้ประสบภัยจากรถ จำกัด', shortName: 'บริษัทกลางฯ', group: 3, logo: '/partner-logos/rvp.png' },
+  { id: 'navakij',     name: 'บริษัท นวกิจประกันภัย จำกัด (มหาชน)', shortName: 'นวกิจประกันภัย', group: 3, logo: '/partner-logos/navakij.png' },
+  { id: 'fwd',         name: 'บริษัท เอฟดับบลิวดี ประกันภัย จำกัด (มหาชน)', shortName: 'FWD ประกันภัย', group: 3, logo: '/partner-logos/fwd.png' },
+  { id: 'tsi',         name: 'บริษัท ไทยเศรษฐกิจ ประกันภัย จำกัด (มหาชน)', shortName: 'ไทยเศรษฐกิจประกันภัย', group: 3, logo: '/partner-logos/tsi.png' },
+  { id: 'pacificcross',name: 'บริษัท แปซิฟิค ครอส ประกันสุขภาพ จำกัด (มหาชน)', shortName: 'แปซิฟิค ครอส', group: 3, logo: '/partner-logos/pacificcross.png' },
+  { id: 'sahasamakkee',name: 'บริษัท ชับบ์สามัคคีประกันภัย จำกัด (มหาชน)', shortName: 'ชับบ์สามัคคีประกันภัย', group: 3, logo: '/partner-logos/sahasamakkee.png' },
+  { id: 'ioi',         name: 'บริษัท ไอโออิ กรุงเทพ ประกันภัย จำกัด (มหาชน)', shortName: 'ไอโออิ กรุงเทพ', group: 3, logo: '/partner-logos/ioi.png' },
+  { id: 'allianz',     name: 'บริษัท อลิอันซ์ อยุธยา ประกันภัย จำกัด (มหาชน)', shortName: 'อลิอันซ์ อยุธยา', group: 3, featured: true, logo: '/partner-logos/allianz.png' },
+  { id: 'sompo',       name: 'บริษัท ซมโปะ ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', shortName: 'ซมโปะ ประกันภัย', group: 3, logo: '/partner-logos/sompo.png' },
+  { id: 'mittare',     name: 'บริษัท มิตรแท้ประกันภัย จำกัด (มหาชน)', shortName: 'มิตรแท้ประกันภัย', group: 3, logo: '/partner-logos/mittare.png' },
+  { id: 'liberty',     name: 'บริษัท ลิเบอร์ตี้ประกันภัย จำกัด (มหาชน)', shortName: 'ลิเบอร์ตี้ประกันภัย', group: 3, logo: '/partner-logos/liberty.png' },
+  { id: 'kpi',         name: 'บริษัท กรุงไทยพานิชประกันภัย จำกัด (มหาชน)', shortName: 'กรุงไทยพานิช (KPI)', group: 3, logo: '/partner-logos/kpi.png' },
+  { id: 'jaymart',     name: 'บริษัท เจมาร์ท ประกันภัย จำกัด (มหาชน)', shortName: 'เจมาร์ท ประกันภัย', group: 3, logo: '/partner-logos/jaymart.png' },
 ];
 
 /** Total partner count — the single source for any "partner count" figure. */
-export const insurerPartnerCount = insurerPartners.length; // 32
+export const insurerPartnerCount = insurerPartners.length; // 31
 
 /** Brand display name for logo tiles/walls — strips the legal prefix/suffix off
  *  the full company name (e.g. "บริษัท ทิพยประกันภัย จำกัด (มหาชน)" → "ทิพยประกันภัย").

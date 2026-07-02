@@ -475,7 +475,7 @@ export interface Review {
   date: string;
 }
 
-export interface InsurerPartner { id: string; name: string; group: 1 | 2 | 3; featured?: boolean; logo?: string; }
+export interface InsurerPartner { id: string; name: string; group: 1 | 2 | 3; featured?: boolean; shortName?: string; logo?: string; }
 
 export interface GlossaryTerm {
   term: string;

@@ -3750,6 +3750,7 @@
       "customersTitle": "Customers served",
       "claimsTitle": "Claims-paid rate",
       "partnersTitle": "Partner insurers",
+      "partnersSeeAll": "View all",
       "awardsTitle": "Awards & recognition",
       "awardsEmpty": "Reserved for real awards — we only display awards we have actually received"
     },
@@ -4600,7 +4601,7 @@
       },
       "wall": {
         "title": "Our partner insurers",
-        "note": "Shown as name placeholders — official partner logos will appear once usage rights are confirmed.",
+        "note": "Official partner insurer logos, shown with usage permission.",
         "empty": "Partner list is being updated — please check back soon."
       },
       "meaning": {
