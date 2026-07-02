@@ -21,8 +21,9 @@ export function generateStaticParams() {
 
 export const metadata: Metadata = {
   // Per-page localized title/description land in Phase 5 (generateMetadata).
+  // Icons come from the file conventions in src/app (favicon.ico, icon.png,
+  // apple-icon.png) — no manual `icons` entry needed.
   title: "TKR",
-  icons: { icon: "/logo-tkr.png" },
 };
 
 export default async function LocaleLayout({ children, params }: Props) {
