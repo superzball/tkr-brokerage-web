@@ -11,7 +11,8 @@ import { Chip } from "@/components/ui/Chip";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
 import { LEARN_PRODUCTS, type LearnProductKey } from "@/config/learn";
-import { WORKER_PLANS, AUTO_PLANS } from "@/config/insurance";
+import { workerInsurancePlan, AUTO_PLANS } from "@/config/insurance";
+import { WorkerFaq } from "@/components/worker/WorkerFaq";
 import { ROUTES } from "@/config/nav";
 import { TrustBadge } from "@/components/conversion/TrustBadge";
 import { GlossarySection } from "@/components/conversion/Glossary";
@@ -195,47 +196,67 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
           <p className="mt-3 text-ink-600">{t("common.plansSub")}</p>
         </div>
 
+        {/* worker = ONE ทิพยประกันภัย package (illness + accident) — no plan choice */}
         {cfg.plansKind === "worker" && (
-          <div className="mt-10 grid sm:grid-cols-3 gap-5">
-            {WORKER_PLANS.map((p) => (
-              <div
-                key={p.id}
-                className={cn(
-                  "card p-6 relative reveal",
-                  p.recommended && "ring-2 ring-brand-400",
+          <div className="mt-10 max-w-xl mx-auto">
+            <div className="card card-lg p-7 relative reveal ring-2 ring-brand-400">
+              <Chip className="bg-brand-500 text-white absolute -top-3 left-6 text-xs">
+                {tw("package.badgeSingle")}
+              </Chip>
+              <div className="flex items-center gap-3">
+                {thipInsurance?.logo && (
+                  <Image
+                    src={thipInsurance.logo}
+                    alt={thipInsurance.name}
+                    width={44}
+                    height={44}
+                    className="h-11 w-11 rounded-xl object-contain bg-white border border-ink-100"
+                    loading="lazy"
+                  />
                 )}
-              >
-                {p.recommended && (
-                  <Chip className="bg-brand-500 text-white absolute -top-3 left-6 text-xs">
-                    {t("common.recommended")}
-                  </Chip>
-                )}
-                <p className="font-600 text-ink-900">{tw(`plan.names.${p.id}`)}</p>
-                <p className="mt-2 font-display font-700 text-3xl text-brand-700 tabnum">
-                  {baht(p.per)}
-                  <span className="text-sm font-500 text-ink-400"> {t("common.perWorker")}</span>
-                </p>
-                <ul className="mt-4 space-y-2.5 text-sm text-ink-600">
-                  <li className="flex justify-between">
-                    <span>{tw("plan.rows.life")}</span>
-                    <span className="font-600 text-ink-900 tabnum">{baht(p.life)}</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>{tw("plan.rows.medical")}</span>
-                    <span className="font-600 text-ink-900 tabnum">{baht(p.medical)}</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span>{tw("plan.rows.repatriation")}</span>
-                    <span className={cn("font-600", p.repatriation ? "text-mint-600" : "text-ink-400")}>
-                      {p.repatriation ? tw("plan.included") : tw("plan.notIncluded")}
-                    </span>
-                  </li>
-                </ul>
-                <Button href={primaryHref} variant={p.recommended ? "primary" : "ghost"} size="md" className="w-full mt-5">
-                  {t("common.choose")}
-                </Button>
+                <div>
+                  <p className="font-600 text-ink-900">{tw("package.underwrittenBy")}</p>
+                  <p className="text-xs text-ink-500">{tw("package.insurerFull")}</p>
+                </div>
               </div>
-            ))}
+              <p className="mt-4 font-display font-700 text-3xl text-brand-700 tabnum">
+                {baht(workerInsurancePlan.per)}
+                <span className="text-sm font-500 text-ink-400"> {t("common.perWorker")}</span>
+              </p>
+              <ul className="mt-4 space-y-2.5 text-sm text-ink-600">
+                <li className="flex justify-between gap-4">
+                  <span>{tw("package.rows.ipd")}</span>
+                  <span className="font-600 text-ink-900 tabnum">
+                    {tw("package.rows.ipdValue", { amount: baht(workerInsurancePlan.ipdMax) })}
+                  </span>
+                </li>
+                <li className="flex justify-between gap-4">
+                  <span>{tw("package.rows.opd")}</span>
+                  <span className="font-600 text-ink-900 tabnum">
+                    {tw("package.rows.opdValue", {
+                      amount: baht(workerInsurancePlan.opdPerVisit),
+                      n: workerInsurancePlan.opdMaxVisits,
+                    })}
+                  </span>
+                </li>
+                <li className="flex justify-between gap-4">
+                  <span>{tw("package.rows.age")}</span>
+                  <span className="font-600 text-ink-900 tabnum">
+                    {tw("package.rows.ageValue", {
+                      min: workerInsurancePlan.ageMin,
+                      max: workerInsurancePlan.ageMax,
+                    })}
+                  </span>
+                </li>
+                <li className="flex items-center gap-2 text-mint-600 font-600">
+                  <Icon name="checkCircle" size={16} /> {tw("package.noAdvance")}
+                </li>
+              </ul>
+              <p className="mt-3 text-xs text-ink-500">{tw("package.minorNote")}</p>
+              <Button href={primaryHref} variant="primary" size="md" className="w-full mt-5">
+                {t("common.choose")}
+              </Button>
+            </div>
           </div>
         )}
 
@@ -345,21 +366,27 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
         <h2 className="font-display font-700 text-3xl text-ink-900 tracking-tight text-center mb-8 reveal">
           {t("common.faqTitle")}
         </h2>
-        <div className="card divide-y divide-ink-50">
-          {faq.map((item) => (
-            <details key={item.q} className="group p-5">
-              <summary className="flex cursor-pointer items-center justify-between gap-3 font-600 text-ink-900 list-none">
-                {item.q}
-                <Icon
-                  name="chevD"
-                  size={18}
-                  className="text-ink-400 transition-transform group-open:rotate-180 shrink-0"
-                />
-              </summary>
-              <p className="mt-2.5 text-sm text-ink-600 leading-relaxed">{item.a}</p>
-            </details>
-          ))}
-        </div>
+        {product === "worker" ? (
+          // customer-supplied worker FAQ (single ทิพย package) + the generic
+          // learn Q&As appended — same list surfaces in /help and in-flow.
+          <WorkerFaq extra={faq} />
+        ) : (
+          <div className="card divide-y divide-ink-50">
+            {faq.map((item) => (
+              <details key={item.q} className="group p-5">
+                <summary className="flex cursor-pointer items-center justify-between gap-3 font-600 text-ink-900 list-none">
+                  {item.q}
+                  <Icon
+                    name="chevD"
+                    size={18}
+                    className="text-ink-400 transition-transform group-open:rotate-180 shrink-0"
+                  />
+                </summary>
+                <p className="mt-2.5 text-sm text-ink-600 leading-relaxed">{item.a}</p>
+              </details>
+            ))}
+          </div>
+        )}
       </section>
 
       {/* ── Final CTA ── */}

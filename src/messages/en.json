@@ -64,29 +64,7 @@
   },
   "homeFaq": {
     "title": "Frequently asked questions",
-    "sub": "The answers customers ask for most",
-    "items": [
-      {
-        "q": "Can I see a price without entering personal data?",
-        "a": "Yes — you see a real premium instantly with no personal data, and we never make sales calls."
-      },
-      {
-        "q": "Is TKR a licensed broker?",
-        "a": "Yes. TKR is a non-life insurance broker properly licensed by the OIC."
-      },
-      {
-        "q": "Can I buy foreign-worker insurance in bulk?",
-        "a": "Yes — issue policies one at a time or in bulk for employers, with a digital card for each worker."
-      },
-      {
-        "q": "What payment methods are available?",
-        "a": "Pay in full, 0% credit-card installments, or PromptPay QR. Coverage starts as soon as the first payment is made."
-      },
-      {
-        "q": "Can an agent help me?",
-        "a": "Absolutely. Choose ‘let an agent help’ at quote time and our agent will contact you."
-      }
-    ]
+    "sub": "The most-asked questions about migrant-worker insurance"
   },
   "common": {
     "brandAlt": "TKR Insurance Brokerage"
@@ -695,7 +673,7 @@
       "badge24h": "Policy issued immediately"
     },
     "steps": {
-      "plan": "Choose plan",
+      "package": "Coverage",
       "fill": "Enter details",
       "review": "Review",
       "pay": "Pay"
@@ -703,6 +681,8 @@
     "summary": {
       "title": "Order summary",
       "plan": "Coverage plan",
+      "insurer": "Underwritten by",
+      "insurerValue": "Dhipaya Insurance",
       "perYear": "Premium / person / year",
       "count": "Number of workers",
       "countValue": "{n, plural, one {# person} other {# people}}",
@@ -713,23 +693,25 @@
       "back": "Back",
       "secure": "Secure encrypted payment"
     },
-    "plan": {
-      "heading": "Choose your coverage plan",
-      "sub": "Pick the plan that fits your workers — price per person per year",
-      "recommended": "Recommended",
+    "package": {
+      "heading": "Coverage plan",
+      "sub": "One single package covering both illness and accident — price per person per year",
+      "shortName": "Single package (illness + accident)",
+      "badgeSingle": "Single package",
+      "underwrittenBy": "Underwritten by Dhipaya Insurance",
+      "insurerFull": "Dhipaya Insurance Public Company Limited",
       "perUnit": "/person/year",
-      "names": {
-        "basic": "Basic",
-        "standard": "Standard",
-        "premium": "Premium"
-      },
       "rows": {
-        "life": "Death / disability",
-        "medical": "Medical expenses",
-        "repatriation": "Repatriation"
+        "ipd": "Inpatient (IPD)",
+        "ipdValue": "Up to {amount}",
+        "opd": "Outpatient (OPD)",
+        "opdValue": "{amount}/visit (max {n, number} visits/policy year)",
+        "age": "Eligible age",
+        "ageValue": "{min, number}–{max, number} years"
       },
-      "included": "Included",
-      "notIncluded": "Not included",
+      "noAdvance": "No advance payment at network hospitals",
+      "minorNote": "Note: insureds under 18 must attach a \"dependent document\" issued by the Department of Provincial Administration",
+      "hospitalLink": "Check the Dhipaya network hospital list",
       "modeHeading": "How to enter worker details",
       "modeSingle": {
         "title": "Enter one by one",
@@ -739,6 +721,42 @@
         "title": "Bulk upload",
         "badge": "Popular",
         "desc": "Hundreds to thousands via Excel"
+      }
+    },
+    "faq": {
+      "title": "FAQ: Migrant worker insurance",
+      "sub": "Answers about the insurer, coverage, hospitals, and required documents",
+      "inflowTitle": "Coverage & FAQ",
+      "viewAll": "View all questions",
+      "items": {
+        "insurer": {
+          "q": "Which company underwrites this worker insurance?",
+          "a": "Underwritten by Dhipaya Insurance Public Company Limited."
+        },
+        "coverage": {
+          "q": "How many coverage options are there — and does it cover both health and accidents?",
+          "a": "There is one single package covering both illness and accident: inpatient (IPD) up to ฿150,000; outpatient (OPD) ฿1,000 per visit (max 15 visits per policy year)."
+        },
+        "noAdvance": {
+          "q": "If a worker has an accident, do they need to pay the hospital upfront?",
+          "a": "No advance payment is needed when treated at a designated network hospital."
+        },
+        "hospitals": {
+          "q": "Which hospitals can workers use?",
+          "a": "Workers can be treated at Dhipaya network hospitals nationwide. Check the list at https://www.dhipaya.co.th/th/hospital"
+        },
+        "age": {
+          "q": "From what age can a worker be insured?",
+          "a": "Coverage is available from age 1 to 99. Note: insureds under 18 must attach a \"dependent document\" issued by the Department of Provincial Administration."
+        },
+        "claimDocs": {
+          "q": "What are the claim steps and required documents?",
+          "a": "Core documents: original receipt, medical certificate, policy schedule page, a copy of the Passport or Work Permit, the medical record, and a copy of the insured's bank book. If the payout goes to the employer's account, also attach a power of attorney, a copy of the employer's ID card, and a copy of the employer's bank book."
+        },
+        "applyDocs": {
+          "q": "What documents are needed to apply for worker insurance?",
+          "a": "A copy of the worker's Passport, a copy of the worker's Work Permit, the employer's full address details, the insurance application form, and the worker's other identity documents."
+        }
       }
     },
     "single": {
@@ -2234,10 +2252,10 @@
         }
       ],
       "coverage": [
-        "Accidental death & dismemberment up to ฿1,000,000",
-        "Inpatient & outpatient medical expenses",
-        "Repatriation of remains (Standard & Premium)",
-        "24-hour multilingual emergency assistance"
+        "Inpatient (IPD) up to ฿150,000",
+        "Outpatient (OPD) ฿1,000/visit (max 15 visits/policy year)",
+        "Covers both illness and accident — cashless at network hospitals",
+        "Underwritten by Dhipaya Insurance"
       ],
       "faq": [
         {
@@ -4017,11 +4035,6 @@
       "network": "Garage & hospital"
     },
     "faqs": [
-      {
-        "category": "worker",
-        "q": "What documents are needed to buy migrant worker insurance?",
-        "a": "A copy of each worker’s passport and work permit, plus employer details. Enter workers one by one or upload in bulk via Excel."
-      },
       {
         "category": "worker",
         "q": "How long does it take to issue a worker policy?",

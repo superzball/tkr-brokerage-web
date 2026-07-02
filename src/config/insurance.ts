@@ -5,7 +5,7 @@ import type {
   PaymentMethodId,
   QuoteTabConfig,
   SingleWorker,
-  WorkerPlan,
+  WorkerFaqItem,
 } from "@/types";
 import type { IconName } from "@/components/ui/Icon";
 import { ROUTES } from "./nav";
@@ -64,17 +64,44 @@ export const QUOTE_TABS: QuoteTabConfig[] = [
    formatted with next-intl. All display text lives in messages.
    ============================================================ */
 
-export const WORKER_PLANS: WorkerPlan[] = [
-  { id: "basic", per: 350, life: 200000, medical: 15000, repatriation: false },
-  {
-    id: "standard",
-    per: 500,
-    life: 500000,
-    medical: 30000,
-    repatriation: true,
-    recommended: true,
-  },
-  { id: "premium", per: 750, life: 1000000, medical: 50000, repatriation: true },
+/** Worker insurance is underwritten by ทิพยประกันภัย ONLY, as a SINGLE package
+ *  covering both illness (IPD/OPD) and accident. There is deliberately no
+ *  choose-insurer / choose-plan step in the worker flow — personal lines
+ *  (auto/travel/pa/fire) keep the multi-insurer registry.
+ *  Coverage numbers are contractual — verify against the ทิพย policy wording
+ *  before go-live. Display text lives in the `worker.package` messages. */
+export const workerInsurancePlan = {
+  /** insurerPartners id (seed) — บริษัท ทิพยประกันภัย จำกัด (มหาชน) */
+  insurerId: "thip",
+  singlePackage: true,
+  /** ฿ premium per worker per year */
+  per: 500,
+  /** ฿ inpatient (IPD) max per policy year */
+  ipdMax: 150_000,
+  /** ฿ outpatient (OPD) per visit */
+  opdPerVisit: 1_000,
+  /** OPD visits max per policy year */
+  opdMaxVisits: 15,
+  ageMin: 1,
+  ageMax: 99,
+  /** cashless at network hospitals — no advance payment */
+  noAdvancePayment: true,
+  /** link out — the list changes; never render it ourselves */
+  hospitalNetworkUrl: "https://www.dhipaya.co.th/th/hospital",
+} as const;
+
+/** FAQ for worker insurance (customer-supplied). Ordered; q/a text lives in
+ *  `worker.faq.items.<id>` messages. `inFlow` marks the compact subset shown
+ *  inside the purchase flow before payment. NOTE: the worker package covers
+ *  BOTH illness and accident — do not "fix" the FAQ to drop illness cover. */
+export const workerInsuranceFaq: WorkerFaqItem[] = [
+  { id: "insurer", inFlow: true },
+  { id: "coverage", inFlow: true },
+  { id: "noAdvance", inFlow: true },
+  { id: "hospitals", inFlow: true },
+  { id: "age" },
+  { id: "claimDocs" },
+  { id: "applyDocs" },
 ];
 
 /** Nationality options for the single-entry form select. */

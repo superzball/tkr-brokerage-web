@@ -7,12 +7,12 @@ import { Icon } from "@/components/ui/Icon";
 import { useBaht } from "@/lib/format";
 import { cn } from "@/lib/cn";
 import {
-  WORKER_PLANS,
+  workerInsurancePlan,
   WORKER_SAMPLE,
   WORKER_BULK,
 } from "@/config/insurance";
-import type { SingleWorker, WorkerMode, WorkerPlanId } from "@/types";
-import { PlanStep } from "./PlanStep";
+import type { SingleWorker, WorkerMode } from "@/types";
+import { PackageStep } from "./PackageStep";
 import { SingleEntry } from "./SingleEntry";
 import { BulkUpload } from "./BulkUpload";
 import { ReviewStep } from "./ReviewStep";
@@ -22,8 +22,7 @@ import { DoneStep } from "./DoneStep";
 export type WorkerEntry = SingleWorker & { id: number };
 
 type State = {
-  step: number; // 0 plan · 1 fill · 2 review · 3 pay · 4 done
-  plan: WorkerPlanId;
+  step: number; // 0 package · 1 fill · 2 review · 3 pay · 4 done
   mode: WorkerMode;
   workers: WorkerEntry[];
   nextId: number;
@@ -31,7 +30,6 @@ type State = {
 };
 
 type Action =
-  | { type: "setPlan"; plan: WorkerPlanId }
   | { type: "setMode"; mode: WorkerMode }
   | { type: "next" }
   | { type: "back" }
@@ -54,7 +52,6 @@ const EMPTY_WORKER: SingleWorker = {
 
 const initialState: State = {
   step: 0,
-  plan: "standard",
   mode: "single",
   workers: [{ ...WORKER_SAMPLE, id: 0 }],
   nextId: 1,
@@ -62,8 +59,6 @@ const initialState: State = {
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case "setPlan":
-      return { ...state, plan: action.plan };
     case "setMode":
       return { ...state, mode: action.mode };
     case "setGuest":
@@ -96,7 +91,7 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-const STEP_KEYS = ["plan", "fill", "review", "pay"] as const;
+const STEP_KEYS = ["package", "fill", "review", "pay"] as const;
 
 export function WorkerFlow({
   authed = false,
@@ -110,10 +105,10 @@ export function WorkerFlow({
   const baht = useBaht();
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const plan = WORKER_PLANS.find((p) => p.id === state.plan)!;
+  // Single ทิพยประกันภัย package — no plan choice, price is fixed per worker.
   const count =
     state.mode === "single" ? state.workers.length : WORKER_BULK.valid;
-  const total = plan.per * count;
+  const total = workerInsurancePlan.per * count;
 
   const completed = useRef(false);
   useEffect(() => {
@@ -181,10 +176,8 @@ export function WorkerFlow({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 grid lg:grid-cols-[1fr_340px] gap-7 items-start">
         <div className="min-w-0" key={state.step}>
           {state.step === 0 && (
-            <PlanStep
-              plan={state.plan}
+            <PackageStep
               mode={state.mode}
-              onPlan={(p) => dispatch({ type: "setPlan", plan: p })}
               onMode={(m) => dispatch({ type: "setMode", mode: m })}
             />
           )}
@@ -204,7 +197,7 @@ export function WorkerFlow({
                 }
               />
             ))}
-          {state.step === 2 && <ReviewStep plan={plan} count={count} />}
+          {state.step === 2 && <ReviewStep count={count} />}
           {state.step === 3 && (
             <PayStep
               total={total}
@@ -229,13 +222,19 @@ export function WorkerFlow({
               <div className="flex justify-between">
                 <span className="text-ink-500">{t("summary.plan")}</span>
                 <span className="font-600 text-ink-900 text-right">
-                  {t(`plan.names.${plan.id}`)}
+                  {t("package.shortName")}
+                </span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-ink-500">{t("summary.insurer")}</span>
+                <span className="font-600 text-ink-900 text-right">
+                  {t("summary.insurerValue")}
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-ink-500">{t("summary.perYear")}</span>
                 <span className="font-600 text-ink-900 tabnum">
-                  {baht(plan.per)}
+                  {baht(workerInsurancePlan.per)}
                 </span>
               </div>
               <div className="flex justify-between">

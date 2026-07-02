@@ -60,3 +60,25 @@ need native translation/review:
   scheduled, inactive, window, toggle, delete, created, deleted, activated,
   deactivated, sampleTitle, sampleCta)
 Note: `homeBanners` slide copy itself is CMS content (seed.ts), not message keys.
+
+## TODO — Worker single-package + FAQ (WORKER_FAQ_ADDITIONS) — NOT yet translated
+Added 2026-07-02. These keys currently hold **Thai placeholder** values and need
+native translation + review (insurance/claims wording — reviewer should have
+insurance domain knowledge; coverage numbers are contractual):
+- `worker.steps.package` (renamed from `worker.steps.plan`)
+- `worker.summary.insurer`, `worker.summary.insurerValue`
+- `worker.package.*` (renamed from `worker.plan.*`; the mode* keys kept their
+  existing translations — everything else is new: heading, sub, shortName,
+  badgeSingle, underwrittenBy, insurerFull, rows.*, noAdvance, minorNote,
+  hospitalLink)
+- `worker.faq.*` (title, sub, inflowTitle, viewAll, items.{insurer,coverage,
+  noAdvance,hospitals,age,claimDocs,applyDocs}.{q,a}) — SINGLE SOURCE: these
+  strings also render on the home FAQ, /help (worker category), both worker
+  landings, and in-flow
+- `help.faqs` — the old apply-docs worker item was removed (covered by
+  `worker.faq.items.applyDocs`); only the issuance-time worker item remains here
+- `homeFaq.sub` — rewritten (worker-insurance focus); `homeFaq.items` deleted
+  (home now renders `worker.faq.items` via config)
+- `learn.worker.coverage` — 4 bullets rewritten for the single ทิพย package
+Keep as-is: insurer names (ทิพยประกันภัย / Dhipaya), the hospital-network URL,
+"IPD"/"OPD"/"Passport"/"Work Permit"/"Book Bank" Latin terms, ฿ amounts.

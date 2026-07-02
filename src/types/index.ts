@@ -78,21 +78,21 @@ export interface QuoteTabConfig {
 
 /* ---- Worker insurance flow ---- */
 
-export type WorkerPlanId = "basic" | "standard" | "premium";
+/** Worker-insurance FAQ ids. Question/answer text lives in the
+ *  `worker.faq.items.<id>` messages (th/en live; my/lo pending native review). */
+export type WorkerFaqId =
+  | "insurer"
+  | "coverage"
+  | "noAdvance"
+  | "hospitals"
+  | "age"
+  | "claimDocs"
+  | "applyDocs";
 
-/** A coverage plan. Money values are numbers (formatted via next-intl); the
- *  plan name + "included/not included" text live in the `worker` messages. */
-export interface WorkerPlan {
-  id: WorkerPlanId;
-  /** ฿ premium per worker per year */
-  per: number;
-  /** ฿ death / disability sum insured */
-  life: number;
-  /** ฿ medical sum insured */
-  medical: number;
-  /** repatriation (ส่งกลับประเทศ) included? */
-  repatriation: boolean;
-  recommended?: boolean;
+export interface WorkerFaqItem {
+  id: WorkerFaqId;
+  /** shown in the compact pre-payment block inside the purchase flow */
+  inFlow?: boolean;
 }
 
 export type WorkerMode = "single" | "bulk";

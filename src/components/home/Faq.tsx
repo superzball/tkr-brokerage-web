@@ -5,14 +5,22 @@ import { useTranslations } from "next-intl";
 import { Chip } from "@/components/ui/Chip";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
+import { workerInsuranceFaq } from "@/config/insurance";
+import { LinkifiedText } from "@/components/worker/WorkerFaq";
 
 type QA = { q: string; a: string };
 
 /** Home FAQ — asymmetric: a sticky heading panel beside the accordion column
- *  (breaks the centered label+heading+stack pattern). Friendly-zone styling. */
+ *  (breaks the centered label+heading+stack pattern). Friendly-zone styling.
+ *  Items are the worker-insurance FAQ (`workerInsuranceFaq` config) — the same
+ *  single source shown on the worker landings, in /help, and in-flow. */
 export function Faq() {
   const t = useTranslations("homeFaq");
-  const items = t.raw("items") as QA[];
+  const tw = useTranslations("worker.faq");
+  const items: QA[] = workerInsuranceFaq.map((f) => ({
+    q: tw(`items.${f.id}.q`),
+    a: tw(`items.${f.id}.a`),
+  }));
   const [open, setOpen] = useState(0);
 
   return (
@@ -72,7 +80,7 @@ export function Faq() {
                 >
                   <div className="overflow-hidden">
                     <p className="px-5 pb-5 text-ink-600 leading-relaxed">
-                      {item.a}
+                      <LinkifiedText text={item.a} />
                     </p>
                   </div>
                 </div>

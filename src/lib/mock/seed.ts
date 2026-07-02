@@ -37,7 +37,7 @@ export const users: User[] = [
 export const policies: Policy[] = [
   // business — mostly worker insurance + one fire
   { id: 'p1', policyNo: 'TKR-W-2026-004821', type: 'worker', status: 'active',   insurer: 'ทิพยประกันภัย',    holderId: 'u_biz', premium: 124000, coverage: 500000,  workersCount: 248, startDate: '2026-01-15', endDate: '2027-01-14' },
-  { id: 'p2', policyNo: 'TKR-W-2026-004955', type: 'worker', status: 'expiring', insurer: 'วิริยะประกันภัย',   holderId: 'u_biz', premium: 36000,  coverage: 500000,  workersCount: 72,  startDate: '2025-07-10', endDate: '2026-07-09' },
+  { id: 'p2', policyNo: 'TKR-W-2026-004955', type: 'worker', status: 'expiring', insurer: 'ทิพยประกันภัย',    holderId: 'u_biz', premium: 36000,  coverage: 500000,  workersCount: 72,  startDate: '2025-07-10', endDate: '2026-07-09' },
   { id: 'p3', policyNo: 'TKR-F-2026-001203', type: 'fire',   status: 'active',   insurer: 'กรุงเทพประกันภัย',  holderId: 'u_biz', premium: 18500,  coverage: 8000000, startDate: '2026-03-01', endDate: '2027-02-28' },
   // individual — personal lines
   { id: 'p4', policyNo: 'TKR-A-2026-022104', type: 'auto',   status: 'active',   insurer: 'วิริยะประกันภัย',   holderId: 'u_indiv', premium: 14200, coverage: 1000000, startDate: '2026-02-20', endDate: '2027-02-19' },
@@ -504,8 +504,10 @@ export const tickets: SupportTicket[] = [
 ];
 
 export const productPlans: ProductPlan[] = [
-  { id: 'pp1', product: 'worker', planName: 'แรงงาน Essential', insurer: 'ทิพยประกันภัย',   coverage: 500000,  basePremium: 500,  active: true },
-  { id: 'pp2', product: 'worker', planName: 'แรงงาน Plus',      insurer: 'วิริยะประกันภัย',  coverage: 1000000, basePremium: 850,  active: true },
+  // Worker insurance = single ทิพยประกันภัย package (illness IPD/OPD + accident).
+  // Exactly ONE active worker plan — keep the old Plus row only as inactive history.
+  { id: 'pp1', product: 'worker', planName: 'แพ็กเกจแรงงานต่างด้าว (เจ็บป่วย + อุบัติเหตุ)', insurer: 'ทิพยประกันภัย', coverage: 150000, basePremium: 500, active: true },
+  { id: 'pp2', product: 'worker', planName: 'แรงงาน Plus (ยกเลิก)', insurer: 'วิริยะประกันภัย',  coverage: 1000000, basePremium: 850,  active: false },
   { id: 'pp3', product: 'auto',   planName: 'รถยนต์ชั้น 1',      insurer: 'วิริยะประกันภัย',  coverage: 1000000, basePremium: 14200, active: true },
   { id: 'pp4', product: 'pa', planName: 'PA อุบัติเหตุส่วนบุคคล',    insurer: 'เมืองไทยประกันภัย', coverage: 1500000, basePremium: 22000, active: true },
   { id: 'pp5', product: 'fire',   planName: 'อัคคีภัยธุรกิจ',    insurer: 'กรุงเทพประกันภัย',  coverage: 8000000, basePremium: 18500, active: false },
@@ -994,8 +996,8 @@ export const applyCoupon = (code: string, product: InsuranceType, subtotal: numb
 // data comes from the admin catalog later. The recommender + plan-card grid +
 // checkout payment options reuse these across personal lines and worker.
 export const planCards: PlanCard[] = [
-  { id: 'plan_w_ess',  product: 'worker', insurer: 'ทิพยประกันภัย',  planName: 'แรงงาน Essential', highlights: ['คุ้มครองอุบัติเหตุ/สุขภาพพื้นฐาน', 'ออกเป็นชุดได้', 'เบี้ยเริ่มต้นต่ำ'], startingPremium: 500, period: 'ต่อคน/ปี', badge: 'ขายดี', favoritable: true },
-  { id: 'plan_w_plus', product: 'worker', insurer: 'วิริยะประกันภัย', planName: 'แรงงาน Plus', highlights: ['ทุนประกันสูงขึ้น', 'ครอบคลุม รพ. มากขึ้น'], startingPremium: 850, period: 'ต่อคน/ปี', couponCode: 'TKRWORKER300', favoritable: true },
+  // Worker = ONE ทิพย package (no multi-insurer choice; personal lines keep theirs).
+  { id: 'plan_w_ess',  product: 'worker', insurer: 'ทิพยประกันภัย',  planName: 'แพ็กเกจแรงงานต่างด้าว (เจ็บป่วย + อุบัติเหตุ)', highlights: ['IPD สูงสุด 150,000 บาท', 'OPD 1,000 บาท/ครั้ง (สูงสุด 15 ครั้ง/ปี)', 'ไม่ต้องสำรองจ่าย รพ.เครือข่าย'], startingPremium: 500, period: 'ต่อคน/ปี', badge: 'แพ็กเกจเดียว', couponCode: 'TKRWORKER300', favoritable: true },
   { id: 'plan_a_c1',   product: 'auto',   insurer: 'วิริยะประกันภัย', planName: 'รถยนต์ชั้น 1', highlights: ['ซ่อมห้าง/ศูนย์', 'คุ้มครองชน-ไฟไหม้-สูญหาย'], startingPremium: 14200, period: 'ต่อปี', badge: 'แนะนำ', favoritable: true },
   { id: 'plan_a_c2p',  product: 'auto',   insurer: 'MSIG',          planName: 'รถยนต์ชั้น 2+', highlights: ['คุ้มครองคู่กรณี + รถหาย/ไฟไหม้', 'เบี้ยคุ้มค่า'], startingPremium: 7900, period: 'ต่อปี', favoritable: true },
 ];
@@ -1005,10 +1007,7 @@ export const fitQuestions: FitQuestion[] = [
     { label: 'ครอบคลุมสูงสุด', value: 'max', recommends: 'plan_a_c1' },
     { label: 'คุ้มค่า เน้นคู่กรณี', value: 'value', recommends: 'plan_a_c2p' },
   ]},
-  { id: 'q2', question: 'ทีมแรงงานของคุณกี่คน?', options: [
-    { label: 'เริ่มต้น/จำนวนน้อย', value: 'small', recommends: 'plan_w_ess' },
-    { label: 'จำนวนมาก ต้องการทุนสูง', value: 'large', recommends: 'plan_w_plus' },
-  ]},
+  // (worker fit question removed — a single ทิพย package leaves nothing to recommend)
 ];
 
 export const checkoutOptions: CheckoutOption[] = [
