@@ -162,14 +162,14 @@ export function Hero() {
                 <div className="mt-5 grid grid-cols-3 gap-3 text-center">
                   <div className="rounded-2xl bg-sky-100 py-3">
                     <p className="text-2xl font-700 text-brand-700 tabnum">
-                      <AnimatedCounter value="248" />
+                      <AnimatedCounter value="10K+" />
                     </p>
                     <p className="text-[0.7rem] text-ink-500">
                       {t("hero.card.workers")}
                     </p>
                   </div>
                   <div className="rounded-2xl bg-sky-50 py-3">
-                    <p className="text-2xl font-700 text-ink-900 tabnum">500k</p>
+                    <p className="text-2xl font-700 text-ink-900 tabnum">150K</p>
                     <p className="text-[0.7rem] text-ink-500">
                       {t("hero.card.perCapita")}
                     </p>
@@ -183,13 +183,13 @@ export function Hero() {
                     </p>
                   </div>
                 </div>
-                <div className="mt-4 flex items-center justify-between text-sm">
-                  <span className="text-ink-500">
+                <div className="mt-4 flex items-center justify-between text-sm mb-6">
+                  {/* <span className="text-ink-500">
                     {t("hero.card.totalPremium")}
                   </span>
                   <span className="font-700 text-ink-900 text-lg tabnum">
                     ฿<AnimatedCounter value="124,000" />
-                  </span>
+                  </span> */}
                 </div>
               </div>
 
