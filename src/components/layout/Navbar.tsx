@@ -118,10 +118,10 @@ export function Navbar() {
             <span className="w-px h-5 bg-ink-100" aria-hidden="true" />
 
             <LocaleSwitcher />
-            <Button href={publicNavActions.login.href} variant="primary" size="sm">
+            {/* <Button href={publicNavActions.login.href} variant="primary" size="sm">
               <Icon name="users" size={17} />
               {t(publicNavActions.login.key)}
-            </Button>
+            </Button> */}
             {/* <Button href={publicNavActions.quoteCta.href} variant="primary" size="sm">
               {t(publicNavActions.quoteCta.key)}
             </Button> */}
