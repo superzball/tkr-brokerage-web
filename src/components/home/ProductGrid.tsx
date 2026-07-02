@@ -81,14 +81,19 @@ export function ProductGrid() {
                 {t("worker.desc")}
               </p>
               <ul className="mt-6 space-y-2.5 text-sm text-ink-100">
-                {workerFeatures.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2.5">
-                    <span className="w-5 h-5 rounded-full bg-mint-500/25 text-mint-300 inline-flex items-center justify-center shrink-0">
-                      <Icon name="check" size={13} />
-                    </span>{" "}
-                    {feature}
-                  </li>
-                ))}
+                {workerFeatures.map((feature) => {
+                  // "**...**" in the locale string marks an emphasized feature
+                  const emphasized = feature.startsWith("**") && feature.endsWith("**");
+                  const label = emphasized ? feature.slice(2, -2) : feature;
+                  return (
+                    <li key={feature} className="flex items-center gap-2.5">
+                      <span className="w-5 h-5 rounded-full bg-mint-500/25 text-mint-300 inline-flex items-center justify-center shrink-0">
+                        <Icon name="check" size={13} />
+                      </span>{" "}
+                      <span className={emphasized ? "font-700 text-white" : undefined}>{label}</span>
+                    </li>
+                  );
+                })}
               </ul>
               <div className="mt-8 inline-flex items-center gap-2 font-700 text-gold-300 group-hover:gap-3.5 transition-all">
                 {t("worker.cta")} <Icon name="arrowRight" />

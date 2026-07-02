@@ -565,16 +565,18 @@
     },
     "products": {
       "badge": "Our products",
-      "title": "Coverage for every need",
+      "title": "Coverage that meets every need",
       "subtitle": "Built on the expertise that sets TKR apart",
       "worker": {
         "badge": "Our specialty",
         "title": "Foreign Worker Insurance",
-        "desc": "The market leader the big players don't compete with head-on — handle one worker at a time or thousands in bulk via Excel, with automatic validation.",
+        "desc": "Confidence at every step — everything you need, all in one place.",
         "features": [
-          "Bulk upload, issue policies all at once",
-          "Supports Myanmar · Laos · Vietnam",
-          "Digital policy wallet for workers"
+          "Foreign worker insurance specialists",
+          "**Fast claims — no upfront payment**",
+          "Underwritten by Dhipaya Insurance",
+          "Supports Myanmar, Lao, and Vietnamese nationals",
+          "Advisory team and after-sales service"
         ],
         "cta": "Get started"
       },
@@ -2213,7 +2215,7 @@
     },
     "worker": {
       "hero": {
-        "title": "Foreign worker insurance, done in minutes",
+        "title": "Foreign worker insurance — fast claims, no upfront payment",
         "subtitle": "Cover one worker or hundreds in a single order — compliant, instant, and fully digital.",
         "badge": "Issued within 24 hours"
       },
