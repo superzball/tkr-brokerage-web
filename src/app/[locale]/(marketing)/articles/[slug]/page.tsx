@@ -3,13 +3,11 @@ import { notFound } from "next/navigation";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { routing, type Locale } from "@/i18n/routing";
 import { Link } from "@/i18n/navigation";
-import {
-  getPublishedArticles,
-  getPublishedArticle,
-} from "@/lib/mock/seed";
+import { getArticles, getArticleBySlug } from "@/lib/articles";
 import { Chip } from "@/components/ui/Chip";
 import { Icon } from "@/components/ui/Icon";
 import { Button } from "@/components/ui/Button";
+import { ArticleBody } from "@/components/articles/ArticleBody";
 import { ArticleCover } from "@/components/articles/ArticleCover";
 import { RelatedArticles } from "@/components/articles/RelatedArticles";
 import { ROUTES } from "@/config/nav";
@@ -18,16 +16,17 @@ type Props = { params: Promise<{ locale: Locale; slug: string }> };
 
 export function generateStaticParams() {
   return routing.locales.flatMap((locale) =>
-    getPublishedArticles().map((a) => ({ locale, slug: a.slug })),
+    getArticles({ publishedOnly: true }).map((a) => ({ locale, slug: a.slug })),
   );
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const article = getPublishedArticle(slug);
+  const article = getArticleBySlug(slug, { publishedOnly: true });
   if (!article) return {};
   const title = article.seo.metaTitle || article.title;
   const description = article.seo.metaDescription || article.excerpt || "";
+  const ogImage = article.seo.ogImage || article.cover;
   return {
     title,
     description,
@@ -36,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title,
       description,
       type: "article",
-      images: article.seo.ogImage ? [article.seo.ogImage] : undefined,
+      images: ogImage ? [ogImage] : undefined,
     },
   };
 }
@@ -44,12 +43,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 export default async function ArticleDetailPage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
-  const article = getPublishedArticle(slug);
+  const article = getArticleBySlug(slug, { publishedOnly: true });
   if (!article) notFound();
 
   const t = await getTranslations("articles");
 
-  const related = getPublishedArticles()
+  const related = getArticles({ publishedOnly: true })
     .filter((a) => a.id !== article.id && a.category === article.category)
     .slice(0, 3);
 
@@ -80,20 +79,16 @@ export default async function ArticleDetailPage({ params }: Props) {
         </div>
 
         <ArticleCover
-          tone={article.cover}
+          src={article.cover}
+          alt={article.title}
+          priority
+          sizes="(min-width: 896px) 56rem, 100vw"
           className="h-56 sm:h-72 max-w-4xl mx-auto sm:rounded-3xl my-8"
         />
 
         {/* body */}
         <div className="max-w-3xl mx-auto px-4 sm:px-6 pb-12">
-          {article.excerpt && (
-            <p className="text-lg text-ink-700 leading-relaxed font-500">{article.excerpt}</p>
-          )}
-          <div className="mt-5 space-y-4 text-ink-700 leading-relaxed">
-            {(article.body ?? []).map((p, i) => (
-              <p key={i}>{p}</p>
-            ))}
-          </div>
+          <ArticleBody markdown={article.bodyMd ?? ""} />
 
           <div className="mt-8 flex items-center gap-2 text-xs text-ink-400">
             {t("availableIn")}:

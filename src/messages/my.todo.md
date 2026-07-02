@@ -121,3 +121,10 @@ Added 2026-07-02. New admin-only keys under `admin.settings`: `workerFlow`,
 `workerDefaultInputMethod`, `workerInputSingle`, `workerInputBulk`.
 These hold **AI Burmese** translations (low risk — admin UI labels, no
 customer/legal copy) but still need native review. "Stepper"/"Excel" kept Latin.
+
+## TODO — Home articles preview (ARTICLES_ADDITIONS) — AI-translated, needs review
+Added 2026-07-02. `home.articles.{title,sub,viewAll}` — the new home "บทความ"
+section heading/sub/link. **AI Burmese** (low risk — short marketing labels)
+but still needs native review. The 10 SEO articles themselves live in
+`/content/articles/*.md` and are **Thai-only**; en/my/lo article translation is
+a separate later task (native review required — insurance content).

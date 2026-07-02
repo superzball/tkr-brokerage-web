@@ -5,7 +5,7 @@ import { staffCan } from "@/lib/auth/rbac";
 import { AdminForbidden } from "@/components/app/admin/AdminForbidden";
 import { PageHeader } from "@/components/app/PageHeader";
 import { ArticlesClient } from "@/components/app/admin/ArticlesClient";
-import { getArticles } from "@/lib/mock/seed";
+import { getArticles } from "@/lib/articles";
 
 type Props = { params: Promise<{ locale: Locale }> };
 

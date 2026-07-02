@@ -644,6 +644,11 @@
         "Southeast Insurance"
       ]
     },
+    "articles": {
+      "title": "Articles & Guides",
+      "sub": "The latest foreign-worker insurance know-how for employers, from the TKR team",
+      "viewAll": "View all articles"
+    },
     "agentCta": {
       "badge": "Earning opportunity",
       "title": "Become a TKR agent and earn without limits",

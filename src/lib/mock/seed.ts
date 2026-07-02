@@ -9,7 +9,7 @@ import type {
   Client, Commission, Lead, AgentTierInfo, Notification, Role,
   DownlineMember, TeamOverride, InsuranceType, LeadStage,
   AgentSale, SaleStatus,
-  Article, Order, StaffUser, SupportTicket, ProductPlan, AuditEntry,
+  Order, StaffUser, SupportTicket, ProductPlan, AuditEntry,
   CmsPage, Faq, MediaAsset, Redirect, CommissionRule,
   CrmProduct, Duration, PricingTier, CustomerCreditProfile,
   PolicyTicket, CrmPayment, CreditTransaction, AmendmentTicket, IssuedPolicy,
@@ -410,89 +410,8 @@ export function leadStageSummary(
 }
 
 // ============================ ADMIN / BACK-OFFICE (Phase 14) ============================
-export const articles: Article[] = [
-  {
-    id: 'a1', title: 'ประกันแรงงานต่างด้าวปี 2569 ต้องรู้อะไรบ้าง', slug: 'foreign-worker-insurance-2026',
-    status: 'published', category: 'ความรู้ประกัน', author: 'ทีม TKR', locales: ['th', 'en'], publishedAt: '2026-06-01',
-    cover: 'brand', readMinutes: 5,
-    excerpt: 'นายจ้างต้องเตรียมเอกสารอะไร คุ้มครองอะไรบ้าง และซื้อออนไลน์อย่างไรให้ออกกรมธรรม์ได้ทันที',
-    seo: { metaTitle: 'ประกันแรงงานต่างด้าว 2569 | TKR', metaDescription: 'คู่มือฉบับสมบูรณ์เรื่องประกันแรงงานต่างด้าวสำหรับนายจ้าง' },
-    body: [
-      'ประกันแรงงานต่างด้าวเป็นสิ่งที่นายจ้างต้องจัดให้ลูกจ้างตามที่กฎหมายกำหนด เพื่อคุ้มครองค่ารักษาพยาบาลจากอุบัติเหตุและการเจ็บป่วย รวมถึงค่าชดเชยและค่าส่งกลับประเทศในกรณีจำเป็น',
-      'เอกสารที่ต้องเตรียมมีเพียงสำเนาพาสปอร์ตและใบอนุญาตทำงานของแรงงาน พร้อมข้อมูลนายจ้าง เมื่อกรอกข้อมูลและชำระเบี้ยแล้ว ระบบจะออกกรมธรรม์ให้ภายใน 24 ชั่วโมง',
-      'TKR ช่วยให้นายจ้างซื้อประกันแรงงานได้ทั้งแบบทีละคนหรือยกชุดหลักพันคนผ่านไฟล์ Excel และจัดการเพิ่ม-ลดรายชื่อแรงงานระหว่างปีได้เองผ่านพอร์ทัล',
-      'ก่อนตัดสินใจ ควรเปรียบเทียบวงเงินคุ้มครอง ค่ารักษาพยาบาลต่อครั้ง และเงื่อนไขการส่งกลับประเทศ เพื่อเลือกแผนที่เหมาะกับลักษณะงานและจำนวนแรงงานของคุณ',
-    ],
-  },
-  {
-    id: 'a2', title: '5 ข้อควรรู้ก่อนต่ออายุประกันรถยนต์', slug: 'car-insurance-renewal-tips',
-    status: 'published', category: 'ประกันรถยนต์', author: 'ทีม TKR', locales: ['th'], publishedAt: '2026-05-18',
-    cover: 'mint', readMinutes: 4,
-    excerpt: 'ต่อประกันรถอย่างไรให้ได้ความคุ้มครองที่ใช่ในราคาที่คุ้มที่สุด',
-    seo: { metaTitle: 'ต่อประกันรถยนต์อย่างไรให้คุ้ม | TKR', metaDescription: 'เคล็ดลับเลือกและต่อประกันรถยนต์' },
-    body: [
-      'ก่อนต่ออายุ ลองทบทวนการใช้งานรถในปีที่ผ่านมาว่าเปลี่ยนไปหรือไม่ เช่น ระยะทางขับขี่ ผู้ขับขี่หลัก หรือสถานที่จอด เพราะปัจจัยเหล่านี้มีผลต่อเบี้ยและความคุ้มครองที่เหมาะสม',
-      'เปรียบเทียบเบี้ยจากหลายบริษัทเสมอ ความคุ้มครองชั้นเดียวกันอาจมีเบี้ยและเงื่อนไขต่างกันมาก การเทียบในที่เดียวช่วยให้เห็นภาพรวมและเลือกได้คุ้มที่สุด',
-      'ตรวจสอบทุนประกันให้สอดคล้องกับมูลค่ารถปัจจุบัน ทุนสูงเกินไปทำให้จ่ายเบี้ยแพงโดยไม่จำเป็น ส่วนทุนต่ำเกินไปอาจได้ค่าสินไหมไม่พอ',
-      'อย่าลืมดูเรื่องค่าเสียหายส่วนแรก (Deductible) และเครือข่ายอู่/ศูนย์ซ่อม ที่ส่งผลต่อความสะดวกเวลาเคลมจริง',
-      'สุดท้าย ต่อก่อนหมดอายุเสมอเพื่อให้ความคุ้มครองต่อเนื่อง ไม่มีช่วงที่รถขาดประกัน',
-    ],
-  },
-  {
-    id: 'a5', title: 'เลือกแผนประกันอุบัติเหตุ (PA) อย่างไรให้เหมาะกับคุณ', slug: 'choosing-pa-insurance',
-    status: 'published', category: 'ประกันอุบัติเหตุ', author: 'ทีม TKR', locales: ['th', 'en'], publishedAt: '2026-05-02',
-    cover: 'peach', readMinutes: 6,
-    excerpt: 'ทุนประกัน ค่ารักษาจากอุบัติเหตุ หรือชดเชยรายได้ — เข้าใจความต่างก่อนเลือกแผนที่ใช่',
-    seo: { metaTitle: 'เลือกประกันอุบัติเหตุ (PA) | TKR', metaDescription: 'แนวทางเลือกแผนประกันอุบัติเหตุ (PA) ให้เหมาะกับไลฟ์สไตล์และงบประมาณ' },
-    body: [
-      'ประกันอุบัติเหตุ (PA) คุ้มครองการเสียชีวิต สูญเสียอวัยวะ และทุพพลภาพจากอุบัติเหตุ พร้อมทุนประกันก้อนใหญ่ในเบี้ยที่จับต้องได้ เหมาะกับทุกคนที่ต้องการความอุ่นใจในชีวิตประจำวัน',
-      'ควรพิจารณาวงเงินค่ารักษาพยาบาลต่อครั้งจากอุบัติเหตุ (อบ.) ให้เพียงพอกับค่ารักษาจริง และดูว่าครอบคลุมทั้งผู้ป่วยในและผู้ป่วยนอกจากอุบัติเหตุหรือไม่',
-      'หากเป็นเสาหลักของครอบครัวหรือทำงานที่มีความเสี่ยง ควรเลือกแผนที่มีเงินชดเชยรายได้ระหว่างพักรักษาตัว (ค่าชดเชยรายวัน) เพื่อลดผลกระทบด้านรายได้',
-      'เปรียบเทียบทุนประกัน วงเงินค่ารักษา ข้อยกเว้น และความคุ้มครองเสริม เช่น อุบัติเหตุจากรถจักรยานยนต์ ก่อนตัดสินใจ เพื่อให้ได้แผนที่สมดุลทั้งความคุ้มครองและงบประมาณ',
-    ],
-  },
-  {
-    id: 'a6', title: 'ขั้นตอนการเคลมประกันให้ได้รับเงินไว', slug: 'fast-claim-guide',
-    status: 'published', category: 'เคลม', author: 'ทีม TKR', locales: ['th'], publishedAt: '2026-04-20',
-    cover: 'gold', readMinutes: 4,
-    excerpt: 'เตรียมเอกสารให้ครบและทำตามขั้นตอน เพื่อให้เคลมผ่านเร็วที่สุด',
-    seo: { metaTitle: 'ขั้นตอนการเคลมประกัน | TKR', metaDescription: 'วิธีเตรียมเอกสารและยื่นเคลมให้ได้รับเงินไว' },
-    body: [
-      'สิ่งแรกเมื่อเกิดเหตุคือแจ้งเคลมทันทีผ่านแอปหรือ LINE ของ TKR พร้อมถ่ายภาพความเสียหายและจดรายละเอียดเหตุการณ์ วันเวลา และสถานที่',
-      'เตรียมเอกสารให้ครบตั้งแต่ต้น เช่น สำเนากรมธรรม์ บัตรประชาชน ใบเสร็จค่ารักษา หรือใบแจ้งความ (กรณีอุบัติเหตุ) จะช่วยให้การพิจารณาไม่สะดุด',
-      'ติดตามสถานะเคลมได้ตลอดผ่านพอร์ทัลลูกค้า ระบบจะแสดงไทม์ไลน์ตั้งแต่ยื่นเรื่อง กำลังพิจารณา จนถึงอนุมัติและโอนเงิน',
-      'หากเอกสารไม่ครบ เจ้าหน้าที่จะแจ้งให้ส่งเพิ่มผ่านช่องทางเดิม การตอบกลับไวช่วยให้ได้รับเงินเร็วขึ้น',
-    ],
-  },
-  {
-    id: 'a7', title: 'ผ่อนเบี้ยประกัน 0% ทำได้อย่างไร', slug: 'installment-0-percent',
-    status: 'published', category: 'การชำระเงิน', author: 'ทีม TKR', locales: ['th'], publishedAt: '2026-04-05',
-    cover: 'sky', readMinutes: 3,
-    excerpt: 'จ่ายเต็ม บัตรเครดิตผ่อน 0% หรือสแกน QR — เลือกวิธีที่สะดวกและได้ความคุ้มครองทันที',
-    seo: { metaTitle: 'ผ่อนเบี้ยประกัน 0% | TKR', metaDescription: 'ทางเลือกการชำระเบี้ยประกันและการผ่อน 0%' },
-    body: [
-      'TKR รองรับการชำระเบี้ยหลายช่องทาง ทั้งจ่ายเต็มจำนวน ผ่อน 0% ผ่านบัตรเครดิตที่ร่วมรายการ และสแกนจ่ายผ่าน QR พร้อมเพย์',
-      'การผ่อน 0% ช่วยกระจายภาระค่าเบี้ยเป็นรายเดือนโดยไม่มีดอกเบี้ย เหมาะกับเบี้ยก้อนใหญ่ เช่น ประกันอุบัติเหตุ (PA) หรือประกันรถชั้น 1',
-      'ไม่ว่าจะเลือกวิธีใด เมื่อชำระสำเร็จระบบจะยืนยันความคุ้มครองทันที และส่งกรมธรรม์ให้ทางอีเมลและในพอร์ทัล',
-    ],
-  },
-  {
-    id: 'a8', title: 'เครือข่ายอู่และโรงพยาบาลของ TKR', slug: 'garage-hospital-network',
-    status: 'published', category: 'ความรู้ประกัน', author: 'ทีม TKR', locales: ['th'], publishedAt: '2026-03-22',
-    cover: 'brand', readMinutes: 3,
-    excerpt: 'ใช้บริการอู่ในเครือและโรงพยาบาลคู่สัญญาได้สะดวก ไม่ต้องสำรองจ่าย',
-    seo: { metaTitle: 'เครือข่ายอู่และโรงพยาบาล | TKR', metaDescription: 'รายละเอียดเครือข่ายอู่ซ่อมและโรงพยาบาลคู่สัญญา' },
-    body: [
-      'การใช้อู่ในเครือหรือศูนย์ซ่อมมาตรฐานช่วยให้ซ่อมรถได้สะดวกและไม่ต้องสำรองจ่าย เพราะบริษัทประกันจ่ายตรงให้กับอู่',
-      'สำหรับประกันอุบัติเหตุ (PA) การเข้ารับบริการในโรงพยาบาลคู่สัญญาสามารถใช้สิทธิ์แบบไม่ต้องสำรองจ่าย เพียงแสดงบัตรและยืนยันตัวตน',
-      'ตรวจสอบรายชื่อเครือข่ายล่าสุดได้ในพอร์ทัลลูกค้า หรือสอบถามทีมงานผ่าน LINE ได้ตลอด 24 ชั่วโมง',
-    ],
-  },
-  {
-    id: 'a3', title: 'Worker Wallet คืออะไร ใช้งานอย่างไร', slug: 'what-is-worker-wallet', status: 'scheduled', category: 'ผลิตภัณฑ์', author: 'ทีม TKR', locales: ['th', 'my', 'lo'], publishedAt: '2026-07-01', seo: { metaTitle: 'Worker Wallet | TKR', metaDescription: 'กระเป๋าดิจิทัลสำหรับแรงงาน' } },
-  { id: 'a4', title: 'ร่างประกาศโปรโมชั่นกลางปี', slug: 'mid-year-promo', status: 'draft', category: 'โปรโมชั่น', author: 'ทีม TKR', locales: ['th'], seo: { metaTitle: '', metaDescription: '' } },
-];
-
+// Articles moved out of the mock seed: they are real markdown files under
+// /content/articles, loaded server-side by lib/articles.ts.
 export const orders: Order[] = [
   // worker order premium = workers × term price (50 × ฿1,790 · 1-year term)
   { id: 'o1', orderNo: 'ORD-2026-1188', customerName: 'บริษัท บูรพา ขนส่ง จำกัด', customerType: 'business', product: 'worker', premium: 89500, status: 'awaiting_payment', channel: 'phone', createdBy: 'u_admin', createdDate: '2026-06-20' },
@@ -535,18 +454,6 @@ export const auditLog: AuditEntry[] = [
 ];
 
 // helpers
-export const getArticles = () => articles;
-/** Public site: only published articles, newest first. */
-export const getPublishedArticles = () =>
-  articles
-    .filter((a) => a.status === 'published')
-    .sort((a, b) => (a.publishedAt && b.publishedAt ? (a.publishedAt < b.publishedAt ? 1 : -1) : 0));
-/** Public site: a single published article by slug (draft/scheduled stay hidden). */
-export const getPublishedArticle = (slug: string) =>
-  articles.find((a) => a.slug === slug && a.status === 'published');
-/** Distinct categories across published articles (for the list filter). */
-export const getArticleCategories = () =>
-  [...new Set(getPublishedArticles().map((a) => a.category))];
 export const getOrders = () => orders;
 export const getStaff = () => staffUsers;
 export const getSupportTickets = () => tickets;
@@ -556,14 +463,14 @@ export const getAllPolicies = () => policies;   // admin sees platform-wide
 export const getAllClaims = () => claims;
 export const getAllCustomers = () => users.filter(u => u.role === 'business' || u.role === 'individual');
 
-export function adminStats() {
+export function adminStats(draftArticles: number) {
   const gwp = policies.reduce((s, p) => s + p.premium, 0);
   return {
     gwp,                                                   // gross written premium
     activePolicies: policies.filter(p => p.status === 'active').length,
     pendingClaims: claims.filter(c => c.status === 'submitted' || c.status === 'reviewing').length,
     openTickets: tickets.filter(t => t.status !== 'resolved').length,
-    draftArticles: articles.filter(a => a.status !== 'published').length,
+    draftArticles,
   };
 }
 
@@ -967,6 +874,9 @@ export const navSettings: NavSetting[] = [
   { key: 'colDigital',    isOpen: false },
   { key: 'lineConcierge',    isOpen: false },
   { key: 'tracking',    isOpen: false },
+  { key: 'agentJoin',    isOpen: false },
+  { key: 'claimHelp',    isOpen: false },
+  { key: 'contactHelp',    isOpen: false },
   // right-side actions (search + login are core, always on — not listed here)
   { key: 'action:renew',    isOpen: true },
   { key: 'action:agent',    isOpen: true },
