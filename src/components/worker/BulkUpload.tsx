@@ -9,7 +9,12 @@ import { WORKER_BULK } from "@/config/insurance";
 
 type Filter = "all" | "error";
 
-export function BulkUpload({ onSwitchSingle }: { onSwitchSingle: () => void }) {
+export function BulkUpload({
+  onSwitchSingle,
+}: {
+  /** Omitted when the admin hides the input-method choice (WORKER_FLOW_UI). */
+  onSwitchSingle?: () => void;
+}) {
   const t = useTranslations("worker");
   const [filter, setFilter] = useState<Filter>("all");
   const [drag, setDrag] = useState(false);
@@ -27,9 +32,11 @@ export function BulkUpload({ onSwitchSingle }: { onSwitchSingle: () => void }) {
           </h2>
           <p className="text-ink-600 mt-1.5">{t("bulk.sub")}</p>
         </div>
-        <button onClick={onSwitchSingle} className="btn btn-ghost btn-sm">
-          <Icon name="user" /> {t("bulk.switchToSingle")}
-        </button>
+        {onSwitchSingle && (
+          <button onClick={onSwitchSingle} className="btn btn-ghost btn-sm">
+            <Icon name="user" /> {t("bulk.switchToSingle")}
+          </button>
+        )}
       </div>
 
       <div className="mt-6 grid sm:grid-cols-[1fr_auto] gap-4 items-stretch">

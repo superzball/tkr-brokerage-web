@@ -1,16 +1,15 @@
 // src/components/conversion/LineChatWidget.tsx
 // Persistent 24/7 LINE chat CTA across the public site. Floating button opens a
-// small panel with a greeting + a deep link into the existing LINE concierge
-// (/line). Mock — no real LINE session. Client (toggle state).
+// small panel with a greeting + a deep link to the real LINE OA
+// (contactInfo.lineHref). Client (toggle state).
 
 "use client";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { AppLink } from "@/components/ui/AppLink";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/cn";
-import { ROUTES } from "@/config/nav";
+import { contactInfo } from "@/config/contact";
 
 const LINE_GREEN = "#06C755";
 
@@ -43,13 +42,15 @@ export function LineChatWidget() {
             <div className="rounded-2xl rounded-bl-sm bg-sky-50 px-3.5 py-2.5 text-sm text-ink-700">
               {t("greeting")}
             </div>
-            <AppLink
-              href={ROUTES.line}
+            <a
+              href={contactInfo.lineHref}
+              target="_blank"
+              rel="noopener noreferrer"
               className="mt-4 btn btn-md w-full text-white"
               style={{ background: LINE_GREEN }}
             >
-              <Icon name="chat" size={16} /> {t("openLine")}
-            </AppLink>
+              <Icon name="line" size={16} /> {t("openLine")}
+            </a>
             <p className="mt-3 text-center text-xs text-ink-400">{t("hours")}</p>
           </div>
         </div>

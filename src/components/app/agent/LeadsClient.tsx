@@ -26,7 +26,7 @@ import { LeadsListView } from "./LeadsListView";
 type TeamMember = { id: string; name: string };
 
 const STAGES: LeadStage[] = ["new", "contacted", "quoted", "won", "lost"];
-const INTERESTS: InsuranceType[] = ["worker", "auto", "travel", "health", "fire"];
+const INTERESTS: InsuranceType[] = ["worker", "auto", "travel", "pa", "fire"];
 const BOARD_CAP = 50; // cards rendered per column; rest reachable via the list
 const PAGE_SIZE = 25;
 

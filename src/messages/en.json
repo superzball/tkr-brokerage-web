@@ -23,8 +23,8 @@
     "autoDesc": "Class 1/2+/3 and EV",
     "travel": "Travel Insurance",
     "travelDesc": "Domestic & international",
-    "health": "Health Insurance",
-    "healthDesc": "Health, critical illness, cancer",
+    "pa": "Personal Accident (PA)",
+    "paDesc": "Accident, death, disability",
     "fire": "Fire Insurance",
     "fireDesc": "Home & business",
     "lineConcierge": "LINE Concierge",
@@ -55,35 +55,16 @@
     "login": "Log in",
     "agentLogin": "Agent Login",
     "search": "Search",
-    "searchPlaceholder": "Search insurance — car, travel, health…",
+    "searchPlaceholder": "Search insurance — car, travel, accident…",
     "menu": "Menu",
-    "close": "Close"
+    "close": "Close",
+    "unavailableTitle": "This page isn't available right now",
+    "unavailableBody": "This menu item has been turned off. Please check back later or head back to the homepage.",
+    "backHome": "Back to home"
   },
   "homeFaq": {
     "title": "Frequently asked questions",
-    "sub": "The answers customers ask for most",
-    "items": [
-      {
-        "q": "Can I see a price without entering personal data?",
-        "a": "Yes — you see a real premium instantly with no personal data, and we never make sales calls."
-      },
-      {
-        "q": "Is TKR a licensed broker?",
-        "a": "Yes. TKR is a non-life insurance broker properly licensed by the OIC."
-      },
-      {
-        "q": "Can I buy foreign-worker insurance in bulk?",
-        "a": "Yes — issue policies one at a time or in bulk for employers, with a digital card for each worker."
-      },
-      {
-        "q": "What payment methods are available?",
-        "a": "Pay in full, 0% credit-card installments, or PromptPay QR. Coverage starts as soon as the first payment is made."
-      },
-      {
-        "q": "Can an agent help me?",
-        "a": "Absolutely. Choose ‘let an agent help’ at quote time and our agent will contact you."
-      }
-    ]
+    "sub": "The most-asked questions about migrant-worker insurance"
   },
   "common": {
     "brandAlt": "TKR Insurance Brokerage"
@@ -121,7 +102,7 @@
     "featured": "Top",
     "getQuote": "Check price / Get a quote",
     "search": "Search",
-    "searchPlaceholder": "Search insurance — car, travel, health…",
+    "searchPlaceholder": "Search insurance — car, travel, accident…",
     "megaFlagship": "Our flagship",
     "megaPersonal": "Personal lines",
     "product": {
@@ -137,9 +118,9 @@
         "title": "Travel Insurance",
         "desc": "Coverage at home and abroad"
       },
-      "health": {
-        "title": "Health Insurance",
-        "desc": "Covers your medical costs"
+      "pa": {
+        "title": "Personal Accident (PA)",
+        "desc": "Accident cover, medical costs & sum insured"
       },
       "fire": {
         "title": "Fire Insurance",
@@ -218,7 +199,8 @@
     "loyalty": "Loyalty & Rewards",
     "loyaltyRules": "Earn rules",
     "loyaltyRewards": "Rewards catalog",
-    "loyaltyRedeem": "Redemptions"
+    "loyaltyRedeem": "Redemptions",
+    "navigation": "Navigation"
   },
   "app": {
     "menu": "Menu",
@@ -332,7 +314,7 @@
       "business": "Business / Company",
       "businessDesc": "Buy and manage foreign-worker insurance at scale.",
       "individual": "Individual",
-      "individualDesc": "Auto, travel, health and fire insurance.",
+      "individualDesc": "Auto, travel, personal accident and fire insurance.",
       "agent": "Agent / Sub-broker",
       "agentDesc": "Sell on behalf, track commissions and tier."
     },
@@ -422,7 +404,7 @@
     }
   },
   "footer": {
-    "tagline": "A full-service insurance broker and leader in foreign-worker insurance, licensed as a non-life insurance broker No. ว00000/2545",
+    "tagline": "A full-service insurance broker and leader in foreign-worker insurance, licensed as a non-life insurance broker No. ว00019/2565 (TKR Brokerage Co., Ltd.)",
     "col": {
       "products": "Products",
       "services": "Services",
@@ -432,7 +414,7 @@
       "worker": "Foreign Worker Insurance",
       "auto": "Car Insurance",
       "travel": "Travel Insurance",
-      "health": "Health Insurance",
+      "pa": "Personal Accident (PA)",
       "fire": "Fire Insurance",
       "customer": "Customer Center",
       "wallet": "Policy Wallet",
@@ -464,14 +446,14 @@
     "hero": {
       "badge": "Trusted by more than 12,800 organizations across Thailand",
       "title": "Comprehensive insurance<br></br>you can <grad>trust</grad> for every risk",
-      "subtitle": "The leader in <strong>foreign worker insurance</strong>, plus car, travel, health and fire coverage — buy, renew and manage every policy in one place",
+      "subtitle": "The leader in <strong>foreign worker insurance</strong>, plus car, travel, personal accident and fire coverage — buy, renew and manage every policy in one place",
       "ctaPrimary": "Get foreign worker insurance",
       "ctaSecondary": "Compare car insurance",
       "trustLicense": "Legally licensed insurance broker",
       "trustEncryption": "Bank-grade data encryption",
       "card": {
         "policyType": "Foreign Worker Insurance Policy",
-        "company": "Thai Charoen Construction Co., Ltd.",
+        "company": "Government and Public organizations",
         "active": "Active",
         "workers": "Workers",
         "perCapita": "Sum per person",
@@ -487,14 +469,14 @@
         "worker": "Foreign Worker",
         "auto": "Car",
         "travel": "Travel",
-        "health": "Health",
+        "pa": "Accident",
         "fire": "Fire"
       },
       "cta": {
         "worker": "Insure workers",
         "auto": "Compare car premiums",
         "travel": "View travel plans",
-        "health": "View health plans",
+        "pa": "View accident plans",
         "fire": "View fire plans"
       },
       "fields": {
@@ -532,11 +514,11 @@
           "label": "Number of days",
           "placeholder": "e.g. 7 days"
         },
-        "healthAge": {
+        "paAge": {
           "label": "Insured's age",
           "placeholder": "e.g. 35"
         },
-        "healthBudget": {
+        "paBudget": {
           "label": "Annual premium budget",
           "options": [
             "Under 15,000",
@@ -561,16 +543,18 @@
     },
     "products": {
       "badge": "Our products",
-      "title": "Coverage for every need",
+      "title": "Coverage that meets every need",
       "subtitle": "Built on the expertise that sets TKR apart",
       "worker": {
         "badge": "Our specialty",
         "title": "Foreign Worker Insurance",
-        "desc": "The market leader the big players don't compete with head-on — handle one worker at a time or thousands in bulk via Excel, with automatic validation.",
+        "desc": "Confidence at every step — everything you need, all in one place.",
         "features": [
-          "Bulk upload, issue policies all at once",
-          "Supports Myanmar · Laos · Vietnam",
-          "Digital policy wallet for workers"
+          "Foreign worker insurance specialists",
+          "**Fast claims — no upfront payment**",
+          "Underwritten by Dhipaya Insurance",
+          "Supports Myanmar, Lao, and Vietnamese nationals",
+          "Advisory team and after-sales service"
         ],
         "cta": "Get started"
       },
@@ -584,9 +568,9 @@
         "desc": "Coverage for trips in Thailand and abroad, issued instantly before you travel.",
         "cta": "View plans"
       },
-      "health": {
-        "title": "Health Insurance",
-        "desc": "Lump-sum medical coverage — choose protection that fits your budget.",
+      "pa": {
+        "title": "Personal Accident (PA)",
+        "desc": "Covers accidental death, disability and medical costs — choose a sum insured that fits your budget.",
         "cta": "View plans"
       },
       "fire": {
@@ -602,7 +586,7 @@
       "features": {
         "expertise": {
           "title": "Deep specialization",
-          "desc": "Over 20 years leading foreign-worker insurance — we understand every requirement"
+          "desc": "Expertise in migrant worker insurance, provided by a professional team."
         },
         "compare": {
           "title": "Compare many insurers",
@@ -660,6 +644,11 @@
         "Southeast Insurance"
       ]
     },
+    "articles": {
+      "title": "Articles & Guides",
+      "sub": "The latest foreign-worker insurance know-how for employers, from the TKR team",
+      "viewAll": "View all articles"
+    },
     "agentCta": {
       "badge": "Earning opportunity",
       "title": "Become a TKR agent and earn without limits",
@@ -689,7 +678,7 @@
       "badge24h": "Policy issued immediately"
     },
     "steps": {
-      "plan": "Choose plan",
+      "term": "Coverage term",
       "fill": "Enter details",
       "review": "Review",
       "pay": "Pay"
@@ -697,7 +686,10 @@
     "summary": {
       "title": "Order summary",
       "plan": "Coverage plan",
-      "perYear": "Premium / person / year",
+      "insurer": "Underwritten by",
+      "insurerValue": "Dhipaya Insurance",
+      "term": "Coverage term",
+      "perPerson": "Premium per person",
       "count": "Number of workers",
       "countValue": "{n, plural, one {# person} other {# people}}",
       "total": "Net total premium",
@@ -707,23 +699,33 @@
       "back": "Back",
       "secure": "Secure encrypted payment"
     },
-    "plan": {
-      "heading": "Choose your coverage plan",
-      "sub": "Pick the plan that fits your workers — price per person per year",
-      "recommended": "Recommended",
-      "perUnit": "/person/year",
-      "names": {
-        "basic": "Basic",
-        "standard": "Standard",
-        "premium": "Premium"
+    "package": {
+      "heading": "Choose your coverage term",
+      "sub": "One single package covering both illness and accident — same coverage for every term, 4 lengths to choose from",
+      "shortName": "Single package (illness + accident)",
+      "badgeSingle": "Single package",
+      "underwrittenBy": "Underwritten by Dhipaya Insurance",
+      "insurerFull": "Dhipaya Insurance Public Company Limited",
+      "perPerson": "/person",
+      "from": "From",
+      "coverageNote": "Same coverage for every term",
+      "terms": {
+        "m3": "3 months",
+        "m6": "6 months",
+        "m12": "1 year",
+        "m15": "1 year 3 months"
       },
       "rows": {
-        "life": "Death / disability",
-        "medical": "Medical expenses",
-        "repatriation": "Repatriation"
+        "ipd": "Inpatient (IPD)",
+        "ipdValue": "Up to {amount}",
+        "opd": "Outpatient (OPD)",
+        "opdValue": "{amount}/visit (max {n, number} visits/policy year)",
+        "age": "Eligible age",
+        "ageValue": "{min, number}–{max, number} years"
       },
-      "included": "Included",
-      "notIncluded": "Not included",
+      "noAdvance": "No advance payment at network hospitals",
+      "minorNote": "Note: insureds under 18 must attach a \"dependent document\" issued by the Department of Provincial Administration",
+      "hospitalLink": "Check the Dhipaya network hospital list",
       "modeHeading": "How to enter worker details",
       "modeSingle": {
         "title": "Enter one by one",
@@ -733,6 +735,42 @@
         "title": "Bulk upload",
         "badge": "Popular",
         "desc": "Hundreds to thousands via Excel"
+      }
+    },
+    "faq": {
+      "title": "FAQ: Migrant worker insurance",
+      "sub": "Answers about the insurer, coverage, hospitals, and required documents",
+      "inflowTitle": "Coverage & FAQ",
+      "viewAll": "View all questions",
+      "items": {
+        "insurer": {
+          "q": "Which company underwrites this worker insurance?",
+          "a": "Underwritten by Dhipaya Insurance Public Company Limited."
+        },
+        "coverage": {
+          "q": "How many coverage options are there — and does it cover both health and accidents?",
+          "a": "There is one single coverage package (identical for every term) covering both illness and accident: inpatient (IPD) up to ฿150,000; outpatient (OPD) ฿1,000 per visit (max 15 visits per policy year). Choose from 4 term lengths: 3 months ฿750, 6 months ฿990, 1 year ฿1,790, 1 year 3 months ฿2,475."
+        },
+        "noAdvance": {
+          "q": "If a worker has an accident, do they need to pay the hospital upfront?",
+          "a": "No advance payment is needed when treated at a designated network hospital."
+        },
+        "hospitals": {
+          "q": "Which hospitals can workers use?",
+          "a": "Workers can be treated at Dhipaya network hospitals nationwide. Check the list at https://www.dhipaya.co.th/th/hospital"
+        },
+        "age": {
+          "q": "From what age can a worker be insured?",
+          "a": "Coverage is available from age 1 to 99. Note: insureds under 18 must attach a \"dependent document\" issued by the Department of Provincial Administration."
+        },
+        "claimDocs": {
+          "q": "What are the claim steps and required documents?",
+          "a": "Core documents: original receipt, medical certificate, policy schedule page, a copy of the Passport or Work Permit, the medical record, and a copy of the insured's bank book. If the payout goes to the employer's account, also attach a power of attorney, a copy of the employer's ID card, and a copy of the employer's bank book."
+        },
+        "applyDocs": {
+          "q": "What documents are needed to apply for worker insurance?",
+          "a": "A copy of the worker's Passport, a copy of the worker's Work Permit, the employer's full address details, the insurance application form, and the worker's other identity documents."
+        }
       }
     },
     "single": {
@@ -804,11 +842,11 @@
       "company": "Thai Charoen Construction Co., Ltd.",
       "taxId": "Tax ID 0105545012345",
       "planLabel": "Coverage plan",
-      "coveragePeriod": "1-year coverage, starting 15 Jun 2026",
+      "coveragePeriod": "{term} coverage, starting 15 Jun 2026",
       "listTitle": "Workers to be issued policies",
       "readyChip": "{n, number} ready to issue",
       "countLabel": "Number of workers",
-      "perLabel": "Premium per person",
+      "perLabel": "Premium per person ({term})",
       "totalLabel": "Net total premium",
       "confirmText": "I confirm the information is correct and accept the ",
       "confirmLink": "policy terms"
@@ -979,10 +1017,10 @@
         "extra": "Toyota Yaris · 1กข 1234",
         "expiry": "28 Jun 2026"
       },
-      "health": {
-        "type": "Lump-sum Health Insurance",
+      "pa": {
+        "type": "Personal Accident (PA)",
         "co": "Muang Thai Insurance",
-        "extra": "Health Plus plan",
+        "extra": "PA Plus plan",
         "expiry": "01 Sep 2026"
       },
       "travel": {
@@ -1036,7 +1074,7 @@
         "d": "24 days left · renew for continuous coverage"
       },
       "n2": {
-        "t": "Health policy issued",
+        "t": "Personal accident (PA) policy issued",
         "d": "Documents are ready to download"
       },
       "n3": {
@@ -1395,7 +1433,7 @@
   "metadata": {
     "home": {
       "title": "TKR | Full-service insurance broker · Foreign worker insurance leader",
-      "description": "The leader in foreign worker insurance, plus car, travel, health and fire coverage — buy, renew and manage every policy in one place."
+      "description": "The leader in foreign worker insurance, plus car, travel, personal accident and fire coverage — buy, renew and manage every policy in one place."
     },
     "worker": {
       "title": "TKR | Get Foreign Worker Insurance",
@@ -1427,7 +1465,7 @@
     },
     "articles": {
       "title": "Articles & Insurance Guides | TKR",
-      "description": "Guides and tips on worker, motor, health insurance and claims"
+      "description": "Guides and tips on worker, motor, personal accident insurance and claims"
     },
     "help": {
       "title": "Help Center | TKR",
@@ -1439,7 +1477,7 @@
     },
     "about": {
       "title": "About TKR | Licensed Insurance Broker",
-      "description": "TKR is a licensed insurance brokerage — foreign-worker insurance for employers plus personal auto, travel, health and fire cover."
+      "description": "TKR is a licensed insurance brokerage — foreign-worker insurance for employers plus personal auto, travel, personal accident and fire cover."
     },
     "aboutWhy": {
       "title": "Why TKR | Compare & Buy with Confidence",
@@ -1504,7 +1542,7 @@
       "worker": "Worker",
       "auto": "Car",
       "travel": "Travel",
-      "health": "Health",
+      "pa": "Accident",
       "fire": "Fire"
     },
     "policyStatus": {
@@ -1805,7 +1843,7 @@
       "tabs": {
         "auto": "Car",
         "travel": "Travel",
-        "health": "Health",
+        "pa": "Accident",
         "fire": "Fire"
       },
       "quote": {
@@ -2105,8 +2143,8 @@
           "travellers": "Travellers",
           "sum": "Sum insured"
         },
-        "health": {
-          "title": "Health plan",
+        "pa": {
+          "title": "Personal accident (PA) plan",
           "insured": "Insured",
           "age": "Age",
           "plan": "Plan",
@@ -2154,12 +2192,13 @@
       "ctaTitle": "Ready to get covered?",
       "ctaSub": "Start your quote now — it only takes a few minutes.",
       "startQuote": "Start quote",
+      "startQuoteMou": "ประกันแรงงานต่างด้าว (MOU)",
+      "startQuote24": "ประกันแรงงานต่างด้าว (มติ 11 พ.ย/ธ.ค 68)",
       "getStarted": "Get started",
       "contact": "Talk to us",
       "seePlans": "See plans",
       "signupCta": "Create an account",
       "perYear": "/ year",
-      "perWorker": "/ worker / year",
       "choose": "Choose plan",
       "recommended": "Recommended",
       "compareCta": "Compare insurers",
@@ -2209,7 +2248,7 @@
     },
     "worker": {
       "hero": {
-        "title": "Foreign worker insurance, done in minutes",
+        "title": "Foreign worker insurance — fast claims, no upfront payment",
         "subtitle": "Cover one worker or hundreds in a single order — compliant, instant, and fully digital.",
         "badge": "Issued within 24 hours"
       },
@@ -2228,10 +2267,10 @@
         }
       ],
       "coverage": [
-        "Accidental death & dismemberment up to ฿1,000,000",
-        "Inpatient & outpatient medical expenses",
-        "Repatriation of remains (Standard & Premium)",
-        "24-hour multilingual emergency assistance"
+        "Inpatient (IPD) up to ฿150,000",
+        "Outpatient (OPD) ฿1,000/visit (max 15 visits/policy year)",
+        "Covers both illness and accident — cashless at network hospitals",
+        "Underwritten by Dhipaya Insurance"
       ],
       "faq": [
         {
@@ -2332,20 +2371,20 @@
         }
       ]
     },
-    "health": {
+    "pa": {
       "hero": {
-        "title": "Health insurance that has your back",
-        "subtitle": "Inpatient and outpatient cover for you and your family.",
+        "title": "Personal accident (PA) cover that has your back",
+        "subtitle": "Accidental death, disability and medical cover for you and your family.",
         "badge": "Plans for every budget"
       },
       "why": [
         {
-          "title": "Real medical cover",
-          "desc": "Hospital stays, surgery and outpatient visits covered."
+          "title": "Real accident cover",
+          "desc": "Accidental death, dismemberment, disability and medical costs covered."
         },
         {
           "title": "Wide hospital network",
-          "desc": "Cashless treatment at partner hospitals nationwide."
+          "desc": "Cashless accident treatment at partner hospitals nationwide."
         },
         {
           "title": "Renew with ease",
@@ -2353,14 +2392,14 @@
         }
       ],
       "coverage": [
-        "Inpatient room, board and surgery",
-        "Outpatient consultations",
-        "Annual health check (Premium)"
+        "Accidental death, dismemberment and disability",
+        "Medical expenses per accident",
+        "Daily income benefit while recovering (Premium)"
       ],
       "faq": [
         {
-          "q": "Is there a waiting period?",
-          "a": "Standard waiting periods apply for certain conditions — details at checkout."
+          "q": "Are motorcycle accidents covered?",
+          "a": "The Premium plan covers motorcycle accidents — details at checkout."
         },
         {
           "q": "Can I add my family?",
@@ -2368,7 +2407,7 @@
         },
         {
           "q": "Cashless or reimbursement?",
-          "a": "Cashless at network hospitals; reimbursement elsewhere."
+          "a": "Cashless accident treatment at network hospitals; reimbursement elsewhere."
         }
       ]
     },
@@ -3049,7 +3088,7 @@
       "worker": "Foreign worker",
       "auto": "Motor",
       "travel": "Travel",
-      "health": "Health",
+      "pa": "Accident",
       "fire": "Fire"
     },
     "articlesEditor": {
@@ -3324,6 +3363,13 @@
       "flagLine": "LINE Concierge",
       "flagTeam": "Agent team (override)",
       "flagMaintenance": "Maintenance mode",
+      "workerFlow": "Worker purchase flow",
+      "workerFlowHint": "Applies immediately to the worker-insurance purchase flow (stored on this device in the demo).",
+      "workerShowStepper": "Show progress stepper",
+      "workerShowInputMethod": "Show input-method chooser (single / bulk)",
+      "workerDefaultInputMethod": "Default input method (used while the chooser is hidden)",
+      "workerInputSingle": "Single entry (one by one)",
+      "workerInputBulk": "Bulk upload (Excel)",
       "notifications": "Notification templates",
       "tplOtp": "OTP message",
       "tplPolicy": "Policy issued",
@@ -3466,7 +3512,7 @@
     "banners": {
       "title": "Home banners",
       "desc": "Manage the promo/campaign banners shown below the hero on the home page",
-      "placeholderBanner": "Sample data for demo — replace with real banners before production",
+      "placeholderBanner": "Edits are saved in this browser (demo mode) and show on the home page immediately — slide links are still '#'; set real targets before production",
       "empty": "No banners yet",
       "add": "Add banner",
       "count": "{n} banners",
@@ -3475,13 +3521,21 @@
       "inactive": "Inactive",
       "window": "Display window",
       "toggle": "Toggle",
+      "edit": "Edit",
       "delete": "Delete",
       "created": "Banner added",
       "deleted": "Banner deleted",
       "activated": "Banner activated",
       "deactivated": "Banner deactivated",
       "sampleTitle": "Sample banner {n}",
-      "sampleCta": "View promotions"
+      "fTitle": "Title (used as the image alt text)",
+      "fImageAlt": "Alt text (blank = use the title)",
+      "fImage": "Desktop image (1600×500)",
+      "fImageMobile": "Mobile image (square)",
+      "fHref": "Target link",
+      "fStart": "Start date",
+      "fEnd": "End date",
+      "fSort": "Sort order"
     },
     "coupons": {
       "title": "Coupons & Promotions",
@@ -3509,19 +3563,17 @@
     },
     "reviews": {
       "title": "Customer reviews",
-      "desc": "Manage reviews shown on the site — display only real, consented reviews",
-      "placeholderBanner": "Sample data for demo — replace with real reviews before going live",
+      "desc": "Manage the genuine customer reviews shown on the site — real post-service survey quotes; never invent or edit wording",
+      "complianceBanner": "All reviews are genuine, anonymized customer quotes (PDPA) — compliance-flagged items must be cleared before they can appear on the home page",
       "empty": "No reviews yet",
-      "author": "Author",
-      "product": "Product",
-      "channel": "Channel",
-      "reaction": "Reaction",
-      "date": "Date",
+      "featured": "On home page",
+      "featuredOn": "Now shown on the home page",
+      "featuredOff": "Removed from the home page",
+      "complianceFlag": "Pending compliance",
+      "complianceBlocked": "Needs compliance sign-off before it can be shown on the home page",
       "delete": "Delete",
       "deleted": "Review deleted",
-      "count": "{n} reviews",
-      "channelSurvey": "Survey",
-      "channelSocial": "Social"
+      "count": "{n} reviews"
     },
     "partners": {
       "title": "Insurer partners",
@@ -3600,6 +3652,29 @@
       "publishedToast": "Publish recorded in the audit log",
       "draftTag": "(new draft)",
       "empty": "No data"
+    },
+    "navigation": {
+      "title": "Navigation",
+      "desc": "Turn public menu items on or off — with optional scheduling — without a deploy",
+      "hint": "Changes apply to the navbar, mega-menu, mobile drawer, and footer. Emptied menu groups and footer columns are hidden automatically.",
+      "shown": "Menu item shown",
+      "hidden": "Menu item hidden",
+      "stOpen": "Shown",
+      "stHidden": "Hidden",
+      "stScheduled": "Scheduled",
+      "kindFeatured": "Featured",
+      "schedule": "Schedule & options",
+      "startDate": "Show from",
+      "endDate": "Show until",
+      "closedBehavior": "When hidden",
+      "behaviorHide": "Remove from menu only",
+      "behaviorBlock": "Also block the page",
+      "auditShown": "Enabled public nav item",
+      "auditHidden": "Disabled public nav item",
+      "auditScheduled": "Scheduled public nav item",
+      "auditBehavior": "Changed nav item closed-behavior",
+      "sectionActions": "Actions (navbar right side)",
+      "sectionFooter": "Footer"
     }
   },
   "public": {
@@ -3711,8 +3786,8 @@
     },
     "reviews": {
       "title": "What customers say",
-      "sub": "Feedback from real customers and agents who use TKR",
-      "placeholderNote": "Sample for demo — to be replaced with real, consented reviews",
+      "sub": "Genuine reviews from TKR customers, collected in post-service surveys",
+      "sourceNote": "Genuine customer reviews from post-service surveys — shown anonymously for privacy",
       "viewAll": "View all reviews"
     },
     "trust": {
@@ -3723,6 +3798,7 @@
       "customersTitle": "Customers served",
       "claimsTitle": "Claims-paid rate",
       "partnersTitle": "Partner insurers",
+      "partnersSeeAll": "View all",
       "awardsTitle": "Awards & recognition",
       "awardsEmpty": "Reserved for real awards — we only display awards we have actually received"
     },
@@ -3858,10 +3934,8 @@
   },
   "reviewsPage": {
     "title": "Customer reviews",
-    "desc": "Feedback from real customers and agents who use TKR",
-    "empty": "No reviews yet",
-    "placeholderBanner": "Sample data for demo — real content will come from consented customer surveys",
-    "filterAll": "All"
+    "desc": "Genuine reviews from customers who use TKR, collected in post-service surveys",
+    "empty": "No reviews yet"
   },
   "seo": {
     "index": {
@@ -3877,7 +3951,6 @@
       "auto": "Motor insurance",
       "travel": "Travel insurance",
       "home": "Home & condo insurance",
-      "health": "Health insurance",
       "tax": "Tax-deductible insurance"
     },
     "sub": {
@@ -3928,14 +4001,6 @@
       "home-condo": {
         "label": "Condo insurance",
         "tagline": "Covers the unit and its contents"
-      },
-      "health-ci": {
-        "label": "Critical illness",
-        "tagline": "Lump sum on diagnosis of a covered critical illness"
-      },
-      "health-cancer": {
-        "label": "Cancer insurance",
-        "tagline": "Low starting premium, lump sum on a cancer diagnosis"
       },
       "tax-savings": {
         "label": "Savings insurance",
@@ -3996,11 +4061,6 @@
       "network": "Garage & hospital"
     },
     "faqs": [
-      {
-        "category": "worker",
-        "q": "What documents are needed to buy migrant worker insurance?",
-        "a": "A copy of each worker’s passport and work permit, plus employer details. Enter workers one by one or upload in bulk via Excel."
-      },
       {
         "category": "worker",
         "q": "How long does it take to issue a worker policy?",
@@ -4133,20 +4193,17 @@
     "methodsTitle": "Contact channels",
     "methods": {
       "phone": "Phone",
-      "phoneValue": "02-123-4567",
       "phoneNote": "Mon–Sat 8:00–20:00",
       "email": "Email",
-      "emailValue": "hello@tkr.co.th",
       "emailNote": "Reply within 1 business day",
       "line": "LINE Official",
-      "lineValue": "@tkrinsure",
       "lineNote": "Live chat 24/7",
+      "facebook": "Facebook",
+      "tiktok": "TikTok",
       "address": "Office address",
-      "addressValue": "TKR Building, Sukhumvit Rd, Bangkok 10110",
       "hours": "Business hours",
       "hoursValue": "Mon–Sat 8:00–20:00"
     },
-    "mapPlaceholder": "Office map",
     "form": {
       "title": "Send us a message",
       "sub": "Fill in the form and we’ll get back to you soon",
@@ -4175,7 +4232,8 @@
       "title": "Find answers fast",
       "desc": "Many questions are already answered in our Help Center",
       "cta": "Go to Help Center"
-    }
+    },
+    "mapLink": "View map"
   },
   "guest": {
     "banner": {
@@ -4411,7 +4469,7 @@
       "hero": {
         "badge": "About us",
         "title": "Insurance that understands working people",
-        "sub": "TKR is a licensed insurance brokerage. Our flagship is foreign-worker insurance for employers, alongside personal lines — car, travel, health and fire."
+        "sub": "TKR is a licensed insurance brokerage. Our flagship is foreign-worker insurance for employers, alongside personal lines — car, travel, personal accident and fire."
       },
       "whatWeDo": {
         "title": "What we do",
@@ -4483,10 +4541,10 @@
             "href": "/insurance/travel"
           },
           {
-            "key": "health",
-            "title": "Health insurance",
-            "desc": "Health, critical illness and cancer cover.",
-            "href": "/insurance/health"
+            "key": "pa",
+            "title": "Personal Accident (PA)",
+            "desc": "Accidental death, disability and medical cover.",
+            "href": "/insurance/pa"
           },
           {
             "key": "fire",
@@ -4582,7 +4640,7 @@
       },
       "wall": {
         "title": "Our partner insurers",
-        "note": "Shown as name placeholders — official partner logos will appear once usage rights are confirmed.",
+        "note": "Official partner insurer logos, shown with usage permission.",
         "empty": "Partner list is being updated — please check back soon."
       },
       "meaning": {

@@ -21,8 +21,9 @@ export function generateStaticParams() {
 
 export const metadata: Metadata = {
   // Per-page localized title/description land in Phase 5 (generateMetadata).
+  // Icons come from the file conventions in src/app (favicon.ico, icon.png,
+  // apple-icon.png) — no manual `icons` entry needed.
   title: "TKR",
-  icons: { icon: "/logo-tkr.png" },
 };
 
 export default async function LocaleLayout({ children, params }: Props) {
@@ -37,7 +38,11 @@ export default async function LocaleLayout({ children, params }: Props) {
 
   return (
     <html lang={locale} className={fontVariables}>
-      <body className="min-h-screen antialiased">
+      {/* Browser extensions (Grammarly, ColorZilla, Dark Reader, password
+          managers…) inject attributes onto <body> before hydration, which React
+          flags as an attribute mismatch. suppressHydrationWarning silences that
+          one level only — real mismatches inside the app still surface. */}
+      <body className="min-h-screen antialiased" suppressHydrationWarning>
         <NextIntlClientProvider>
           {children}
           {/* Site-wide PDPA cookie consent + gated analytics/marketing scripts. */}

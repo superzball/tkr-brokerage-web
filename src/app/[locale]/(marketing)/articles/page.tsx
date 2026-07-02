@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import type { Locale } from "@/i18n/routing";
-import { getPublishedArticles, getArticleCategories } from "@/lib/mock/seed";
+import { getArticles, getArticleCategories } from "@/lib/articles";
 import { ArticlesIndex } from "@/components/articles/ArticlesIndex";
 import { EmptyState } from "@/components/app/EmptyState";
 
@@ -18,7 +18,7 @@ export default async function ArticlesPage({ params }: Props) {
   setRequestLocale(locale);
   const t = await getTranslations("articles");
 
-  const articles = getPublishedArticles();
+  const articles = getArticles({ publishedOnly: true });
   const categories = getArticleCategories();
 
   return (

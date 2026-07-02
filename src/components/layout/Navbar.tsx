@@ -10,7 +10,8 @@ import { Logo } from "./Logo";
 import { MegaMenu } from "./MegaMenu";
 import { NavSearch } from "./NavSearch";
 import { MobileDrawer } from "./MobileDrawer";
-import { publicNav, publicNavActions } from "@/config/nav";
+import { publicNavActions } from "@/config/nav";
+import { useVisiblePublicNav } from "@/hooks/useNavVisibility";
 import type { TopNavItem } from "@/types/portal";
 import { cn } from "@/lib/cn";
 
@@ -33,6 +34,8 @@ export function Navbar() {
   // Nav labels use dynamic keys from config → plain string lookup.
   const t = useTranslations("topnav") as unknown as (key: string) => string;
   const pathname = usePathname();
+  // Data-driven visibility: hidden/expired items (and empty columns) filtered out.
+  const navItems = useVisiblePublicNav();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -89,7 +92,7 @@ export function Navbar() {
               searchOpen && "lg:hidden",
             )}
           >
-            {publicNav.map((item) =>
+            {navItems.map((item) =>
               item.columns ? (
                 <MegaMenu key={item.key} item={item} active={isActive(item)} />
               ) : (
@@ -115,10 +118,10 @@ export function Navbar() {
             <span className="w-px h-5 bg-ink-100" aria-hidden="true" />
 
             <LocaleSwitcher />
-            <Button href={publicNavActions.login.href} variant="primary" size="sm">
+            {/* <Button href={publicNavActions.login.href} variant="primary" size="sm">
               <Icon name="users" size={17} />
               {t(publicNavActions.login.key)}
-            </Button>
+            </Button> */}
             {/* <Button href={publicNavActions.quoteCta.href} variant="primary" size="sm">
               {t(publicNavActions.quoteCta.key)}
             </Button> */}
@@ -146,7 +149,12 @@ export function Navbar() {
         </nav>
       </div>
 
-      <MobileDrawer open={open} onClose={() => setOpen(false)} pathname={pathname} />
+      <MobileDrawer
+        open={open}
+        onClose={() => setOpen(false)}
+        pathname={pathname}
+        items={navItems}
+      />
     </header>
   );
 }

@@ -10,7 +10,7 @@ export type Locale = 'th' | 'en' | 'my' | 'lo';
 // ---- RBAC for back-office (Phase 14) ----
 export type StaffRole = 'superadmin' | 'ops' | 'content' | 'sales';
 
-export type InsuranceType = 'worker' | 'auto' | 'travel' | 'health' | 'fire';
+export type InsuranceType = 'worker' | 'auto' | 'travel' | 'pa' | 'fire';
 export type PolicyStatus = 'active' | 'expiring' | 'expired' | 'pending';
 export type ClaimStatus = 'submitted' | 'reviewing' | 'approved' | 'paid' | 'rejected';
 export type InvoiceStatus = 'paid' | 'unpaid' | 'overdue';
@@ -208,8 +208,6 @@ export interface NavSection {
 
 // ============== admin entities (Phase 14) ==============
 export type ArticleStatus = 'draft' | 'scheduled' | 'published';
-/** Decorative cover tone (no real images in the mock CMS — keyed gradient). */
-export type ArticleCover = 'brand' | 'mint' | 'gold' | 'peach' | 'sky';
 export interface Article {
   id: string;
   title: string;
@@ -222,9 +220,9 @@ export interface Article {
   seo: { metaTitle: string; metaDescription: string; ogImage?: string };
   // ---- public reading view (optional; published entries carry these) ----
   excerpt?: string;            // one-line lead for cards + meta fallback
-  cover?: ArticleCover;        // keyed gradient cover
+  cover?: string;              // cover image URL (under /public/article-images)
   readMinutes?: number;        // estimated read time
-  body?: string[];             // paragraphs (mock CMS authoring is Thai)
+  bodyMd?: string;             // markdown body (loaded from /content/articles)
 }
 
 export type OrderStatus = 'draft' | 'awaiting_payment' | 'issued' | 'cancelled';
@@ -447,18 +445,20 @@ export interface Coupon {
   active: boolean;
 }
 
-// Home promo/campaign banner — CMS-driven carousel below the hero. Copy is
-// CMS content (Thai); only slides with active=true AND today within
-// [startDate, endDate] render. Background is an image when `image` is set,
-// otherwise the `gradient` CSS fallback (no image assets shipped in the mock).
+// Home promo/campaign banner — CMS-driven carousel below the hero. The TKR
+// campaign artwork has headline/subtext/CTA BAKED INTO the image, so slides
+// render image-only (whole image clickable) — `title`/`imageAlt` are used only
+// for the link's accessible name / img alt, never overlaid. Only slides with
+// active=true AND today within [startDate, endDate] render.
 export interface HomeBanner {
   id: string;
-  title: string;                 // headline (CMS content)
-  subtitle?: string;             // optional supporting line
-  image?: string;                // background image URL (optional)
-  gradient: string;              // CSS background fallback when no image
-  ctaLabel: string;              // button label
-  ctaHref: string;               // target: promo/product/landing route
+  title: string;                 // slide's accessible name / img-alt fallback
+  subtitle?: string;             // leave empty when text is baked into the image
+  image: string;                 // wide 1600x500 web image (/banners/*.jpg)
+  imageMobile?: string;          // optional square/medium for small screens
+  imageAlt?: string;             // alt text (falls back to title)
+  ctaLabel?: string;             // leave empty when the CTA is baked into the image
+  href: string;                  // target link ('#' until set via admin)
   startDate: string;             // ISO yyyy-mm-dd — inclusive
   endDate: string;               // ISO yyyy-mm-dd — inclusive
   active: boolean;
@@ -467,15 +467,16 @@ export interface HomeBanner {
 
 export interface Review {
   id: string;
-  authorLabel: string;           // masked, e.g. "ลูกค้า TKR" — PLACEHOLDER
-  channel: 'survey' | 'social';
-  product: InsuranceType;
-  text: string;                  // PLACEHOLDER copy
-  reaction: 'heart' | 'like' | 'celebrate';
-  date: string;
+  quote: string;                 // genuine customer words — never invent or embellish
+  author: string;                // anonymized "ลูกค้า TKR" (PDPA: real names need consent)
+  channel?: string;              // source, e.g. "สำรวจหลังบริการ"
+  tag?: string;                  // short label chip
+  date: string;                  // ISO yyyy-mm-dd
+  featured?: boolean;            // shown on the home testimonials strip
+  complianceNote?: string;       // admin-only — keep featured:false until cleared
 }
 
-export interface InsurerPartner { id: string; name: string; group: 1 | 2 | 3; featured?: boolean; logo?: string; }
+export interface InsurerPartner { id: string; name: string; group: 1 | 2 | 3; featured?: boolean; shortName?: string; logo?: string; }
 
 export interface GlossaryTerm {
   term: string;
@@ -546,6 +547,28 @@ export interface TopNavItem {
   href?: string;               // simple link (no dropdown)
   columns?: MegaColumn[];      // present → renders as a mega menu
   featured?: MegaLink;         // optional highlighted card in the dropdown
+}
+
+// ---- public nav visibility (NAV_VISIBILITY) ----
+// Turn individual public nav entries on/off — and optionally schedule them —
+// WITHOUT a deploy. Applies to a top-level `TopNavItem`, its `featured` card, or
+// any `MegaLink`, keyed by that entry's `key`. Mirrors HomeBanner scheduling.
+export type NavClosedBehavior =
+  | 'hide'        // (default) hidden from every rendered menu surface only
+  | 'blockRoute'; // also gate the target page (friendly "unavailable", not a 404)
+
+/** Visibility + optional scheduling flags for one public nav entry. */
+export interface NavVisibility {
+  isOpen: boolean;             // false = hidden from the rendered menu
+  startDate?: string;          // ISO yyyy-mm-dd — inclusive; only visible on/after
+  endDate?: string;            // ISO yyyy-mm-dd — inclusive; only visible on/before
+  closedBehavior?: NavClosedBehavior; // default 'hide'
+}
+
+/** A stored nav-visibility record, keyed by the nav entry's `key`. Data-driven
+ *  (seed defaults + admin overrides) so items toggle without a code change. */
+export interface NavSetting extends NavVisibility {
+  key: string;                 // matches a TopNavItem/MegaLink `key`
 }
 
 // ============== customer loyalty & rewards (Phase 20, LOYALTY_ADDITIONS) ==============

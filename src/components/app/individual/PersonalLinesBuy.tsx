@@ -10,12 +10,12 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { AutoCompare } from "@/components/auto/AutoCompare";
 
-type Line = "auto" | "travel" | "health" | "fire";
+type Line = "auto" | "travel" | "pa" | "fire";
 type Coverage = "basic" | "standard" | "premium";
 
 const BASE: Record<Exclude<Line, "auto">, number> = {
   travel: 1850,
-  health: 22000,
+  pa: 22000,
   fire: 8500,
 };
 const MULT: Record<Coverage, number> = { basic: 0.8, standard: 1, premium: 1.4 };
@@ -32,7 +32,7 @@ export function PersonalLinesBuy({
   return (
     <div className="space-y-5">
       <Tabs<Line>
-        tabs={(["auto", "travel", "health", "fire"] as Line[]).map((k) => ({
+        tabs={(["auto", "travel", "pa", "fire"] as Line[]).map((k) => ({
           key: k,
           label: t(`buy.tabs.${k}`),
         }))}
@@ -79,7 +79,7 @@ function GenericQuote({
               <Input type="number" label={t("buy.quote.days")} defaultValue={7} />
             </>
           )}
-          {line === "health" && (
+          {line === "pa" && (
             <Input type="number" label={t("buy.quote.age")} defaultValue={30} />
           )}
           {line === "fire" && (

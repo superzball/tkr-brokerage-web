@@ -10,6 +10,7 @@ import {
   Phone,
   Shield,
   ShieldCheck,
+  ShieldPlus,
   Users,
   User,
   File,
@@ -52,7 +53,9 @@ import {
   Link2,
   Play,
   Image as ImageIcon,
+  SquarePen,
   Megaphone,
+  Mail,
   Map,
   Flag,
   Info,
@@ -106,6 +109,13 @@ const Facebook = (props: LucideProps) => (
   </BrandSvg>
 );
 
+const Tiktok = (props: LucideProps) => (
+  <BrandSvg {...props}>
+    <path d="M14.5 3.5v10.7a3.9 3.9 0 1 1-3.4-3.86" />
+    <path d="M14.5 6c.9 1.8 2.5 2.9 4.5 3.1" />
+  </BrandSvg>
+);
+
 const Line = (props: LucideProps) => (
   <BrandSvg {...props}>
     <rect x="3" y="3.5" width="18" height="15" rx="4.5" />
@@ -132,9 +142,12 @@ const registry = {
   truck: Truck,
   facebook: Facebook,
   line: Line,
+  tiktok: Tiktok,
+  mail: Mail,
   phone: Phone,
   shield: Shield,
   shieldCheck: ShieldCheck,
+  shieldPlus: ShieldPlus,
   users: Users,
   user: User,
   file: File,
@@ -178,6 +191,7 @@ const registry = {
   link: Link2,
   play: Play,
   image: ImageIcon,
+  edit: SquarePen,
   megaphone: Megaphone,
   map: Map,
   flag: Flag,

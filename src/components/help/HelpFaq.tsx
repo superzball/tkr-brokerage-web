@@ -5,6 +5,8 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Icon } from "@/components/ui/Icon";
 import { EmptyState } from "@/components/app/EmptyState";
+import { LinkifiedText } from "@/components/worker/WorkerFaq";
+import { workerInsuranceFaq } from "@/config/insurance";
 import { cn } from "@/lib/cn";
 
 type Faq = { category: string; q: string; a: string };
@@ -12,7 +14,9 @@ const CATS = ["all", "worker", "buy", "claims", "payment", "refund", "network"];
 
 /** Help-center FAQ. `search` toggles the search box + category filter (full FAQ
  *  page); without it, renders a simple accordion of the first `limit` items
- *  (the hub teaser). Reads content from the `help` i18n namespace. */
+ *  (the hub teaser). Content: the worker items come from `workerInsuranceFaq`
+ *  (the single source also shown on home/landings/in-flow, copy in
+ *  `worker.faq.items`); everything else from the `help.faqs` messages. */
 export function HelpFaq({
   search = true,
   limit,
@@ -21,7 +25,18 @@ export function HelpFaq({
   limit?: number;
 }) {
   const t = useTranslations("help");
-  const all = t.raw("faqs") as Faq[];
+  const tw = useTranslations("worker.faq");
+  const all = useMemo<Faq[]>(
+    () => [
+      ...workerInsuranceFaq.map((f) => ({
+        category: "worker",
+        q: tw(`items.${f.id}.q`),
+        a: tw(`items.${f.id}.a`),
+      })),
+      ...(t.raw("faqs") as Faq[]),
+    ],
+    [t, tw],
+  );
   const [q, setQ] = useState("");
   const [cat, setCat] = useState("all");
   const [open, setOpen] = useState(0);
@@ -116,7 +131,9 @@ export function HelpFaq({
                   )}
                 >
                   <div className="overflow-hidden">
-                    <p className="px-5 pb-5 text-ink-600 leading-relaxed">{item.a}</p>
+                    <p className="px-5 pb-5 text-ink-600 leading-relaxed">
+                      <LinkifiedText text={item.a} />
+                    </p>
                   </div>
                 </div>
               </div>

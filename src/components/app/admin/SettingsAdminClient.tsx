@@ -1,6 +1,8 @@
 // src/components/app/admin/SettingsAdminClient.tsx
 // System settings: org name, default locale, feature flags (toggles),
 // notification templates, integration keys. Mock — state + toast on save.
+// The worker-flow section is the exception: it persists immediately to
+// localStorage (WORKER_FLOW_UI) so the public worker flow picks it up.
 
 "use client";
 
@@ -10,6 +12,12 @@ import { routing } from "@/i18n/routing";
 import { Input, Select, Field } from "@/components/app/form";
 import { Button } from "@/components/ui/Button";
 import { useToast } from "@/components/app/toast";
+import { getWorkerFlowUI } from "@/lib/mock/seed";
+import {
+  readWorkerFlowOverrides,
+  saveWorkerFlowOverride,
+} from "@/lib/mock/local-worker-flow";
+import type { WorkerFlowUI, WorkerMode } from "@/types";
 import { cn } from "@/lib/cn";
 
 function Toggle({ on, onToggle, label }: { on: boolean; onToggle: () => void; label: string }) {
@@ -47,6 +55,18 @@ export function SettingsAdminClient() {
 
   const flag = (k: keyof typeof flags) => () => setFlags((f) => ({ ...f, [k]: !f[k] }));
 
+  // Worker purchase-flow toggles (WORKER_FLOW_UI): seed defaults + stored
+  // overrides (mirrors NavigationClient); every change persisted immediately.
+  const [workerFlow, setWorkerFlow] = useState<WorkerFlowUI>(() => ({
+    ...getWorkerFlowUI(),
+    ...readWorkerFlowOverrides(),
+  }));
+  const patchWorkerFlow = (patch: Partial<WorkerFlowUI>) => {
+    setWorkerFlow((prev) => ({ ...prev, ...patch }));
+    saveWorkerFlowOverride(patch);
+    toast(t("saved"), "success");
+  };
+
   return (
     <div className="space-y-6 max-w-3xl">
       {/* general */}
@@ -66,6 +86,40 @@ export function SettingsAdminClient() {
           <Toggle on={flags.line} onToggle={flag("line")} label={t("flagLine")} />
           <Toggle on={flags.team} onToggle={flag("team")} label={t("flagTeam")} />
           <Toggle on={flags.maintenance} onToggle={flag("maintenance")} label={t("flagMaintenance")} />
+        </div>
+      </section>
+
+      {/* worker purchase flow (WORKER_FLOW_UI) — persists immediately */}
+      <section className="card p-5">
+        <h2 className="font-700 text-ink-900">{t("workerFlow")}</h2>
+        <p className="text-xs text-ink-500 mt-1 mb-2">{t("workerFlowHint")}</p>
+        <div className="divide-y divide-ink-50">
+          <Toggle
+            on={workerFlow.showStepper}
+            onToggle={() => patchWorkerFlow({ showStepper: !workerFlow.showStepper })}
+            label={t("workerShowStepper")}
+          />
+          <Toggle
+            on={workerFlow.showInputMethod}
+            onToggle={() =>
+              patchWorkerFlow({ showInputMethod: !workerFlow.showInputMethod })
+            }
+            label={t("workerShowInputMethod")}
+          />
+          {!workerFlow.showInputMethod && (
+            <div className="pt-3">
+              <Select
+                label={t("workerDefaultInputMethod")}
+                value={workerFlow.defaultInputMethod}
+                onChange={(e) =>
+                  patchWorkerFlow({ defaultInputMethod: e.target.value as WorkerMode })
+                }
+              >
+                <option value="single">{t("workerInputSingle")}</option>
+                <option value="bulk">{t("workerInputBulk")}</option>
+              </Select>
+            </div>
+          )}
         </div>
       </section>
 

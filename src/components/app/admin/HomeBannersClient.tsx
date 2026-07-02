@@ -1,67 +1,89 @@
 // src/components/app/admin/HomeBannersClient.tsx
-// Admin CMS — manage the home-page promo carousel (homeBanners). Mock: state is
-// in-memory; add/toggle/delete with toasts. Mirrors CouponsClient. A slide only
-// appears on the live site when active=true AND today is within start/end.
+// Admin CMS — manage the home-page promo carousel (homeBanners). CRUD + active
+// toggle + display window + sort order. Mirrors the navigation panel's
+// persistence: seed defaults + full-list localStorage writes (lib/mock/
+// local-banners), which the home carousel re-reads after mount — so edits here
+// show on the live home page without a deploy. Campaign text is baked into the
+// artwork; `title`/`imageAlt` only name the slide for assistive tech.
 
 "use client";
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import type { HomeBanner } from "@/types/portal";
+import {
+  isBannerLive,
+  readLocalHomeBanners,
+  saveLocalHomeBanners,
+} from "@/lib/mock/local-banners";
 import { EmptyState } from "@/components/app/EmptyState";
 import { StatusBadge } from "@/components/app/StatusBadge";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { Chip } from "@/components/ui/Chip";
+import { DatePicker, Input } from "@/components/app/form";
 import { useToast } from "@/components/app/toast";
-
-/** True when active AND today within [startDate, endDate] (ISO compare). */
-function isLive(b: HomeBanner): boolean {
-  const today = new Date().toISOString().slice(0, 10);
-  return b.active && b.startDate <= today && today <= b.endDate;
-}
 
 export function HomeBannersClient({ initial }: { initial: HomeBanner[] }) {
   const t = useTranslations("admin.banners");
   const { toast } = useToast();
-  const [banners, setBanners] = useState<HomeBanner[]>(initial);
+  const [banners, setBanners] = useState<HomeBanner[]>(
+    () => readLocalHomeBanners() ?? initial,
+  );
+  const [expanded, setExpanded] = useState<Set<string>>(new Set());
+  const today = new Date().toISOString().slice(0, 10);
+
+  function persist(next: HomeBanner[]) {
+    setBanners(next);
+    saveLocalHomeBanners(next);
+  }
+
+  function patch(id: string, changes: Partial<HomeBanner>) {
+    persist(banners.map((b) => (b.id === id ? { ...b, ...changes } : b)));
+  }
 
   function toggle(id: string) {
-    let nowActive = false;
-    setBanners((prev) =>
-      prev.map((b) => {
-        if (b.id !== id) return b;
-        nowActive = !b.active;
-        return { ...b, active: nowActive };
-      }),
-    );
+    const nowActive = !banners.find((b) => b.id === id)?.active;
+    patch(id, { active: nowActive });
     toast(nowActive ? t("activated") : t("deactivated"), "info");
   }
 
   function remove(id: string) {
-    setBanners((prev) => prev.filter((b) => b.id !== id));
+    persist(banners.filter((b) => b.id !== id));
     toast(t("deleted"), "info");
   }
 
   function add() {
     const n = banners.length + 1;
-    setBanners((prev) => [
-      ...prev,
+    const id = `hb_${Date.now()}`;
+    persist([
+      ...banners,
       {
-        id: `hb_${Date.now()}`,
+        id,
         title: t("sampleTitle", { n }),
-        subtitle: "—",
-        gradient: "linear-gradient(120deg,#0b2240 0%,#143a6b 48%,#1f66ee 100%)",
-        ctaLabel: t("sampleCta"),
-        ctaHref: "/promotions",
-        startDate: "2026-01-01",
+        image: "/banners/wide-web.jpg",
+        imageMobile: "/banners/square-web.jpg",
+        href: "#",
+        startDate: today,
         endDate: "2026-12-31",
         active: false,
-        sortOrder: n,
+        sortOrder: Math.max(0, ...banners.map((b) => b.sortOrder)) + 1,
       },
     ]);
+    setExpanded((prev) => new Set(prev).add(id));
     toast(t("created"), "success");
   }
+
+  function toggleExpand(id: string) {
+    setExpanded((prev) => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  }
+
+  const ordered = [...banners].sort((a, b) => a.sortOrder - b.sortOrder);
 
   return (
     <>
@@ -81,33 +103,20 @@ export function HomeBannersClient({ initial }: { initial: HomeBanner[] }) {
         <EmptyState icon="image" title={t("empty")} />
       ) : (
         <div className="grid gap-4 sm:grid-cols-2">
-          {banners.map((b) => {
-            const live = isLive(b);
+          {ordered.map((b) => {
+            const live = isBannerLive(b, today);
+            const open = expanded.has(b.id);
             return (
               <div key={b.id} className="card p-0 overflow-hidden flex flex-col">
-                {/* preview strip — same background the carousel renders */}
-                <div
-                  className="relative h-24 flex items-end"
-                  style={{ background: b.image ? undefined : b.gradient }}
-                >
-                  {b.image && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={b.image}
-                      alt=""
-                      className="absolute inset-0 h-full w-full object-cover"
-                    />
-                  )}
-                  <div
-                    className="absolute inset-0"
-                    style={{
-                      background:
-                        "linear-gradient(90deg,rgba(8,20,40,.6),transparent 80%)",
-                    }}
+                {/* preview — the wide artwork exactly as the carousel shows it
+                    (text is baked in, so no overlay) */}
+                <div className="relative aspect-[16/5] bg-sky-100">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={b.image}
+                    alt={b.imageAlt ?? b.title}
+                    className="absolute inset-0 h-full w-full object-cover"
                   />
-                  <p className="relative px-4 pb-2.5 text-sm font-600 text-white line-clamp-2">
-                    {b.title}
-                  </p>
                   <span className="absolute top-2.5 left-2.5 inline-flex items-center justify-center w-6 h-6 rounded-md bg-white/85 text-xs font-700 text-ink-600">
                     {b.sortOrder}
                   </span>
@@ -119,24 +128,84 @@ export function HomeBannersClient({ initial }: { initial: HomeBanner[] }) {
                       {live ? t("live") : b.active ? t("scheduled") : t("inactive")}
                     </StatusBadge>
                   </div>
-                  {b.subtitle && (
-                    <p className="mt-2 text-sm text-ink-600 line-clamp-2">
-                      {b.subtitle}
-                    </p>
-                  )}
+                  <p className="mt-2 text-sm font-600 text-ink-900 line-clamp-2">
+                    {b.title}
+                  </p>
                   <div className="mt-3 flex flex-wrap gap-2 text-xs">
-                    <Chip className="bg-brand-50 text-brand-600">
-                      <Icon name="link" size={12} /> {b.ctaLabel}
+                    <Chip className="bg-sky-100 text-ink-600">
+                      <Icon name="link" size={12} /> {b.href}
                     </Chip>
-                    <Chip className="bg-sky-100 text-ink-600">{b.ctaHref}</Chip>
                   </div>
                   <p className="mt-2 text-xs text-ink-400">
                     {t("window")}: {b.startDate} → {b.endDate}
                   </p>
+
+                  {open && (
+                    <div className="mt-4 grid gap-3 rounded-xl bg-sky-50/60 p-3">
+                      <Input
+                        label={t("fTitle")}
+                        value={b.title}
+                        onChange={(e) => patch(b.id, { title: e.target.value })}
+                      />
+                      <Input
+                        label={t("fImageAlt")}
+                        value={b.imageAlt ?? ""}
+                        onChange={(e) =>
+                          patch(b.id, { imageAlt: e.target.value || undefined })
+                        }
+                      />
+                      <Input
+                        label={t("fImage")}
+                        value={b.image}
+                        onChange={(e) => patch(b.id, { image: e.target.value })}
+                      />
+                      <Input
+                        label={t("fImageMobile")}
+                        value={b.imageMobile ?? ""}
+                        onChange={(e) =>
+                          patch(b.id, { imageMobile: e.target.value || undefined })
+                        }
+                      />
+                      <Input
+                        label={t("fHref")}
+                        value={b.href}
+                        onChange={(e) => patch(b.id, { href: e.target.value })}
+                      />
+                      <div className="grid gap-3 sm:grid-cols-3">
+                        <DatePicker
+                          label={t("fStart")}
+                          value={b.startDate}
+                          onChange={(e) => patch(b.id, { startDate: e.target.value })}
+                        />
+                        <DatePicker
+                          label={t("fEnd")}
+                          value={b.endDate}
+                          onChange={(e) => patch(b.id, { endDate: e.target.value })}
+                        />
+                        <Input
+                          label={t("fSort")}
+                          type="number"
+                          value={b.sortOrder}
+                          onChange={(e) =>
+                            patch(b.id, { sortOrder: Number(e.target.value) || 0 })
+                          }
+                        />
+                      </div>
+                    </div>
+                  )}
+
                   <div className="mt-4 pt-3 border-t border-ink-50 flex items-center gap-2">
                     <Button variant="ghost" size="sm" onClick={() => toggle(b.id)}>
                       <Icon name={b.active ? "eye" : "refresh"} size={14} />{" "}
                       {t("toggle")}
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => toggleExpand(b.id)}
+                      aria-expanded={open}
+                    >
+                      <Icon name="edit" size={14} /> {t("edit")}
                     </Button>
                     <button
                       type="button"

@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/Button";
 import { Chip } from "@/components/ui/Chip";
@@ -8,11 +11,15 @@ import { AnimatedCounter } from "./AnimatedCounter";
 import { FEATURES } from "@/config/features";
 import { ROUTES } from "@/config/nav";
 import { QuoteBar } from "./QuoteBar";
-import { getActiveHomeBanners } from "@/lib/mock/seed";
+import { getActiveHomeBanners, getWorkerFlowUI } from "@/lib/mock/seed";
+import { WorkerFlowUI } from "@/types";
 
 export function Hero() {
   const t = useTranslations("home");
-
+  const l = useTranslations("learn");
+  const [workerFlow, setWorkerFlow] = useState<WorkerFlowUI>(() => ({
+    ...getWorkerFlowUI(),
+  }));
   return (
     <section className="relative overflow-hidden pb-24">
       {/* Restrained Trust backdrop: a calm white→soft-blue wash + a faint dot
@@ -29,12 +36,18 @@ export function Hero() {
       {/* two soft brand-tinted washes for depth (no mint/gold/peach) */}
       <div
         className="absolute -top-32 -right-24 w-[620px] h-[620px] rounded-full blur-3xl"
-        style={{ background: "radial-gradient(circle,rgba(31,102,238,.14),transparent 70%)" }}
+        style={{
+          background:
+            "radial-gradient(circle,rgba(31,102,238,.14),transparent 70%)",
+        }}
         aria-hidden="true"
       />
       <div
         className="absolute -bottom-24 -left-28 w-[520px] h-[520px] rounded-full blur-3xl"
-        style={{ background: "radial-gradient(circle,rgba(11,34,64,.07),transparent 70%)" }}
+        style={{
+          background:
+            "radial-gradient(circle,rgba(11,34,64,.07),transparent 70%)",
+        }}
         aria-hidden="true"
       />
 
@@ -42,7 +55,8 @@ export function Hero() {
         {/* copy */}
         <div className="lg:col-span-6">
           <Chip className="bg-white text-brand-700 shadow-card border border-brand-100 mb-6 animate-fade-up">
-            <span className="w-2 h-2 rounded-full bg-brand-500" /> {t("hero.badge")}
+            <span className="w-2 h-2 rounded-full bg-brand-500" />{" "}
+            {t("hero.badge")}
           </Chip>
           <h1
             className="font-display font-700 text-[2.6rem] leading-[1.08] sm:text-6xl text-ink-900 tracking-tight animate-fade-up"
@@ -63,17 +77,31 @@ export function Hero() {
               ),
             })}
           </p>
-          <div
-            className="mt-8 flex flex-wrap gap-3 animate-fade-up"
-            style={{ animationDelay: ".1s" }}
-          >
-            <Button href={ROUTES.worker} variant="primary" size="lg">
-              {t("hero.ctaPrimary")} <Icon name="arrowRight" />
-            </Button>
-            <Button href={ROUTES.auto} variant="gold" size="lg">
-              {t("hero.ctaSecondary")}
-            </Button>
-          </div>
+          {workerFlow.showInputMethod ? (
+            <div
+              className="mt-8 flex flex-wrap gap-3 animate-fade-up"
+              style={{ animationDelay: ".1s" }}
+            >
+              <Button href={ROUTES.worker} variant="primary" size="lg">
+                {t("hero.ctaPrimary")} <Icon name="arrowRight" />
+              </Button>
+              <Button href={ROUTES.auto} variant="gold" size="lg">
+                {t("hero.ctaSecondary")}
+              </Button>
+            </div>
+          ) : (
+            <div
+              className="mt-8 flex flex-wrap gap-3 animate-fade-up"
+              style={{ animationDelay: ".1s" }}
+            >
+              <Button href={ROUTES.workerMou} variant="primary" size="lg" target="_blank">
+                {l("common.startQuoteMou")} <Icon name="arrowRight" />
+              </Button>
+              <Button href={ROUTES.worker24} variant="gold" size="lg" target="_blank">
+                {l("common.startQuote24")} <Icon name="arrowRight" />
+              </Button>
+            </div>
+          )}
           {/* trust pills */}
           <div
             className="mt-9 flex flex-wrap items-center gap-2.5 animate-fade-up"
@@ -103,7 +131,10 @@ export function Hero() {
             <div className="relative mx-auto max-w-md aspect-square">
               <div
                 className="absolute inset-6 rounded-full blur-2xl"
-                style={{ background: "radial-gradient(circle,rgba(31,102,238,.18),transparent 70%)" }}
+                style={{
+                  background:
+                    "radial-gradient(circle,rgba(31,102,238,.18),transparent 70%)",
+                }}
               />
               <Mascot
                 title={t("hero.card.company")}
@@ -162,14 +193,16 @@ export function Hero() {
                 <div className="mt-5 grid grid-cols-3 gap-3 text-center">
                   <div className="rounded-2xl bg-sky-100 py-3">
                     <p className="text-2xl font-700 text-brand-700 tabnum">
-                      <AnimatedCounter value="248" />
+                      <AnimatedCounter value=">1M+" />
                     </p>
                     <p className="text-[0.7rem] text-ink-500">
                       {t("hero.card.workers")}
                     </p>
                   </div>
                   <div className="rounded-2xl bg-sky-50 py-3">
-                    <p className="text-2xl font-700 text-ink-900 tabnum">500k</p>
+                    <p className="text-2xl font-700 text-ink-900 tabnum">
+                      150K
+                    </p>
                     <p className="text-[0.7rem] text-ink-500">
                       {t("hero.card.perCapita")}
                     </p>
@@ -183,13 +216,13 @@ export function Hero() {
                     </p>
                   </div>
                 </div>
-                <div className="mt-4 flex items-center justify-between text-sm">
-                  <span className="text-ink-500">
+                <div className="mt-4 flex items-center justify-between text-sm mb-6">
+                  {/* <span className="text-ink-500">
                     {t("hero.card.totalPremium")}
                   </span>
                   <span className="font-700 text-ink-900 text-lg tabnum">
                     ฿<AnimatedCounter value="124,000" />
-                  </span>
+                  </span> */}
                 </div>
               </div>
 
@@ -208,7 +241,10 @@ export function Hero() {
                 <div className="mt-3 h-1.5 rounded-full bg-sky-200 overflow-hidden">
                   <div
                     className="h-full rounded-full sheen"
-                    style={{ width: "72%", background: "linear-gradient(90deg,#f2b736,#e89c12)" }}
+                    style={{
+                      width: "72%",
+                      background: "linear-gradient(90deg,#f2b736,#e89c12)",
+                    }}
                   />
                 </div>
               </div>
@@ -227,7 +263,7 @@ export function Hero() {
           )}
         </div>
       </div>
-      
+
       {/* floating quote-entry card (shadow-lift), overlapping the next section */}
       {/* <div className="relative max-w-6xl mx-auto px-4 sm:px-6 -mb-12 lg:-mb-16">
         <QuoteBar />

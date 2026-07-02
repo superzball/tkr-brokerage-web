@@ -7,10 +7,12 @@ import { WhyTKR } from "@/components/home/WhyTKR";
 import { TrustStats } from "@/components/home/TrustStats";
 import { Faq } from "@/components/home/Faq";
 import { AgentCTA } from "@/components/home/AgentCTA";
+import { HomeArticles } from "@/components/home/HomeArticles";
 import { Reviews } from "@/components/conversion/Reviews";
 import { TrustCredentials } from "@/components/conversion/TrustCredentials";
 import { QuickRenew } from "@/components/conversion/QuickRenew";
 import { getReviews } from "@/lib/mock/seed";
+import { getArticles } from "@/lib/articles";
 
 type Props = {
   params: Promise<{ locale: Locale }>;
@@ -35,12 +37,14 @@ export default async function HomePage({ params }: Props) {
       <WhyTKR />
       {/* contained soft-blue stats panel — featured gold figure + stat cards */}
       <TrustStats />
-      {/* white — social proof */}
-      <Reviews reviews={getReviews()} limit={3} />
+      {/* white — social proof: featured = the 3 service-focused quotes cleared for home */}
+      <Reviews reviews={getReviews({ featuredOnly: true })} />
       {/* one restrained soft-blue band breaks the white rhythm before the dark anchor */}
       <div className="sec-soft">
         <Faq />
       </div>
+      {/* white — บทความ preview: the 3 newest SEO articles from the file CMS */}
+      <HomeArticles articles={getArticles({ publishedOnly: true }).slice(0, 3)} />
       {/* dark band — OIC license + partner wall (no fabricated awards).
           `home-credentials` hides the two stat cells that duplicate the headline
           numbers above (customers 12,800 + insurers count) — home only; other

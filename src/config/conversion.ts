@@ -11,7 +11,7 @@ import type { InsuranceType } from "@/types/portal";
 import type { LearnProductKey } from "./learn";
 import { getInsurerPartners, insurerShortName } from "@/lib/mock/seed";
 
-export type SeoCategory = "auto" | "travel" | "home" | "health" | "tax";
+export type SeoCategory = "auto" | "travel" | "home" | "tax";
 
 export type SeoLanding = {
   slug: string;                 // URL slug under /insurance/<slug>
@@ -25,7 +25,7 @@ export type SeoLanding = {
   fromPrice: number;
 };
 
-export const SEO_CATEGORIES: SeoCategory[] = ["auto", "travel", "home", "health", "tax"];
+export const SEO_CATEGORIES: SeoCategory[] = ["auto", "travel", "home", "tax"];
 
 export const SEO_LANDINGS: SeoLanding[] = [
   // ── motor ──
@@ -41,12 +41,9 @@ export const SEO_LANDINGS: SeoLanding[] = [
   // ── home & condo ──
   { slug: "home-house",  category: "home", parent: "fire", icon: "building", compare: true,  fromPrice: 2500 },
   { slug: "home-condo",  category: "home", parent: "fire", icon: "building", compare: true,  fromPrice: 1800 },
-  // ── health ──
-  { slug: "health-ci",     category: "health", parent: "health", icon: "heart",    compare: true, fromPrice: 7800 },
-  { slug: "health-cancer", category: "health", parent: "health", icon: "hospital", compare: true, fromPrice: 4200 },
   // ── tax-deduction ──
-  { slug: "tax-savings", category: "tax", parent: "health", icon: "coins", compare: false, fromPrice: 24000 },
-  { slug: "tax-annuity", category: "tax", parent: "health", icon: "coins", compare: false, fromPrice: 30000 },
+  { slug: "tax-savings", category: "tax", parent: "pa", icon: "coins", compare: false, fromPrice: 24000 },
+  { slug: "tax-annuity", category: "tax", parent: "pa", icon: "coins", compare: false, fromPrice: 30000 },
 ];
 
 export const SEO_LANDING_SLUGS = SEO_LANDINGS.map((s) => s.slug);

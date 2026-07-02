@@ -3,7 +3,9 @@
 // verifiable stats. No fabricated awards — the awards slot stays empty until
 // real ones exist (project guiding principle #5).
 
+import Image from "next/image";
 import { useTranslations, useFormatter } from "next-intl";
+import { Link } from "@/i18n/navigation";
 import { Icon } from "@/components/ui/Icon";
 import {
   getInsurerPartners,
@@ -66,34 +68,49 @@ export function TrustCredentials() {
           </div>
         </div>
 
-        {/* partner wall */}
+        {/* partner wall — featured insurers as white logo chips on the dark band;
+            the full grouped list of all partners lives on /about/partners */}
         <div className="mt-14 pt-10 border-t border-ink-800">
           <p className="text-center text-sm text-ink-400 mb-7">
             {t("partnersTitle")}
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-5">
-            {/* featured insurers only — short brand names; the full grouped list
-                of all partners lives on /about/partners */}
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-7 sm:gap-x-8 pb-12">
             {getInsurerPartners({ featuredOnly: true }).map((p) => (
-              <span
-                key={p.id}
-                className="font-display font-700 text-xl text-ink-200/80"
-              >
-                {insurerShortName(p.name)}
-              </span>
+              <div key={p.id} className="flex flex-col items-center gap-2.5">
+                {/* fixed-size white chip — logo object-contain, equal optical
+                    size across all six (PNGs are height-normalized) */}
+                <div className="flex items-center justify-center rounded-[14px] border border-black/5 bg-white shadow-[0_4px_14px_rgba(0,0,0,0.18)]">
+                  {p.logo ? (
+                    <Image
+                      src={p.logo}
+                      alt={p.name}
+                      width={122}
+                      height={122}
+                      className="h-12 w-12 max-w-full object-fit rounded-[14px]"
+                    />
+                  ) : (
+                    <span className="font-display font-700 text-lg text-ink-700">
+                      {insurerShortName(p.name)}
+                    </span>
+                  )}
+                </div>
+                <span className="ont-display font-700 text-lg text-ink-200/80">
+                  {p.shortName ?? insurerShortName(p.name)}
+                </span>
+              </div>
             ))}
           </div>
         </div>
 
         {/* awards — intentionally empty until real awards exist */}
-        <div className="mt-12">
+        {/* <div className="mt-12">
           <p className="text-center text-sm text-ink-400 mb-4">
             {t("awardsTitle")}
           </p>
           <div className="rounded-2xl border border-dashed border-ink-700 p-6 text-center text-sm text-ink-500 max-w-2xl mx-auto">
             {t("awardsEmpty")}
           </div>
-        </div>
+        </div> */}
       </div>
     </section>
   );

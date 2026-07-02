@@ -9,7 +9,7 @@ import type {
   Client, Commission, Lead, AgentTierInfo, Notification, Role,
   DownlineMember, TeamOverride, InsuranceType, LeadStage,
   AgentSale, SaleStatus,
-  Article, Order, StaffUser, SupportTicket, ProductPlan, AuditEntry,
+  Order, StaffUser, SupportTicket, ProductPlan, AuditEntry,
   CmsPage, Faq, MediaAsset, Redirect, CommissionRule,
   CrmProduct, Duration, PricingTier, CustomerCreditProfile,
   PolicyTicket, CrmPayment, CreditTransaction, AmendmentTicket, IssuedPolicy,
@@ -17,8 +17,12 @@ import type {
   PlanCard, FitQuestion, CheckoutOption, TaxDeductionCap,
   LoyaltyAccount, PointsEntry, Reward, Redemption,
   ConsentRecord, LegalPolicy, LegalPolicyKind, DataSubjectRequest,
+  NavSetting,
 } from '@/types/portal';
+import type { WorkerFlowUI } from '@/types';
 import { memberTierOf, FEATURES_LOYALTY } from '@/config/loyalty';
+import { workerInsurancePlan } from '@/config/insurance';
+import { activeHomeBanners } from '@/lib/mock/local-banners';
 
 // ============================ USERS (demo accounts) ============================
 export const users: User[] = [
@@ -35,12 +39,13 @@ export const users: User[] = [
 // ============================ POLICIES ============================
 export const policies: Policy[] = [
   // business — mostly worker insurance + one fire
-  { id: 'p1', policyNo: 'TKR-W-2026-004821', type: 'worker', status: 'active',   insurer: 'ทิพยประกันภัย',    holderId: 'u_biz', premium: 124000, coverage: 500000,  workersCount: 248, startDate: '2026-01-15', endDate: '2027-01-14' },
-  { id: 'p2', policyNo: 'TKR-W-2026-004955', type: 'worker', status: 'expiring', insurer: 'วิริยะประกันภัย',   holderId: 'u_biz', premium: 36000,  coverage: 500000,  workersCount: 72,  startDate: '2025-07-10', endDate: '2026-07-09' },
+  // worker premiums = workersCount × term price (1-year term ฿1,790/คน)
+  { id: 'p1', policyNo: 'TKR-W-2026-004821', type: 'worker', status: 'active',   insurer: 'ทิพยประกันภัย',    holderId: 'u_biz', premium: 443920, coverage: 500000,  workersCount: 248, startDate: '2026-01-15', endDate: '2027-01-14' },
+  { id: 'p2', policyNo: 'TKR-W-2026-004955', type: 'worker', status: 'expiring', insurer: 'ทิพยประกันภัย',    holderId: 'u_biz', premium: 128880, coverage: 500000,  workersCount: 72,  startDate: '2025-07-10', endDate: '2026-07-09' },
   { id: 'p3', policyNo: 'TKR-F-2026-001203', type: 'fire',   status: 'active',   insurer: 'กรุงเทพประกันภัย',  holderId: 'u_biz', premium: 18500,  coverage: 8000000, startDate: '2026-03-01', endDate: '2027-02-28' },
   // individual — personal lines
   { id: 'p4', policyNo: 'TKR-A-2026-022104', type: 'auto',   status: 'active',   insurer: 'วิริยะประกันภัย',   holderId: 'u_indiv', premium: 14200, coverage: 1000000, startDate: '2026-02-20', endDate: '2027-02-19' },
-  { id: 'p5', policyNo: 'TKR-H-2026-008877', type: 'health', status: 'active',   insurer: 'เมืองไทยประกันภัย', holderId: 'u_indiv', premium: 22000, coverage: 1500000, startDate: '2026-01-01', endDate: '2026-12-31' },
+  { id: 'p5', policyNo: 'TKR-PA-2026-008877', type: 'pa', status: 'active',   insurer: 'เมืองไทยประกันภัย', holderId: 'u_indiv', premium: 22000, coverage: 1500000, startDate: '2026-01-01', endDate: '2026-12-31' },
   { id: 'p6', policyNo: 'TKR-T-2026-031590', type: 'travel', status: 'expired',  insurer: 'MSIG',             holderId: 'u_indiv', premium: 1850,  coverage: 2000000, startDate: '2026-04-02', endDate: '2026-04-16' },
 ];
 
@@ -107,7 +112,7 @@ const baseLeads: Lead[] = [
   { id: 'l2', name: 'หจก. รุ่งโรจน์ ก่อสร้าง',   contact: '089-552-1100', interest: 'worker', stage: 'contacted', value: 145000, createdDate: '2026-06-14', assignedTo: 'd1' },
   { id: 'l3', name: 'คุณอาทิตย์ แสงทอง',         contact: '081-334-7788', interest: 'auto',   stage: 'quoted',    value: 16500, createdDate: '2026-06-10', assignedTo: 'd2' },
   { id: 'l4', name: 'บริษัท นครชัย พลาสติก',     contact: '092-110-9988', interest: 'fire',   stage: 'quoted',    value: 31000, createdDate: '2026-06-05' },
-  { id: 'l5', name: 'คุณมณีรัตน์ ทองคำ',         contact: '083-447-2299', interest: 'health', stage: 'won',       value: 24000, createdDate: '2026-05-28' },
+  { id: 'l5', name: 'คุณมณีรัตน์ ทองคำ',         contact: '083-447-2299', interest: 'pa', stage: 'won',       value: 24000, createdDate: '2026-05-28' },
   { id: 'l6', name: 'ร้าน สมหวัง การช่าง',       contact: '087-665-1122', interest: 'worker', stage: 'lost',      value: 42000, createdDate: '2026-05-20' },
 ];
 
@@ -118,7 +123,7 @@ const LEAD_NAME_POOL = [
   'คุณประเสริฐ ทรัพย์มาก', 'คุณสุภาพร ดีงาม', 'บริษัท เจริญยนต์', 'หจก. มงคลก่อสร้าง',
   'คุณวีระศักดิ์ ใจกล้า', 'ร้าน รวมมิตรวัสดุ', 'บริษัท บางกอกโลจิสติกส์', 'คุณอรทัย พูนสุข',
 ];
-const LEAD_INTERESTS: InsuranceType[] = ['worker', 'auto', 'travel', 'health', 'fire'];
+const LEAD_INTERESTS: InsuranceType[] = ['worker', 'auto', 'travel', 'pa', 'fire'];
 const LEAD_STAGES_GEN: LeadStage[] = ['new', 'contacted', 'quoted', 'won', 'lost'];
 const LEAD_ASSIGNEES: (string | undefined)[] = ['d1', 'd2', 'd5', 'd7', undefined, undefined, undefined, undefined];
 
@@ -311,11 +316,12 @@ export function queryLeads(all: Lead[], query: LeadQuery = {}): { rows: Lead[]; 
 
 // ============================ AGENT SALES (production history) ============================
 const baseSales: AgentSale[] = [
-  { id: 's1', date: '2026-06-19', clientName: 'บริษัท ไทยเจริญ ก่อสร้าง จำกัด', product: 'worker', premium: 124000, commission: 14880, status: 'issued' },
-  { id: 's2', date: '2026-06-15', clientName: 'บริษัท สยามโลจิสติกส์ จำกัด',     product: 'worker', premium: 56000,  commission: 6720,  status: 'issued' },
+  // worker premiums = workers × term price: s1 = 248 × ฿1,790 (1 ปี), s2 = 56 × ฿990 (6 เดือน)
+  { id: 's1', date: '2026-06-19', clientName: 'บริษัท ไทยเจริญ ก่อสร้าง จำกัด', product: 'worker', premium: 443920, commission: 53270, status: 'issued' },
+  { id: 's2', date: '2026-06-15', clientName: 'บริษัท สยามโลจิสติกส์ จำกัด',     product: 'worker', premium: 55440,  commission: 6653,  status: 'issued' },
   { id: 's3', date: '2026-06-10', clientName: 'คุณวีรพล สุขสันต์',               product: 'auto',   premium: 14200,  commission: 1420,  status: 'issued' },
   { id: 's4', date: '2026-06-04', clientName: 'ร้าน ก.รุ่งเรืองวัสดุ',           product: 'fire',   premium: 24000,  commission: 2400,  status: 'pending' },
-  { id: 's5', date: '2026-05-28', clientName: 'คุณพิมพ์ชนก ใจงาม',               product: 'health', premium: 22000,  commission: 2200,  status: 'issued' },
+  { id: 's5', date: '2026-05-28', clientName: 'คุณพิมพ์ชนก ใจงาม',               product: 'pa', premium: 22000,  commission: 2200,  status: 'issued' },
   { id: 's6', date: '2026-05-12', clientName: 'บริษัท สยามโลจิสติกส์ จำกัด',     product: 'travel', premium: 8500,   commission: 850,   status: 'cancelled' },
 ];
 
@@ -324,12 +330,17 @@ const SALE_CLIENTS = [
   'คุณวีรพล สุขสันต์', 'คุณพิมพ์ชนก ใจงาม', 'หจก. รุ่งโรจน์ ก่อสร้าง',
 ];
 const SALE_STATUSES: SaleStatus[] = ['issued', 'issued', 'issued', 'pending', 'cancelled'];
+const WORKER_TERM_PRICES = workerInsurancePlan.terms.map(t => t.price);
 
 function genSales(n: number): AgentSale[] {
   const out: AgentSale[] = [];
   for (let i = 0; i < n; i++) {
     const product = LEAD_INTERESTS[i % LEAD_INTERESTS.length]!;
-    const premium = 8000 + ((i * 97) % 140) * 1000;
+    // worker premiums are always workers × one of the 4 ทิพย term prices
+    const premium =
+      product === 'worker'
+        ? WORKER_TERM_PRICES[i % WORKER_TERM_PRICES.length]! * (20 + ((i * 7) % 80))
+        : 8000 + ((i * 97) % 140) * 1000;
     // Spread across 2025–2026 so ~1-year renewals fall due across the calendar.
     const year = 2025 + (i % 2);
     const month = 1 + ((i * 5) % 12);
@@ -399,94 +410,14 @@ export function leadStageSummary(
 }
 
 // ============================ ADMIN / BACK-OFFICE (Phase 14) ============================
-export const articles: Article[] = [
-  {
-    id: 'a1', title: 'ประกันแรงงานต่างด้าวปี 2569 ต้องรู้อะไรบ้าง', slug: 'foreign-worker-insurance-2026',
-    status: 'published', category: 'ความรู้ประกัน', author: 'ทีม TKR', locales: ['th', 'en'], publishedAt: '2026-06-01',
-    cover: 'brand', readMinutes: 5,
-    excerpt: 'นายจ้างต้องเตรียมเอกสารอะไร คุ้มครองอะไรบ้าง และซื้อออนไลน์อย่างไรให้ออกกรมธรรม์ได้ทันที',
-    seo: { metaTitle: 'ประกันแรงงานต่างด้าว 2569 | TKR', metaDescription: 'คู่มือฉบับสมบูรณ์เรื่องประกันแรงงานต่างด้าวสำหรับนายจ้าง' },
-    body: [
-      'ประกันแรงงานต่างด้าวเป็นสิ่งที่นายจ้างต้องจัดให้ลูกจ้างตามที่กฎหมายกำหนด เพื่อคุ้มครองค่ารักษาพยาบาลจากอุบัติเหตุและการเจ็บป่วย รวมถึงค่าชดเชยและค่าส่งกลับประเทศในกรณีจำเป็น',
-      'เอกสารที่ต้องเตรียมมีเพียงสำเนาพาสปอร์ตและใบอนุญาตทำงานของแรงงาน พร้อมข้อมูลนายจ้าง เมื่อกรอกข้อมูลและชำระเบี้ยแล้ว ระบบจะออกกรมธรรม์ให้ภายใน 24 ชั่วโมง',
-      'TKR ช่วยให้นายจ้างซื้อประกันแรงงานได้ทั้งแบบทีละคนหรือยกชุดหลักพันคนผ่านไฟล์ Excel และจัดการเพิ่ม-ลดรายชื่อแรงงานระหว่างปีได้เองผ่านพอร์ทัล',
-      'ก่อนตัดสินใจ ควรเปรียบเทียบวงเงินคุ้มครอง ค่ารักษาพยาบาลต่อครั้ง และเงื่อนไขการส่งกลับประเทศ เพื่อเลือกแผนที่เหมาะกับลักษณะงานและจำนวนแรงงานของคุณ',
-    ],
-  },
-  {
-    id: 'a2', title: '5 ข้อควรรู้ก่อนต่ออายุประกันรถยนต์', slug: 'car-insurance-renewal-tips',
-    status: 'published', category: 'ประกันรถยนต์', author: 'ทีม TKR', locales: ['th'], publishedAt: '2026-05-18',
-    cover: 'mint', readMinutes: 4,
-    excerpt: 'ต่อประกันรถอย่างไรให้ได้ความคุ้มครองที่ใช่ในราคาที่คุ้มที่สุด',
-    seo: { metaTitle: 'ต่อประกันรถยนต์อย่างไรให้คุ้ม | TKR', metaDescription: 'เคล็ดลับเลือกและต่อประกันรถยนต์' },
-    body: [
-      'ก่อนต่ออายุ ลองทบทวนการใช้งานรถในปีที่ผ่านมาว่าเปลี่ยนไปหรือไม่ เช่น ระยะทางขับขี่ ผู้ขับขี่หลัก หรือสถานที่จอด เพราะปัจจัยเหล่านี้มีผลต่อเบี้ยและความคุ้มครองที่เหมาะสม',
-      'เปรียบเทียบเบี้ยจากหลายบริษัทเสมอ ความคุ้มครองชั้นเดียวกันอาจมีเบี้ยและเงื่อนไขต่างกันมาก การเทียบในที่เดียวช่วยให้เห็นภาพรวมและเลือกได้คุ้มที่สุด',
-      'ตรวจสอบทุนประกันให้สอดคล้องกับมูลค่ารถปัจจุบัน ทุนสูงเกินไปทำให้จ่ายเบี้ยแพงโดยไม่จำเป็น ส่วนทุนต่ำเกินไปอาจได้ค่าสินไหมไม่พอ',
-      'อย่าลืมดูเรื่องค่าเสียหายส่วนแรก (Deductible) และเครือข่ายอู่/ศูนย์ซ่อม ที่ส่งผลต่อความสะดวกเวลาเคลมจริง',
-      'สุดท้าย ต่อก่อนหมดอายุเสมอเพื่อให้ความคุ้มครองต่อเนื่อง ไม่มีช่วงที่รถขาดประกัน',
-    ],
-  },
-  {
-    id: 'a5', title: 'เลือกแผนประกันสุขภาพอย่างไรให้เหมาะกับคุณ', slug: 'choosing-health-insurance',
-    status: 'published', category: 'ประกันสุขภาพ', author: 'ทีม TKR', locales: ['th', 'en'], publishedAt: '2026-05-02',
-    cover: 'peach', readMinutes: 6,
-    excerpt: 'เหมาจ่าย แยกค่าใช้จ่าย หรือ OPD — เข้าใจความต่างก่อนเลือกแผนที่ใช่',
-    seo: { metaTitle: 'เลือกประกันสุขภาพ | TKR', metaDescription: 'แนวทางเลือกแผนประกันสุขภาพให้เหมาะกับไลฟ์สไตล์และงบประมาณ' },
-    body: [
-      'แผนประกันสุขภาพแบบเหมาจ่ายให้วงเงินรวมต่อปีที่ยืดหยุ่น เหมาะกับผู้ที่ต้องการความอุ่นใจสูงและไม่อยากกังวลรายละเอียดค่าใช้จ่ายแต่ละหมวด',
-      'แผนแบบแยกค่าใช้จ่ายจะกำหนดวงเงินต่อหมวด เช่น ค่าห้อง ค่าผ่าตัด ค่าแพทย์ ทำให้เบี้ยถูกลงแต่ต้องดูเพดานแต่ละหมวดให้ดี',
-      'หากใช้บริการผู้ป่วยนอกบ่อย ควรพิจารณาความคุ้มครอง OPD เพิ่มเติม และตรวจสอบเครือข่ายโรงพยาบาลที่สะดวกต่อการเข้ารับบริการ',
-      'เปรียบเทียบเบี้ย วงเงิน และเงื่อนไขโรคที่ไม่คุ้มครองก่อนตัดสินใจ เพื่อให้ได้แผนที่สมดุลทั้งความคุ้มครองและงบประมาณ',
-    ],
-  },
-  {
-    id: 'a6', title: 'ขั้นตอนการเคลมประกันให้ได้รับเงินไว', slug: 'fast-claim-guide',
-    status: 'published', category: 'เคลม', author: 'ทีม TKR', locales: ['th'], publishedAt: '2026-04-20',
-    cover: 'gold', readMinutes: 4,
-    excerpt: 'เตรียมเอกสารให้ครบและทำตามขั้นตอน เพื่อให้เคลมผ่านเร็วที่สุด',
-    seo: { metaTitle: 'ขั้นตอนการเคลมประกัน | TKR', metaDescription: 'วิธีเตรียมเอกสารและยื่นเคลมให้ได้รับเงินไว' },
-    body: [
-      'สิ่งแรกเมื่อเกิดเหตุคือแจ้งเคลมทันทีผ่านแอปหรือ LINE ของ TKR พร้อมถ่ายภาพความเสียหายและจดรายละเอียดเหตุการณ์ วันเวลา และสถานที่',
-      'เตรียมเอกสารให้ครบตั้งแต่ต้น เช่น สำเนากรมธรรม์ บัตรประชาชน ใบเสร็จค่ารักษา หรือใบแจ้งความ (กรณีอุบัติเหตุ) จะช่วยให้การพิจารณาไม่สะดุด',
-      'ติดตามสถานะเคลมได้ตลอดผ่านพอร์ทัลลูกค้า ระบบจะแสดงไทม์ไลน์ตั้งแต่ยื่นเรื่อง กำลังพิจารณา จนถึงอนุมัติและโอนเงิน',
-      'หากเอกสารไม่ครบ เจ้าหน้าที่จะแจ้งให้ส่งเพิ่มผ่านช่องทางเดิม การตอบกลับไวช่วยให้ได้รับเงินเร็วขึ้น',
-    ],
-  },
-  {
-    id: 'a7', title: 'ผ่อนเบี้ยประกัน 0% ทำได้อย่างไร', slug: 'installment-0-percent',
-    status: 'published', category: 'การชำระเงิน', author: 'ทีม TKR', locales: ['th'], publishedAt: '2026-04-05',
-    cover: 'sky', readMinutes: 3,
-    excerpt: 'จ่ายเต็ม บัตรเครดิตผ่อน 0% หรือสแกน QR — เลือกวิธีที่สะดวกและได้ความคุ้มครองทันที',
-    seo: { metaTitle: 'ผ่อนเบี้ยประกัน 0% | TKR', metaDescription: 'ทางเลือกการชำระเบี้ยประกันและการผ่อน 0%' },
-    body: [
-      'TKR รองรับการชำระเบี้ยหลายช่องทาง ทั้งจ่ายเต็มจำนวน ผ่อน 0% ผ่านบัตรเครดิตที่ร่วมรายการ และสแกนจ่ายผ่าน QR พร้อมเพย์',
-      'การผ่อน 0% ช่วยกระจายภาระค่าเบี้ยเป็นรายเดือนโดยไม่มีดอกเบี้ย เหมาะกับเบี้ยก้อนใหญ่ เช่น ประกันสุขภาพหรือประกันรถชั้น 1',
-      'ไม่ว่าจะเลือกวิธีใด เมื่อชำระสำเร็จระบบจะยืนยันความคุ้มครองทันที และส่งกรมธรรม์ให้ทางอีเมลและในพอร์ทัล',
-    ],
-  },
-  {
-    id: 'a8', title: 'เครือข่ายอู่และโรงพยาบาลของ TKR', slug: 'garage-hospital-network',
-    status: 'published', category: 'ความรู้ประกัน', author: 'ทีม TKR', locales: ['th'], publishedAt: '2026-03-22',
-    cover: 'brand', readMinutes: 3,
-    excerpt: 'ใช้บริการอู่ในเครือและโรงพยาบาลคู่สัญญาได้สะดวก ไม่ต้องสำรองจ่าย',
-    seo: { metaTitle: 'เครือข่ายอู่และโรงพยาบาล | TKR', metaDescription: 'รายละเอียดเครือข่ายอู่ซ่อมและโรงพยาบาลคู่สัญญา' },
-    body: [
-      'การใช้อู่ในเครือหรือศูนย์ซ่อมมาตรฐานช่วยให้ซ่อมรถได้สะดวกและไม่ต้องสำรองจ่าย เพราะบริษัทประกันจ่ายตรงให้กับอู่',
-      'สำหรับประกันสุขภาพ การเข้ารับบริการในโรงพยาบาลคู่สัญญาสามารถใช้สิทธิ์แบบไม่ต้องสำรองจ่าย เพียงแสดงบัตรและยืนยันตัวตน',
-      'ตรวจสอบรายชื่อเครือข่ายล่าสุดได้ในพอร์ทัลลูกค้า หรือสอบถามทีมงานผ่าน LINE ได้ตลอด 24 ชั่วโมง',
-    ],
-  },
-  {
-    id: 'a3', title: 'Worker Wallet คืออะไร ใช้งานอย่างไร', slug: 'what-is-worker-wallet', status: 'scheduled', category: 'ผลิตภัณฑ์', author: 'ทีม TKR', locales: ['th', 'my', 'lo'], publishedAt: '2026-07-01', seo: { metaTitle: 'Worker Wallet | TKR', metaDescription: 'กระเป๋าดิจิทัลสำหรับแรงงาน' } },
-  { id: 'a4', title: 'ร่างประกาศโปรโมชั่นกลางปี', slug: 'mid-year-promo', status: 'draft', category: 'โปรโมชั่น', author: 'ทีม TKR', locales: ['th'], seo: { metaTitle: '', metaDescription: '' } },
-];
-
+// Articles moved out of the mock seed: they are real markdown files under
+// /content/articles, loaded server-side by lib/articles.ts.
 export const orders: Order[] = [
-  { id: 'o1', orderNo: 'ORD-2026-1188', customerName: 'บริษัท บูรพา ขนส่ง จำกัด', customerType: 'business', product: 'worker', premium: 88000, status: 'awaiting_payment', channel: 'phone', createdBy: 'u_admin', createdDate: '2026-06-20' },
+  // worker order premium = workers × term price (50 × ฿1,790 · 1-year term)
+  { id: 'o1', orderNo: 'ORD-2026-1188', customerName: 'บริษัท บูรพา ขนส่ง จำกัด', customerType: 'business', product: 'worker', premium: 89500, status: 'awaiting_payment', channel: 'phone', createdBy: 'u_admin', createdDate: '2026-06-20' },
   { id: 'o2', orderNo: 'ORD-2026-1175', customerName: 'คุณอาทิตย์ แสงทอง', customerType: 'individual', product: 'auto', premium: 16500, status: 'issued', channel: 'line', createdBy: 'u_admin', createdDate: '2026-06-15' },
   { id: 'o3', orderNo: 'ORD-2026-1162', customerName: 'ร้าน ก.รุ่งเรืองวัสดุ', customerType: 'business', product: 'fire', premium: 24000, status: 'issued', channel: 'walk_in', createdBy: 'u_admin', createdDate: '2026-06-09' },
-  { id: 'o4', orderNo: 'ORD-2026-1150', customerName: 'คุณมณีรัตน์ ทองคำ', customerType: 'individual', product: 'health', premium: 24000, status: 'draft', channel: 'phone', createdBy: 'u_admin', createdDate: '2026-06-05' },
+  { id: 'o4', orderNo: 'ORD-2026-1150', customerName: 'คุณมณีรัตน์ ทองคำ', customerType: 'individual', product: 'pa', premium: 24000, status: 'draft', channel: 'phone', createdBy: 'u_admin', createdDate: '2026-06-05' },
 ];
 
 export const staffUsers: StaffUser[] = [
@@ -503,10 +434,14 @@ export const tickets: SupportTicket[] = [
 ];
 
 export const productPlans: ProductPlan[] = [
-  { id: 'pp1', product: 'worker', planName: 'แรงงาน Essential', insurer: 'ทิพยประกันภัย',   coverage: 500000,  basePremium: 500,  active: true },
-  { id: 'pp2', product: 'worker', planName: 'แรงงาน Plus',      insurer: 'วิริยะประกันภัย',  coverage: 1000000, basePremium: 850,  active: true },
+  // Worker insurance = single ทิพยประกันภัย coverage package (illness IPD/OPD +
+  // accident) sold in 4 terms: 3ด ฿750 / 6ด ฿990 / 1ปี ฿1,790 / 1ปี3ด ฿2,475.
+  // Exactly ONE active worker plan (basePremium = cheapest term) — keep the old
+  // Plus row only as inactive history.
+  { id: 'pp1', product: 'worker', planName: 'แพ็กเกจแรงงานต่างด้าว (เจ็บป่วย + อุบัติเหตุ · 4 ระยะเวลา)', insurer: 'ทิพยประกันภัย', coverage: 150000, basePremium: 750, active: true },
+  { id: 'pp2', product: 'worker', planName: 'แรงงาน Plus (ยกเลิก)', insurer: 'วิริยะประกันภัย',  coverage: 1000000, basePremium: 850,  active: false },
   { id: 'pp3', product: 'auto',   planName: 'รถยนต์ชั้น 1',      insurer: 'วิริยะประกันภัย',  coverage: 1000000, basePremium: 14200, active: true },
-  { id: 'pp4', product: 'health', planName: 'สุขภาพเหมาจ่าย',    insurer: 'เมืองไทยประกันภัย', coverage: 1500000, basePremium: 22000, active: true },
+  { id: 'pp4', product: 'pa', planName: 'PA อุบัติเหตุส่วนบุคคล',    insurer: 'เมืองไทยประกันภัย', coverage: 1500000, basePremium: 22000, active: true },
   { id: 'pp5', product: 'fire',   planName: 'อัคคีภัยธุรกิจ',    insurer: 'กรุงเทพประกันภัย',  coverage: 8000000, basePremium: 18500, active: false },
 ];
 
@@ -519,18 +454,6 @@ export const auditLog: AuditEntry[] = [
 ];
 
 // helpers
-export const getArticles = () => articles;
-/** Public site: only published articles, newest first. */
-export const getPublishedArticles = () =>
-  articles
-    .filter((a) => a.status === 'published')
-    .sort((a, b) => (a.publishedAt && b.publishedAt ? (a.publishedAt < b.publishedAt ? 1 : -1) : 0));
-/** Public site: a single published article by slug (draft/scheduled stay hidden). */
-export const getPublishedArticle = (slug: string) =>
-  articles.find((a) => a.slug === slug && a.status === 'published');
-/** Distinct categories across published articles (for the list filter). */
-export const getArticleCategories = () =>
-  [...new Set(getPublishedArticles().map((a) => a.category))];
 export const getOrders = () => orders;
 export const getStaff = () => staffUsers;
 export const getSupportTickets = () => tickets;
@@ -540,14 +463,14 @@ export const getAllPolicies = () => policies;   // admin sees platform-wide
 export const getAllClaims = () => claims;
 export const getAllCustomers = () => users.filter(u => u.role === 'business' || u.role === 'individual');
 
-export function adminStats() {
+export function adminStats(draftArticles: number) {
   const gwp = policies.reduce((s, p) => s + p.premium, 0);
   return {
     gwp,                                                   // gross written premium
     activePolicies: policies.filter(p => p.status === 'active').length,
     pendingClaims: claims.filter(c => c.status === 'submitted' || c.status === 'reviewing').length,
     openTickets: tickets.filter(t => t.status !== 'resolved').length,
-    draftArticles: articles.filter(a => a.status !== 'published').length,
+    draftArticles,
   };
 }
 
@@ -598,7 +521,7 @@ export const commissionRules: CommissionRule[] = [
   { id: 'cr3', product: 'worker', tier: 'Platinum', rate: 12, active: true },
   { id: 'cr4', product: 'auto',   tier: 'Gold',     rate: 12, active: true },
   { id: 'cr5', product: 'auto',   tier: 'Platinum', rate: 14, active: true },
-  { id: 'cr6', product: 'health', tier: 'Gold',     rate: 15, active: true },
+  { id: 'cr6', product: 'pa', tier: 'Gold',     rate: 15, active: true },
   { id: 'cr7', product: 'fire',   tier: 'Diamond',  rate: 16, active: false },
 ];
 
@@ -788,107 +711,104 @@ export const crmCustomers = () =>
   creditProfiles.map(p => ({ id: p.customerId, name: crmCustomerName(p.customerId) }));
 
 // ============================ CONVERSION & TRUST (Phase 17) ============================
-// D2C UX upgrade. Coupons/installments/glossary are real config; reviews + trust
-// stats are PLACEHOLDERS to be replaced with real, consented, verifiable content.
+// D2C UX upgrade. Coupons/installments/glossary are real config; reviews are real
+// anonymized survey quotes; trust stats are PLACEHOLDERS pending verifiable numbers.
 export const coupons: Coupon[] = [
   { id: 'cpn1', code: 'TKRWORKER300', description: 'ลด ฿300 ต่อกรมธรรม์ประกันแรงงานต่างด้าว', discountType: 'fixed', value: 300, minSpend: 5000, products: ['worker'], expiry: '2026-12-31', active: true },
   { id: 'cpn2', code: 'EVFIRST10',    description: 'ลด 10% ประกันรถ EV ลูกค้าใหม่', discountType: 'percent', value: 10, products: ['auto'], paymentCondition: 'บัตรเครดิต ผ่อน 0% นาน 3 เดือน', expiry: '2026-09-30', active: true },
   { id: 'cpn3', code: 'TRAVEL150',    description: 'ลด ฿150 ประกันเดินทาง', discountType: 'fixed', value: 150, products: ['travel'], expiry: '2026-08-31', active: false },
 ];
 
-// PLACEHOLDER home banners — SAMPLE campaign copy only, NOT real promo terms.
-// CMS-driven (admin → /admin/content/banners). Each slide deep-links into an
-// existing flow (worker product, promotions hub, auto compare). Backgrounds are
-// Trust-palette CSS gradients until rights-cleared campaign images exist.
+// Real TKR campaign banners (/public/banners). Headline/subtext/CTA are BAKED
+// INTO each image, so `title` is only the slide's accessible name — the
+// carousel renders image-only slides. CMS-driven (admin → /admin/content/
+// banners; edits persist as localStorage overrides — see lib/mock/local-
+// banners.ts). Links are '#' until real targets are set via the admin panel.
 export const homeBanners: HomeBanner[] = [
-  {
-    id: 'hb1',
-    title: 'ดูแลทีมแรงงานต่างด้าวครบในที่เดียว',
-    subtitle: 'ออกกรมธรรม์เป็นชุด ต่ออายุ และจัดการเอกสารได้เองทั้งหมด (ตัวอย่างเนื้อหา)',
-    gradient: 'linear-gradient(120deg,#0b2240 0%,#143a6b 48%,#1f66ee 100%)',
-    ctaLabel: 'ดูประกันแรงงานต่างด้าว',
-    ctaHref: '/worker-insurance',
-    startDate: '2026-01-01',
-    endDate: '2026-12-31',
-    active: true,
-    sortOrder: 1,
-  },
-  {
-    id: 'hb2',
-    title: 'รวมโปรโมชั่นและคูปองส่วนลด',
-    subtitle: 'โค้ดส่วนลดตัวอย่างสำหรับลูกค้าใหม่ — ดูเงื่อนไขทั้งหมดในหน้าโปรโมชั่น (ตัวอย่างเนื้อหา)',
-    gradient: 'linear-gradient(120deg,#143a6b 0%,#1f66ee 60%,#3b82f6 100%)',
-    ctaLabel: 'ดูโปรโมชั่นทั้งหมด',
-    ctaHref: '/promotions',
-    startDate: '2026-01-01',
-    endDate: '2026-12-31',
-    active: true,
-    sortOrder: 2,
-  },
-  {
-    id: 'hb3',
-    title: 'เทียบเบี้ยประกันรถยนต์ออนไลน์',
-    subtitle: 'เห็นเบี้ยจากหลายบริษัททันที เลือกแผนที่ใช่ในไม่กี่นาที (ตัวอย่างเนื้อหา)',
-    gradient: 'linear-gradient(120deg,#0b2240 0%,#1f3a5f 50%,#c9962f 140%)',
-    ctaLabel: 'เทียบเบี้ยประกันรถยนต์',
-    ctaHref: '/auto',
-    startDate: '2026-01-01',
-    endDate: '2026-12-31',
-    active: true,
-    sortOrder: 3,
-  },
+  { id: 'b1', title: 'ผู้นำประกันแรงงาน อันดับ 1', image: '/banners/wide-01.jpg',
+    imageMobile: '/banners/square-01.jpg', href: '#', active: true, sortOrder: 1,
+    startDate: '2026-01-01', endDate: '2026-12-31' },
+  { id: 'b2', title: 'ผู้นำประกันแรงงาน มาทำงานเมืองไทย อุ่นใจเป็นที่สุด', image: '/banners/wide-02.jpg',
+    imageMobile: '/banners/square-02.jpg', href: '#', active: true, sortOrder: 2,
+    startDate: '2026-01-01', endDate: '2026-12-31' },
+  { id: 'b3', title: 'ประกันที่ตอบโจทย์ทุก Life Style', image: '/banners/wide-03.jpg',
+    imageMobile: '/banners/square-03.jpg', href: '#', active: true, sortOrder: 3,
+    startDate: '2026-01-01', endDate: '2026-12-31' },
+  // square-web (1:1) over medium-900x600 so all mobile slides share one aspect
+  // (no crop of baked-in text); the 900x600 file still ships for admin use.
+  { id: 'b4', title: 'มากกว่าแรงงาน คือคนสำคัญที่เราต้องดูแล — เบี้ยเริ่มต้น 1,190 บาท',
+    image: '/banners/wide-web.jpg', imageMobile: '/banners/square-web.jpg',
+    href: '#', active: true, sortOrder: 4, startDate: '2026-01-01', endDate: '2026-12-31' },
 ];
 
-// PLACEHOLDER reviews — replace with real, consented TKR customer feedback.
+// REAL customer reviews (REVIEWS_ADDITIONS) — genuine post-service survey quotes,
+// anonymized as "ลูกค้า TKR" (PDPA: real names need consent). Do NOT invent more
+// or add ratings. `featured` = home testimonials strip (r1–r3, service-focused).
+// r6/r7 stay featured:false — "เคลมง่าย"/"ราคาดี" can read as overclaiming (claims
+// are the insurer's; premiums are OIC-filed rates) — pending compliance sign-off.
 export const reviews: Review[] = [
-  { id: 'rv1', authorLabel: 'ลูกค้า TKR (สำรวจหลังบริการ)', channel: 'survey', product: 'worker', text: 'ออกกรมธรรม์แรงงานเป็นชุดได้เร็ว ไม่ต้องเดินเอกสารเอง', reaction: 'heart', date: '2026-05-30' },
-  { id: 'rv2', authorLabel: 'ลูกค้า TKR (สำรวจหลังบริการ)', channel: 'survey', product: 'auto',   text: 'เทียบราคาเองได้ เห็นเบี้ยทันที ไม่มีใครโทรตาม', reaction: 'like', date: '2026-05-12' },
-  { id: 'rv3', authorLabel: 'ตัวแทน TKR', channel: 'survey', product: 'worker', text: 'พอร์ทัลตัวแทนดูยอดทีมและคอมมิชชั่นได้ในที่เดียว', reaction: 'celebrate', date: '2026-04-20' },
+  { id: 'r1', quote: 'บริการดีมาก ตอบแชทไว ให้คำแนะนำละเอียด', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'ประทับใจบริการ', date: '2026-06-28', featured: true },
+  { id: 'r2', quote: 'ซื้อหลายครั้งแล้ว บริการดีเหมือนเดิม', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'ลูกค้าประจำ', date: '2026-06-10', featured: true },
+  { id: 'r3', quote: 'บริการเป็นกันเอง รู้สึกใส่ใจลูกค้าจริง ๆ', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'ใส่ใจ', date: '2026-05-22', featured: true },
+  { id: 'r4', quote: 'ให้ข้อมูลตรงไปตรงมา ไม่มีค่าใช้จ่ายแอบแฝง', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'โปร่งใส', date: '2026-05-05', featured: false },
+  { id: 'r5', quote: 'มีปัญหาเรื่องเอกสาร โทรไปก็ช่วยแก้ให้เลย บริการดีจริง', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'ช่วยแก้ปัญหา', date: '2026-04-18', featured: false },
+  { id: 'r6', quote: 'เคลมง่าย มีคนช่วยประสานงานทุกขั้นตอน', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'ประสานงานเคลม', date: '2026-04-02', featured: false,
+    complianceNote: 'คำว่า "เคลมง่าย" อาจเข้าข่ายโฆษณาเกินจริง (การเคลมเป็นของบริษัทประกัน) — รอฝ่ายกำกับดูแลยืนยันก่อนแสดงหน้าแรก' },
+  { id: 'r7', quote: 'ราคาดี บริการก็ดี ไว้จะต่อประกันกับ TKR อีกแน่นอน', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'คุ้มค่า', date: '2026-03-14', featured: false,
+    complianceNote: 'คำว่า "ราคาดี" อาจเข้าข่ายโฆษณาเกินจริง (เบี้ยวินาศภัยเป็นอัตราที่ยื่น คปภ. นายหน้าลดเองไม่ได้) — รอฝ่ายกำกับดูแลยืนยันก่อนแสดงหน้าแรก' },
 ];
 
-// Real licensed-insurer partner list (32). Names are the proper Thai legal names
-// — keep as-is (don't translate). Logos render as initial/text tiles until real,
-// rights-cleared logo files exist (`logo?` stays empty). `group` lets the UI show
-// them sensibly; `featured` marks the few surfaced first (home/shared logo wall).
+// Real licensed-insurer partner list (31). Names are the proper Thai legal names
+// — keep as-is (don't translate). Every partner has a real, rights-cleared logo
+// in /public/partner-logos/<id>.png plus a `shortName` (brand shown under/next to
+// the logo). `group` lets the UI show them sensibly; `featured` marks the few
+// surfaced first (home/shared logo wall). De-duped from the original 32-name list:
+// emart→jaymart, msi→msig, bci→kpi merged; wannai removed (no such company).
 export const insurerPartners: InsurerPartner[] = [
-  { id: 'thip',        name: 'บริษัท ทิพยประกันภัย จำกัด (มหาชน)', group: 1, featured: true },
-  { id: 'viriyah',     name: 'บริษัท วิริยะประกันภัย จำกัด (มหาชน)', group: 1, featured: true },
-  { id: 'indara',      name: 'บริษัท อินทรประกันภัย จำกัด (มหาชน)', group: 1 },
-  { id: 'thaipaiboon', name: 'บริษัท ไทยไพบูลย์ประกันภัย จำกัด (มหาชน)', group: 1 },
-  { id: 'muangthai',   name: 'บริษัท เมืองไทยประกันภัย จำกัด (มหาชน)', group: 1, featured: true },
-  { id: 'bki',         name: 'บริษัท กรุงเทพประกันภัย จำกัด (มหาชน)', group: 1, featured: true },
-  { id: 'bui',         name: 'บริษัท บางกอกสหประกันภัย จำกัด (มหาชน)', group: 1 },
-  { id: 'emart',       name: 'บริษัท เอมาร์ท ประกันภัย จำกัด (มหาชน)', group: 1 },
-  { id: 'lmg',         name: 'บริษัท แอลเอ็มจี ประกันภัย จำกัด (มหาชน)', group: 1 },
-  { id: 'thaivivat',   name: 'บริษัท ประกันภัยไทยวิวัฒน์ จำกัด (มหาชน)', group: 1 },
-  { id: 'kwi',         name: 'บริษัท เคดับบลิวไอ ประกันภัย จำกัด (มหาชน)', group: 1 },
+  { id: 'thip',        name: 'บริษัท ทิพยประกันภัย จำกัด (มหาชน)', shortName: 'ทิพยประกันภัย', group: 1, featured: true, logo: '/partner-logos/thip.png' },
+  { id: 'viriyah',     name: 'บริษัท วิริยะประกันภัย จำกัด (มหาชน)', shortName: 'วิริยะประกันภัย', group: 1, featured: true, logo: '/partner-logos/viriyah.png' },
+  { id: 'indara',      name: 'บริษัท อินทรประกันภัย จำกัด (มหาชน)', shortName: 'อินทรประกันภัย', group: 1, logo: '/partner-logos/indara.png' },
+  { id: 'thaipaiboon', name: 'บริษัท ไทยไพบูลย์ประกันภัย จำกัด (มหาชน)', shortName: 'ไทยไพบูลย์ประกันภัย', group: 1, logo: '/partner-logos/thaipaiboon.png' },
+  { id: 'muangthai',   name: 'บริษัท เมืองไทยประกันภัย จำกัด (มหาชน)', shortName: 'เมืองไทยประกันภัย', group: 1, featured: true, logo: '/partner-logos/muangthai.png' },
+  { id: 'bki',         name: 'บริษัท กรุงเทพประกันภัย จำกัด (มหาชน)', shortName: 'กรุงเทพประกันภัย', group: 1, featured: true, logo: '/partner-logos/bki.png' },
+  { id: 'bui',         name: 'บริษัท บางกอกสหประกันภัย จำกัด (มหาชน)', shortName: 'บางกอกสหประกันภัย', group: 1, logo: '/partner-logos/bui.png' },
+  { id: 'lmg',         name: 'บริษัท แอลเอ็มจี ประกันภัย จำกัด (มหาชน)', shortName: 'LMG ประกันภัย', group: 1, logo: '/partner-logos/lmg.png' },
+  { id: 'thaivivat',   name: 'บริษัท ประกันภัยไทยวิวัฒน์ จำกัด (มหาชน)', shortName: 'ไทยวิวัฒน์ประกันภัย', group: 1, logo: '/partner-logos/thaivivat.png' },
+  { id: 'kwi',         name: 'บริษัท เคดับบลิวไอ ประกันภัย จำกัด (มหาชน)', shortName: 'KWI ประกันภัย', group: 1, logo: '/partner-logos/kwi.png' },
 
-  { id: 'msi',         name: 'บริษัท มิตซุย สุมิโตโม อินชัวรันซ์ จำกัด', group: 2 },
-  { id: 'tune',        name: 'บริษัท ทูนประกันภัย จำกัด (มหาชน)', group: 2 },
-  { id: 'thanachart',  name: 'บริษัท ธนชาตประกันภัย จำกัด (มหาชน)', group: 2 },
-  { id: 'thaipat',     name: 'บริษัท ไทยพัฒนาประกันภัย จำกัด (มหาชน)', group: 2 },
-  { id: 'ergo',        name: 'บริษัท เออร์โกประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 2 },
-  { id: 'wannai',      name: 'บริษัท วรรณัยประกันภัย จำกัด (มหาชน)', group: 2 },
-  { id: 'bci',         name: 'บริษัท กรุงเทพพาณิชย์ประกันภัย จำกัด (มหาชน)', group: 2 },
-  { id: 'tokiomarine', name: 'บริษัท คุ้มภัยโตเกียวมารีนประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 2 },
-  { id: 'aig',         name: 'บริษัท เอไอจี ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 2 },
-  { id: 'msig',        name: 'บริษัท เอ็มเอสไอจี ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 2, featured: true },
-  { id: 'deves',       name: 'บริษัท เทเวศประกันภัย จำกัด (มหาชน)', group: 2 },
+  { id: 'tune',        name: 'บริษัท ทูนประกันภัย จำกัด (มหาชน)', shortName: 'ทูนประกันภัย', group: 2, logo: '/partner-logos/tune.png' },
+  { id: 'thanachart',  name: 'บริษัท ธนชาตประกันภัย จำกัด (มหาชน)', shortName: 'ธนชาตประกันภัย', group: 2, logo: '/partner-logos/thanachart.png' },
+  { id: 'thaipat',     name: 'บริษัท ไทยพัฒนาประกันภัย จำกัด (มหาชน)', shortName: 'ไทยพัฒนาประกันภัย', group: 2, logo: '/partner-logos/thaipat.png' },
+  { id: 'ergo',        name: 'บริษัท เออร์โกประกันภัย (ประเทศไทย) จำกัด (มหาชน)', shortName: 'เออร์โกประกันภัย', group: 2, logo: '/partner-logos/ergo.png' },
+  { id: 'tokiomarine', name: 'บริษัท คุ้มภัยโตเกียวมารีนประกันภัย (ประเทศไทย) จำกัด (มหาชน)', shortName: 'โตเกียวมารีนประกันภัย', group: 2, logo: '/partner-logos/tokiomarine.png' },
+  { id: 'aig',         name: 'บริษัท เอไอจี ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', shortName: 'AIG ประกันภัย', group: 2, logo: '/partner-logos/aig.png' },
+  { id: 'msig',        name: 'บริษัท เอ็มเอสไอจี ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', shortName: 'MSIG ประกันภัย', group: 2, featured: true, logo: '/partner-logos/msig.png' },
+  { id: 'deves',       name: 'บริษัท เทเวศประกันภัย จำกัด (มหาชน)', shortName: 'เทเวศประกันภัย', group: 2, logo: '/partner-logos/deves.png' },
 
-  { id: 'rvp',         name: 'บริษัท กลางคุ้มครองผู้ประสบภัยจากรถ จำกัด', group: 3 },
-  { id: 'buakij',      name: 'บริษัท บวกิจประกันภัย จำกัด (มหาชน)', group: 3 },
-  { id: 'fwd',         name: 'บริษัท เอฟดับบลิวดี ประกันภัย จำกัด (มหาชน)', group: 3 },
-  { id: 'tsi',         name: 'บริษัท ไทยเศรษฐกิจ ประกันภัย จำกัด (มหาชน)', group: 3 },
-  { id: 'pacificcross',name: 'บริษัท แปซิฟิค ครอส ประกันสุขภาพ จำกัด (มหาชน)', group: 3 },
-  { id: 'sahasamakkee',name: 'บริษัท ซับบีสามัคคีประกันภัย จำกัด (มหาชน)', group: 3 },
-  { id: 'ioi',         name: 'บริษัท ไอโอไอ กรุงเทพ ประกันภัย จำกัด (มหาชน)', group: 3 },
-  { id: 'allianz',     name: 'บริษัท อลิอันซ์ อยุธยา ประกันภัย จำกัด (มหาชน)', group: 3, featured: true },
-  { id: 'sompo',       name: 'บริษัท ซมโปะ ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', group: 3 },
-  { id: 'mittare',     name: 'บริษัท มิตรแท้ประกันภัย จำกัด (มหาชน)', group: 3 },
+  { id: 'rvp',         name: 'บริษัท กลางคุ้มครองผู้ประสบภัยจากรถ จำกัด', shortName: 'บริษัทกลางฯ', group: 3, logo: '/partner-logos/rvp.png' },
+  { id: 'navakij',     name: 'บริษัท นวกิจประกันภัย จำกัด (มหาชน)', shortName: 'นวกิจประกันภัย', group: 3, logo: '/partner-logos/navakij.png' },
+  { id: 'fwd',         name: 'บริษัท เอฟดับบลิวดี ประกันภัย จำกัด (มหาชน)', shortName: 'FWD ประกันภัย', group: 3, logo: '/partner-logos/fwd.png' },
+  { id: 'tsi',         name: 'บริษัท ไทยเศรษฐกิจ ประกันภัย จำกัด (มหาชน)', shortName: 'ไทยเศรษฐกิจประกันภัย', group: 3, logo: '/partner-logos/tsi.png' },
+  { id: 'pacificcross',name: 'บริษัท แปซิฟิค ครอส ประกันสุขภาพ จำกัด (มหาชน)', shortName: 'แปซิฟิค ครอส', group: 3, logo: '/partner-logos/pacificcross.png' },
+  { id: 'sahasamakkee',name: 'บริษัท ชับบ์สามัคคีประกันภัย จำกัด (มหาชน)', shortName: 'ชับบ์สามัคคีประกันภัย', group: 3, logo: '/partner-logos/sahasamakkee.png' },
+  { id: 'ioi',         name: 'บริษัท ไอโออิ กรุงเทพ ประกันภัย จำกัด (มหาชน)', shortName: 'ไอโออิ กรุงเทพ', group: 3, logo: '/partner-logos/ioi.png' },
+  { id: 'allianz',     name: 'บริษัท อลิอันซ์ อยุธยา ประกันภัย จำกัด (มหาชน)', shortName: 'อลิอันซ์ อยุธยา', group: 3, featured: true, logo: '/partner-logos/allianz.png' },
+  { id: 'sompo',       name: 'บริษัท ซมโปะ ประกันภัย (ประเทศไทย) จำกัด (มหาชน)', shortName: 'ซมโปะ ประกันภัย', group: 3, logo: '/partner-logos/sompo.png' },
+  { id: 'mittare',     name: 'บริษัท มิตรแท้ประกันภัย จำกัด (มหาชน)', shortName: 'มิตรแท้ประกันภัย', group: 3, logo: '/partner-logos/mittare.png' },
+  { id: 'liberty',     name: 'บริษัท ลิเบอร์ตี้ประกันภัย จำกัด (มหาชน)', shortName: 'ลิเบอร์ตี้ประกันภัย', group: 3, logo: '/partner-logos/liberty.png' },
+  { id: 'kpi',         name: 'บริษัท กรุงไทยพานิชประกันภัย จำกัด (มหาชน)', shortName: 'กรุงไทยพานิช (KPI)', group: 3, logo: '/partner-logos/kpi.png' },
+  { id: 'jaymart',     name: 'บริษัท เจมาร์ท ประกันภัย จำกัด (มหาชน)', shortName: 'เจมาร์ท ประกันภัย', group: 3, logo: '/partner-logos/jaymart.png' },
 ];
 
 /** Total partner count — the single source for any "partner count" figure. */
-export const insurerPartnerCount = insurerPartners.length; // 32
+export const insurerPartnerCount = insurerPartners.length; // 31
 
 /** Brand display name for logo tiles/walls — strips the legal prefix/suffix off
  *  the full company name (e.g. "บริษัท ทิพยประกันภัย จำกัด (มหาชน)" → "ทิพยประกันภัย").
@@ -917,7 +837,7 @@ export const installmentPlans: InstallmentPlan[] = [
 
 // honest trust stats (use only verifiable numbers in production)
 export const trustStats = {
-  oicLicense: 'ใบอนุญาตนายหน้าประกันวินาศภัย เลขที่ —',  // fill with real license
+  oicLicense: 'ใบอนุญาตนายหน้าประกันวินาศภัย เลขที่ ว00019/2565 (บริษัท ทีเคอาร์โบรกเกอร์เรจ จำกัด)',  // fill with real license
   insurers: insurerPartnerCount,
   customersServed: 12800,
   claimsPaidPct: 98,
@@ -930,16 +850,69 @@ export const getHomeBanners = () =>
   [...homeBanners].sort((a, b) => a.sortOrder - b.sortOrder);
 
 /** Banners to render on the home carousel: active AND today within
- *  [startDate, endDate], ascending by sortOrder. ISO dates compare
- *  lexicographically. Returns [] when nothing is live (home renders nothing). */
-export const getActiveHomeBanners = () => {
-  const today = new Date().toISOString().slice(0, 10);
-  return homeBanners
-    .filter((b) => b.active && b.startDate <= today && today <= b.endDate)
-    .sort((a, b) => a.sortOrder - b.sortOrder);
+ *  [startDate, endDate], ascending by sortOrder. Returns [] when nothing is
+ *  live (home renders nothing). Seed defaults only — the client carousel
+ *  re-applies this filter over admin localStorage edits after mount. */
+export const getActiveHomeBanners = () =>
+  activeHomeBanners(homeBanners, new Date().toISOString().slice(0, 10));
+
+// PUBLIC NAV visibility (NAV_VISIBILITY) — data-driven on/off (+ optional
+// scheduling) for the marketing top-nav, so menu items can be turned off without
+// a deploy. Keyed by the nav entry's `key` (see config/nav.ts `publicNav`). Any
+// entry NOT listed here defaults to open, so existing items are unchanged. Admin
+// edits under /admin/content/navigation persist as localStorage overrides that
+// the public Navbar merges on top of these defaults (see lib/nav-visibility.ts).
+export const navSettings: NavSetting[] = [
+  // top-level items
+  { key: 'products',   isOpen: true },
+  { key: 'workerWallet', isOpen: false },
+  { key: 'about',      isOpen: true },
+  { key: 'help',       isOpen: true },
+  { key: 'promotions', isOpen: false },
+  { key: 'articles',   isOpen: true },
+  { key: 'contact',    isOpen: true },
+  { key: 'colDigital',    isOpen: false },
+  { key: 'lineConcierge',    isOpen: false },
+  { key: 'tracking',    isOpen: false },
+  { key: 'agentJoin',    isOpen: false },
+  { key: 'claimHelp',    isOpen: false },
+  { key: 'contactHelp',    isOpen: false },
+  // right-side actions (search + login are core, always on — not listed here)
+  { key: 'action:renew',    isOpen: true },
+  { key: 'action:agent',    isOpen: true },
+  { key: 'action:quoteCta', isOpen: true },
+  // footer columns (footer links reuse the nav link keys above → shared flag;
+  // footer-only links get their own default here)
+  { key: 'footerCol:products', isOpen: true },
+  { key: 'footerCol:services', isOpen: false },
+  { key: 'footerCol:company',  isOpen: true },
+  { key: 'customer',     isOpen: false },
+  { key: 'wallet',       isOpen: false },
+  { key: 'line',         isOpen: false },
+  { key: 'applyAgent',   isOpen: false },
+  { key: 'agencyCenter', isOpen: false },
+];
+
+/** Seed nav-visibility settings, keyed by entry key (admin merges overrides). */
+export const getNavSettings = () => navSettings;
+
+// WORKER FLOW UI (WORKER_FLOW_UI) — admin-editable on/off switches for sections
+// of the worker purchase flow. Defaults are all-on (nothing changes today);
+// admin edits persist as localStorage overrides merged on top of these (see
+// lib/mock/local-worker-flow.ts + hooks/useWorkerFlowUI.ts). Visual only —
+// hiding the input-method chooser proceeds with `defaultInputMethod`.
+export const workerFlowUI: WorkerFlowUI = {
+  showStepper: false,
+  showInputMethod: false,
+  defaultInputMethod: 'single',
 };
 
-export const getReviews = () => reviews;
+/** Seed worker-flow UI toggles (admin merges localStorage overrides). */
+export const getWorkerFlowUI = () => workerFlowUI;
+
+/** Reviews for display — `featuredOnly` = the home testimonials strip (r1–r3). */
+export const getReviews = (opts?: { featuredOnly?: boolean }) =>
+  opts?.featuredOnly ? reviews.filter((r) => r.featured) : reviews;
 export const getInsurerPartners = (opts?: { featuredOnly?: boolean }) =>
   opts?.featuredOnly ? insurerPartners.filter((p) => p.featured) : insurerPartners;
 export const getGlossary = () => glossary;
@@ -959,8 +932,8 @@ export const applyCoupon = (code: string, product: InsuranceType, subtotal: numb
 // data comes from the admin catalog later. The recommender + plan-card grid +
 // checkout payment options reuse these across personal lines and worker.
 export const planCards: PlanCard[] = [
-  { id: 'plan_w_ess',  product: 'worker', insurer: 'ทิพยประกันภัย',  planName: 'แรงงาน Essential', highlights: ['คุ้มครองอุบัติเหตุ/สุขภาพพื้นฐาน', 'ออกเป็นชุดได้', 'เบี้ยเริ่มต้นต่ำ'], startingPremium: 500, period: 'ต่อคน/ปี', badge: 'ขายดี', favoritable: true },
-  { id: 'plan_w_plus', product: 'worker', insurer: 'วิริยะประกันภัย', planName: 'แรงงาน Plus', highlights: ['ทุนประกันสูงขึ้น', 'ครอบคลุม รพ. มากขึ้น'], startingPremium: 850, period: 'ต่อคน/ปี', couponCode: 'TKRWORKER300', favoritable: true },
+  // Worker = ONE ทิพย package (no multi-insurer choice; personal lines keep theirs).
+  { id: 'plan_w_ess',  product: 'worker', insurer: 'ทิพยประกันภัย',  planName: 'แพ็กเกจแรงงานต่างด้าว (เจ็บป่วย + อุบัติเหตุ)', highlights: ['IPD สูงสุด 150,000 บาท', 'OPD 1,000 บาท/ครั้ง (สูงสุด 15 ครั้ง/ปี)', 'เลือกระยะเวลาได้ 4 แบบ (3 เดือน – 1 ปี 3 เดือน)', 'ไม่ต้องสำรองจ่าย รพ.เครือข่าย'], startingPremium: 750, period: 'ต่อคน/3 เดือน', badge: 'แพ็กเกจเดียว', couponCode: 'TKRWORKER300', favoritable: true },
   { id: 'plan_a_c1',   product: 'auto',   insurer: 'วิริยะประกันภัย', planName: 'รถยนต์ชั้น 1', highlights: ['ซ่อมห้าง/ศูนย์', 'คุ้มครองชน-ไฟไหม้-สูญหาย'], startingPremium: 14200, period: 'ต่อปี', badge: 'แนะนำ', favoritable: true },
   { id: 'plan_a_c2p',  product: 'auto',   insurer: 'MSIG',          planName: 'รถยนต์ชั้น 2+', highlights: ['คุ้มครองคู่กรณี + รถหาย/ไฟไหม้', 'เบี้ยคุ้มค่า'], startingPremium: 7900, period: 'ต่อปี', favoritable: true },
 ];
@@ -970,10 +943,7 @@ export const fitQuestions: FitQuestion[] = [
     { label: 'ครอบคลุมสูงสุด', value: 'max', recommends: 'plan_a_c1' },
     { label: 'คุ้มค่า เน้นคู่กรณี', value: 'value', recommends: 'plan_a_c2p' },
   ]},
-  { id: 'q2', question: 'ทีมแรงงานของคุณกี่คน?', options: [
-    { label: 'เริ่มต้น/จำนวนน้อย', value: 'small', recommends: 'plan_w_ess' },
-    { label: 'จำนวนมาก ต้องการทุนสูง', value: 'large', recommends: 'plan_w_plus' },
-  ]},
+  // (worker fit question removed — a single ทิพย package leaves nothing to recommend)
 ];
 
 export const checkoutOptions: CheckoutOption[] = [
@@ -1013,7 +983,7 @@ export const getTaxDeductionCaps = () => taxDeductionCaps;
 
 // u_indiv ledger — oldest → newest. balanceAfter is the running balance.
 export const pointsLedger: PointsEntry[] = [
-  { id: 'pt1',  customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 900,  balanceAfter: 900,  description: 'ได้แต้มจากการซื้อประกันสุขภาพครอบครัว (เบี้ย ฿90,000)', date: '2026-01-01', ref: 'TKR-H-2026-008700' },
+  { id: 'pt1',  customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 900,  balanceAfter: 900,  description: 'ได้แต้มจากการซื้อประกันอุบัติเหตุ (PA) ครอบครัว (เบี้ย ฿90,000)', date: '2026-01-01', ref: 'TKR-PA-2026-008700' },
   { id: 'pt2',  customerId: 'u_indiv', type: 'earn', source: 'profile_complete', points: 100,  balanceAfter: 1000, description: 'กรอกข้อมูลโปรไฟล์ครบถ้วน', date: '2026-01-02' },
   { id: 'pt3',  customerId: 'u_indiv', type: 'earn', source: 'social_link',      points: 50,   balanceAfter: 1050, description: 'เชื่อมบัญชี LINE', date: '2026-01-03' },
   { id: 'pt4',  customerId: 'u_indiv', type: 'earn', source: 'no_claim',         points: 300,  balanceAfter: 1350, description: 'ครบปีไม่มีการเคลม', date: '2026-01-15' },
@@ -1022,7 +992,7 @@ export const pointsLedger: PointsEntry[] = [
   { id: 'pt7',  customerId: 'u_indiv', type: 'earn', source: 'referral',         points: 300,  balanceAfter: 1842, description: 'แนะนำเพื่อนสมัครสำเร็จ', date: '2026-03-10', ref: 'REF-7781' },
   { id: 'pt8',  customerId: 'u_indiv', type: 'earn', source: 'renewal',          points: 200,  balanceAfter: 2042, description: 'ต่ออายุกรมธรรม์', date: '2026-03-20' },
   { id: 'pt9',  customerId: 'u_indiv', type: 'earn', source: 'birthday',         points: 100,  balanceAfter: 2142, description: 'โบนัสวันเกิด', date: '2026-04-01' },
-  { id: 'pt10', customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 220,  balanceAfter: 2362, description: 'ได้แต้มจากการซื้อประกันสุขภาพ (เบี้ย ฿22,000)', date: '2026-04-10', ref: 'TKR-H-2026-008877' },
+  { id: 'pt10', customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 220,  balanceAfter: 2362, description: 'ได้แต้มจากการซื้อประกันอุบัติเหตุ (PA) (เบี้ย ฿22,000)', date: '2026-04-10', ref: 'TKR-PA-2026-008877' },
   { id: 'pt11', customerId: 'u_indiv', type: 'earn', source: 'purchase',         points: 188,  balanceAfter: 2550, description: 'ได้แต้มจากการซื้อประกันรถยนต์ (เบี้ย ฿18,800)', date: '2026-04-18', ref: 'TKR-A-2026-022590' },
   { id: 'pt12', customerId: 'u_indiv', type: 'earn', source: 'review',           points: 50,   balanceAfter: 2600, description: 'รีวิวหลังใช้บริการ', date: '2026-05-01' },
   { id: 'pt13', customerId: 'u_indiv', type: 'earn', source: 'survey',           points: 30,   balanceAfter: 2630, description: 'ทำแบบสอบถามความพึงพอใจ', date: '2026-05-08' },

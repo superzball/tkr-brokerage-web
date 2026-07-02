@@ -26,7 +26,9 @@ export function ArticleCard({
       className="card card-hover overflow-hidden group flex flex-col"
     >
       <ArticleCover
-        tone={article.cover}
+        src={article.cover}
+        alt={article.title}
+        sizes={feature ? "(min-width: 768px) 48rem, 100vw" : undefined}
         className={feature ? "h-56" : "h-40"}
       />
       <div className="p-5 flex flex-col flex-1">

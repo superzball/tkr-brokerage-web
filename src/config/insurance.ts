@@ -5,7 +5,7 @@ import type {
   PaymentMethodId,
   QuoteTabConfig,
   SingleWorker,
-  WorkerPlan,
+  WorkerFaqItem,
 } from "@/types";
 import type { IconName } from "@/components/ui/Icon";
 import { ROUTES } from "./nav";
@@ -41,11 +41,11 @@ export const QUOTE_TABS: QuoteTabConfig[] = [
     ],
   },
   {
-    id: "health",
-    href: "/insurance/health",
+    id: "pa",
+    href: "/insurance/pa",
     fields: [
-      { key: "healthAge", type: "number" },
-      { key: "healthBudget", type: "select", optionCount: 3 },
+      { key: "paAge", type: "number" },
+      { key: "paBudget", type: "select", optionCount: 3 },
     ],
   },
   {
@@ -64,17 +64,59 @@ export const QUOTE_TABS: QuoteTabConfig[] = [
    formatted with next-intl. All display text lives in messages.
    ============================================================ */
 
-export const WORKER_PLANS: WorkerPlan[] = [
-  { id: "basic", per: 350, life: 200000, medical: 15000, repatriation: false },
-  {
-    id: "standard",
-    per: 500,
-    life: 500000,
-    medical: 30000,
-    repatriation: true,
-    recommended: true,
-  },
-  { id: "premium", per: 750, life: 1000000, medical: 50000, repatriation: true },
+/** Worker insurance is underwritten by ทิพยประกันภัย ONLY, as ONE coverage
+ *  package covering both illness (IPD/OPD) and accident, sold in 4 term
+ *  lengths. There is deliberately no choose-insurer / choose-coverage step in
+ *  the worker flow — the only choice is the coverage term — while personal
+ *  lines (auto/travel/pa/fire) keep the multi-insurer registry.
+ *  Coverage numbers & prices are contractual — verify against the ทิพย policy
+ *  wording before go-live. Display text lives in the `worker.package` messages
+ *  (term labels in `worker.package.terms.<id>`). */
+export const workerInsurancePlan = {
+  /** insurerPartners id (seed) — บริษัท ทิพยประกันภัย จำกัด (มหาชน) */
+  insurerId: "thip",
+  singlePackage: true,
+  /** ฿ premium per worker — same coverage, different term length & price */
+  terms: [
+    { id: "m3", months: 3, price: 750 },
+    { id: "m6", months: 6, price: 990 },
+    { id: "m12", months: 12, price: 1_790 },
+    { id: "m15", months: 15, price: 2_475 },
+  ],
+  /** ฿ inpatient (IPD) max per policy year */
+  ipdMax: 150_000,
+  /** ฿ outpatient (OPD) per visit */
+  opdPerVisit: 1_000,
+  /** OPD visits max per policy year */
+  opdMaxVisits: 15,
+  ageMin: 1,
+  ageMax: 99,
+  /** cashless at network hospitals — no advance payment */
+  noAdvancePayment: true,
+  /** link out — the list changes; never render it ourselves */
+  hospitalNetworkUrl: "https://www.dhipaya.co.th/th/hospital",
+} as const;
+
+export type WorkerTerm = (typeof workerInsurancePlan.terms)[number];
+export type WorkerTermId = WorkerTerm["id"];
+
+/** Cheapest term price — the "เริ่มต้น" figure on landing/marketing surfaces. */
+export const workerMinPrice = Math.min(
+  ...workerInsurancePlan.terms.map((t) => t.price),
+);
+
+/** FAQ for worker insurance (customer-supplied). Ordered; q/a text lives in
+ *  `worker.faq.items.<id>` messages. `inFlow` marks the compact subset shown
+ *  inside the purchase flow before payment. NOTE: the worker package covers
+ *  BOTH illness and accident — do not "fix" the FAQ to drop illness cover. */
+export const workerInsuranceFaq: WorkerFaqItem[] = [
+  { id: "insurer", inFlow: true },
+  { id: "coverage", inFlow: true },
+  { id: "noAdvance", inFlow: true },
+  { id: "hospitals", inFlow: true },
+  { id: "age" },
+  { id: "claimDocs" },
+  { id: "applyDocs" },
 ];
 
 /** Nationality options for the single-entry form select. */

@@ -26,7 +26,7 @@ import {
   saleWorkerCount,
   saleVehicle,
   saleTravel,
-  saleHealth,
+  salePA,
   saleFire,
 } from "@/lib/mock/sale-detail";
 import type { AgentSale, SaleStatus } from "@/types/portal";
@@ -233,7 +233,7 @@ export function SaleDetailView({
           {sale.product === "worker" && <WorkerSection sale={sale} />}
           {sale.product === "auto" && <AutoSection sale={sale} />}
           {sale.product === "travel" && <TravelSection sale={sale} />}
-          {sale.product === "health" && <HealthSection sale={sale} />}
+          {sale.product === "pa" && <PASection sale={sale} />}
           {sale.product === "fire" && <FireSection sale={sale} />}
         </div>
       </div>
@@ -335,18 +335,18 @@ function TravelSection({ sale }: { sale: AgentSale }) {
   );
 }
 
-function HealthSection({ sale }: { sale: AgentSale }) {
+function PASection({ sale }: { sale: AgentSale }) {
   const t = useTranslations("agent");
   const baht = useBaht();
-  const v = saleHealth(sale);
+  const v = salePA(sale);
   return (
     <section className="card p-6">
-      <h2 className="font-700 text-ink-900 mb-4">{t("sales.detail.health.title")}</h2>
+      <h2 className="font-700 text-ink-900 mb-4">{t("sales.detail.pa.title")}</h2>
       <dl className="space-y-3 text-sm max-w-md">
-        <Row label={t("sales.detail.health.insured")} value={v.insured} />
-        <Row label={t("sales.detail.health.age")} value={<span className="tabnum">{v.age}</span>} />
-        <Row label={t("sales.detail.health.plan")} value={t(`sales.detail.health.${v.plan}` as "sales.detail.health.basic")} />
-        <Row label={t("sales.detail.health.sum")} value={<span className="tabnum">{baht(v.sumInsured)}</span>} />
+        <Row label={t("sales.detail.pa.insured")} value={v.insured} />
+        <Row label={t("sales.detail.pa.age")} value={<span className="tabnum">{v.age}</span>} />
+        <Row label={t("sales.detail.pa.plan")} value={t(`sales.detail.pa.${v.plan}` as "sales.detail.pa.basic")} />
+        <Row label={t("sales.detail.pa.sum")} value={<span className="tabnum">{baht(v.sumInsured)}</span>} />
       </dl>
     </section>
   );

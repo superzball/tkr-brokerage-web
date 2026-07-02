@@ -7,7 +7,7 @@ export interface NavRoute {
 }
 
 /** Keys of the Products / Digital Services dropdowns (drive `nav.product.*` / `nav.service.*`). */
-export type ProductMenuKey = "worker" | "auto" | "travel" | "health" | "fire";
+export type ProductMenuKey = "worker" | "auto" | "travel" | "pa" | "fire";
 export type ServiceMenuKey = "wallet" | "line" | "tracking";
 
 /** An item inside a hover dropdown (Products / Digital Services). */
@@ -25,7 +25,7 @@ export type FooterLinkKey =
   | "worker"
   | "auto"
   | "travel"
-  | "health"
+  | "pa"
   | "fire"
   | "customer"
   | "wallet"
@@ -43,7 +43,7 @@ export interface FooterColumn {
 }
 
 /** The five insurance lines offered by the home quote bar. */
-export type InsuranceTabId = "worker" | "auto" | "travel" | "health" | "fire";
+export type InsuranceTabId = "worker" | "auto" | "travel" | "pa" | "fire";
 
 export type QuoteFieldType = "text" | "number" | "select";
 
@@ -55,8 +55,8 @@ export type QuoteFieldKey =
   | "autoYear"
   | "travelDest"
   | "travelDays"
-  | "healthAge"
-  | "healthBudget"
+  | "paAge"
+  | "paBudget"
   | "fireProp"
   | "fireSum";
 
@@ -78,24 +78,36 @@ export interface QuoteTabConfig {
 
 /* ---- Worker insurance flow ---- */
 
-export type WorkerPlanId = "basic" | "standard" | "premium";
+/** Worker-insurance FAQ ids. Question/answer text lives in the
+ *  `worker.faq.items.<id>` messages (th/en live; my/lo pending native review). */
+export type WorkerFaqId =
+  | "insurer"
+  | "coverage"
+  | "noAdvance"
+  | "hospitals"
+  | "age"
+  | "claimDocs"
+  | "applyDocs";
 
-/** A coverage plan. Money values are numbers (formatted via next-intl); the
- *  plan name + "included/not included" text live in the `worker` messages. */
-export interface WorkerPlan {
-  id: WorkerPlanId;
-  /** ฿ premium per worker per year */
-  per: number;
-  /** ฿ death / disability sum insured */
-  life: number;
-  /** ฿ medical sum insured */
-  medical: number;
-  /** repatriation (ส่งกลับประเทศ) included? */
-  repatriation: boolean;
-  recommended?: boolean;
+export interface WorkerFaqItem {
+  id: WorkerFaqId;
+  /** shown in the compact pre-payment block inside the purchase flow */
+  inFlow?: boolean;
 }
 
 export type WorkerMode = "single" | "bulk";
+
+/** Admin-editable UI toggles for the worker purchase flow (WORKER_FLOW_UI).
+ *  Purely visual — hiding a section never changes the step logic. */
+export interface WorkerFlowUI {
+  /** false → hide the progress stepper bar (flow still advances normally). */
+  showStepper: boolean;
+  /** false → hide the "วิธีกรอกข้อมูลแรงงาน" chooser (and the in-step switch
+   *  links); the flow proceeds with `defaultInputMethod`. */
+  showInputMethod: boolean;
+  /** Mode used when the chooser is hidden. */
+  defaultInputMethod: WorkerMode;
+}
 
 /** Nationality codes; display names live in `worker.nat.*`. */
 export type NationalityCode = "mm" | "la" | "vn";
@@ -166,7 +178,7 @@ export interface AutoPlan {
 
 export type PolicyStatus = "active" | "expiring" | "expired";
 
-export type CustomerPolicyId = "worker" | "auto" | "health" | "travel" | "fire";
+export type CustomerPolicyId = "worker" | "auto" | "pa" | "travel" | "fire";
 
 /** A held policy (sample data). Text lives in `customer.policies.<id>`. */
 export interface CustomerPolicy {

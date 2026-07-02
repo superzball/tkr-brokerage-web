@@ -7,11 +7,14 @@ import type {
 } from "@/types";
 import type { TopNavItem } from "@/types/portal";
 import { FEATURES } from "@/config/features";
+import { contactInfo } from "@/config/contact";
 
 /** Canonical route map (was the `L` object in nav.js, now localized routes). */
 export const ROUTES = {
   home: "/",
   worker: "/worker-insurance",
+  workerMou: "https://member.tkrbroker.com",
+  worker24: "https://24tkr.com",
   auto: "/auto",
   customer: "/customer",
   agency: "/agency",
@@ -29,7 +32,7 @@ export const PRODUCT_MENU: MenuItem<ProductMenuKey>[] = [
   { key: "worker", href: "/insurance/worker", icon: "star", featured: true },
   { key: "auto", href: "/insurance/auto", icon: "car" },
   { key: "travel", href: "/insurance/travel", icon: "plane" },
-  { key: "health", href: "/insurance/health", icon: "heart" },
+  { key: "pa", href: "/insurance/pa", icon: "shieldPlus" },
   { key: "fire", href: "/insurance/fire", icon: "flame" },
 ];
 
@@ -70,7 +73,7 @@ export const publicNav: TopNavItem[] = [
         links: [
           { key: "auto", href: "/insurance/auto", icon: "car", descKey: "autoDesc" },
           { key: "travel", href: "/insurance/travel", icon: "plane", descKey: "travelDesc" },
-          { key: "health", href: "/insurance/health", icon: "heartPulse", descKey: "healthDesc" },
+          { key: "pa", href: "/insurance/pa", icon: "shieldPlus", descKey: "paDesc" },
           { key: "fire", href: "/insurance/fire", icon: "flame", descKey: "fireDesc" },
         ],
       },
@@ -135,6 +138,15 @@ export const publicNavActions = {
   agent: { key: "agentLogin", href: "/login?role=agent" },
 } as const;
 
+/**
+ * Right-side actions that admin may turn on/off + schedule (NAV_VISIBILITY),
+ * keyed under `action:<name>` in the nav-visibility settings. `search` and
+ * `login` are intentionally EXCLUDED — they are core (never expose an easy way
+ * to remove sign-in), so they always render regardless of settings.
+ */
+export const TOGGLEABLE_ACTIONS = ["renew", "agent", "quoteCta"] as const;
+export type ToggleableAction = (typeof TOGGLEABLE_ACTIONS)[number];
+
 /** Full ordered list for the mobile drawer. */
 export const MOBILE_NAV: NavRoute[] = [
   { key: "home", href: ROUTES.home },
@@ -162,7 +174,7 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
       { key: "worker", href: "/insurance/worker" },
       { key: "auto", href: "/insurance/auto" },
       { key: "travel", href: "/insurance/travel" },
-      { key: "health", href: "/insurance/health" },
+      { key: "pa", href: "/insurance/pa" },
       { key: "fire", href: "/insurance/fire" },
     ],
   },
@@ -186,5 +198,9 @@ export const FOOTER_COLUMNS: FooterColumn[] = [
   },
 ];
 
-/** Social glyphs shown in the footer. */
-export const FOOTER_SOCIAL = ["facebook", "line", "phone"] as const;
+/** Social links shown in the footer — hrefs come from contactInfo (single source). */
+export const FOOTER_SOCIAL = [
+  { icon: "facebook", label: "Facebook", href: contactInfo.facebook },
+  { icon: "tiktok", label: "TikTok", href: contactInfo.tiktok },
+  { icon: "line", label: "LINE", href: contactInfo.lineHref },
+] as const;

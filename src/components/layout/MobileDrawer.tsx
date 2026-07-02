@@ -8,7 +8,9 @@ import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
 import { LocaleSwitcher } from "@/components/ui/LocaleSwitcher";
 import { Logo } from "./Logo";
-import { publicNav, publicNavActions } from "@/config/nav";
+import { publicNavActions } from "@/config/nav";
+import { useNavEntryVisible } from "@/hooks/useNavVisibility";
+import { actionSettingKey } from "@/lib/nav-visibility";
 import type { TopNavItem } from "@/types/portal";
 import { cn } from "@/lib/cn";
 
@@ -16,6 +18,8 @@ export type MobileDrawerProps = {
   open: boolean;
   onClose: () => void;
   pathname: string;
+  /** Already visibility-filtered public nav (see useVisiblePublicNav). */
+  items: TopNavItem[];
 };
 
 /**
@@ -23,10 +27,12 @@ export type MobileDrawerProps = {
  * accordion (columns flatten into stacked groups); simple items are direct
  * links. Footer carries locale, login, agent login + the quote CTA.
  */
-export function MobileDrawer({ open, onClose, pathname }: MobileDrawerProps) {
+export function MobileDrawer({ open, onClose, pathname, items }: MobileDrawerProps) {
   // Nav labels use dynamic keys from config → plain string lookup.
   const t = useTranslations("topnav") as unknown as (key: string) => string;
   const [openKey, setOpenKey] = useState<string | null>("products");
+  // Right-side actions can be turned off/scheduled from admin (NAV_VISIBILITY).
+  const actionVisible = useNavEntryVisible();
 
   const linkActive = (href: string) =>
     href !== "/" && (pathname === href || pathname.startsWith(`${href}/`));
@@ -63,7 +69,7 @@ export function MobileDrawer({ open, onClose, pathname }: MobileDrawerProps) {
         </div>
 
         <div className="flex-1 overflow-y-auto px-3 py-4">
-          {publicNav.map((item: TopNavItem) => {
+          {items.map((item: TopNavItem) => {
             if (!item.columns) {
               return (
                 <Link
@@ -164,17 +170,27 @@ export function MobileDrawer({ open, onClose, pathname }: MobileDrawerProps) {
           <div className="flex items-center justify-center">
             <LocaleSwitcher className="px-1" />
           </div>
-          <Button
-            href={publicNavActions.renew.href}
-            variant="ghost"
-            size="md"
-            onClick={onClose}
-            className="w-full"
+          {actionVisible(actionSettingKey("renew")) && (
+            <Button
+              href={publicNavActions.renew.href}
+              variant="ghost"
+              size="md"
+              onClick={onClose}
+              className="w-full"
+            >
+              <Icon name="refresh" size={18} />
+              {t(publicNavActions.renew.key)}
+            </Button>
+          )}
+          <div
+            className={cn(
+              "grid gap-2.5",
+              actionVisible(actionSettingKey("quoteCta"))
+                ? "grid-cols-2"
+                : "grid-cols-1",
+            )}
           >
-            <Icon name="refresh" size={18} />
-            {t(publicNavActions.renew.key)}
-          </Button>
-          <div className="grid grid-cols-2 gap-2.5">
+            {/* login is core — always available (never hide sign-in) */}
             <Button
               href={publicNavActions.login.href}
               variant="ghost"
@@ -183,14 +199,16 @@ export function MobileDrawer({ open, onClose, pathname }: MobileDrawerProps) {
             >
               {t(publicNavActions.login.key)}
             </Button>
-            <Button
-              href={publicNavActions.quoteCta.href}
-              variant="primary"
-              size="md"
-              onClick={onClose}
-            >
-              {t(publicNavActions.quoteCta.key)}
-            </Button>
+            {actionVisible(actionSettingKey("quoteCta")) && (
+              <Button
+                href={publicNavActions.quoteCta.href}
+                variant="primary"
+                size="md"
+                onClick={onClose}
+              >
+                {t(publicNavActions.quoteCta.key)}
+              </Button>
+            )}
           </div>
         </div>
       </div>

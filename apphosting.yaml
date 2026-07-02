@@ -9,9 +9,18 @@ runConfig:
   memoryMiB: 512
 
 # Environment variables and secrets.
-# env:
-#   - variable: MESSAGE
-#     value: Hello world!
-#     availability:
-#       - BUILD
-#       - RUNTIME
+# NEXT_PUBLIC_* values are inlined at build time, so BUILD availability is
+# required. This file is per-branch: the uat branch carries UAT values;
+# master must set NEXT_PUBLIC_SITE_ENV=production and the real domain,
+# otherwise robots.txt serves BLOCK-ALL (safe default — see src/config/site.ts).
+env:
+  - variable: NEXT_PUBLIC_SITE_URL
+    value: https://app--tkr-brokerage-uat.asia-southeast1.hosted.app
+    availability:
+      - BUILD
+      - RUNTIME
+  - variable: NEXT_PUBLIC_SITE_ENV
+    value: uat
+    availability:
+      - BUILD
+      - RUNTIME

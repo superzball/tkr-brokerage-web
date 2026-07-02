@@ -9,7 +9,7 @@ import type { CustomerPolicy, NotifItem, TimelineStep } from "@/types";
 export const CUSTOMER_POLICIES: CustomerPolicy[] = [
   { id: "worker", status: "active", icon: "users", premium: 124000, no: "TKR-W-2568-1042" },
   { id: "auto", status: "expiring", icon: "car", premium: 14200, no: "TKR-A-2568-3387" },
-  { id: "health", status: "active", icon: "heart", premium: 22800, no: "TKR-H-2568-5521" },
+  { id: "pa", status: "active", icon: "shield", premium: 22800, no: "TKR-PA-2568-5521" },
   { id: "travel", status: "expiring", icon: "plane", premium: 1890, no: "TKR-T-2568-7710" },
   { id: "fire", status: "expired", icon: "flame", premium: 3200, no: "TKR-F-2567-2204" },
 ];

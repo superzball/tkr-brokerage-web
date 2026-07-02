@@ -14,6 +14,7 @@ import {
   getDownline,
   getAllPolicies,
 } from "@/lib/mock/seed";
+import { getArticles } from "@/lib/articles";
 import type { InsuranceType } from "@/types/portal";
 
 type Props = { params: Promise<{ locale: Locale }> };
@@ -37,7 +38,9 @@ export default async function AdminDashboard({ params }: Props) {
       maximumFractionDigits: 0,
     });
 
-  const stats = adminStats();
+  const stats = adminStats(
+    getArticles().filter((a) => a.status !== "published").length,
+  );
   const pendingApprovals = getDownline().filter(
     (d) => d.licenseStatus !== "verified",
   ).length;

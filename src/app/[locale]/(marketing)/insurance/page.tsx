@@ -97,7 +97,7 @@ export default async function InsuranceIndexPage({ params }: Props) {
       {/* link back to the 5 flagship "how it works" landings */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 pb-20">
         <div className="flex flex-wrap gap-3">
-          {(["auto", "travel", "health", "fire"] as const).map((p) => (
+          {(["auto", "travel", "pa", "fire"] as const).map((p) => (
             <AppLink key={p} href={`/insurance/${p}`} className="chip bg-ink-50 text-ink-600 hover:bg-sky-100">
               {tl(`${p}.hero.title`)}
             </AppLink>

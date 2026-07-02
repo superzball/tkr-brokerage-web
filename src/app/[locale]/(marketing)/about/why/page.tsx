@@ -30,7 +30,7 @@ export default async function WhyTkrPage({ params }: Props) {
   const heroSub = cms?.body ?? t("hero.sub");
   const cards = t.raw("cards") as Card[];
   const brokerPoints = t.raw("broker.points") as string[];
-  const reviews = getReviews();
+  const reviews = getReviews({ featuredOnly: true });
 
   return (
     <main>
@@ -102,14 +102,14 @@ export default async function WhyTkrPage({ params }: Props) {
         </div>
       </section>
 
-      {/* reviews teaser (placeholder, clearly labelled) */}
+      {/* reviews teaser — featured (compliance-cleared) quotes only */}
       <section className="bg-gradient-to-b from-white to-sky-50/60">
         {reviews.length === 0 ? (
           <div className="max-w-5xl mx-auto px-4 sm:px-6 py-16">
             <EmptyState icon="star" title={t("reviews.title")} />
           </div>
         ) : (
-          <Reviews reviews={reviews} limit={3} heading={false} />
+          <Reviews reviews={reviews} heading={false} />
         )}
       </section>
 

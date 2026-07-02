@@ -40,7 +40,7 @@ export const portalNav: Record<Role, NavSection[]> = {
     help,
   ],
 
-  // ---- Individual (personal lines: auto/travel/health/fire) ----
+  // ---- Individual (personal lines: auto/travel/pa/fire) ----
   individual: [
     {
       items: [
@@ -110,6 +110,7 @@ export const portalNav: Record<Role, NavSection[]> = {
         { key: 'seo',      href: '/admin/content/seo',      icon: 'Search',    perm: 'content' },
         { key: 'media',    href: '/admin/content/media',    icon: 'Image',     perm: 'content' },
         { key: 'banners',  href: '/admin/content/banners',  icon: 'GalleryHorizontalEnd', perm: 'content' },
+        { key: 'navigation', href: '/admin/content/navigation', icon: 'Menu', perm: 'content' },
         { key: 'coupons',  href: '/admin/content/coupons',  icon: 'TicketPercent', perm: 'content' },
         { key: 'reviews',  href: '/admin/content/reviews',  icon: 'Star',          perm: 'content' },
         { key: 'partners', href: '/admin/content/partners', icon: 'Handshake',     perm: 'content' },

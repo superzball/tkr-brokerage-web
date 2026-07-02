@@ -7,7 +7,7 @@ import type { IconName } from "@/components/ui/Icon";
 import type { Role } from "@/types/portal";
 import { ROUTES } from "./nav";
 
-export type LearnProductKey = "worker" | "auto" | "travel" | "health" | "fire";
+export type LearnProductKey = "worker" | "auto" | "travel" | "pa" | "fire";
 
 /** How the plans/pricing section renders for each product. */
 export type PlansKind = "worker" | "auto" | "generic";
@@ -53,9 +53,9 @@ export const LEARN_PRODUCTS: Record<LearnProductKey, LearnProduct> = {
       { price: 1290, sum: 5_000_000 },
     ],
   },
-  health: {
-    key: "health",
-    icon: "heart",
+  pa: {
+    key: "pa",
+    icon: "shieldPlus",
     role: "individual",
     quoteHref: null,
     plansKind: "generic",

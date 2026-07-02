@@ -5,13 +5,14 @@ import { Icon, type IconName } from "@/components/ui/Icon";
 import { ROUTES } from "@/config/nav";
 
 type SecondaryProduct = {
-  key: "auto" | "travel" | "health" | "fire";
+  key: "auto" | "travel" | "pa" | "fire";
   icon: IconName;
   href: string;
   /** per-card accent so the grid isn't monochrome blue */
   tile: string;
   cta: string;
   bar: string;
+  linkTarget?: string;
 };
 
 // Trust palette: one calm brand-blue treatment across all four — the bento
@@ -20,8 +21,11 @@ type SecondaryProduct = {
 const SECONDARY: SecondaryProduct[] = [
   { key: "auto", icon: "car", href: "/insurance/auto", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
   { key: "travel", icon: "plane", href: "/insurance/travel", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
-  { key: "health", icon: "heart", href: "/insurance/health", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
+  { key: "pa", icon: "shieldPlus", href: "/insurance/pa", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
   { key: "fire", icon: "flame", href: "/insurance/fire", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600" },
+  // { key: "auto", icon: "car", href: "https://m.me/384154094776068?text=%5B%E0%B8%97%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%9A%5D%20%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88%E0%B8%8B%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%A3%E0%B8%96%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600", linkTarget: "_blank" },
+  // { key: "travel", icon: "plane", href: "https://m.me/384154094776068?ref=%5B%E0%B8%97%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%9A%5D%20%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88%E0%B8%8B%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%A3%E0%B8%96%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600", linkTarget: "_blank" },
+  // { key: "fire", icon: "flame", href: "https://m.me/384154094776068?ref=%5B%E0%B8%97%E0%B8%94%E0%B8%AA%E0%B8%AD%E0%B8%9A%5D%20%E0%B8%AA%E0%B8%99%E0%B9%83%E0%B8%88%E0%B8%8B%E0%B8%B7%E0%B9%89%E0%B8%AD%E0%B8%9B%E0%B8%A3%E0%B8%B0%E0%B8%81%E0%B8%B1%E0%B8%99%E0%B8%A3%E0%B8%96%E0%B8%A2%E0%B8%99%E0%B8%95%E0%B9%8C", tile: "bg-brand-50 text-brand-600", cta: "text-brand-600", bar: "from-brand-400 to-brand-600", linkTarget: "_blank" },
 ];
 
 export function ProductGrid() {
@@ -77,14 +81,19 @@ export function ProductGrid() {
                 {t("worker.desc")}
               </p>
               <ul className="mt-6 space-y-2.5 text-sm text-ink-100">
-                {workerFeatures.map((feature) => (
-                  <li key={feature} className="flex items-center gap-2.5">
-                    <span className="w-5 h-5 rounded-full bg-mint-500/25 text-mint-300 inline-flex items-center justify-center shrink-0">
-                      <Icon name="check" size={13} />
-                    </span>{" "}
-                    {feature}
-                  </li>
-                ))}
+                {workerFeatures.map((feature) => {
+                  // "**...**" in the locale string marks an emphasized feature
+                  const emphasized = feature.startsWith("**") && feature.endsWith("**");
+                  const label = emphasized ? feature.slice(2, -2) : feature;
+                  return (
+                    <li key={feature} className="flex items-center gap-2.5">
+                      <span className="w-5 h-5 rounded-full bg-mint-500/25 text-mint-300 inline-flex items-center justify-center shrink-0">
+                        <Icon name="check" size={13} />
+                      </span>{" "}
+                      <span className={emphasized ? "font-700 text-white" : undefined}>{label}</span>
+                    </li>
+                  );
+                })}
               </ul>
               <div className="mt-8 inline-flex items-center gap-2 font-700 text-gold-300 group-hover:gap-3.5 transition-all">
                 {t("worker.cta")} <Icon name="arrowRight" />
@@ -95,7 +104,7 @@ export function ProductGrid() {
 
         {/* secondary products — top accent bar + lifting card */}
         {SECONDARY.map((product) => (
-          <AppLink key={product.key} href={product.href} className="group reveal">
+          <AppLink key={product.key} href={product.href} className="group reveal" target={product.linkTarget}>
             <div className="card card-hover h-full p-6 relative overflow-hidden shadow-pop">
               <span
                 className={`absolute inset-x-0 top-0 h-1.5 bg-gradient-to-r ${product.bar}`}

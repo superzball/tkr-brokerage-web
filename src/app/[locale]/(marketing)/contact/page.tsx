@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import { Chip } from "@/components/ui/Chip";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import { ContactForm } from "@/components/contact/ContactForm";
+import { contactInfo } from "@/config/contact";
 
 type Props = { params: Promise<{ locale: Locale }> };
 
@@ -15,10 +16,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 // Trust palette: unified brand-blue contact-method tiles (no rainbow).
-const METHODS: { icon: IconName; key: string; valueKey: string; noteKey?: string; href?: string; tone: string }[] = [
-  { icon: "phone", key: "phone", valueKey: "phoneValue", noteKey: "phoneNote", href: "tel:021234567", tone: "bg-sky-100 text-brand-600" },
-  { icon: "chat", key: "line", valueKey: "lineValue", noteKey: "lineNote", href: "https://line.me", tone: "bg-sky-100 text-brand-600" },
-  { icon: "phone", key: "email", valueKey: "emailValue", noteKey: "emailNote", href: "mailto:hello@tkr.co.th", tone: "bg-sky-100 text-brand-600" },
+// Values/hrefs come from the contactInfo config (single source); only the
+// labels + notes are localized.
+const METHODS: { icon: IconName; key: string; value: string; noteKey?: string; href: string; external?: boolean }[] = [
+  { icon: "phone", key: "phone", value: contactInfo.phone, noteKey: "phoneNote", href: contactInfo.phoneHref },
+  { icon: "line", key: "line", value: contactInfo.line, noteKey: "lineNote", href: contactInfo.lineHref, external: true },
+  { icon: "mail", key: "email", value: contactInfo.email, noteKey: "emailNote", href: contactInfo.emailHref },
+  { icon: "facebook", key: "facebook", value: contactInfo.facebookLabel, href: contactInfo.facebook, external: true },
+  { icon: "tiktok", key: "tiktok", value: contactInfo.tiktokLabel, href: contactInfo.tiktok, external: true },
 ];
 
 export default async function ContactPage({ params }: Props) {
@@ -47,25 +52,25 @@ export default async function ContactPage({ params }: Props) {
         <div className="space-y-5">
           <h2 className="font-display font-700 text-xl text-ink-900">{t("methodsTitle")}</h2>
           <div className="space-y-3">
-            {METHODS.map((m) => {
-              const inner = (
+            {METHODS.map((m) => (
+              <a
+                key={m.key}
+                href={m.href}
+                className="block"
+                {...(m.external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+              >
                 <span className="card card-hover p-4 flex items-center gap-3.5">
-                  <span className={`w-11 h-11 rounded-xl ${m.tone} flex items-center justify-center shrink-0`}>
+                  <span className="w-11 h-11 rounded-xl bg-sky-100 text-brand-600 flex items-center justify-center shrink-0">
                     <Icon name={m.icon} size={20} />
                   </span>
                   <span className="min-w-0">
                     <span className="block text-xs text-ink-400">{tk(`methods.${m.key}`)}</span>
-                    <span className="block font-600 text-ink-900">{tk(`methods.${m.valueKey}`)}</span>
+                    <span className="block font-600 text-ink-900 truncate">{m.value}</span>
                     {m.noteKey && <span className="block text-xs text-ink-500">{tk(`methods.${m.noteKey}`)}</span>}
                   </span>
                 </span>
-              );
-              return m.href ? (
-                <a key={m.key} href={m.href} className="block">{inner}</a>
-              ) : (
-                <div key={m.key}>{inner}</div>
-              );
-            })}
+              </a>
+            ))}
           </div>
 
           {/* address + hours */}
@@ -74,7 +79,7 @@ export default async function ContactPage({ params }: Props) {
               <span className="text-brand-500 mt-0.5"><Icon name="pin" size={18} /></span>
               <div>
                 <p className="text-xs text-ink-400">{t("methods.address")}</p>
-                <p className="text-sm font-500 text-ink-800">{t("methods.addressValue")}</p>
+                <p className="text-sm font-500 text-ink-800">{contactInfo.address}</p>
               </div>
             </div>
             <div className="flex items-start gap-3">
@@ -84,10 +89,17 @@ export default async function ContactPage({ params }: Props) {
                 <p className="text-sm font-500 text-ink-800">{t("methods.hoursValue")}</p>
               </div>
             </div>
-            {/* map placeholder */}
-            <div className="rounded-xl bg-sky-50 border border-ink-100 h-40 flex items-center justify-center text-ink-400">
-              <span className="inline-flex items-center gap-2 text-sm"><Icon name="map" size={18} /> {t("mapPlaceholder")}</span>
-            </div>
+            {/* open in Google Maps */}
+            <a
+              href={contactInfo.googleMap}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-xl bg-sky-50 border border-ink-100 h-40 flex items-center justify-center text-brand-600 hover:bg-sky-100 transition-colors"
+            >
+              <span className="inline-flex items-center gap-2 text-sm font-600">
+                <Icon name="map" size={18} /> {t("mapLink")}
+              </span>
+            </a>
           </div>
         </div>
 
