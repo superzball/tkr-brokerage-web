@@ -35,8 +35,8 @@ export default async function HomePage({ params }: Props) {
       <WhyTKR />
       {/* contained soft-blue stats panel — featured gold figure + stat cards */}
       <TrustStats />
-      {/* white — social proof */}
-      <Reviews reviews={getReviews()} limit={3} />
+      {/* white — social proof: featured = the 3 service-focused quotes cleared for home */}
+      <Reviews reviews={getReviews({ featuredOnly: true })} />
       {/* one restrained soft-blue band breaks the white rhythm before the dark anchor */}
       <div className="sec-soft">
         <Faq />

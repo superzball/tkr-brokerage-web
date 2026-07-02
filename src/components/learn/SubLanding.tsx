@@ -127,8 +127,8 @@ export function SubLanding({ slug }: { slug: string }) {
         <GlossarySection />
       </section>
 
-      {/* ── Social proof ── */}
-      <Reviews reviews={getReviews()} limit={3} />
+      {/* ── Social proof (featured = compliance-cleared quotes only) ── */}
+      <Reviews reviews={getReviews({ featuredOnly: true })} />
 
       {/* ── Trust / credentials ── */}
       <TrustCredentials />

@@ -792,8 +792,8 @@ export const crmCustomers = () =>
   creditProfiles.map(p => ({ id: p.customerId, name: crmCustomerName(p.customerId) }));
 
 // ============================ CONVERSION & TRUST (Phase 17) ============================
-// D2C UX upgrade. Coupons/installments/glossary are real config; reviews + trust
-// stats are PLACEHOLDERS to be replaced with real, consented, verifiable content.
+// D2C UX upgrade. Coupons/installments/glossary are real config; reviews are real
+// anonymized survey quotes; trust stats are PLACEHOLDERS pending verifiable numbers.
 export const coupons: Coupon[] = [
   { id: 'cpn1', code: 'TKRWORKER300', description: 'ลด ฿300 ต่อกรมธรรม์ประกันแรงงานต่างด้าว', discountType: 'fixed', value: 300, minSpend: 5000, products: ['worker'], expiry: '2026-12-31', active: true },
   { id: 'cpn2', code: 'EVFIRST10',    description: 'ลด 10% ประกันรถ EV ลูกค้าใหม่', discountType: 'percent', value: 10, products: ['auto'], paymentCondition: 'บัตรเครดิต ผ่อน 0% นาน 3 เดือน', expiry: '2026-09-30', active: true },
@@ -822,11 +822,28 @@ export const homeBanners: HomeBanner[] = [
     href: '#', active: true, sortOrder: 4, startDate: '2026-01-01', endDate: '2026-12-31' },
 ];
 
-// PLACEHOLDER reviews — replace with real, consented TKR customer feedback.
+// REAL customer reviews (REVIEWS_ADDITIONS) — genuine post-service survey quotes,
+// anonymized as "ลูกค้า TKR" (PDPA: real names need consent). Do NOT invent more
+// or add ratings. `featured` = home testimonials strip (r1–r3, service-focused).
+// r6/r7 stay featured:false — "เคลมง่าย"/"ราคาดี" can read as overclaiming (claims
+// are the insurer's; premiums are OIC-filed rates) — pending compliance sign-off.
 export const reviews: Review[] = [
-  { id: 'rv1', authorLabel: 'ลูกค้า TKR (สำรวจหลังบริการ)', channel: 'survey', product: 'worker', text: 'ออกกรมธรรม์แรงงานเป็นชุดได้เร็ว ไม่ต้องเดินเอกสารเอง', reaction: 'heart', date: '2026-05-30' },
-  { id: 'rv2', authorLabel: 'ลูกค้า TKR (สำรวจหลังบริการ)', channel: 'survey', product: 'auto',   text: 'เทียบราคาเองได้ เห็นเบี้ยทันที ไม่มีใครโทรตาม', reaction: 'like', date: '2026-05-12' },
-  { id: 'rv3', authorLabel: 'ตัวแทน TKR', channel: 'survey', product: 'worker', text: 'พอร์ทัลตัวแทนดูยอดทีมและคอมมิชชั่นได้ในที่เดียว', reaction: 'celebrate', date: '2026-04-20' },
+  { id: 'r1', quote: 'บริการดีมาก ตอบแชทไว ให้คำแนะนำละเอียด', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'ประทับใจบริการ', date: '2026-06-28', featured: true },
+  { id: 'r2', quote: 'ซื้อหลายครั้งแล้ว บริการดีเหมือนเดิม', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'ลูกค้าประจำ', date: '2026-06-10', featured: true },
+  { id: 'r3', quote: 'บริการเป็นกันเอง รู้สึกใส่ใจลูกค้าจริง ๆ', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'ใส่ใจ', date: '2026-05-22', featured: true },
+  { id: 'r4', quote: 'ให้ข้อมูลตรงไปตรงมา ไม่มีค่าใช้จ่ายแอบแฝง', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'โปร่งใส', date: '2026-05-05', featured: false },
+  { id: 'r5', quote: 'มีปัญหาเรื่องเอกสาร โทรไปก็ช่วยแก้ให้เลย บริการดีจริง', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'ช่วยแก้ปัญหา', date: '2026-04-18', featured: false },
+  { id: 'r6', quote: 'เคลมง่าย มีคนช่วยประสานงานทุกขั้นตอน', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'ประสานงานเคลม', date: '2026-04-02', featured: false,
+    complianceNote: 'คำว่า "เคลมง่าย" อาจเข้าข่ายโฆษณาเกินจริง (การเคลมเป็นของบริษัทประกัน) — รอฝ่ายกำกับดูแลยืนยันก่อนแสดงหน้าแรก' },
+  { id: 'r7', quote: 'ราคาดี บริการก็ดี ไว้จะต่อประกันกับ TKR อีกแน่นอน', author: 'ลูกค้า TKR',
+    channel: 'สำรวจหลังบริการ', tag: 'คุ้มค่า', date: '2026-03-14', featured: false,
+    complianceNote: 'คำว่า "ราคาดี" อาจเข้าข่ายโฆษณาเกินจริง (เบี้ยวินาศภัยเป็นอัตราที่ยื่น คปภ. นายหน้าลดเองไม่ได้) — รอฝ่ายกำกับดูแลยืนยันก่อนแสดงหน้าแรก' },
 ];
 
 // Real licensed-insurer partner list (31). Names are the proper Thai legal names
@@ -941,19 +958,21 @@ export const navSettings: NavSetting[] = [
   // footer columns (footer links reuse the nav link keys above → shared flag;
   // footer-only links get their own default here)
   { key: 'footerCol:products', isOpen: true },
-  { key: 'footerCol:services', isOpen: true },
+  { key: 'footerCol:services', isOpen: false },
   { key: 'footerCol:company',  isOpen: true },
-  { key: 'customer',     isOpen: true },
-  { key: 'wallet',       isOpen: true },
-  { key: 'line',         isOpen: true },
-  { key: 'applyAgent',   isOpen: true },
-  { key: 'agencyCenter', isOpen: true },
+  { key: 'customer',     isOpen: false },
+  { key: 'wallet',       isOpen: false },
+  { key: 'line',         isOpen: false },
+  { key: 'applyAgent',   isOpen: false },
+  { key: 'agencyCenter', isOpen: false },
 ];
 
 /** Seed nav-visibility settings, keyed by entry key (admin merges overrides). */
 export const getNavSettings = () => navSettings;
 
-export const getReviews = () => reviews;
+/** Reviews for display — `featuredOnly` = the home testimonials strip (r1–r3). */
+export const getReviews = (opts?: { featuredOnly?: boolean }) =>
+  opts?.featuredOnly ? reviews.filter((r) => r.featured) : reviews;
 export const getInsurerPartners = (opts?: { featuredOnly?: boolean }) =>
   opts?.featuredOnly ? insurerPartners.filter((p) => p.featured) : insurerPartners;
 export const getGlossary = () => glossary;

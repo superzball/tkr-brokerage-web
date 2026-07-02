@@ -87,3 +87,19 @@ insurance domain knowledge; coverage numbers are contractual):
 - `learn.worker.coverage` — 4 bullets rewritten for the single ทิพย package
 Keep as-is: insurer names (ทิพยประกันภัย / Dhipaya), the hospital-network URL,
 "IPD"/"OPD"/"Passport"/"Work Permit"/"Book Bank" Latin terms, ฿ amounts.
+
+## TODO — Real customer reviews (REVIEWS_ADDITIONS) — NOT yet translated
+Added 2026-07-02. These keys currently hold **Thai placeholder** values and need
+native translation + review (marketing/compliance wording):
+- `conversion.reviews.sub` — rewritten (real survey reviews, no more "agents")
+- `conversion.reviews.sourceNote` — NEW (replaces the deleted `placeholderNote`;
+  copy changed from "demo sample" to "genuine anonymized survey reviews")
+- `reviewsPage.desc` — rewritten; `reviewsPage.placeholderBanner` + `filterAll`
+  deleted (unused)
+- `admin.reviews.desc` — rewritten; `admin.reviews.{complianceBanner, featured,
+  featuredOn, featuredOff, complianceFlag, complianceBlocked}` — NEW;
+  `admin.reviews.{placeholderBanner, author, product, channel, reaction, date,
+  channelSurvey, channelSocial}` deleted (unused after the card redesign)
+Note: the review quotes/tags/`complianceNote` themselves live in seed.ts
+(`reviews[]`) as genuine Thai customer words — CMS content, NOT message keys;
+do not translate or paraphrase them.

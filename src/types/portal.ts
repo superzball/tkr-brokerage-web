@@ -469,12 +469,13 @@ export interface HomeBanner {
 
 export interface Review {
   id: string;
-  authorLabel: string;           // masked, e.g. "ลูกค้า TKR" — PLACEHOLDER
-  channel: 'survey' | 'social';
-  product: InsuranceType;
-  text: string;                  // PLACEHOLDER copy
-  reaction: 'heart' | 'like' | 'celebrate';
-  date: string;
+  quote: string;                 // genuine customer words — never invent or embellish
+  author: string;                // anonymized "ลูกค้า TKR" (PDPA: real names need consent)
+  channel?: string;              // source, e.g. "สำรวจหลังบริการ"
+  tag?: string;                  // short label chip
+  date: string;                  // ISO yyyy-mm-dd
+  featured?: boolean;            // shown on the home testimonials strip
+  complianceNote?: string;       // admin-only — keep featured:false until cleared
 }
 
 export interface InsurerPartner { id: string; name: string; group: 1 | 2 | 3; featured?: boolean; shortName?: string; logo?: string; }

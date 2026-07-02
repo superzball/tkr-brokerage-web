@@ -1,24 +1,13 @@
 // src/components/conversion/Reviews.tsx
-// Social proof — testimonial cards from the mock review store. Sample data is
-// clearly labelled as placeholder (project rule: never present mock reviews as
-// real). `limit` renders a strip (home/landing); omit it for the full list.
+// Social proof — real customer quotes from post-service surveys, anonymized as
+// "ลูกค้า TKR" (see lib/mock/seed.ts reviews[]). No star ratings — we don't
+// collect them. `limit` caps a strip (landings); omit it for the full list.
 
 import { useTranslations } from "next-intl";
-import { Icon, type IconName } from "@/components/ui/Icon";
+import { Icon } from "@/components/ui/Icon";
 import { Chip } from "@/components/ui/Chip";
 import { cn } from "@/lib/cn";
 import type { Review } from "@/types/portal";
-
-const REACTION_ICON: Record<Review["reaction"], IconName> = {
-  heart: "heart",
-  like: "star",
-  celebrate: "sparkle",
-};
-const REACTION_TONE: Record<Review["reaction"], string> = {
-  heart: "text-rose-500",
-  like: "text-gold-500",
-  celebrate: "text-brand-500",
-};
 
 export function Reviews({
   reviews,
@@ -34,7 +23,6 @@ export function Reviews({
   className?: string;
 }) {
   const t = useTranslations("conversion.reviews");
-  const tp = useTranslations("admin.product");
   const list = limit ? reviews.slice(0, limit) : reviews;
 
   return (
@@ -50,24 +38,24 @@ export function Reviews({
       )}
 
       {showNote && (
-        <div className="mb-6 mx-auto max-w-2xl rounded-xl bg-gold-50 border border-gold-100 px-4 py-2.5 flex items-center gap-2 text-xs text-gold-700">
+        <div className="mb-6 mx-auto max-w-2xl rounded-xl bg-sky-50 border border-sky-100 px-4 py-2.5 flex items-center gap-2 text-xs text-ink-500">
           <Icon name="info" size={14} />
-          {t("placeholderNote")}
+          {t("sourceNote")}
         </div>
       )}
 
       <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {list.map((r) => (
-          <figure key={r.id} className="card card-hover p-6 reveal">
-            <div className="flex items-center justify-between">
-              <span className={cn("inline-flex", REACTION_TONE[r.reaction])}>
-                <Icon name={REACTION_ICON[r.reaction]} size={22} />
+          <figure key={r.id} className="card card-hover p-6 reveal flex flex-col">
+            <div className="flex items-center justify-between gap-2">
+              <span aria-hidden className="font-display font-700 text-4xl leading-none text-peach-300 select-none">
+                “
               </span>
-              <Chip className="bg-sky-100 text-ink-600 text-xs">{tp(r.product)}</Chip>
+              {r.tag && <Chip className="bg-sky-100 text-ink-600 text-xs">{r.tag}</Chip>}
             </div>
-            <blockquote className="mt-4 text-ink-700 leading-relaxed">“{r.text}”</blockquote>
+            <blockquote className="mt-3 text-ink-700 leading-relaxed flex-1">“{r.quote}”</blockquote>
             <figcaption className="mt-4 flex items-center justify-between text-sm">
-              <span className="font-600 text-ink-900">{r.authorLabel}</span>
+              <span className="font-600 text-ink-900">{r.author}</span>
               <span className="text-ink-400 tabnum">{r.date}</span>
             </figcaption>
           </figure>

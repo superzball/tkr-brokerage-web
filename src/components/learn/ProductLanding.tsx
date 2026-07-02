@@ -337,8 +337,8 @@ export function ProductLanding({ product }: { product: LearnProductKey }) {
         </div>
       </section>
 
-      {/* ── Social proof ── */}
-      <Reviews reviews={getReviews()} limit={3} />
+      {/* ── Social proof (featured = compliance-cleared quotes only) ── */}
+      <Reviews reviews={getReviews({ featuredOnly: true })} />
 
       {/* ── Trust / credentials ── */}
       <section className="bg-gradient-to-br from-brand-900 via-ink-900 to-ink-950 text-white relative overflow-hidden">
