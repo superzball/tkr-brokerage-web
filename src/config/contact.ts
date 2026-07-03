@@ -2,15 +2,15 @@
  * Real TKR contact channels — single source for /contact, the footer and the
  * floating LINE CTA. Edit here once; never hardcode these in components.
  *
- * ⚠️ VERIFY BEFORE GO-LIVE: LINE id was provided as `@trkbroker` (TRK) while
+ * ⚠️ VERIFY BEFORE GO-LIVE: LINE id was provided as `@tkrbroker` (TKR) while
  * email/Facebook/brand are all TKR — likely a transposition. Confirm the real
  * handle (and that the google-maps short link resolves to the right address).
  */
 export const contactInfo = {
   phone: "096-047-1919",
   phoneHref: "tel:+66960471919",
-  line: "@trkbroker", // VERIFY (see above)
-  lineHref: "https://line.me/R/ti/p/@trkbroker", // update if id changes
+  line: "@tkrbroker", // VERIFY (see above)
+  lineHref: "https://line.me/R/ti/p/@tkrbroker", // update if id changes
   email: "support@tkrbroker.com",
   emailHref: "mailto:support@tkrbroker.com",
   facebook: "https://www.facebook.com/tkrbrokerages",
