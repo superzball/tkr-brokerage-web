@@ -305,6 +305,7 @@ export function WorkerFlow({
               </span>
               <span>{t("summary.info")}</span>
             </div>
+            {/* Edit later */}
             {!workerFlow.showInputMethod && (
               <>
                 <Button

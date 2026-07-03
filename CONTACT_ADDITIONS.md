@@ -4,9 +4,9 @@ Real TKR contact channels. One config consumed everywhere (contact page, footer,
 floating LINE CTA), so it's edited once.
 
 ## ⚠️ VERIFY BEFORE GO-LIVE
-- **LINE id**: provided as `@trkbroker` (TRK), but email/Facebook/brand are all
+- **LINE id**: provided as `@tkrbroker` (TKR), but email/Facebook/brand are all
   **TKR** (support@tkrbroker.com, /tkrbrokerages). Likely a transposition — confirm
-  whether the real handle is `@tkrbroker` or `@trkbroker`. A wrong LINE id means
+  whether the real handle is `@tkrbroker` or `@tkrbroker`. A wrong LINE id means
   customers can't add the account.
 
 ## DATA
@@ -14,8 +14,8 @@ floating LINE CTA), so it's edited once.
 export const contactInfo = {
   phone: '096-047-1919',
   phoneHref: 'tel:+66960471919',
-  line: '@trkbroker',                       // VERIFY (see above)
-  lineHref: 'https://line.me/R/ti/p/@trkbroker',   // update if id changes
+  line: '@tkrbroker',                       // VERIFY (see above)
+  lineHref: 'https://line.me/R/ti/p/@tkrbroker',   // update if id changes
   email: 'support@tkrbroker.com',
   emailHref: 'mailto:support@tkrbroker.com',
   facebook: 'https://www.facebook.com/tkrbrokerages',

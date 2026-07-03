@@ -77,6 +77,7 @@ export function Hero() {
               ),
             })}
           </p>
+          {/* Edit later */}
           {workerFlow.showInputMethod ? (
             <div
               className="mt-8 flex flex-wrap gap-3 animate-fade-up"
