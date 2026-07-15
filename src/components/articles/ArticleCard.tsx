@@ -33,7 +33,9 @@ export function ArticleCard({
       />
       <div className="p-5 flex flex-col flex-1">
         <div className="flex items-center gap-2 text-xs text-ink-400">
-          <Chip className="bg-sky-100 text-brand-700 text-xs">{article.category}</Chip>
+          <Chip className="bg-sky-100 text-brand-700 text-xs">
+            {article.categoryLabel ?? article.category}
+          </Chip>
           {article.readMinutes && (
             <span className="inline-flex items-center gap-1 tabnum">
               <Icon name="clock" size={13} /> {t("minRead", { n: article.readMinutes })}

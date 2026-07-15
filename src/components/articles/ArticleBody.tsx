@@ -1,19 +1,24 @@
 // src/components/articles/ArticleBody.tsx
 // Renders the markdown article body from /content/articles. The corpus only
-// uses H2/H3 headings, paragraphs, and `-` bullet lists, so a tiny block
-// parser keeps us dependency-free (no remark/marked).
+// uses H2/H3 headings, paragraphs, `-` bullet lists, and standalone
+// `![alt](src)` images (in-article infographics), so a tiny block parser
+// keeps us dependency-free (no remark/marked).
 import type { ReactNode } from "react";
+import Image from "next/image";
 
 type Block =
   | { type: "h2" | "h3" | "p"; text: string }
-  | { type: "ul"; items: string[] };
+  | { type: "ul"; items: string[] }
+  | { type: "img"; src: string; alt: string };
 
 function parseBlocks(md: string): Block[] {
   const blocks: Block[] = [];
   for (const line of md.split(/\r?\n/)) {
     const t = line.trim();
     if (!t) continue;
-    if (t.startsWith("### ")) blocks.push({ type: "h3", text: t.slice(4) });
+    const img = t.match(/^!\[([^\]]*)\]\(([^)\s]+)\)$/);
+    if (img) blocks.push({ type: "img", alt: img[1] ?? "", src: img[2] ?? "" });
+    else if (t.startsWith("### ")) blocks.push({ type: "h3", text: t.slice(4) });
     else if (t.startsWith("## ")) blocks.push({ type: "h2", text: t.slice(3) });
     else if (t.startsWith("# ")) blocks.push({ type: "h2", text: t.slice(2) });
     else if (/^[-*] /.test(t)) {
@@ -42,6 +47,20 @@ export function ArticleBody({ markdown }: { markdown: string }) {
               <h3 key={i} className="pt-2 font-600 text-lg text-ink-900">
                 {b.text}
               </h3>
+            );
+          case "img":
+            // w-full + h-auto keeps the image's intrinsic aspect ratio
+            // (infographics are square-ish, not 16:9)
+            return (
+              <Image
+                key={i}
+                src={b.src}
+                alt={b.alt}
+                width={1200}
+                height={1200}
+                sizes="(min-width: 768px) 48rem, 100vw"
+                className="w-full h-auto my-6 rounded-2xl border border-ink-100"
+              />
             );
           case "ul":
             return (

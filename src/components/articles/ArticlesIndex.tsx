@@ -7,20 +7,21 @@ import { Icon } from "@/components/ui/Icon";
 import { EmptyState } from "@/components/app/EmptyState";
 import { cn } from "@/lib/cn";
 import { ArticleCard } from "./ArticleCard";
-import type { Article } from "@/types/portal";
+import type { Article, ArticleCategory } from "@/types/portal";
 
-/** Client index: search + category filter over the published articles handed in
- *  by the server page. The newest article is featured when no filter is active. */
+/** Client index: search + category filter (แรงงาน/รถยนต์/เดินทาง/ทั้งหมด) over
+ *  the published articles handed in by the server page. The newest article is
+ *  featured when no filter is active. */
 export function ArticlesIndex({
   articles,
   categories,
 }: {
   articles: Article[];
-  categories: string[];
+  categories: ArticleCategory[];
 }) {
   const t = useTranslations("articles");
   const [q, setQ] = useState("");
-  const [cat, setCat] = useState<string>("all");
+  const [cat, setCat] = useState<ArticleCategory | "all">("all");
 
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
@@ -30,7 +31,7 @@ export function ArticlesIndex({
       return (
         a.title.toLowerCase().includes(needle) ||
         (a.excerpt ?? "").toLowerCase().includes(needle) ||
-        a.category.toLowerCase().includes(needle)
+        (a.categoryLabel ?? a.category).toLowerCase().includes(needle)
       );
     });
   }, [articles, q, cat]);
@@ -62,7 +63,7 @@ export function ArticlesIndex({
           </FilterChip>
           {categories.map((c) => (
             <FilterChip key={c} active={cat === c} onClick={() => setCat(c)}>
-              {c}
+              {t(`cat.${c}`)}
             </FilterChip>
           ))}
         </div>
