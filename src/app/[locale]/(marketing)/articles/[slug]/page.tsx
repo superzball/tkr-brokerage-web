@@ -66,7 +66,7 @@ export default async function ArticleDetailPage({ params }: Props) {
   return (
     <main>
       <article>
-        {/* hero banner (worker articles ship a wide 3.34:1 crop) — desktop only;
+        {/* hero banner (every article ships a wide 3.34:1 crop) — desktop only;
             mobile keeps the 16:9 cover below the header instead */}
         {article.hero && (
           <ArticleCover

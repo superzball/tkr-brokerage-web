@@ -49,7 +49,7 @@ function toArticle(raw: string, filename: string): Article {
     seo: { metaTitle: str("metaTitle"), metaDescription: str("metaDescription") },
     excerpt: str("excerpt") || undefined,
     cover: str("cover") || undefined,
-    coverKind: str("coverKind") === "brand" ? "brand" : str("coverKind") === "real" ? "real" : undefined,
+    coverKind: str("coverKind") === "letterbox" ? "letterbox" : str("coverKind") === "real" ? "real" : undefined,
     hero: str("hero") || undefined,
     inArticleImage: str("inArticleImage") || undefined,
     metaDrafted: data.metaDrafted === true,

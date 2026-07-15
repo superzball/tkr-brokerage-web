@@ -7,7 +7,8 @@ metaTitle: "ประกันเดินทางคืออะไร? รู
 metaDescription: "ก่อนออกเดินทาง ไม่ว่าจะเป็นการท่องเที่ยวต่างประเทศ เที่ยวในประเทศ หรือเดินทางเพื่อทำงาน หลายคนอาจเคยได้ยินคำว่า \"ประกันเดินทาง\""
 excerpt: "ก่อนออกเดินทาง ไม่ว่าจะเป็นการท่องเที่ยวต่างประเทศ เที่ยวในประเทศ หรือเดินทางเพื่อทำงาน หลายคนอาจเคยได้ยินคำว่า \"ประกันเดินทาง\"…"
 cover: /article-images/travel-01.jpg
-coverKind: brand
+coverKind: letterbox
+hero: /article-images/travel-01-hero.jpg
 author: ทีมงาน TKR
 date: 2026-04-28
 published: true

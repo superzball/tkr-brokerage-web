@@ -223,7 +223,7 @@ export interface Article {
   // ---- public reading view (optional; published entries carry these) ----
   excerpt?: string;            // one-line lead for cards + meta fallback
   cover?: string;              // 16:9 card/OG image (under /public/article-images)
-  coverKind?: 'real' | 'brand'; // brand = generated placeholder cover; swap for real art later
+  coverKind?: 'real' | 'letterbox'; // letterbox = wide banner composited onto a 16:9 canvas; swap for true 16:9 art later
   hero?: string;               // wide banner for the article header (desktop)
   inArticleImage?: string;     // infographic referenced inline in the body
   readMinutes?: number;        // estimated read time
