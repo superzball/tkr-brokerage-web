@@ -114,7 +114,12 @@ export function ArticlesClient({ initial }: { initial: Article[] }) {
 
   const columns: Column<Article>[] = [
     { key: "title", header: t("col.title"), sortValue: (a) => a.title },
-    { key: "category", header: t("col.category"), sortValue: (a) => a.category },
+    {
+      key: "category",
+      header: t("col.category"),
+      sortValue: (a) => a.category,
+      render: (a) => a.categoryLabel ?? a.category,
+    },
     {
       key: "status",
       header: t("col.status"),

@@ -208,20 +208,26 @@ export interface NavSection {
 
 // ============== admin entities (Phase 14) ==============
 export type ArticleStatus = 'draft' | 'scheduled' | 'published';
+export type ArticleCategory = 'worker' | 'auto' | 'travel';
 export interface Article {
   id: string;
   title: string;
   slug: string;
   status: ArticleStatus;
-  category: string;
+  category: string;            // canonical key ('worker' | 'auto' | 'travel' in the file CMS)
+  categoryLabel?: string;      // Thai display label from frontmatter (e.g. "ประกันแรงงาน")
   author: string;
   locales: Locale[];           // which languages are translated
   publishedAt?: string;
   seo: { metaTitle: string; metaDescription: string; ogImage?: string };
   // ---- public reading view (optional; published entries carry these) ----
   excerpt?: string;            // one-line lead for cards + meta fallback
-  cover?: string;              // cover image URL (under /public/article-images)
+  cover?: string;              // 16:9 card/OG image (under /public/article-images)
+  coverKind?: 'real' | 'brand'; // brand = generated placeholder cover; swap for real art later
+  hero?: string;               // wide banner for the article header (desktop)
+  inArticleImage?: string;     // infographic referenced inline in the body
   readMinutes?: number;        // estimated read time
+  metaDrafted?: boolean;       // true = meta auto-drafted from body, pending SEO review
   bodyMd?: string;             // markdown body (loaded from /content/articles)
 }
 

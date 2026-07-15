@@ -4027,9 +4027,28 @@
     "noResults": "No articles match your search",
     "availableIn": "Available in",
     "backToList": "Back to articles",
-    "ctaTitle": "Ready to get started?",
-    "ctaDesc": "See real prices instantly — no personal details needed",
-    "cta": "Check your price"
+    "cat": {
+      "worker": "Worker",
+      "auto": "Auto",
+      "travel": "Travel"
+    },
+    "ctaByCat": {
+      "worker": {
+        "title": "Ready to cover your workers?",
+        "desc": "See real migrant-worker insurance prices instantly — no personal details needed",
+        "btn": "Check your price"
+      },
+      "auto": {
+        "title": "Looking for the right car insurance?",
+        "desc": "Compare class 1, 2+ and 3+ plans with TKR",
+        "btn": "Explore car insurance"
+      },
+      "travel": {
+        "title": "Travel with peace of mind",
+        "desc": "Pick a travel insurance plan that fits your trip",
+        "btn": "Explore travel insurance"
+      }
+    }
   },
   "help": {
     "hero": {

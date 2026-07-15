@@ -1,11 +1,12 @@
 // src/lib/articles.ts
 // File-based article CMS (server-only): loads /content/articles/*.md — flat
-// gray-matter-style frontmatter (title, slug, metaTitle, metaDescription,
-// excerpt, cover, category, author, date, published) + a markdown body.
+// gray-matter-style frontmatter (title, slug, category, categoryLabel,
+// metaTitle, metaDescription, excerpt, cover, coverKind, hero, inArticleImage,
+// author, date, published, metaDrafted) + a markdown body.
 // Replaces the old placeholder articles in lib/mock/seed.
 import fs from "node:fs";
 import path from "node:path";
-import type { Article } from "@/types/portal";
+import type { Article, ArticleCategory } from "@/types/portal";
 
 const ARTICLES_DIR = path.join(process.cwd(), "content", "articles");
 
@@ -22,7 +23,8 @@ function parseFrontmatter(raw: string): { data: Record<string, string | boolean 
     let value = line.slice(i + 1).trim();
     if (value === "null" || value === "") { data[key] = undefined; continue; }
     if (value === "true" || value === "false") { data[key] = value === "true"; continue; }
-    if (/^".*"$/.test(value) || /^'.*'$/.test(value)) value = value.slice(1, -1);
+    if (/^".*"$/.test(value)) value = value.slice(1, -1).replace(/\\"/g, '"');
+    else if (/^'.*'$/.test(value)) value = value.slice(1, -1).replace(/\\'/g, "'");
     data[key] = value;
   }
   return { data, body: raw.slice(m[0].length) };
@@ -40,12 +42,17 @@ function toArticle(raw: string, filename: string): Article {
     slug,
     status: data.published === false ? "draft" : "published",
     category: str("category"),
+    categoryLabel: str("categoryLabel") || undefined,
     author: str("author"),
     locales: ["th"], // Thai-only for now; en/my/lo translations come later
     publishedAt: str("date") || undefined,
     seo: { metaTitle: str("metaTitle"), metaDescription: str("metaDescription") },
     excerpt: str("excerpt") || undefined,
     cover: str("cover") || undefined,
+    coverKind: str("coverKind") === "brand" ? "brand" : str("coverKind") === "real" ? "real" : undefined,
+    hero: str("hero") || undefined,
+    inArticleImage: str("inArticleImage") || undefined,
+    metaDrafted: data.metaDrafted === true,
     // Thai has no word spaces — estimate read time from characters (~1000/min)
     readMinutes: Math.max(1, Math.round(bodyMd.length / 1000)),
     bodyMd,
@@ -67,10 +74,12 @@ function loadAll(): Article[] {
 
 /** All articles, newest first, WITHOUT bodyMd — list payloads reach client
  *  components (cards, admin table), so the ~10KB bodies stay server-side.
- *  `publishedOnly` hides drafts (public site). */
-export const getArticles = (opts?: { publishedOnly?: boolean }) =>
+ *  `publishedOnly` hides drafts (public site); `category` narrows to one of
+ *  the three canonical categories. */
+export const getArticles = (opts?: { publishedOnly?: boolean; category?: ArticleCategory }) =>
   loadAll()
     .filter((a) => !opts?.publishedOnly || a.status === "published")
+    .filter((a) => !opts?.category || a.category === opts.category)
     .map(({ bodyMd: _bodyMd, ...rest }) => rest as Article);
 
 /** One full article (incl. bodyMd) by slug, or null. Public callers pass publishedOnly. */
@@ -79,6 +88,9 @@ export const getArticleBySlug = (slug: string, opts?: { publishedOnly?: boolean 
     (a) => a.slug === slug && (!opts?.publishedOnly || a.status === "published"),
   ) ?? null;
 
-/** Distinct categories across published articles (for the list filter). */
-export const getArticleCategories = () =>
-  [...new Set(getArticles({ publishedOnly: true }).map((a) => a.category))];
+/** Distinct categories across published articles (for the list filter),
+ *  in canonical worker → auto → travel order. */
+export const getArticleCategories = (): ArticleCategory[] => {
+  const present = new Set(getArticles({ publishedOnly: true }).map((a) => a.category));
+  return (["worker", "auto", "travel"] as const).filter((c) => present.has(c));
+};
